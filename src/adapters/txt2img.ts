@@ -1,9 +1,8 @@
-import type Txt2ImgOpts from "../schemas/txt2imgOpts";
+import txt2imgOptsSchema from "../schemas/txt2imgOpts";
+import type { Txt2ImgOpts } from "../schemas/txt2imgOpts";
 
-// \u001b[A\u001b[A
-
-export default async function txt2img(
-  opts: typeof Txt2ImgOpts,
+async function exec(
+  opts: Txt2ImgOpts,
   {
     setLog,
     imgResult,
@@ -16,7 +15,10 @@ export default async function txt2img(
   let up = 0;
   let buffer;
   console.log("start");
-  const response = await fetch("/api/txt2img-exec");
+  const url = "/api/txt2img-exec?" + new URLSearchParams(opts);
+  console.log("url", url);
+
+  const response = await fetch(url);
   if (!response.body) throw new Error("No body");
   const reader = response.body.getReader();
 
@@ -55,6 +57,52 @@ export default async function txt2img(
       throw new Error("Invalid JSON");
     }
   }
-
   console.log("done");
+}
+
+async function http(
+  opts: Txt2ImgOpts,
+  {
+    setLog,
+    imgResult,
+  }: {
+    setLog: (log: string[]) => void;
+    imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
+  }
+) {
+  setLog(["[WebUI] Sending request..."]);
+  const url = "/api/txt2img-fetch?" + new URLSearchParams(opts);
+  const response = await fetch(url);
+  const result = await response.json();
+
+  const imgBase64 = result.modelOutputs[0].image_base64;
+  const buffer = Buffer.from(imgBase64, "base64");
+  const blob = new Blob([buffer], { type: "image/png" });
+  const objectURL = URL.createObjectURL(blob);
+  if (imgResult.current) imgResult.current.src = objectURL;
+  setLog([]);
+
+  // console.log(result);
+}
+
+const runners = { exec, http };
+
+export default async function txt2img(
+  opts: unknown,
+  {
+    setLog,
+    imgResult,
+    dest,
+  }: {
+    setLog: (log: string[]) => void;
+    imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
+    dest: "exec" | "http";
+  }
+) {
+  const runner = runners[dest];
+  //console.log("runner", dest, runner);
+  console.log(opts);
+  const modelOpts = txt2imgOptsSchema.cast(opts);
+  const result = await runner(modelOpts, { setLog, imgResult });
+  return result;
 }

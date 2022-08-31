@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import type { NextApiRequest, NextApiResponse } from "next";
+import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
 
 const { STABLE_DIFFUSION_HOME } = process.env;
 console.log({ STABLE_DIFFUSION_HOME });
@@ -13,6 +14,22 @@ export default async function txt2imgExec(
 ) {
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "sd-mui-"));
   const dir = tmpDir.split(path.sep).pop();
+  const opts = req.query;
+  const modelOpts = txt2imgOptsSchema.cast(opts);
+  console.log(6, modelOpts);
+
+  const cmdString = [
+    "conda run --no-capture-output -n ldm",
+    "python scripts/txt2img.py --outdir " + tmpDir,
+    "--skip_grid --n_iter 1 --n_samples 1",
+  ]
+    .concat(
+      Object.entries(modelOpts).map(
+        ([key, val]: [key: string, val: string]) =>
+          "--" + key + " " + (typeof val === "string" ? "'" + val + "'" : val)
+      )
+    )
+    .join(" ");
 
   const write = (obj: Record<string, unknown>) =>
     res.write(JSON.stringify(obj) + "\n");
@@ -24,15 +41,16 @@ export default async function txt2imgExec(
       "Content-Encoding": "chunked",
     });
 
-    const child = child_process.spawn(
+    /*
       "conda run --no-capture-output -n ldm python scripts/txt2img.py --prompt hi --outdir " +
         tmpDir +
-        " --skip_grid --n_iter 1 --n_samples 1",
-      {
-        shell: true,
-        cwd: process.env.STABLE_DIFFUSION_HOME,
-      }
-    );
+        " --skip_grid --n_iter 1 --n_samples 1"
+        */
+
+    const child = child_process.spawn(cmdString, {
+      shell: true,
+      cwd: process.env.STABLE_DIFFUSION_HOME,
+    });
 
     child.stdout.on("data", (data) => {
       console.log(data.toString("utf8"));

@@ -36,7 +36,7 @@ export default function Txt2Img() {
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
-    const img = await txt2img({ prompt }, { setLog, imgResult });
+    const img = await txt2img({ prompt }, { setLog, imgResult, dest });
     console.log(img);
   }
 
@@ -64,8 +64,12 @@ export default function Txt2Img() {
               ref={imgResult}
               width="512"
               height="512"
-              style={{ position: "absolute", left: 0, top: 0 }}
-              display={log.length ? "none" : "block"}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                display: log.length ? "none" : "block",
+              }}
             ></img>
             <Box
               sx={{

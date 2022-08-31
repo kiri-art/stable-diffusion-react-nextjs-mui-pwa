@@ -19,7 +19,7 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 # Banana.dev setup (serverless GPU)
 
 1. Follow instructions at https://github.com/bananaml/serverless-template-stable-diffusion.
-2. Set BANANA_API_KEY and BANANA_MODEL env variables.
+2. Set BANANA_API_KEY and BANANA_MODEL_KEY env variables.
 
 ## Refs
 
