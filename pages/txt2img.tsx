@@ -98,12 +98,12 @@ export default function Txt2Img() {
         />
         {isDev ? (
           <Grid container sx={{ my: 1 }}>
-            <Grid item xs={9} sm={9} md={9}>
+            <Grid item xs={7} sm={8} md={9}>
               <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
                 Go
               </Button>
             </Grid>
-            <Grid item xs={3} sm={3} md={3} sx={{ pl: 1, pt: 1 }}>
+            <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
               <FormControl fullWidth size="small">
                 <InputLabel id="dest-select-label">Dest</InputLabel>
                 <Select
