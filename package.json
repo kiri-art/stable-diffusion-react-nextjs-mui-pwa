@@ -23,8 +23,12 @@
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
+    "@typescript-eslint/eslint-plugin": "5.36.1",
+    "@typescript-eslint/parser": "5.36.1",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
+    "eslint-plugin-unused-imports": "2.0.0",
+    "prettier": "2.7.1",
     "typescript": "latest"
   }
 }

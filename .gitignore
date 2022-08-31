@@ -3,3 +3,4 @@ node_modules
 .vercel
 .next
 node_modules
+yarn-error.log
