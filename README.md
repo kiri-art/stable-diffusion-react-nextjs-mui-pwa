@@ -4,6 +4,12 @@ _PWA Web App front end for Stable Diffusion, on React/NextJS with Material UI_
 
 Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
+## WIP - just started. Only use if you want to help :)
+
+- Web interface to run Stable Diffusion queries on:
+  - Local PC / local installation
+  - [Banana.dev](https://banana.dev) serverless GPU containers.
+
 ## To Develop
 
 1. Clone repo
@@ -13,8 +19,8 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
 ## TODO
 
-- Docker image
-- Vercel start button
+- Docker image for super easy start
+- Vercel clone button
 
 # Banana.dev setup (serverless GPU)
 
