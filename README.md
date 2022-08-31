@@ -16,6 +16,11 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 - Docker image
 - Vercel start button
 
+# Banana.dev setup (serverless GPU)
+
+1. Follow instructions at https://github.com/bananaml/serverless-template-stable-diffusion.
+2. Set BANANA_API_KEY and BANANA_MODEL env variables.
+
 ## Refs
 
 - https://github.com/mui/material-ui/tree/master/examples/nextjs-with-typescript

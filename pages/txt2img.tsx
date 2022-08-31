@@ -1,8 +1,22 @@
 import React from "react";
-import { Box, Button, Container, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import txt2img from "../src/adapters/txt2img";
+
+const isDev =
+  process.env.NODE_ENV === "development" ||
+  (typeof location === "object" && !!location.href.match(/localhost/));
 
 function Log({ log }: { log: string[] }) {
   const ref = React.useRef<HTMLPreElement>(null);
@@ -18,6 +32,7 @@ export default function Txt2Img() {
   const [prompt, setPrompt] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
   const imgResult = React.useRef<HTMLImageElement>();
+  const [dest, setDest] = React.useState(isDev ? "exec" : "http");
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
@@ -77,9 +92,34 @@ export default function Txt2Img() {
             setPrompt(event.target.value);
           }}
         />
-        <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-          Go
-        </Button>
+        {isDev ? (
+          <Grid container sx={{ my: 1 }}>
+            <Grid item xs={9} sm={9} md={9}>
+              <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
+                Go
+              </Button>
+            </Grid>
+            <Grid item xs={3} sm={3} md={3} sx={{ pl: 1, pt: 1 }}>
+              <FormControl fullWidth size="small">
+                <InputLabel id="dest-select-label">Dest</InputLabel>
+                <Select
+                  labelId="dest-select-label"
+                  id="dest-select"
+                  value={dest}
+                  label="Dest"
+                  onChange={(e) => setDest(e.target.value as string)}
+                >
+                  <MenuItem value="exec">local (exec)</MenuItem>
+                  <MenuItem value="http">remote (http)</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        ) : (
+          <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
+            Go
+          </Button>
+        )}
       </Container>
     </>
   );
