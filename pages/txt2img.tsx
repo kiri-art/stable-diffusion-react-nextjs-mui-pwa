@@ -11,16 +11,17 @@ function Log({ log }: { log: string[] }) {
     if (ref.current) ref.current.scrollIntoView(false);
   });
 
-  return <pre ref={ref}>hello {log.join("\n")}</pre>;
+  return log.length ? <pre ref={ref}>{log.join("\n")}</pre> : null;
 }
 
 export default function Txt2Img() {
   const [prompt, setPrompt] = React.useState("");
-  const [log, setLog] = React.useState([]);
-  const imgResult = React.useRef();
+  const [log, setLog] = React.useState([] as Array<string>);
+  const imgResult = React.useRef<HTMLImageElement>();
 
   async function go() {
-    const img = await txt2img({ prompt }, { setLog });
+    setLog(["[WebUI] Executing..."]);
+    const img = await txt2img({ prompt }, { setLog, imgResult });
     console.log(img);
   }
 
@@ -41,6 +42,7 @@ export default function Txt2Img() {
               height: 512,
               position: "relative",
               margin: "auto",
+              border: "1px solid #ddd",
             }}
           >
             <img
@@ -48,6 +50,7 @@ export default function Txt2Img() {
               width="512"
               height="512"
               style={{ position: "absolute", left: 0, top: 0 }}
+              display={log.length ? "none" : "block"}
             ></img>
             <Box
               sx={{
