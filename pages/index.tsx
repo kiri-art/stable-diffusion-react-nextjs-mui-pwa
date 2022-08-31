@@ -20,8 +20,9 @@ const Home: NextPage = () => {
         }}
       >
         <Typography variant="h4" component="h1" gutterBottom>
-          MUI v5 + Next.js with TypeScript example
+          stable-diffusion-react-nextjs-mui-pwa
         </Typography>
+        <Link href="txt2img">txt2img</Link>
         <Link href="/about" color="secondary">
           Go to the about page
         </Link>

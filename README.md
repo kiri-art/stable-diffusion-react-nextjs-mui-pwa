@@ -1,44 +1,21 @@
-# Next.js with TypeScript example
+# stable-diffusion-react-nextjs-mui-pwa
 
-## How to use
+_PWA Web App front end for Stable Diffusion, on React/NextJS with Material UI_
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
-<!-- #default-branch-switch -->
+## To Develop
 
-```sh
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs-with-typescript
-cd nextjs-with-typescript
-```
+1. Clone repo
+1. `yarn install`
+1. edit `.env.local`
+1. `yarn dev`
 
-Install it and run:
+## TODO
 
-```sh
-npm install
-npm run dev
-```
+- Docker image
+- Vercel start button
 
-or:
+## Refs
 
-<!-- #default-branch-switch -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/nextjs-with-typescript)
-
-## The idea behind the example
-
-The project uses [Next.js](https://github.com/vercel/next.js), which is a framework for server-rendered React apps.
-It includes `@mui/material` and its peer dependencies, including `emotion`, the default style engine in MUI v5. If you prefer, you can [use styled-components instead](https://mui.com/material-ui/guides/interoperability/#styled-components).
-
-## The link component
-
-The [example folder](https://github.com/mui/material-ui/tree/HEAD/examples/nextjs-with-typescript) provides an adapter for the use of [Next.js's Link component](https://nextjs.org/docs/api-reference/next/link) with MUI.
-More information [in the documentation](https://mui.com/material-ui/guides/routing/#next-js).
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+- https://github.com/mui/material-ui/tree/master/examples/nextjs-with-typescript

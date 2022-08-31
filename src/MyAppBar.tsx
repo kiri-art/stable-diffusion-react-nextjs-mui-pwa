@@ -6,8 +6,8 @@ import {
   Typography,
   Button,
   IconButton,
-  MenuIcon,
-} from "@mui";
+} from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 
 export default function MyAppBar({ title }: { title: string }) {
   return (
@@ -26,7 +26,9 @@ export default function MyAppBar({ title }: { title: string }) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Button color="inherit">Login</Button>
+          {/* 
+            <Button color="inherit">Login</Button>
+          */}
         </Toolbar>
       </AppBar>
     </Box>
