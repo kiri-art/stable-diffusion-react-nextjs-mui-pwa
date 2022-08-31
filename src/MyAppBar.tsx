@@ -1,5 +1,13 @@
-import * as React from 'react';
-import { AppBar, Box, Toolbar, Typography, Button, IconButton, MenuIcon } from "@mui";
+import * as React from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  MenuIcon,
+} from "@mui";
 
 export default function MyAppBar({ title }: { title: string }) {
   return (
