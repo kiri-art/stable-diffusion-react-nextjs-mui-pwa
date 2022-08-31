@@ -1,1 +1,5 @@
 upstream/commits/*
+node_modules
+.vercel
+.next
+node_modules
