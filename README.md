@@ -8,7 +8,7 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
 - Web interface to run Stable Diffusion queries on:
   - Local PC / local installation
-  - [Banana.dev](https://banana.dev) serverless GPU containers.
+  - [Banana.dev](https://banana.dev) serverless GPU containers (roughly $1 = 200 requests, YMMV)
   - Others?
 
 Why? Make this fun stuff more accessible to web developers and friends :)
