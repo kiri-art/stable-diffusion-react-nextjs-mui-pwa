@@ -17,7 +17,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as any).emotionStyleTags}
+          {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (this.props as any).emotionStyleTags
+          }
         </Head>
         <body>
           <Main />
@@ -62,6 +65,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
