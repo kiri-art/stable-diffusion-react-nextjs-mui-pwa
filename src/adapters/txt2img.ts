@@ -15,10 +15,15 @@ async function exec(
   let up = 0;
   let buffer;
   console.log("start");
-  const url = "/api/txt2img-exec?" + new URLSearchParams(opts);
-  console.log("url", url);
 
-  const response = await fetch(url);
+  const response = await fetch("/api/txt2img-exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ modelOpts: opts }),
+  });
+
   if (!response.body) throw new Error("No body");
   const reader = response.body.getReader();
 
@@ -71,8 +76,13 @@ async function http(
   }
 ) {
   setLog(["[WebUI] Sending request..."]);
-  const url = "/api/txt2img-fetch?" + new URLSearchParams(opts);
-  const response = await fetch(url);
+  const response = await fetch("/api/txt2img-fetch", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ modelOpts: opts }),
+  });
   const result = await response.json();
 
   const imgBase64 = result.modelOutputs[0].image_base64;
