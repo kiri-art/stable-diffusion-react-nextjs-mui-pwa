@@ -1,4 +1,7 @@
-import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ContentCopy, Download } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -11,9 +14,10 @@ import {
   TextField,
 } from "@mui/material";
 
-import MyAppBar from "../src/MyAppBar";
-import txt2img from "../src/adapters/txt2img";
 import InputSlider from "../src/InputSlider";
+import MyAppBar from "../src/MyAppBar";
+import React from "react";
+import txt2img from "../src/adapters/txt2img";
 
 const isDev =
   process.env.NODE_ENV === "development" ||
@@ -46,6 +50,7 @@ export default function Txt2Img() {
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
+  const [mouseOver, setMouseOver] = React.useState(false);
 
   // Model inputs
   const [prompt, setPrompt] = React.useState("");
@@ -60,7 +65,26 @@ export default function Txt2Img() {
       { prompt, width, height, num_inference_steps, guidance_scale },
       { setLog, imgResult, dest }
     );
-    console.log(img);
+  }
+
+  async function copy() {
+    console.log("copy");
+    if (!imgResult.current) return;
+    const blob = await fetch(imgResult.current.src).then((r) => r.blob());
+    const item = new ClipboardItem({ "image/png": blob });
+    await navigator.clipboard.write([item]);
+    toast("✅ PNG copied to clipboard");
+  }
+
+  async function download() {
+    console.log("download");
+    if (!imgResult.current) return;
+    //const blob = await fetch(imgResult.current.src).then(r => r.blob());
+    const a = document.createElement("a");
+    a.setAttribute("download", prompt + ".png");
+    a.setAttribute("href-lang", "image/png");
+    a.setAttribute("href", imgResult.current.src);
+    a.click();
   }
 
   return (
@@ -75,6 +99,8 @@ export default function Txt2Img() {
           }}
         >
           <Box
+            onMouseOver={() => setMouseOver(true)}
+            onMouseOut={() => setMouseOver(false)}
             sx={{
               width: 512,
               height: 512,
@@ -95,25 +121,49 @@ export default function Txt2Img() {
                 display: log.length ? "none" : "block",
               }}
             ></img>
-            <Box
-              sx={{
-                py: 0.5,
-                px: 2,
-                width: 512,
-                height: 512,
-                position: "absolute",
-                left: 0,
-                top: 0,
-                overflow: "auto",
-              }}
-            >
-              {log.length > 0 && (
+            {mouseOver && log.length === 0 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 10,
+                  right: 10,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+                  onClick={copy}
+                >
+                  <ContentCopy />
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+                  onClick={download}
+                >
+                  <Download />
+                </Button>
+              </Box>
+            )}
+            {log.length > 0 && (
+              <Box
+                sx={{
+                  py: 0.5,
+                  px: 2,
+                  width: 512,
+                  height: 512,
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  overflow: "auto",
+                }}
+              >
                 <div style={{ position: "absolute", right: 10, top: 10 }}>
                   <Timer />
                 </div>
-              )}
-              <Log log={log} />
-            </Box>
+                <Log log={log} />
+              </Box>
+            )}
           </Box>
         </Box>
         <TextField
@@ -194,6 +244,17 @@ export default function Txt2Img() {
           </Grid>
         </Grid>
       </Container>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
     </>
   );
 }
