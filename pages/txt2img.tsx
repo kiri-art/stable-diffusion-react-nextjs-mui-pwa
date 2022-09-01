@@ -23,7 +23,7 @@ function Timer() {
   const [s, setS] = React.useState(0);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setS((s += 0.1)), 100);
+    const timeout = setTimeout(() => setS(s + 0.1), 100);
     return () => clearTimeout(timeout);
   }, [s]);
 
