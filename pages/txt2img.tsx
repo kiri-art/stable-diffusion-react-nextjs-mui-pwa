@@ -19,6 +19,17 @@ const isDev =
   process.env.NODE_ENV === "development" ||
   (typeof location === "object" && !!location.href.match(/localhost/));
 
+function Timer() {
+  const [s, setS] = React.useState(0);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => setS((s += 0.1)), 100);
+    return () => clearTimeout(timeout);
+  }, [s]);
+
+  return <div>{s.toFixed(1)}</div>;
+}
+
 function Log({ log }: { log: string[] }) {
   const ref = React.useRef<HTMLPreElement>(null);
 
@@ -96,6 +107,11 @@ export default function Txt2Img() {
                 overflow: "auto",
               }}
             >
+              {log.length > 0 && (
+                <div style={{ position: "absolute", right: 10, top: 10 }}>
+                  <Timer />
+                </div>
+              )}
               <Log log={log} />
             </Box>
           </Box>
