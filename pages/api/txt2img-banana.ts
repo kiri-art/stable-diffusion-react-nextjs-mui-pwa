@@ -55,7 +55,8 @@ async function localSdkRun(modelOpts: Txt2ImgOpts) {
   // Now we return it in the same way Banana's SDK would
   return {
     id: "UID todo",
-    message: "success",
+    // Up until now, every { message: "something" } has been a failure.
+    message: data.message ? "" : "success",
     created,
     apiVersion: "local dev",
     modelOutputs: [data],

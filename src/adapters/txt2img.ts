@@ -87,6 +87,11 @@ async function banana(
   });
   const result = await response.json();
 
+  if (!result.message) {
+    setLog(JSON.stringify(result, null, 2).split("\n"));
+    return;
+  }
+
   const imgBase64 = result.modelOutputs[0].image_base64;
   const buffer = Buffer.from(imgBase64, "base64");
   const blob = new Blob([buffer], { type: "image/png" });
