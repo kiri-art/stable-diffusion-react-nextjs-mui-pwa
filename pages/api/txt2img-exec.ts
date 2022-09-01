@@ -46,7 +46,7 @@ export default async function txt2imgExec(
   const write = (obj: Record<string, unknown>) =>
     res.write(JSON.stringify(obj) + "\n");
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     res.writeHead(200, {
       "Content-Type": "application/json",
       "Transfer-Encoding": "chunked",
