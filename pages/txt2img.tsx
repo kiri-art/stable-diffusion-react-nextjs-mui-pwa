@@ -31,7 +31,7 @@ function Log({ log }: { log: string[] }) {
 
 export default function Txt2Img() {
   const [log, setLog] = React.useState([] as Array<string>);
-  const imgResult = React.useRef<HTMLImageElement>();
+  const imgResult = React.useRef<HTMLImageElement>(null);
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
@@ -73,6 +73,7 @@ export default function Txt2Img() {
             }}
           >
             <img
+              alt="model output"
               ref={imgResult}
               width="512"
               height="512"

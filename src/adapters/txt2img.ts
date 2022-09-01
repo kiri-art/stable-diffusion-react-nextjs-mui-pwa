@@ -8,12 +8,11 @@ async function exec(
     imgResult,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
+    imgResult: React.RefObject<HTMLImageElement>;
   }
 ) {
   let log: string[] = [];
   let up = 0;
-  let buffer;
   console.log("start");
 
   const response = await fetch("/api/txt2img-exec", {
@@ -32,6 +31,7 @@ async function exec(
     if (done) break;
     try {
       // const str = Buffer.from(value).toString("utf-8");
+      // @ts-expect-error: TODO
       const str = String.fromCharCode.apply(null, value);
       const strs = str.trim().split("\n");
       for (const str of strs) {
@@ -73,8 +73,8 @@ async function banana(
     dest,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
-    dest: "banana-local" | "banana-remote" | "exec";
+    imgResult: React.RefObject<HTMLImageElement>;
+    dest: string; // "banana-local" | "banana-remote" | "exec";
   }
 ) {
   setLog(["[WebUI] Sending " + dest + " request..."]);
@@ -112,8 +112,8 @@ export default async function txt2img(
     dest,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
-    dest: "exec" | "banana-local" | "banana-remote";
+    imgResult: React.RefObject<HTMLImageElement>;
+    dest: string; // "exec" | "banana-local" | "banana-remote";
   }
 ) {
   const proto = dest.split("-")[0] as "exec" | "banana";
