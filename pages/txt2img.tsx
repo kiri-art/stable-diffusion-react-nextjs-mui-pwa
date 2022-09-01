@@ -68,7 +68,6 @@ export default function Txt2Img() {
   }
 
   async function copy() {
-    console.log("copy");
     if (!imgResult.current) return;
     const blob = await fetch(imgResult.current.src).then((r) => r.blob());
     const item = new ClipboardItem({ "image/png": blob });
@@ -77,7 +76,6 @@ export default function Txt2Img() {
   }
 
   async function download() {
-    console.log("download");
     if (!imgResult.current) return;
     //const blob = await fetch(imgResult.current.src).then(r => r.blob());
     const a = document.createElement("a");
@@ -93,17 +91,20 @@ export default function Txt2Img() {
       <Container maxWidth="lg">
         <Box
           sx={{
-            my: 1,
+            mt: 1,
+            mb: 2,
             width: "100%",
-            height: 517,
+            height: "calc(100vw - 46px)",
+            maxHeight: 512,
           }}
         >
           <Box
             onMouseOver={() => setMouseOver(true)}
             onMouseOut={() => setMouseOver(false)}
             sx={{
-              width: 512,
-              height: 512,
+              width: "calc(100vw - 46px)",
+              maxWidth: 512,
+              height: "100%",
               position: "relative",
               margin: "auto",
               border: "1px solid #ddd",
@@ -112,8 +113,8 @@ export default function Txt2Img() {
             <img
               alt="model output"
               ref={imgResult}
-              width="512"
-              height="512"
+              width="100%"
+              height="100%"
               style={{
                 position: "absolute",
                 left: 0,
@@ -150,8 +151,8 @@ export default function Txt2Img() {
                 sx={{
                   py: 0.5,
                   px: 2,
-                  width: 512,
-                  height: 512,
+                  width: "100%",
+                  height: "100%",
                   position: "absolute",
                   left: 0,
                   top: 0,
