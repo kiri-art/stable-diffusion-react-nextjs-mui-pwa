@@ -13,6 +13,7 @@ import {
 
 import MyAppBar from "../src/MyAppBar";
 import txt2img from "../src/adapters/txt2img";
+import InputSlider from "../src/InputSlider";
 
 const isDev =
   process.env.NODE_ENV === "development" ||
@@ -29,16 +30,25 @@ function Log({ log }: { log: string[] }) {
 }
 
 export default function Txt2Img() {
-  const [prompt, setPrompt] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
   const imgResult = React.useRef<HTMLImageElement>();
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
 
+  // Model inputs
+  const [prompt, setPrompt] = React.useState("");
+  const [width, setWidth] = React.useState(512);
+  const [height, setHeight] = React.useState(512);
+  const [num_inference_steps, setNumInferenceSteps] = React.useState(50);
+  const [guidance_scale, setGuidanceScale] = React.useState(7.5);
+
   async function go() {
     setLog(["[WebUI] Executing..."]);
-    const img = await txt2img({ prompt }, { setLog, imgResult, dest });
+    const img = await txt2img(
+      { prompt, width, height, num_inference_steps, guidance_scale },
+      { setLog, imgResult, dest }
+    );
     console.log(img);
   }
 
@@ -127,6 +137,45 @@ export default function Txt2Img() {
             Go
           </Button>
         )}
+
+        <Grid container>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <InputSlider
+              label="guidance_scale"
+              value={guidance_scale}
+              setValue={setGuidanceScale}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <InputSlider
+              label="num_inference_steps"
+              value={num_inference_steps}
+              setValue={setNumInferenceSteps}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <InputSlider
+              label="width"
+              value={width}
+              setValue={setWidth}
+              step={8}
+              min={8}
+              max={2048}
+              marks={true}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <InputSlider
+              label="height"
+              value={height}
+              setValue={setHeight}
+              step={8}
+              min={8}
+              max={2048}
+              marks={true}
+            />
+          </Grid>
+        </Grid>
       </Container>
     </>
   );
