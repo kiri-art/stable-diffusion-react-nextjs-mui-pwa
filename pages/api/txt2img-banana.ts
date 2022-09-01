@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import * as banana from "@banana-dev/banana-dev";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Txt2ImgOpts } from "../../src/schemas/txt2imgOpts";
