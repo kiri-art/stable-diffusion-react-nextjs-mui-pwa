@@ -32,7 +32,9 @@ export default function Txt2Img() {
   const [prompt, setPrompt] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
   const imgResult = React.useRef<HTMLImageElement>();
-  const [dest, setDest] = React.useState(isDev ? "exec" : "http");
+  const [dest, setDest] = React.useState(
+    isDev ? "banana-local" : "banana-remote"
+  );
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
@@ -113,8 +115,9 @@ export default function Txt2Img() {
                   label="Dest"
                   onChange={(e) => setDest(e.target.value as string)}
                 >
-                  <MenuItem value="exec">local (exec)</MenuItem>
-                  <MenuItem value="http">remote (http)</MenuItem>
+                  <MenuItem value="exec">exec (local)</MenuItem>
+                  <MenuItem value="banana-local">banana (local)</MenuItem>
+                  <MenuItem value="banana-remote">banana (remote)</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

@@ -10,7 +10,7 @@ const txt2imgOptsSchema = object({
   num_inference_steps: number().default(15),
   guidance_scale: number().default(7.5),
   // needs to be pre-processed
-  seed: number().default(0),
+  seed: number().min(0).max(4294967295),
 });
 
 type Txt2ImgOpts = InferType<typeof txt2imgOptsSchema>;

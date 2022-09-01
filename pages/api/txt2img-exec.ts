@@ -16,7 +16,19 @@ export default async function txt2imgExec(
   const dir = tmpDir.split(path.sep).pop();
   const opts = req.query;
   const modelOpts = txt2imgOptsSchema.cast(opts);
-  console.log(6, modelOpts);
+  console.log({ modelOpts });
+
+  const cmdOpts = Object.fromEntries(
+    Object.entries(modelOpts).map(([key, value]) => {
+      if (key === "guidance_scale") return ["scale", value];
+      if (key === "width") return ["W", value];
+      if (key === "height") return ["H", value];
+      if (key === "num_inference_steps") return ["ddim_steps", value];
+      return [key, value];
+    })
+  );
+
+  console.log({ cmdOpts });
 
   const cmdString = [
     "conda run --no-capture-output -n ldm",
@@ -24,8 +36,8 @@ export default async function txt2imgExec(
     "--skip_grid --n_iter 1 --n_samples 1",
   ]
     .concat(
-      Object.entries(modelOpts).map(
-        ([key, val]: [key: string, val: string]) =>
+      Object.entries(cmdOpts).map(
+        ([key, val]) =>
           "--" + key + " " + (typeof val === "string" ? "'" + val + "'" : val)
       )
     )

@@ -62,6 +62,11 @@ async function localSdkRun(modelOpts: Txt2ImgOpts) {
   };
 }
 
+const runners = {
+  "banana-local": localSdkRun,
+  "banana-remote": bananaSdkRun,
+};
+
 export default async function txt2imgFetch(
   req: NextApiRequest,
   res: NextApiResponse
@@ -72,12 +77,14 @@ export default async function txt2imgFetch(
   if (!req.body.modelOpts) throw new Error("No modelOpts provided");
 
   const modelOpts = txt2imgOptsSchema.cast(req.body.modelOpts);
-  const fetchOpts = req.body.fetchOpts;
+  const fetchOpts = req.body.fetchOpts || {};
 
   console.log("sending", modelOpts);
 
-  //const out = await bananaSdkRun(modelOpts);
-  const out = await localSdkRun(modelOpts);
+  // @ts-expect-error: TODO
+  const runner = runners[fetchOpts.dest];
+
+  const out = await runner(modelOpts);
 
   const toLog: object = { ...out };
   // @ts-expect-error: just some logging `:)

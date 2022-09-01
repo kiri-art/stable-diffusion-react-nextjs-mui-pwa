@@ -65,23 +65,25 @@ async function exec(
   console.log("done");
 }
 
-async function http(
+async function banana(
   opts: Txt2ImgOpts,
   {
     setLog,
     imgResult,
+    dest,
   }: {
     setLog: (log: string[]) => void;
     imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
+    dest: "banana-local" | "banana-remote" | "exec";
   }
 ) {
-  setLog(["[WebUI] Sending request..."]);
-  const response = await fetch("/api/txt2img-fetch", {
+  setLog(["[WebUI] Sending " + dest + " request..."]);
+  const response = await fetch("/api/txt2img-banana", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ modelOpts: opts }),
+    body: JSON.stringify({ modelOpts: opts, fetchOpts: { dest } }),
   });
   const result = await response.json();
 
@@ -95,7 +97,7 @@ async function http(
   // console.log(result);
 }
 
-const runners = { exec, http };
+const runners = { exec, banana };
 
 export default async function txt2img(
   opts: unknown,
@@ -106,13 +108,14 @@ export default async function txt2img(
   }: {
     setLog: (log: string[]) => void;
     imgResult: React.MutableRefObject<HTMLImageElement | undefined>;
-    dest: "exec" | "http";
+    dest: "exec" | "banana-local" | "banana-remote";
   }
 ) {
-  const runner = runners[dest];
+  const proto = dest.split("-")[0] as "exec" | "banana";
+  const runner = runners[proto];
   //console.log("runner", dest, runner);
   console.log(opts);
   const modelOpts = txt2imgOptsSchema.cast(opts);
-  const result = await runner(modelOpts, { setLog, imgResult });
+  const result = await runner(modelOpts, { setLog, imgResult, dest });
   return result;
 }
