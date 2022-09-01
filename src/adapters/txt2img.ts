@@ -87,7 +87,16 @@ async function banana(
   });
   const result = await response.json();
 
-  if (!result.message) {
+  // It turns out sometimes we can still get { message: "" } and success.
+  // if (!result.message) {
+  if (
+    !(
+      result &&
+      result.modelOutputs &&
+      result.modelOutputs.length &&
+      result.modelOutputs[0].image_base64
+    )
+  ) {
     setLog(JSON.stringify(result, null, 2).split("\n"));
     return;
   }
