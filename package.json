@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "i18n:extract": "lingui extract",
+    "i18n:compile": "lingui compile"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
@@ -15,19 +17,27 @@
     "@emotion/react": "11.10.4",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.4",
+    "@lingui/react": "^3.14.0",
     "@mui/icons-material": "5.10.3",
     "@mui/material": "5.10.3",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-toastify": "9.0.8",
+    "stylis": "4.1.1",
+    "stylis-plugin-rtl": "2.1.1",
     "yup": "1.0.0-beta.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@lingui/cli": "^3.14.0",
+    "@lingui/macro": "^3.14.0",
     "@types/node": "18.7.14",
     "@types/react": "18.0.18",
+    "@types/stylis": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
+    "babel-plugin-macros": "^3.1.0",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
     "eslint-plugin-unused-imports": "2.0.0",

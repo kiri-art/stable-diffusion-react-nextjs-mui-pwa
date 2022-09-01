@@ -55,6 +55,21 @@ Note: you'll need at least one destination / target from the list below where St
 - Docker image for super easy start
 - Vercel clone button
 
+## i18n
+
+We use NextJS's built-in
+[i18n routing](https://nextjs.org/docs/advanced-features/i18n-routing) and
+[Lingui](https://lingui.js.org/tutorials/setup-react.html) for translations.
+
+Useful commands:
+
+- `yarn i18n:extract` to extract strings.
+- Send `locales/*/messages.po` to translators, resave.
+- `yarn i18n:compile` before deploy.
+
+See also [lingui.config.js](./lingui.config.js) and [locales](./locales) dir.
+
 ## Refs
 
 - https://github.com/mui/material-ui/tree/master/examples/nextjs-with-typescript
+-

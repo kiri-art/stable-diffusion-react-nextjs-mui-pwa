@@ -4,3 +4,4 @@ node_modules
 .next
 node_modules
 yarn-error.log
+tsconfig.tsbuildinfo

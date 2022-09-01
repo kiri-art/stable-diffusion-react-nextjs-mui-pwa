@@ -1,13 +1,23 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../src/theme";
+
+import themes from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
+import locales from "../src/lib/locales";
 
 export default class MyDocument extends Document {
   render() {
+    // Server-rendered here, but changed dynamically in _app.js
+    const { locale = "en" } = this.props.__NEXT_DATA__;
+    // @ts-expect-error: TODO
+    const localeData = locales[locale];
+    const dir = localeData ? localeData.dir : "ltr";
+    // @ts-expect-error: TODO
+    const theme = themes[dir];
+
     return (
-      <Html lang="en">
+      <Html lang={locale} dir={dir} style={{ height: "100%" }}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -57,6 +67,10 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage;
+  const locale = ctx.locale;
+  // @ts-expect-error: TODO
+  const localeData = locales[locale];
+  const dir = localeData ? localeData.dir : "ltr";
 
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
