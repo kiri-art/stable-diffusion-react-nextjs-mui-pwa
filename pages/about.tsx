@@ -29,35 +29,41 @@ const About: NextPage = () => {
           </Typography>
           <Box maxWidth="sm" sx={{ textAlign: "justify" }}>
             <p>
-              SD-MUI is a WEB UI frontend for{" "}
-              <a href="https://stability.ai/">Stability.AI</a>'s{" "}
-              <a href="https://stability.ai/blog/stable-diffusion-public-release">
-                Stable Diffusion
-              </a>
-              . It is FOSS (Free and Open Source Software Frontend) and
-              developed by the community.
+              <Trans>
+                SD-MUI is a WEB UI frontend for{" "}
+                <a href="https://stability.ai/">Stability.AI</a>&apos;s{" "}
+                <a href="https://stability.ai/blog/stable-diffusion-public-release">
+                  Stable Diffusion
+                </a>
+                . It is FOSS (Free and Open Source Software Frontend) and
+                developed by the community.
+              </Trans>
             </p>
 
             <p>
-              You can run it for free on your own computer (if you have a
-              suitable GPU) or very cheaply via{" "}
-              <a href="https://banana.dev/">Banana.Dev</a>'s serverless GPU
-              cloud. Get involved in our{" "}
-              <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa">
-                GitHub project
-              </a>{" "}
-              and let's build something awesome together.
+              <Trans>
+                You can run it for free on your own computer (if you have a
+                suitable GPU) or very cheaply via{" "}
+                <a href="https://banana.dev/">Banana.Dev</a>&apos;s serverless
+                GPU cloud. Get involved in our{" "}
+                <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa">
+                  GitHub project
+                </a>{" "}
+                and let&apos;s build something awesome together.
+              </Trans>
             </p>
 
             <p>
-              Rendering can be performed either 1) locally with a Banana.Dev
-              docker image (recommended), 2) locally with an existing Stable
-              Diffusion installation, or 3) remotely via a Banana.Dev account.
-              Details in the{" "}
-              <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa#readme">
-                project README
-              </a>
-              .
+              <Trans>
+                Rendering can be performed either 1) locally with a Banana.Dev
+                docker image (recommended), 2) locally with an existing Stable
+                Diffusion installation, or 3) remotely via a Banana.Dev account.
+                Details in the{" "}
+                <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa#readme">
+                  project README
+                </a>
+                .
+              </Trans>
             </p>
 
             <p>
