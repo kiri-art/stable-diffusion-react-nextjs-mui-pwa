@@ -6,6 +6,8 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
 ## WIP - just started. Only use if you want to help :)
 
+<img align="right" src="./docs/img/cover2.jpg" alt="super dog" />
+
 - Web interface to run Stable Diffusion queries on:
   - Local PC / local installation
   - [Banana.dev](https://banana.dev) serverless GPU containers (roughly $1 = 200 requests, YMMV)
@@ -17,8 +19,6 @@ Why? Make this fun stuff more accessible to web developers and friends :)
 If you have a background in web dev / dev ops, and have wanted to experiment a bit with machine learning / latent diffusion (AI image generation), this is a great project to get involved in :)
 
 Doing this in my very limited spare time, PRs more likely to get responses than issues, but try me :)
-
-![a super happy developer typing away on her computer, anime style](./docs/img/cover.png)
 
 ## To Develop
 
