@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { t, Trans } from "@lingui/macro";
 
-import { ContentCopy, Download } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { ContentCopy, Download, Height, Scale } from "@mui/icons-material";
 
 import InputSlider from "../src/InputSlider";
 import MyAppBar from "../src/MyAppBar";
@@ -44,6 +45,31 @@ function Log({ log }: { log: string[] }) {
   return log.length ? <pre ref={ref}>{log.join("\n")}</pre> : null;
 }
 
+function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
+  return (
+    <Box
+      sx={{
+        mt: -2,
+        width: 25.5,
+        height: 25.5,
+        textAlign: "center",
+        fontSize: "150%",
+        verticalAlign: "top",
+        ...props,
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
+
+const defaults = {
+  guidance_scale: 7.5,
+  num_inference_steps: 50,
+  width: 512,
+  height: 512,
+};
+
 export default function Txt2Img() {
   const [log, setLog] = React.useState([] as Array<string>);
   const imgResult = React.useRef<HTMLImageElement>(null);
@@ -54,14 +80,14 @@ export default function Txt2Img() {
 
   // Model inputs
   const [prompt, setPrompt] = React.useState("");
-  const [width, setWidth] = React.useState<number | string>(512);
-  const [height, setHeight] = React.useState<number | string>(512);
   const [num_inference_steps, setNumInferenceSteps] = React.useState<
     number | string
-  >(50);
+  >(defaults.num_inference_steps);
   const [guidance_scale, setGuidanceScale] = React.useState<number | string>(
-    7.5
+    defaults.guidance_scale
   );
+  const [width, setWidth] = React.useState<number | string>(defaults.width);
+  const [height, setHeight] = React.useState<number | string>(defaults.height);
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
@@ -210,26 +236,58 @@ export default function Txt2Img() {
           </Button>
         )}
 
-        <Grid container>
+        <Grid container spacing={2} sx={{ mt: 1 }}>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
             <InputSlider
-              label="guidance_scale"
+              label={t`Classifier-Free Guidance (Scale)`}
               value={guidance_scale}
               setValue={setGuidanceScale}
+              defaultValue={defaults.guidance_scale}
+              tooltip={
+                <Box>
+                  <Trans>
+                    How closely to follow the prompt. Lower values = more
+                    creative, more variety. Higher values = more exact, may
+                    cause artifacts. Values of 5 - 15 tend to work best.{" "}
+                    <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                      Learn more
+                    </a>
+                  </Trans>
+                </Box>
+              }
+              icon={<Scale />}
+              min={1}
+              max={50}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
             <InputSlider
-              label="num_inference_steps"
+              label={t`Number of Inference Steps`}
               value={num_inference_steps}
               setValue={setNumInferenceSteps}
+              defaultValue={defaults.num_inference_steps}
+              icon={<EmojiIcon>👣</EmojiIcon>}
+              tooltip={
+                <Box>
+                  <Trans>
+                    Number of denoising steps (how many times to iterate over
+                    and improve the image). Larger numbers take longer to render
+                    but may produce higher quality results.{" "}
+                    <a href="https://huggingface.co/blog/stable_diffusion">
+                      Learn more
+                    </a>
+                  </Trans>
+                </Box>
+              }
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
             <InputSlider
-              label="width"
+              label={t`Width`}
               value={width}
               setValue={setWidth}
+              defaultValue={defaults.width}
+              icon={<EmojiIcon>⭤</EmojiIcon>}
               step={8}
               min={8}
               max={2048}
@@ -238,9 +296,11 @@ export default function Txt2Img() {
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
             <InputSlider
-              label="height"
+              label={t`Height`}
               value={height}
               setValue={setHeight}
+              defaultValue={defaults.height}
+              icon={<Height />}
               step={8}
               min={8}
               max={2048}
@@ -248,6 +308,9 @@ export default function Txt2Img() {
             />
           </Grid>
         </Grid>
+        <p>
+          <a href="https://github.com/Maks-s/sd-akashic">SD Akashic Guide</a>
+        </p>
       </Container>
       <ToastContainer
         position="bottom-center"
