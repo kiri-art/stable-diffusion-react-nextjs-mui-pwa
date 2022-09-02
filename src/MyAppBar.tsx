@@ -22,7 +22,9 @@ import locales from "../src/lib/locales";
 export default function MyAppBar({ title }: { title: string }) {
   const router = useRouter();
   const { pathname, asPath, query } = router;
-  const [anchorElLang, setAnchorElLang] = React.useState(null);
+  const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(
+    null
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>

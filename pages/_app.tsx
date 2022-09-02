@@ -9,7 +9,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 
 import themes from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-import locales from "../src/lib/locales";
+import locales, { defaultLocale } from "../src/lib/locales";
 import { i18n, I18nProvider } from "../src/lib/i18n";
 
 interface MyAppProps extends AppProps {
@@ -24,18 +24,21 @@ const csEmotionCache = {
 
 export default function MyApp(props: MyAppProps) {
   const router = useRouter();
-  const dir = locales[router.locale].dir;
+  const locale = locales[router.locale || defaultLocale];
+  const dir = locale.dir as "ltr" | "rtl";
   const { Component, emotionCache = csEmotionCache[dir], pageProps } = props;
 
   React.useEffect(() => {
     // Initially set on server-rendered _document.js
     const html = document.querySelector("html");
-    html.setAttribute("lang", router.locale);
-    html.setAttribute("dir", locales[router.locale].dir);
+    if (html) {
+      html.setAttribute("lang", locale.id);
+      html.setAttribute("dir", locale.dir);
+    }
 
     // Lingui
-    i18n.activate(router.locale);
-  }, [router.locale]);
+    i18n.activate(locale.id);
+  }, [locale]);
 
   return (
     <CacheProvider value={emotionCache}>

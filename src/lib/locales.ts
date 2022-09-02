@@ -1,4 +1,14 @@
-const locales = {
+const defaultLocale = "en-US";
+
+interface locale {
+  id: string;
+  dir: string;
+  language: string;
+  region: string;
+  label: Record<string, string>;
+}
+
+const locales: Record<string, locale> = {
   "en-US": {
     id: "en-US",
     dir: "ltr",
@@ -22,4 +32,5 @@ const locales = {
   },
 };
 
+export { defaultLocale };
 export default locales;

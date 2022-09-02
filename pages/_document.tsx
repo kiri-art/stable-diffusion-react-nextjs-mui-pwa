@@ -4,15 +4,14 @@ import createEmotionServer from "@emotion/server/create-instance";
 
 import themes from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-import locales from "../src/lib/locales";
+import locales, { defaultLocale } from "../src/lib/locales";
 
 export default class MyDocument extends Document {
   render() {
     // Server-rendered here, but changed dynamically in _app.js
-    const { locale = "en" } = this.props.__NEXT_DATA__;
-    // @ts-expect-error: TODO
+    const { locale = defaultLocale } = this.props.__NEXT_DATA__;
     const localeData = locales[locale];
-    const dir = localeData ? localeData.dir : "ltr";
+    const dir = localeData.dir;
     // @ts-expect-error: TODO
     const theme = themes[dir];
 
@@ -67,14 +66,12 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage;
-  const locale = ctx.locale;
-  // @ts-expect-error: TODO
+  const locale = ctx.locale || defaultLocale;
   const localeData = locales[locale];
-  const dir = localeData ? localeData.dir : "ltr";
 
   // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
-  const cache = createEmotionCache();
+  const cache = createEmotionCache(localeData.dir);
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
   ctx.renderPage = () =>
