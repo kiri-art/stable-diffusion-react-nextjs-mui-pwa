@@ -15,7 +15,7 @@ const Home: NextPage = () => {
       <Container maxWidth="lg">
         <Box
           sx={{
-            my: 4,
+            my: 2,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -42,6 +42,30 @@ const Home: NextPage = () => {
             About
           </Button>
         </Box>
+        <p>
+          <b>
+            <Trans>Be Responsible</Trans>
+          </b>
+          <ul>
+            <li>
+              <Trans>
+                Do not create any harmful content (racist, inciteful, etc).
+              </Trans>
+            </li>
+            <li>
+              <Trans>
+                No deepfakes aside for fair use (e.g. humour, education, nothing
+                misleading or political).
+              </Trans>
+            </li>
+            <li>
+              <Trans>
+                You must make clear on any content you share elsewhere that the
+                image is computer generated.
+              </Trans>
+            </li>
+          </ul>
+        </p>
         <Box
           sx={{
             p: 1,
@@ -56,6 +80,27 @@ const Home: NextPage = () => {
             it on your own computer for free (if you have a suitable GPU, or
             with your own Banana serverless GPU account). Want to get involved?
             See the <Link href="/about">about</Link> page.
+          </Trans>
+        </Box>{" "}
+        <Box sx={{ fontSize: "80%", mb: 2 }}>
+          <b>
+            <Trans>Terms of Service</Trans>
+          </b>
+          :{" "}
+          <Trans>
+            1) Use at your own risk, we assume no responsibilty for any
+            consequences as a result of your use (or misuse) of this project. 2)
+            Any use of this site or project implies acceptance of its terms, and
+            rules, including the &quot;be responsible&quot; rules above, Stable
+            Diffusion&apos;s{" "}
+            <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">
+              CreativeML Open RAIL-M license
+            </a>
+            , and this project's{" "}
+            <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa/blob/main/LICENSE.txt">
+              MIT license
+            </a>
+            .
           </Trans>
         </Box>
         <Copyright />

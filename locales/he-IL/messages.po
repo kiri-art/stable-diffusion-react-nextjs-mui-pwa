@@ -13,15 +13,27 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: pages/index.tsx:90
+msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
+msgstr ""
+
 #: pages/about.tsx:16
 msgid "About"
 msgstr ""
 
-#: pages/txt2img.tsx:242
+#: pages/index.tsx:47
+msgid "Be Responsible"
+msgstr ""
+
+#: pages/txt2img.tsx:243
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/txt2img.tsx:299
+#: pages/index.tsx:51
+msgid "Do not create any harmful content (racist, inciteful, etc)."
+msgstr ""
+
+#: pages/txt2img.tsx:300
 msgid "Height"
 msgstr ""
 
@@ -29,15 +41,19 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: pages/txt2img.tsx:248
+#: pages/txt2img.tsx:249
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best. <0>Learn more</0>"
 msgstr ""
 
-#: pages/txt2img.tsx:265
+#: pages/index.tsx:56
+msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
+msgstr ""
+
+#: pages/txt2img.tsx:266
 msgid "Number of Inference Steps"
 msgstr ""
 
-#: pages/txt2img.tsx:272
+#: pages/txt2img.tsx:273
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results. <0>Learn more</0>"
 msgstr ""
 
@@ -49,14 +65,22 @@ msgstr ""
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
 msgstr ""
 
-#: pages/index.tsx:54
+#: pages/index.tsx:87
+msgid "Terms of Service"
+msgstr ""
+
+#: pages/index.tsx:78
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
-#: pages/txt2img.tsx:286
+#: pages/txt2img.tsx:287
 msgid "Width"
 msgstr ""
 
 #: pages/about.tsx:44
 msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
+msgstr ""
+
+#: pages/index.tsx:62
+msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr ""
