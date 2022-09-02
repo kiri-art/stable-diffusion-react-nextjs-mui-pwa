@@ -5,3 +5,7 @@ node_modules
 node_modules
 yarn-error.log
 tsconfig.tsbuildinfo
+**/public/precache.*.js
+**/public/sw.js
+**/public/sw.js.map
+**/public/workbox-*

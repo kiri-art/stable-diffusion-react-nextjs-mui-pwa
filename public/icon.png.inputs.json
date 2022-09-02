@@ -1,0 +1,7 @@
+{
+  prompt: 'app icon of a magical picture icon',
+  width: 512,
+  height: 512,
+  num_inference_steps: 50,
+  guidance_scale: 5
+}
