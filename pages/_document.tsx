@@ -31,6 +31,8 @@ export default class MyDocument extends Document {
             (this.props as any).emotionStyleTags
           }
           <meta name="application-name" content="SD MUI" />
+          <link rel="manifest" href="/manifest.webmanifest" />
+
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
@@ -81,7 +83,6 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/icons/favicon-16x16.png"
           />
-          <link rel="manifest" href="/manifest.webmanifest" />
           <link
             rel="mask-icon"
             href="/icons/safari-pinned-tab.svg"
