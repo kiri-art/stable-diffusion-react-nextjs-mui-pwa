@@ -91,6 +91,7 @@ export default function Txt2Img() {
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
+    if (imgResult.current) imgResult.current.src = "/img/placeholder.png";
     await txt2img(
       { prompt, width, height, num_inference_steps, guidance_scale },
       { setLog, imgResult, dest }
@@ -146,13 +147,13 @@ export default function Txt2Img() {
               ref={imgResult}
               width="100%"
               height="100%"
+              src="/img/placeholder.png"
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                display: log.length ? "none" : "block",
               }}
-            ></img>
+            />
             {mouseOver && log.length === 0 && (
               <Box
                 sx={{
