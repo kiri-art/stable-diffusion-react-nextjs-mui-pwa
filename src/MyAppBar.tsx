@@ -26,6 +26,14 @@ export default function MyAppBar({ title }: { title: string }) {
     null
   );
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -35,10 +43,36 @@ export default function MyAppBar({ title }: { title: string }) {
             edge="start"
             color="inherit"
             aria-label="menu"
+            onClick={handleMenu}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose} component={Link} href="/">
+              Home
+            </MenuItem>
+            <MenuItem onClick={handleClose} component={Link} href="/txt2img">
+              txt2img
+            </MenuItem>
+            <MenuItem onClick={handleClose} component={Link} href="/about">
+              About
+            </MenuItem>
+          </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
