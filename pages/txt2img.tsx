@@ -13,12 +13,22 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { ContentCopy, Download, Height, Scale } from "@mui/icons-material";
+import {
+  ContentCopy,
+  Download,
+  Height,
+  Share,
+  Scale,
+} from "@mui/icons-material";
 
 import InputSlider from "../src/InputSlider";
 import MyAppBar from "../src/MyAppBar";
 import React from "react";
 import txt2img from "../src/adapters/txt2img";
+
+const canShare =
+  typeof navigator === "undefined" || // draw on SSR
+  (!!navigator.share && !!navigator.canShare);
 
 const isDev =
   process.env.NODE_ENV === "development" ||
@@ -116,6 +126,25 @@ export default function Txt2Img() {
     a.click();
   }
 
+  async function share() {
+    if (!imgResult.current) return;
+    const blob = await fetch(imgResult.current.src).then((r) => r.blob());
+    const shareData = {
+      title: prompt,
+      files: [
+        new File([blob], prompt + ".png", {
+          type: "image/png",
+          lastModified: new Date().getTime(),
+        }),
+      ],
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      navigator.share(shareData);
+    } else {
+      toast("Sharing failed");
+    }
+  }
+
   return (
     <>
       <MyAppBar title="txt2img" />
@@ -176,6 +205,19 @@ export default function Txt2Img() {
                 >
                   <Download />
                 </Button>
+                {canShare && (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      px: 0.5,
+                      mx: 0.5,
+                      background: "rgba(170,170,170,0.7)",
+                    }}
+                    onClick={share}
+                  >
+                    <Share />
+                  </Button>
+                )}
               </Box>
             )}
             {log.length > 0 && (
