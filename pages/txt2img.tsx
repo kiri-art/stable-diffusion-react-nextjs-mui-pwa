@@ -131,6 +131,7 @@ export default function Txt2Img() {
     const blob = await fetch(imgResult.current.src).then((r) => r.blob());
     const shareData = {
       title: prompt,
+      text: prompt,
       files: [
         new File([blob], prompt + ".png", {
           type: "image/png",
