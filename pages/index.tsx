@@ -96,7 +96,7 @@ const Home: NextPage = () => {
             <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">
               CreativeML Open RAIL-M license
             </a>
-            , and this project's{" "}
+            , and this project&apos;s{" "}
             <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa/blob/main/LICENSE.txt">
               MIT license
             </a>
