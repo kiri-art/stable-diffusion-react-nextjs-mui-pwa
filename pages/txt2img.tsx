@@ -91,7 +91,7 @@ export default function Txt2Img() {
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
-    const img = await txt2img(
+    await txt2img(
       { prompt, width, height, num_inference_steps, guidance_scale },
       { setLog, imgResult, dest }
     );
@@ -140,6 +140,7 @@ export default function Txt2Img() {
               border: "1px solid #ddd",
             }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="model output"
               ref={imgResult}
