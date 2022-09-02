@@ -26,8 +26,8 @@ export default function InputSlider({
   max,
   marks,
 }: {
-  value: number;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
+  value: number | string;
+  setValue: React.Dispatch<React.SetStateAction<number | string>>;
   label: string;
   step?: number;
   min?: number;
@@ -39,8 +39,7 @@ export default function InputSlider({
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setValue(event.target.value === "" ? "" : Number(event.target.value));
-    setValue(Number(event.target.value));
+    setValue(event.target.value === "" ? "" : Number(event.target.value));
   };
 
   const handleBlur = () => {

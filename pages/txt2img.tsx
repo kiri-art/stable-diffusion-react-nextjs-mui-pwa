@@ -54,10 +54,14 @@ export default function Txt2Img() {
 
   // Model inputs
   const [prompt, setPrompt] = React.useState("");
-  const [width, setWidth] = React.useState(512);
-  const [height, setHeight] = React.useState(512);
-  const [num_inference_steps, setNumInferenceSteps] = React.useState(50);
-  const [guidance_scale, setGuidanceScale] = React.useState(7.5);
+  const [width, setWidth] = React.useState<number | string>(512);
+  const [height, setHeight] = React.useState<number | string>(512);
+  const [num_inference_steps, setNumInferenceSteps] = React.useState<
+    number | string
+  >(50);
+  const [guidance_scale, setGuidanceScale] = React.useState<number | string>(
+    7.5
+  );
 
   async function go() {
     setLog(["[WebUI] Executing..."]);
