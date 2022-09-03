@@ -6,7 +6,7 @@ import GongoAuth from "gongo-client/lib/auth";
 
 // import type { } from "./schemas";
 
-const out = { db };
+// const out = { db };
 
 db.extend("auth", GongoAuth);
 db.extend("transport", HTTPTransport, {

@@ -1,6 +1,6 @@
 import GongoServer from "gongo-server/lib/serverless";
 import MongoDBA from "gongo-server-db-mongo";
-import { ObjectId } from "gongo-server-db-mongo";
+// import { ObjectId } from "gongo-server-db-mongo";
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
@@ -8,7 +8,7 @@ const gs = new GongoServer({
   dba: new MongoDBA(MONGO_URL, "sd-mui"),
 });
 
-const db = gs.dba;
+// const db = gs.dba;
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 

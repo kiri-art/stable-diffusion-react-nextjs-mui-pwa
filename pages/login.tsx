@@ -23,6 +23,7 @@ export default function Login() {
       <AppBar title="Cart" />
       <Container maxWidth="sm" style={{ textAlign: "center" }}>
         <p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/icon.png" alt="logo" width="192" height="192" />
         </p>
         <p>SD-MUI</p>
