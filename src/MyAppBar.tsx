@@ -1,15 +1,19 @@
 import * as React from "react";
 import { useRouter } from "next/router";
-// import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/macro";
+import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 
 import {
   AppBar,
   Box,
+  Button,
   Toolbar,
   Typography,
   IconButton,
   Menu,
   MenuItem,
+  // Tooltip,
+  Avatar,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -26,12 +30,27 @@ export default function MyAppBar({ title }: { title: string }) {
     null
   );
 
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return (
@@ -76,7 +95,6 @@ export default function MyAppBar({ title }: { title: string }) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-
           <IconButton
             size="large"
             edge="start"
@@ -87,7 +105,6 @@ export default function MyAppBar({ title }: { title: string }) {
           >
             <LanguageIcon />
           </IconButton>
-
           <Menu
             id="lang-select"
             anchorEl={anchorElLang}
@@ -129,9 +146,62 @@ export default function MyAppBar({ title }: { title: string }) {
               </MenuItem>
             ))}
           </Menu>
-          {/* 
-            <Button color="inherit">Login</Button>
-          */}
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              {/* <Tooltip title="Open settings"> */}
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar
+                  alt={
+                    typeof user.displayName === "string"
+                      ? user.displayName
+                      : "avatar"
+                  }
+                  src={
+                    /* @ts-expect-error: TODO */
+                    user.photos[0].value
+                  }
+                  imgProps={{ referrerPolicy: "no-referrer" }}
+                />
+              </IconButton>
+              {/* </Tooltip> */}
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    /* @ts-expect-error: TODO */
+                    db.auth.clear();
+                  }}
+                >
+                  <Typography textAlign="center">
+                    <Trans>Logout</Trans>
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Button
+              color="inherit"
+              component={Link}
+              href={"/login?from=" + location.pathname + location.search}
+            >
+              <Trans>Login</Trans>
+            </Button>
+          )}{" "}
         </Toolbar>
       </AppBar>
     </Box>

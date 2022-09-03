@@ -2,11 +2,13 @@ import * as React from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
+// import { useGongoIsPopulated } from "gongo-client-react";
 
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 
+import "../src/db";
 import themes from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import locales, { defaultLocale } from "../src/lib/locales";
@@ -23,6 +25,8 @@ const csEmotionCache = {
 };
 
 export default function MyApp(props: MyAppProps) {
+  // const isPopulated = useGongoIsPopulated();
+  // const isServer = typeof document === "undefined";
   const router = useRouter();
   const locale = locales[router.locale || defaultLocale];
   const dir = locale.dir as "ltr" | "rtl";
@@ -39,6 +43,8 @@ export default function MyApp(props: MyAppProps) {
     // Lingui
     i18n.activate(locale.id);
   }, [locale]);
+
+  // if (!isServer && !isPopulated) return <div>Loading...</div>;
 
   return (
     <CacheProvider value={emotionCache}>
