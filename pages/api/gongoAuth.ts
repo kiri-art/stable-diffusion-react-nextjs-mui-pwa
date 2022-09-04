@@ -1,7 +1,7 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
 import GongoServer from "gongo-server/lib/serverless";
 import GongoAuth from "gongo-server/lib/auth";
-import MongoDBA from "gongo-server-db-mongo";
+import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
@@ -50,6 +50,22 @@ gongoAuth.use(
 );
 
 //module.exports = passport.authenticate('google', gongoAuth.passportComplete);
+
+if (gs.dba) {
+  // TODO, implement onCreateUser hook in gongo-server. For now:
+  const Users = gs.dba.Users;
+  const origCreateUser = Users.createUser;
+  gs.dba.Users.createUser = async function sbMuiCreateUser(
+    origCallback?: ((dbaUser: Partial<MongoDbaUser>) => void) | undefined
+  ) {
+    function callback(user: Partial<MongoDbaUser>): void {
+      origCallback && origCallback(user);
+      user.credits = { free: 20, purchased: 0 };
+      user.createdAt = new Date();
+    }
+    return origCreateUser.call(Users, callback);
+  };
+}
 
 // @ts-expect-error: any
 export default function handler(req, res, next) {
