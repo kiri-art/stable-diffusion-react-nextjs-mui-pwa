@@ -6,7 +6,7 @@ interface User {
   displayName: string;
   credits: {
     free: number;
-    purchased: number;
+    paid: number;
   };
   createdAt: Date;
 }

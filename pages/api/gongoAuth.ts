@@ -60,7 +60,7 @@ if (gs.dba) {
   ) {
     function callback(user: Partial<MongoDbaUser>): void {
       origCallback && origCallback(user);
-      user.credits = { free: 20, purchased: 0 };
+      user.credits = { free: 20, paid: 0 };
       user.createdAt = new Date();
     }
     return origCreateUser.call(Users, callback);

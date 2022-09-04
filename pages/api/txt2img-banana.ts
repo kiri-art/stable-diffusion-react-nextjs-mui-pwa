@@ -107,7 +107,7 @@ export default async function txt2imgFetch(
     const user = await gs.dba.collection("users").findOne({ _id: userId });
     if (!user) return res.status(500).send("Server error");
 
-    if (!(user.credits.free > 0 || user.credits.purchased > 0))
+    if (!(user.credits.free > 0 || user.credits.paid > 0))
       return res.status(403).send("Out of credits");
 
     if (user.credits.free) {
@@ -116,10 +116,10 @@ export default async function txt2imgFetch(
         .collection("users")
         .updateOne({ _id: userId }, { $inc: { "credits.free": -1 } });
     } else {
-      user.credits.purchased--;
+      user.credits.paid--;
       await gs.dba
         .collection("users")
-        .updateOne({ _id: userId }, { $inc: { "credits.purchased": -1 } });
+        .updateOne({ _id: userId }, { $inc: { "credits.paid": -1 } });
     }
 
     credits = user.credits;

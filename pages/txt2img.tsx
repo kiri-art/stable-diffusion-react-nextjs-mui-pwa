@@ -114,7 +114,7 @@ export default function Txt2Img() {
     if (REQUIRE_REGISTRATION) {
       // TODO, record state in URL, e.g. #prompt=,etc
       if (!user) return router.push("/login?from=/txt2img");
-      if (!(user.credits.free > 0 || user.credits.purchased > 0))
+      if (!(user.credits.free > 0 || user.credits.paid > 0))
         return router.push("/credits");
     }
 
@@ -276,7 +276,7 @@ export default function Txt2Img() {
               <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
                 {!REQUIRE_REGISTRATION ||
                 user?.credits?.free > 0 ||
-                user?.credits?.purchased > 0 ? (
+                user?.credits?.paid > 0 ? (
                   <Trans>Go</Trans>
                 ) : user ? (
                   <Trans>Get More Credits</Trans>

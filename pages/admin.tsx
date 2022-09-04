@@ -62,7 +62,7 @@ export default function Credits() {
                 <TableCell>Email</TableCell>
                 <TableCell>Display Name</TableCell>
                 <TableCell align="right">Free</TableCell>
-                <TableCell align="right">Purchased</TableCell>
+                <TableCell align="right">Paid</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -91,11 +91,11 @@ export default function Credits() {
                     style={{ cursor: "pointer" }}
                     onClick={onClick(
                       user._id,
-                      "credits.purchased",
-                      user.credits.purchased
+                      "credits.paid",
+                      user.credits.paid
                     )}
                   >
-                    {user.credits.purchased}
+                    {user.credits.paid}
                   </TableCell>
                 </TableRow>
               ))}

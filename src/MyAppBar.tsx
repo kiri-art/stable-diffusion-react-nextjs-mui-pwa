@@ -188,7 +188,7 @@ export default function MyAppBar({ title }: { title: string }) {
               >
                 <MenuItem component={Link} href="/credits">
                   <Trans>Credits:</Trans>{" "}
-                  {user.credits.free + user.credits.purchased}
+                  {user.credits.free + user.credits.paid}
                 </MenuItem>
                 <MenuItem
                   onClick={() => {

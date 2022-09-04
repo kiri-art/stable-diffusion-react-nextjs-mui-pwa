@@ -30,8 +30,7 @@ export default function Credits() {
       <MyAppBar title={t`My Credits`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
         <Typography variant="h6">
-          <Trans>Total Credits</Trans>:{" "}
-          {user.credits.free + user.credits.purchased}
+          <Trans>Total Credits</Trans>: {user.credits.free + user.credits.paid}
         </Typography>
         <Trans>Total credits available for immediate use.</Trans>
 
@@ -47,7 +46,7 @@ export default function Credits() {
         </p>
 
         <Typography variant="h6" sx={{ mt: 2 }}>
-          <Trans>Purchased Credits</Trans>: {user.credits.free}
+          <Trans>Purchased Credits</Trans>: {user.credits.paid}
         </Typography>
         <Trans>
           Purchased credits are used after you run out of free credits that
