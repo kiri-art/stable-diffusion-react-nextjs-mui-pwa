@@ -1,10 +1,21 @@
 import * as banana from "@banana-dev/banana-dev";
 import type { NextApiRequest, NextApiResponse } from "next";
+import Auth from "gongo-server/lib/auth-class";
+import GongoServer from "gongo-server/lib/serverless";
+import Database /* ObjectID */ from "gongo-server-db-mongo";
+
 import type { Txt2ImgOpts } from "../../src/schemas/txt2imgOpts";
 import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
+import { REQUIRE_REGISTRATION } from "../../src/lib/client-env";
 
 const apiKey = process.env.BANANA_API_KEY;
 const modelKey = process.env.BANANA_MODEL_KEY;
+
+const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
+
+const gs = new GongoServer({
+  dba: new Database(MONGO_URL, "sd-mui"),
+});
 
 async function bananaSdkRun(modelOpts: Txt2ImgOpts) {
   if (typeof apiKey !== "string")
@@ -79,12 +90,48 @@ export default async function txt2imgFetch(
   const modelOpts = txt2imgOptsSchema.cast(req.body.modelOpts);
   const fetchOpts = req.body.fetchOpts || {};
 
+  console.log(fetchOpts);
+
+  let credits;
+  if (process.env.REQUIRE_REGISTRATION) {
+    if (!fetchOpts.auth) return res.status(400).end("Forbidden");
+    if (!gs.dba) throw new Error("gs.dba not defined");
+
+    const auth = new Auth(gs.dba, fetchOpts.auth);
+    const userId = await auth.userId();
+
+    if (!userId) {
+      return res.status(403).send("Forbidden");
+    }
+
+    const user = await gs.dba.collection("users").findOne({ _id: userId });
+    if (!user) return res.status(500).send("Server error");
+
+    if (!(user.credits.free > 0 || user.credits.purchased > 0))
+      return res.status(403).send("Out of credits");
+
+    if (user.credits.free) {
+      user.credits.free--;
+      await gs.dba
+        .collection("users")
+        .updateOne({ _id: userId }, { $inc: { "credits.free": -1 } });
+    } else {
+      user.credits.purchased--;
+      await gs.dba
+        .collection("users")
+        .updateOne({ _id: userId }, { $inc: { "credits.purchased": -1 } });
+    }
+
+    credits = user.credits;
+  }
+
   console.log("sending", modelOpts);
 
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 
   const out = await runner(modelOpts);
+  if (REQUIRE_REGISTRATION) out.credits = credits;
 
   const toLog: object = { ...out };
   // @ts-expect-error: just some logging `:)

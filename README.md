@@ -50,6 +50,17 @@ Note: you'll need at least one destination / target from the list below where St
   - Follow instructions at https://github.com/bananaml/serverless-template-stable-diffusion.
   - Set BANANA_API_KEY and BANANA_MODEL_KEY env variables.
 
+## REQUIRE_REGISTRATION
+
+By default, registration (i.e. sign up, log in, use credits) is required in production only. You can turn it on in development (to test the auth flow), or turn it off in production (if you're deploying somewhere private).
+
+```bash
+REQUIRE_REGISTRATION=1
+NEXT_PUBLIC_REQUIRE_REGISTRATION=1
+```
+
+Note: `NEXT_PUBLIC_` vars are compiled at build time! So if you want to deploy to production without requiring registration, set it to `0` _before_ building and deploying.
+
 ## TODO
 
 - Docker image for super easy start

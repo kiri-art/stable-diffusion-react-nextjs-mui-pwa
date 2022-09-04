@@ -1,6 +1,11 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { t, Trans } from "@lingui/macro";
+import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { useRouter } from "next/router";
+
+import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
+console.log({ REQUIRE_REGISTRATION });
 
 import {
   Box,
@@ -88,6 +93,12 @@ export default function Txt2Img() {
   );
   const [mouseOver, setMouseOver] = React.useState(false);
 
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const router = useRouter();
+
   // Model inputs
   const [prompt, setPrompt] = React.useState("");
   const [num_inference_steps, setNumInferenceSteps] = React.useState<
@@ -100,11 +111,19 @@ export default function Txt2Img() {
   const [height, setHeight] = React.useState<number | string>(defaults.height);
 
   async function go() {
+    if (
+      REQUIRE_REGISTRATION &&
+      !(user.credits.free > 0 || user.credits.purchased > 0)
+    ) {
+      return router.push("/credits");
+    }
+
     setLog(["[WebUI] Executing..."]);
     if (imgResult.current) imgResult.current.src = "/img/placeholder.png";
     await txt2img(
       { prompt, width, height, num_inference_steps, guidance_scale },
-      { setLog, imgResult, dest }
+      // @ts-expect-error: TODO, db auth type
+      { setLog, imgResult, dest, auth: db.auth.authInfoToSend() }
     );
   }
 
@@ -255,7 +274,13 @@ export default function Txt2Img() {
           <Grid container sx={{ my: 1 }}>
             <Grid item xs={7} sm={8} md={9}>
               <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-                Go
+                {!REQUIRE_REGISTRATION ||
+                user?.credits?.free > 0 ||
+                user?.credits?.purchased > 0 ? (
+                  <Trans>Go</Trans>
+                ) : (
+                  <Trans>Get More Credits</Trans>
+                )}
               </Button>
             </Grid>
             <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
@@ -353,6 +378,7 @@ export default function Txt2Img() {
             />
           </Grid>
         </Grid>
+        <p>COMING NEXT: img2img, inpainting.</p>
         <p>
           <a href="https://github.com/Maks-s/sd-akashic">SD Akashic Guide</a> -
           SD studies, art styles, prompts.

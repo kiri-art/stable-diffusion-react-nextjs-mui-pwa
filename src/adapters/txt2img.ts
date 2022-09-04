@@ -6,9 +6,11 @@ async function exec(
   {
     setLog,
     imgResult,
+    _auth,
   }: {
     setLog: (log: string[]) => void;
     imgResult: React.RefObject<HTMLImageElement>;
+    _auth?: Record<string, unknown>;
   }
 ) {
   let log: string[] = [];
@@ -71,10 +73,12 @@ async function banana(
     setLog,
     imgResult,
     dest,
+    auth,
   }: {
     setLog: (log: string[]) => void;
     imgResult: React.RefObject<HTMLImageElement>;
     dest: string; // "banana-local" | "banana-remote" | "exec";
+    auth?: Record<string, unknown>;
   }
 ) {
   setLog(["[WebUI] Sending " + dest + " request..."]);
@@ -83,9 +87,17 @@ async function banana(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ modelOpts: opts, fetchOpts: { dest } }),
+    body: JSON.stringify({ modelOpts: opts, fetchOpts: { dest, auth } }),
   });
-  const result = await response.json();
+
+  let result;
+  try {
+    result = await response.json();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    setLog(["FAILED: " + message]);
+    return;
+  }
 
   // It turns out sometimes we can still get { message: "" } and success.
   // if (!result.message) {
@@ -119,10 +131,12 @@ export default async function txt2img(
     setLog,
     imgResult,
     dest,
+    auth,
   }: {
     setLog: (log: string[]) => void;
     imgResult: React.RefObject<HTMLImageElement>;
     dest: string; // "exec" | "banana-local" | "banana-remote";
+    auth?: Record<string, unknown>;
   }
 ) {
   const proto = dest.split("-")[0] as "exec" | "banana";
@@ -130,6 +144,6 @@ export default async function txt2img(
   //console.log("runner", dest, runner);
   console.log(opts);
   const modelOpts = txt2imgOptsSchema.cast(opts);
-  const result = await runner(modelOpts, { setLog, imgResult, dest });
+  const result = await runner(modelOpts, { setLog, imgResult, dest, auth });
   return result;
 }
