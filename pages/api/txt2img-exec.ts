@@ -12,6 +12,12 @@ export default async function txt2imgExec(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (process.env.NODE_ENV !== "development") {
+    res.status(400);
+    res.end();
+    return;
+  }
+
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "sd-mui-"));
   const dir = tmpDir.split(path.sep).pop();
   const opts = req.query;
