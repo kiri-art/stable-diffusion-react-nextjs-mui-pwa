@@ -34,6 +34,7 @@ export default function MyAppBar({ title }: { title: string }) {
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
+  const isAdmin = user.admin;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -83,14 +84,19 @@ export default function MyAppBar({ title }: { title: string }) {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose} component={Link} href="/">
-              Home
+              <Trans>Home</Trans>
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/txt2img">
-              txt2img
+              Stable Diffusion
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/about">
-              About
+              <Trans>About</Trans>
             </MenuItem>
+            {isAdmin ? (
+              <MenuItem onClick={handleClose} component={Link} href="/admin">
+                <Trans>Admin</Trans>
+              </MenuItem>
+            ) : undefined}
           </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
@@ -180,6 +186,10 @@ export default function MyAppBar({ title }: { title: string }) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <MenuItem component={Link} href="/credits">
+                  <Trans>Credits:</Trans>{" "}
+                  {user.credits.free + user.credits.purchased}
+                </MenuItem>
                 <MenuItem
                   onClick={() => {
                     handleCloseUserMenu();

@@ -1,0 +1,113 @@
+import React from "react";
+import { useRouter } from "next/router";
+import { t, Trans } from "@lingui/macro";
+import {
+  db,
+  useGongoUserId,
+  useGongoOne,
+  useGongoSub,
+  useGongoLive,
+} from "gongo-client-react";
+
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+
+import MyAppBar from "../src/MyAppBar";
+
+export default function Credits() {
+  const router = useRouter();
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+
+  useGongoSub("usersAndCredits", {});
+  const users = useGongoLive((db) => db.collection("users").find());
+
+  function onClick(userId, field, oldValue) {
+    return function () {
+      const textValue = prompt("New Value?  Was: " + oldValue);
+      if (!textValue) return alert("Invalid value");
+      const newValue = parseInt(textValue);
+      const query = { $set: { [field]: newValue } };
+      db.collection("users").update(userId, query);
+    };
+  }
+
+  if (!(user && user.admin))
+    return (
+      <div>
+        <Trans>Access Denied.</Trans>
+      </div>
+    );
+
+  return (
+    <>
+      <MyAppBar title={t`Admin`} />
+      <Container maxWidth="lg" sx={{ my: 2 }}>
+        <p>Users and Credits</p>
+
+        <p>Total users: {users.length}</p>
+
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Email</TableCell>
+                <TableCell>Display Name</TableCell>
+                <TableCell align="right">Free</TableCell>
+                <TableCell align="right">Purchased</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow
+                  key={user._id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {user.emails[0].value}
+                  </TableCell>
+                  <TableCell>{user.displayName}</TableCell>
+                  <TableCell
+                    align="right"
+                    style={{ cursor: "pointer" }}
+                    onClick={onClick(
+                      user._id,
+                      "credits.free",
+                      user.credits.free
+                    )}
+                  >
+                    {user.credits.free}
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    style={{ cursor: "pointer" }}
+                    onClick={onClick(
+                      user._id,
+                      "credits.purchased",
+                      user.credits.purchased
+                    )}
+                  >
+                    {user.credits.purchased}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </>
+  );
+}

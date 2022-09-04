@@ -1,10 +1,10 @@
 import db from "gongo-client";
 import HTTPTransport from "gongo-client/lib/transports/http";
 
-// import { Collection } from "gongo-client";
+import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
-// import type { } from "./schemas";
+import type { User } from "./schemas";
 
 // const out = { db };
 
@@ -20,7 +20,7 @@ db.collection("users").persist();
 
 declare module "gongo-client" {
   class Database {
-    // collection(name: "collection"): Collection<Collection>;
+    collection(name: "users"): Collection<User>;
   }
 }
 
