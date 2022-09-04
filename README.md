@@ -4,7 +4,11 @@ _PWA Web App front end for Stable Diffusion, on React/NextJS with Material UI_
 
 Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
-## WIP - just started. Only use if you want to help :)
+<span style="font-size: larger;">
+  <a href="https://sd-mui.vercel.app/">sd-mui.vercel.app</a>
+</span>
+
+## New Project in Active Development (since Aug 31st, 2022)
 
 <img align="right" src="./docs/img/cover2.jpg" alt="super dog" />
 
@@ -14,7 +18,7 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
   - Local banana.dev docker container (see [docs/banana-local.md](./docs/banana-local.md))
   - Others?
 
-Why? Make this fun stuff more accessible to web developers and friends :)
+Why? Make this fun stuff more accessible to web developers and friends :) See the [live demo](https://sd-mui.vercel.app/), run on your own PC for free, or deploy!
 
 If you have a background in web dev / dev ops, and have wanted to experiment a bit with machine learning / latent diffusion (AI image generation), this is a great project to get involved in :)
 
