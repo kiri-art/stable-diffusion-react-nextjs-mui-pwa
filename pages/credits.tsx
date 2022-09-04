@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
+import addMonths from "date-fns/addMonths";
 
 import { Box, Button, Container, Typography } from "@mui/material";
 
@@ -18,6 +19,11 @@ export default function Credits() {
     router.push("/login?from=/credits");
     return null;
   }
+
+  const renewalDay = user.createdAt.getDate();
+  console.log({ renewalDay });
+  const nextCreditDate = addMonths(new Date(), 1);
+  nextCreditDate.setDate(renewalDay);
 
   return (
     <>
@@ -36,6 +42,9 @@ export default function Credits() {
           You receive free credits every month. They are used before your paid
           credits. Unused credits don&apos;t carry over.
         </Trans>
+        <p>
+          <Trans>Next credits on: {nextCreditDate.toLocaleDateString()}</Trans>
+        </p>
 
         <Typography variant="h6" sx={{ mt: 2 }}>
           <Trans>Purchased Credits</Trans>: {user.credits.free}

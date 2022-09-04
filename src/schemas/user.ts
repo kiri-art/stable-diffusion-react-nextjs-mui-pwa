@@ -8,6 +8,7 @@ interface User {
     free: number;
     purchased: number;
   };
+  createdAt: Date;
 }
 
 export type { User };

@@ -21,6 +21,7 @@
     "@lingui/react": "^3.14.0",
     "@mui/icons-material": "5.10.3",
     "@mui/material": "5.10.3",
+    "date-fns": "^2.29.2",
     "gongo-client": "2.1.0",
     "gongo-client-react": "0.1.0",
     "gongo-server": "2.0.4",
