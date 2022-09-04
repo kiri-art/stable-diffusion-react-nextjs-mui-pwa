@@ -14,6 +14,11 @@ export default function Credits() {
     db.collection("users").find({ _id: userId })
   );
 
+  if (!userId) {
+    router.push("/login?from=/credits");
+    return null;
+  }
+
   return (
     <>
       <MyAppBar title={t`My Credits`} />
