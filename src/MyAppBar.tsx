@@ -34,7 +34,7 @@ export default function MyAppBar({ title }: { title: string }) {
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
-  const isAdmin = user.admin;
+  const isAdmin = user && user.admin;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
