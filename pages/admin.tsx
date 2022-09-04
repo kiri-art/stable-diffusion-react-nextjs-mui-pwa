@@ -56,11 +56,10 @@ export default function Credits() {
         <p>Total users: {users.length}</p>
 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Email</TableCell>
-                <TableCell>Display Name</TableCell>
+                <TableCell>User</TableCell>
                 <TableCell align="right">Free</TableCell>
                 <TableCell align="right">Paid</TableCell>
               </TableRow>
@@ -72,9 +71,10 @@ export default function Credits() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
+                    {user.displayName}
+                    <br />
                     {user.emails[0].value}
                   </TableCell>
-                  <TableCell>{user.displayName}</TableCell>
                   <TableCell
                     align="right"
                     style={{ cursor: "pointer" }}
