@@ -42,7 +42,7 @@ const Home: NextPage = () => {
             About
           </Button>
         </Box>
-        <p>
+        <Box sx={{ my: 1 }}>
           <b>
             <Trans>Be Responsible</Trans>
           </b>
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
               </Trans>
             </li>
           </ul>
-        </p>
+        </Box>
         <Box
           sx={{
             p: 1,
