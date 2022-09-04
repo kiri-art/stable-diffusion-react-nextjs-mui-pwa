@@ -111,11 +111,11 @@ export default function Txt2Img() {
   const [height, setHeight] = React.useState<number | string>(defaults.height);
 
   async function go() {
-    if (
-      REQUIRE_REGISTRATION &&
-      !(user.credits.free > 0 || user.credits.purchased > 0)
-    ) {
-      return router.push("/credits");
+    if (REQUIRE_REGISTRATION) {
+      // TODO, record state in URL, e.g. #prompt=,etc
+      if (!user) return router.push("/login?from=/txt2img");
+      if (!(user.credits.free > 0 || user.credits.purchased > 0))
+        return router.push("/credits");
     }
 
     setLog(["[WebUI] Executing..."]);
@@ -278,8 +278,10 @@ export default function Txt2Img() {
                 user?.credits?.free > 0 ||
                 user?.credits?.purchased > 0 ? (
                   <Trans>Go</Trans>
-                ) : (
+                ) : user ? (
                   <Trans>Get More Credits</Trans>
+                ) : (
+                  <Trans>Login</Trans>
                 )}
               </Button>
             </Grid>
