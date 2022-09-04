@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 import {
   db,
@@ -10,8 +9,6 @@ import {
 } from "gongo-client-react";
 
 import {
-  Box,
-  Button,
   Container,
   Paper,
   Table,
@@ -20,13 +17,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 
 export default function Credits() {
-  const router = useRouter();
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
@@ -35,7 +30,7 @@ export default function Credits() {
   useGongoSub("usersAndCredits", {});
   const users = useGongoLive((db) => db.collection("users").find());
 
-  function onClick(userId, field, oldValue) {
+  function onClick(userId: string, field: string, oldValue: number) {
     return function () {
       const textValue = prompt("New Value?  Was: " + oldValue);
       if (!textValue) return alert("Invalid value");

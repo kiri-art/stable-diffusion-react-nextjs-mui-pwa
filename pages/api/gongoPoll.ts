@@ -33,7 +33,7 @@ gs.publish("user", async (db, _opts, { auth, updatedAt }) => {
   ];
 });
 
-gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
+gs.publish("usersAndCredits", async (db, _opts, { auth /*, updatedAt */ }) => {
   const userId = await auth.userId();
   if (!userId) return [];
 
@@ -65,13 +65,16 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
 });
 
 if (db) {
+  /*
   db.collection("users").on("preInsertMany", async (props, args) => {
     return;
     /*
     const userId = props.auth.userId;
     const user = await props.dba.collection("users").findOne(userId);
     */
+  /*
   });
+  */
 }
 
 module.exports = gs.expressPost();
