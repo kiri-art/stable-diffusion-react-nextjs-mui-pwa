@@ -6,7 +6,7 @@ import Database /* ObjectID */ from "gongo-server-db-mongo";
 
 import type { Txt2ImgOpts } from "../../src/schemas/txt2imgOpts";
 import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
-import { REQUIRE_REGISTRATION } from "../../src/lib/client-env";
+import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 
 const apiKey = process.env.BANANA_API_KEY;
 const modelKey = process.env.BANANA_MODEL_KEY;
@@ -93,7 +93,7 @@ export default async function txt2imgFetch(
   console.log(fetchOpts);
 
   let credits;
-  if (process.env.REQUIRE_REGISTRATION) {
+  if (REQUIRE_REGISTRATION) {
     if (!fetchOpts.auth) return res.status(400).end("Forbidden");
     if (!gs.dba) throw new Error("gs.dba not defined");
 
