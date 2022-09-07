@@ -125,12 +125,14 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
     )
     .toArray();
 
-  return [
-    {
-      coll: "users",
-      entries: users,
-    },
-  ];
+  return users.length
+    ? [
+        {
+          coll: "users",
+          entries: users,
+        },
+      ]
+    : [];
 });
 
 if (gs.dba) {
