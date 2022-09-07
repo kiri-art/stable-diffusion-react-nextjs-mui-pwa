@@ -60,8 +60,8 @@ export default function CheckoutForm({ orderId }: { orderId: string }) {
 
       <Box sx={{ fontSize: "80%" }}>
         <Trans>
-          The charge will appear from "Wastelands Networking" or "Wastelands*
-          SD-MUI".
+          The charge will appear from &quot;Wastelands Networking&quot; or
+          &quot;Wastelands* SD-MUI&quot;.
         </Trans>
       </Box>
     </form>
