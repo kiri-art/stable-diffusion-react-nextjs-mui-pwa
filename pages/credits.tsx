@@ -126,6 +126,12 @@ export default function Credits() {
 
         <RedeemCreditCode />
 
+        <p>
+          <Trans>
+            Earn free credits by contributing to the project on GitHub!
+          </Trans>
+        </p>
+
         <Typography variant="h6" sx={{ mt: 2 }}>
           <Trans>Purchased Credits</Trans>: {user.credits.paid}
         </Typography>
