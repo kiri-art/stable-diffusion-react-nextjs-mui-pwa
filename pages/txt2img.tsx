@@ -195,6 +195,11 @@ export default function Txt2Img() {
     }
   }
 
+  function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    // Submit on "enter" but allow newline creation on shift-enter.
+    if (event.key === "Enter" && !event.shiftKey) go(event);
+  }
+
   return (
     <>
       <MyAppBar title={t`Text to Image`} />
@@ -296,6 +301,7 @@ export default function Txt2Img() {
             label="Prompt"
             fullWidth
             multiline
+            onKeyDown={promptKeyDown}
             value={prompt}
             placeholder={randomPrompt}
             InputLabelProps={{ shrink: true }}
