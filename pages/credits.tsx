@@ -18,7 +18,9 @@ function RedeemCreditCode() {
   async function go(event: React.SyntheticEvent) {
     event.preventDefault();
     setDisabled(true);
-    const result = await db.call("redeemCreditCode", { creditCode });
+    const result = await db.call("redeemCreditCode", {
+      creditCode: creditCode.toUpperCase(),
+    });
     setDisabled(false);
 
     if (!result) return setMessage("Failed with unknown error.");

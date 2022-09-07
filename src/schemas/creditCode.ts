@@ -2,7 +2,7 @@ import { object, string, number, InferType } from "yup";
 
 const creditCodeSchema = object({
   _id: string(),
-  name: string().required(),
+  name: string().required().uppercase(),
   credits: number().required(),
   total: number().required(),
   used: number().required().default(0),
