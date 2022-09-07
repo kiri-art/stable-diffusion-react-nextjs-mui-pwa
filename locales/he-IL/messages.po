@@ -18,43 +18,155 @@ msgid "1) Use at your own risk, we assume no responsibilty for any consequences 
 msgstr ""
 
 #: pages/about.tsx:16
+#: src/MyAppBar.tsx:93
 msgid "About"
+msgstr ""
+
+#: pages/admin.tsx:46
+msgid "Access Denied."
+msgstr ""
+
+#: pages/admin.tsx:52
+#: src/MyAppBar.tsx:97
+msgid "Admin"
+msgstr ""
+
+#: pages/order/[_id].tsx:58
+msgid "Amount"
+msgstr ""
+
+#: pages/order/[_id].tsx:72
+msgid "Back to Credits"
 msgstr ""
 
 #: pages/index.tsx:47
 msgid "Be Responsible"
 msgstr ""
 
-#: pages/txt2img.tsx:243
+#: pages/credits.tsx:97
+msgid "Buy 50 credits for $1"
+msgstr ""
+
+#: pages/checkout.tsx:60
+#: pages/checkout.tsx:63
+msgid "Checkout"
+msgstr ""
+
+#: pages/txt2img.tsx:314
 msgid "Classifier-Free Guidance (Scale)"
+msgstr ""
+
+#: src/MyAppBar.tsx:190
+msgid "Credits:"
+msgstr ""
+
+#: pages/order/[_id].tsx:61
+msgid "Currency"
+msgstr ""
+
+#: pages/order/[_id].tsx:55
+msgid "Date"
 msgstr ""
 
 #: pages/index.tsx:51
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
-#: pages/txt2img.tsx:300
+#: pages/credits.tsx:68
+msgid "Free Credits"
+msgstr ""
+
+#: pages/txt2img.tsx:282
+msgid "Get More Credits"
+msgstr ""
+
+#: pages/txt2img.tsx:280
+msgid "Go"
+msgstr ""
+
+#: pages/txt2img.tsx:371
 msgid "Height"
 msgstr ""
 
 #: pages/index.tsx:14
+#: src/MyAppBar.tsx:87
 msgid "Home"
 msgstr ""
 
-#: pages/txt2img.tsx:249
+#: pages/txt2img.tsx:320
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best. <0>Learn more</0>"
+msgstr ""
+
+#: pages/txt2img.tsx:284
+#: src/MyAppBar.tsx:212
+msgid "Login"
+msgstr ""
+
+#: src/MyAppBar.tsx:201
+msgid "Logout"
+msgstr ""
+
+#: pages/credits.tsx:55
+msgid "My Credits"
+msgstr ""
+
+#: pages/credits.tsx:75
+msgid "Next credits on:"
 msgstr ""
 
 #: pages/index.tsx:56
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr ""
 
-#: pages/txt2img.tsx:266
+#: pages/txt2img.tsx:337
 msgid "Number of Inference Steps"
 msgstr ""
 
-#: pages/txt2img.tsx:273
+#: pages/txt2img.tsx:344
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results. <0>Learn more</0>"
+msgstr ""
+
+#: pages/credits.tsx:119
+#: pages/order/[_id].tsx:75
+msgid "Order History"
+msgstr ""
+
+#: pages/order/[_id].tsx:49
+#: pages/orders.tsx:44
+msgid "Order Status"
+msgstr ""
+
+#: pages/order/[_id].tsx:52
+msgid "Order {_id}"
+msgstr ""
+
+#: pages/orders.tsx:47
+msgid "Orders"
+msgstr ""
+
+#: src/CheckoutForm.tsx:58
+msgid "Pay"
+msgstr ""
+
+#: pages/credits.tsx:95
+#: src/CheckoutForm.tsx:58
+msgid "Please wait..."
+msgstr ""
+
+#: pages/credits.tsx:59
+msgid "Purchase Successful!"
+msgstr ""
+
+#: pages/credits.tsx:80
+msgid "Purchased Credits"
+msgstr ""
+
+#: pages/credits.tsx:82
+msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
+msgstr ""
+
+#: pages/order/[_id].tsx:68
+msgid "Reason"
 msgstr ""
 
 #: pages/about.tsx:57
@@ -65,15 +177,36 @@ msgstr ""
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
 msgstr ""
 
+#: pages/order/[_id].tsx:64
+msgid "Status"
+msgstr ""
+
 #: pages/index.tsx:87
 msgid "Terms of Service"
+msgstr ""
+
+#: pages/credits.tsx:103
+#: src/CheckoutForm.tsx:62
+msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 msgstr ""
 
 #: pages/index.tsx:78
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
-#: pages/txt2img.tsx:287
+#: pages/credits.tsx:110
+msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
+msgstr ""
+
+#: pages/credits.tsx:63
+msgid "Total Credits"
+msgstr ""
+
+#: pages/credits.tsx:65
+msgid "Total credits available for immediate use."
+msgstr ""
+
+#: pages/txt2img.tsx:358
 msgid "Width"
 msgstr ""
 
@@ -83,4 +216,8 @@ msgstr ""
 
 #: pages/index.tsx:62
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
+msgstr ""
+
+#: pages/credits.tsx:70
+msgid "You receive free credits every month. They are used before your paid credits. Unused credits don't carry over."
 msgstr ""
