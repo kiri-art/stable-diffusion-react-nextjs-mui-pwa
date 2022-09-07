@@ -130,7 +130,9 @@ export default function Txt2Img() {
   const [width, setWidth] = React.useState<number | string>(defaults.width);
   const [height, setHeight] = React.useState<number | string>(defaults.height);
 
-  async function go() {
+  async function go(event: React.SyntheticEvent) {
+    event.preventDefault();
+
     if (REQUIRE_REGISTRATION) {
       // TODO, record state in URL, e.g. #prompt=,etc
       if (!user) return router.push("/login?from=/txt2img");
@@ -138,10 +140,18 @@ export default function Txt2Img() {
         return router.push("/credits");
     }
 
-    setLog(["[WebUI] Executing..."]);
+    // setLog(["[WebUI] Executing..."]);
     if (imgResult.current) imgResult.current.src = "/img/placeholder.png";
+    if (!prompt) setPrompt(randomPrompt);
+
     await txt2img(
-      { prompt, width, height, num_inference_steps, guidance_scale },
+      {
+        prompt: prompt || randomPrompt,
+        width,
+        height,
+        num_inference_steps,
+        guidance_scale,
+      },
       // @ts-expect-error: TODO, db auth type
       { setLog, imgResult, dest, auth: db.auth.authInfoToSend() }
     );
@@ -281,161 +291,169 @@ export default function Txt2Img() {
             )}
           </Box>
         </Box>
-        <TextField
-          label="Prompt"
-          fullWidth
-          multiline
-          value={prompt}
-          placeholder={randomPrompt}
-          InputLabelProps={{ shrink: true }}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setPrompt(event.target.value);
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setPrompt("")}>
-                  <Clear />
-                </IconButton>
-                <Tooltip
-                  title={
-                    <Box>
-                      <Trans>
-                        Description / caption of your desired image. May include
-                        art styles like &apos;impressionist&apos;, &apos;digital
-                        art&apos;, photographic styles and lenses, and other
-                        hints.
-                      </Trans>{" "}
-                      <Trans>
-                        <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
-                          Learn more
-                        </a>
-                      </Trans>
-                    </Box>
-                  }
-                  enterTouchDelay={0}
-                  leaveDelay={2000}
+        <form onSubmit={go}>
+          <TextField
+            label="Prompt"
+            fullWidth
+            multiline
+            value={prompt}
+            placeholder={randomPrompt}
+            InputLabelProps={{ shrink: true }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setPrompt(event.target.value);
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setPrompt("")}>
+                    <Clear />
+                  </IconButton>
+                  <Tooltip
+                    title={
+                      <Box>
+                        <Trans>
+                          Description / caption of your desired image. May
+                          include art styles like &apos;impressionist&apos;,
+                          &apos;digital art&apos;, photographic styles and
+                          lenses, and other hints.
+                        </Trans>{" "}
+                        <Trans>
+                          <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                            Learn more
+                          </a>
+                        </Trans>
+                      </Box>
+                    }
+                    enterTouchDelay={0}
+                    leaveDelay={2000}
+                  >
+                    <Help />
+                  </Tooltip>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {isDev ? (
+            <Grid container sx={{ my: 1 }}>
+              <Grid item xs={7} sm={8} md={9}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{ my: 1 }}
+                  type="submit"
                 >
-                  <Help />
-                </Tooltip>
-              </InputAdornment>
-            ),
-          }}
-        />
-        {isDev ? (
-          <Grid container sx={{ my: 1 }}>
-            <Grid item xs={7} sm={8} md={9}>
-              <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-                {!REQUIRE_REGISTRATION ||
-                user?.credits?.free > 0 ||
-                user?.credits?.paid > 0 ? (
-                  <Trans>Go</Trans>
-                ) : user ? (
-                  <Trans>Get More Credits</Trans>
-                ) : (
-                  <Trans>Login</Trans>
-                )}
-              </Button>
+                  {!REQUIRE_REGISTRATION ||
+                  user?.credits?.free > 0 ||
+                  user?.credits?.paid > 0 ? (
+                    <Trans>Go</Trans>
+                  ) : user ? (
+                    <Trans>Get More Credits</Trans>
+                  ) : (
+                    <Trans>Login</Trans>
+                  )}
+                </Button>
+              </Grid>
+              <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
+                <FormControl fullWidth size="small">
+                  <InputLabel id="dest-select-label">Dest</InputLabel>
+                  <Select
+                    labelId="dest-select-label"
+                    id="dest-select"
+                    value={dest}
+                    label="Dest"
+                    onChange={(e) => setDest(e.target.value as string)}
+                  >
+                    <MenuItem value="exec">exec (local)</MenuItem>
+                    <MenuItem value="banana-local">banana (local)</MenuItem>
+                    <MenuItem value="banana-remote">banana (remote)</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="dest-select-label">Dest</InputLabel>
-                <Select
-                  labelId="dest-select-label"
-                  id="dest-select"
-                  value={dest}
-                  label="Dest"
-                  onChange={(e) => setDest(e.target.value as string)}
-                >
-                  <MenuItem value="exec">exec (local)</MenuItem>
-                  <MenuItem value="banana-local">banana (local)</MenuItem>
-                  <MenuItem value="banana-remote">banana (remote)</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        ) : (
-          <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-            Go
-          </Button>
-        )}
+          ) : (
+            <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
+              Go
+            </Button>
+          )}
 
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <InputSlider
-              label={t`Classifier-Free Guidance (Scale)`}
-              value={guidance_scale}
-              setValue={setGuidanceScale}
-              defaultValue={defaults.guidance_scale}
-              tooltip={
-                <Box>
-                  <Trans>
-                    How closely to follow the prompt. Lower values = more
-                    creative, more variety. Higher values = more exact, may
-                    cause artifacts. Values of 5 - 15 tend to work best.
-                  </Trans>{" "}
-                  <Trans>
-                    <a href="https://benanne.github.io/2022/05/26/guidance.html">
-                      Learn more
-                    </a>
-                  </Trans>
-                </Box>
-              }
-              icon={<Scale />}
-              min={1}
-              max={50}
-            />
+          <Grid container spacing={2} sx={{ mt: 1 }}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <InputSlider
+                label={t`Classifier-Free Guidance (Scale)`}
+                value={guidance_scale}
+                setValue={setGuidanceScale}
+                defaultValue={defaults.guidance_scale}
+                tooltip={
+                  <Box>
+                    <Trans>
+                      How closely to follow the prompt. Lower values = more
+                      creative, more variety. Higher values = more exact, may
+                      cause artifacts. Values of 5 - 15 tend to work best.
+                    </Trans>{" "}
+                    <Trans>
+                      <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                        Learn more
+                      </a>
+                    </Trans>
+                  </Box>
+                }
+                icon={<Scale />}
+                min={1}
+                max={50}
+                step={0.1}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <InputSlider
+                label={t`Number of Inference Steps`}
+                value={num_inference_steps}
+                setValue={setNumInferenceSteps}
+                defaultValue={defaults.num_inference_steps}
+                icon={<EmojiIcon>👣</EmojiIcon>}
+                tooltip={
+                  <Box>
+                    <Trans>
+                      Number of denoising steps (how many times to iterate over
+                      and improve the image). Larger numbers take longer to
+                      render but may produce higher quality results.
+                    </Trans>{" "}
+                    <Trans>
+                      <a href="https://huggingface.co/blog/stable_diffusion">
+                        Learn more
+                      </a>
+                    </Trans>
+                  </Box>
+                }
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <InputSlider
+                label={t`Width`}
+                value={width}
+                setValue={setWidth}
+                defaultValue={defaults.width}
+                icon={<EmojiIcon>⭤</EmojiIcon>}
+                step={8}
+                min={8}
+                max={2048}
+                marks={true}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <InputSlider
+                label={t`Height`}
+                value={height}
+                setValue={setHeight}
+                defaultValue={defaults.height}
+                icon={<Height />}
+                step={8}
+                min={8}
+                max={2048}
+                marks={true}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <InputSlider
-              label={t`Number of Inference Steps`}
-              value={num_inference_steps}
-              setValue={setNumInferenceSteps}
-              defaultValue={defaults.num_inference_steps}
-              icon={<EmojiIcon>👣</EmojiIcon>}
-              tooltip={
-                <Box>
-                  <Trans>
-                    Number of denoising steps (how many times to iterate over
-                    and improve the image). Larger numbers take longer to render
-                    but may produce higher quality results.
-                  </Trans>{" "}
-                  <Trans>
-                    <a href="https://huggingface.co/blog/stable_diffusion">
-                      Learn more
-                    </a>
-                  </Trans>
-                </Box>
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <InputSlider
-              label={t`Width`}
-              value={width}
-              setValue={setWidth}
-              defaultValue={defaults.width}
-              icon={<EmojiIcon>⭤</EmojiIcon>}
-              step={8}
-              min={8}
-              max={2048}
-              marks={true}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-            <InputSlider
-              label={t`Height`}
-              value={height}
-              setValue={setHeight}
-              defaultValue={defaults.height}
-              icon={<Height />}
-              step={8}
-              min={8}
-              max={2048}
-              marks={true}
-            />
-          </Grid>
-        </Grid>
+        </form>
         <p>COMING NEXT: img2img, inpainting.</p>
         <p>
           <a href="https://github.com/Maks-s/sd-akashic">SD Akashic Guide</a> -
