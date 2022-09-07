@@ -72,7 +72,8 @@ export default function Credits() {
           credits. Unused credits don&apos;t carry over.
         </Trans>
         <p>
-          <Trans>Next credits on: {nextCreditDate.toLocaleDateString()}</Trans>
+          <Trans>Next credits on:</Trans>
+          {nextCreditDate.toLocaleDateString()}
         </p>
 
         <Typography variant="h6" sx={{ mt: 2 }}>
@@ -96,6 +97,13 @@ export default function Credits() {
               <Trans>Buy 50 credits for $1</Trans>
             )}
           </Button>
+        </Box>
+
+        <Box sx={{ my: 2, fontSize: "80%" }}>
+          <Trans>
+            The charge will appear from "Wastelands Networking" or "Wastelands*
+            SD-MUI".
+          </Trans>
         </Box>
 
         <Box sx={{ my: 2 }}>

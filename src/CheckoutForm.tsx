@@ -6,7 +6,7 @@ import {
 import React, { SyntheticEvent } from "react";
 import { Trans } from "@lingui/macro";
 
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 export default function CheckoutForm({ orderId }: { orderId: string }) {
   const stripe = useStripe();
@@ -57,6 +57,13 @@ export default function CheckoutForm({ orderId }: { orderId: string }) {
       >
         {loading ? <Trans>Please wait...</Trans> : <Trans>Pay</Trans>}
       </Button>
+
+      <Box sx={{ fontSize: "80%" }}>
+        <Trans>
+          The charge will appear from "Wastelands Networking" or "Wastelands*
+          SD-MUI".
+        </Trans>
+      </Box>
     </form>
   );
 }
