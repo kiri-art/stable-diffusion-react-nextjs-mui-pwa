@@ -3,7 +3,7 @@ import MongoDBA from "gongo-server-db-mongo";
 import Auth from "gongo-server/lib/auth-class";
 import Database, { /* Collection, */ ObjectId } from "gongo-server-db-mongo";
 
-import type { User, Order } from "../../src/schemas";
+import type { User, Order, CreditCode } from "../../src/schemas";
 
 const env = process.env;
 const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
@@ -23,5 +23,5 @@ declare module "gongo-server" {
 }
 */
 
-export { db, dba, Auth, Database, ObjectId, User, Order };
+export { db, dba, Auth, Database, ObjectId, User, Order, CreditCode };
 export default gs;

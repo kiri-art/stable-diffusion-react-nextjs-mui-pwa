@@ -2,6 +2,7 @@
 
 interface User {
   [key: string]: unknown;
+  _id: string;
   emails: Array<{ value: string; verified: boolean }>;
   displayName: string;
   credits: {
@@ -10,6 +11,7 @@ interface User {
   };
   createdAt: Date;
   stripeCustomerId: string;
+  redeemedCreditCodes: string[];
 }
 
 export type { User };

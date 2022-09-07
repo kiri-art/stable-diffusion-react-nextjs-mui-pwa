@@ -1,14 +1,62 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
+import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import addMonths from "date-fns/addMonths";
 //import RevolutCheckout from "@revolut/checkout";
 
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
+
+function RedeemCreditCode() {
+  const [creditCode, setCreditCode] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [disabled, setDisabled] = React.useState(false);
+
+  async function go(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setDisabled(true);
+    const result = await db.call("redeemCreditCode", { creditCode });
+    setDisabled(false);
+
+    if (!result) return setMessage("Failed with unknown error.");
+    if (result.$error) {
+      if (result.$error === "NO_SUCH_CODE")
+        return setMessage(t`No such code exists.`);
+      if (result.$error === "MAXIMUM_REACHED")
+        return setMessage(
+          t`Code already redeeemed maximum number of times, sorry.`
+        );
+      if (result.$error === "ALREADY_REDEEMED")
+        return setMessage(t`You have already redeemed this code before.`);
+      if (typeof result.$error === "string") return setMessage(result.$error);
+    }
+    if (result.$success)
+      return setMessage(t`Successfully redeemed ${result.credits} credits.`);
+  }
+
+  return (
+    <Box>
+      <p>
+        <Trans>Redeem Credit Code</Trans>
+      </p>
+      <form onSubmit={go}>
+        <TextField
+          size="small"
+          value={creditCode}
+          onChange={(e) => setCreditCode(e.target.value)}
+        />{" "}
+        <Button variant="contained" type="submit" disabled={disabled}>
+          {disabled ? <Trans>Loading...</Trans> : <Trans>Redeem</Trans>}
+        </Button>
+        <br />
+        {message && <Box sx={{ color: "red", mt: 1 }}>{message}</Box>}
+      </form>
+    </Box>
+  );
+}
 
 export default function Credits() {
   const router = useRouter();
@@ -68,13 +116,15 @@ export default function Credits() {
           <Trans>Free Credits</Trans>: {user.credits.free}
         </Typography>
         <Trans>
-          You receive free credits every month. They are used before your paid
-          credits. Unused credits don&apos;t carry over.
+          Your free credits are topped up every month. They are used before your
+          paid credits. Unused credits don&apos;t carry over.
         </Trans>
         <p>
           <Trans>Next credits on:</Trans>
           {nextCreditDate.toLocaleDateString()}
         </p>
+
+        <RedeemCreditCode />
 
         <Typography variant="h6" sx={{ mt: 2 }}>
           <Trans>Purchased Credits</Trans>: {user.credits.paid}
