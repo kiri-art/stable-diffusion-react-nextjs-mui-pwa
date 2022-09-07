@@ -81,7 +81,9 @@ async function banana(
     auth?: Record<string, unknown>;
   }
 ) {
-  setLog(["[WebUI] Sending " + dest + " request..."]);
+  // This is quite distracting, need to rethink this ;)
+  // setLog(["[WebUI] Sending " + dest + " request..."]);
+  setLog([""]);
   const response = await fetch("/api/txt2img-banana", {
     method: "POST",
     headers: {
