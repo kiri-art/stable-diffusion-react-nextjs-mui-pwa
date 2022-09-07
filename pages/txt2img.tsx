@@ -13,15 +13,20 @@ import {
   Container,
   FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import {
+  Clear,
   ContentCopy,
   Download,
   Height,
+  Help,
   Share,
   Scale,
 } from "@mui/icons-material";
@@ -85,6 +90,20 @@ const defaults = {
   height: 512,
 };
 
+const randomPrompts = [
+  "Super Dog",
+  "A digital illustration of a medieval town, 4k, detailed, trending in artstation, fantasy",
+  "Cute and adorable ferret wizard, wearing coat and suit, steampunk, lantern, anthromorphic, Jean paptiste monge, oil painting",
+  "<Scene>, skylight, soft shadows, depth of field, canon, f 1.8, 35mm",
+];
+
+function useRandomPrompt() {
+  return React.useMemo(() => {
+    // Do at runtime to get in local language
+    return randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
+  }, []);
+}
+
 export default function Txt2Img() {
   const [log, setLog] = React.useState([] as Array<string>);
   const imgResult = React.useRef<HTMLImageElement>(null);
@@ -92,6 +111,7 @@ export default function Txt2Img() {
     isDev ? "banana-local" : "banana-remote"
   );
   const [mouseOver, setMouseOver] = React.useState(false);
+  const randomPrompt = useRandomPrompt();
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -266,8 +286,40 @@ export default function Txt2Img() {
           fullWidth
           multiline
           value={prompt}
+          placeholder={randomPrompt}
+          InputLabelProps={{ shrink: true }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setPrompt(event.target.value);
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setPrompt("")}>
+                  <Clear />
+                </IconButton>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Description / caption of your desired image. May include
+                        art styles like &apos;impressionist&apos;, &apos;digital
+                        art&apos;, photographic styles and lenses, and other
+                        hints.
+                      </Trans>{" "}
+                      <Trans>
+                        <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                          Learn more
+                        </a>
+                      </Trans>
+                    </Box>
+                  }
+                  enterTouchDelay={0}
+                  leaveDelay={2000}
+                >
+                  <Help />
+                </Tooltip>
+              </InputAdornment>
+            ),
           }}
         />
         {isDev ? (
@@ -320,7 +372,9 @@ export default function Txt2Img() {
                   <Trans>
                     How closely to follow the prompt. Lower values = more
                     creative, more variety. Higher values = more exact, may
-                    cause artifacts. Values of 5 - 15 tend to work best.{" "}
+                    cause artifacts. Values of 5 - 15 tend to work best.
+                  </Trans>{" "}
+                  <Trans>
                     <a href="https://benanne.github.io/2022/05/26/guidance.html">
                       Learn more
                     </a>
@@ -344,7 +398,9 @@ export default function Txt2Img() {
                   <Trans>
                     Number of denoising steps (how many times to iterate over
                     and improve the image). Larger numbers take longer to render
-                    but may produce higher quality results.{" "}
+                    but may produce higher quality results.
+                  </Trans>{" "}
+                  <Trans>
                     <a href="https://huggingface.co/blog/stable_diffusion">
                       Learn more
                     </a>
