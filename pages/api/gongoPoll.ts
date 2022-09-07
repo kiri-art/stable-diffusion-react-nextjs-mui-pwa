@@ -120,6 +120,7 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
           displayName: true,
           credits: true,
           admin: true,
+          __updatedAt: true,
         },
       }
     )
