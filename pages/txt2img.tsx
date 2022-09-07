@@ -167,7 +167,7 @@ export default function Txt2Img() {
 
   return (
     <>
-      <MyAppBar title="Stable Diffusion" />
+      <MyAppBar title={t`Text to Image`} />
       <Container maxWidth="lg">
         <Box
           sx={{

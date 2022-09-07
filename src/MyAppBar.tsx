@@ -87,7 +87,7 @@ export default function MyAppBar({ title }: { title: string }) {
               <Trans>Home</Trans>
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/txt2img">
-              Stable Diffusion
+              Text to Image
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/about">
               <Trans>About</Trans>
