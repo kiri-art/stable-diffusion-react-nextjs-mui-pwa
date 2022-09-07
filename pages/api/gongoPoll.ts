@@ -112,7 +112,7 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
   const realUsers = await db.collection("users").getReal();
   const users = await realUsers
     .find(
-      { _id: { $ne: userId }, __updatedAt: { $gt: updatedAt } },
+      { _id: { $ne: userId }, __updatedAt: { $gt: updatedAt.users } },
       {
         projection: {
           _id: true,
