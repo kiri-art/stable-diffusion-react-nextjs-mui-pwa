@@ -174,6 +174,15 @@ export default function Credits() {
         <Button component={Link} variant="outlined" href="/orders">
           <Trans>Order History</Trans>
         </Button>
+
+        <Box sx={{ fontSize: "80%", py: 2 }}>
+          <Trans>
+            Reminder: this is Free and Open Source Software. You can run your
+            own copy for free on your own PC, with either a suitable graphics
+            card or a cheap Banana.Dev acccount. More info on the{" "}
+            <Link href="/about">About Page</Link>.
+          </Trans>
+        </Box>
       </Container>
     </>
   );
