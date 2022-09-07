@@ -1,18 +1,41 @@
-import GongoServer from "gongo-server/lib/serverless";
-import MongoDBA from "gongo-server-db-mongo";
-// import { ObjectId } from "gongo-server-db-mongo";
-
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
-
-const gs = new GongoServer({
-  dba: new MongoDBA(MONGO_URL, "sd-mui"),
-});
-
-const db = gs.dba;
+import gs from "../../src/api-lib/db";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
 gs.publish("accounts", (db) => db.collection("accounts").find());
+
+gs.publish("orders", async (db, {}, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+  return db.collection("orders").find({ userId });
+});
+
+/*
+gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const order = await db
+    .collection("orders")
+    .findOne({ _id: new ObjectId(orderId) });
+
+  if (!order || order.__updatedAt === updatedAt.orders) return [];
+
+  if (!order.userId.equals(userId)) {
+    console.error(
+      `Non-matching order userId ${order.userId} user userId ${userId}`
+    );
+    return [];
+  }
+
+  return [
+    {
+      coll: "orders",
+      entries: [order],
+    },
+  ];
+});
+*/
 
 gs.publish("user", async (db, _opts, { auth, updatedAt }) => {
   const userId = await auth.userId();
@@ -64,9 +87,9 @@ gs.publish("usersAndCredits", async (db, _opts, { auth /*, updatedAt */ }) => {
   ];
 });
 
-if (db) {
+if (gs.dba) {
   /*
-  db.collection("users").on("preInsertMany", async (props, args) => {
+  gs.dba.collection("users").on("preInsertMany", async (props, args) => {
     return;
     /*
     const userId = props.auth.userId;

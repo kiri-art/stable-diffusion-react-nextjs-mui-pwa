@@ -4,7 +4,7 @@ import HTTPTransport from "gongo-client/lib/transports/http";
 import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
-import type { User } from "./schemas";
+import type { User, Order } from "./schemas";
 
 // const out = { db };
 
@@ -17,10 +17,12 @@ db.extend("transport", HTTPTransport, {
 
 db.subscribe("user");
 db.collection("users").persist();
+db.collection("orders").persist();
 
 declare module "gongo-client" {
   class Database {
     collection(name: "users"): Collection<User>;
+    collection(name: "orders"): Collection<Order>;
   }
 }
 

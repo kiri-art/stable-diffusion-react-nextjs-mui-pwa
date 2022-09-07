@@ -9,6 +9,7 @@ interface User {
     paid: number;
   };
   createdAt: Date;
+  stripeCustomerId: string;
 }
 
 export type { User };
