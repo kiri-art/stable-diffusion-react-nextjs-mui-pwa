@@ -87,7 +87,10 @@ export default function MyAppBar({ title }: { title: string }) {
               <Trans>Home</Trans>
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/txt2img">
-              Text to Image
+              <Trans>Text to Image</Trans>
+            </MenuItem>
+            <MenuItem onClick={handleClose} component={Link} href="/img2img">
+              <Trans>Image to Image</Trans>
             </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/about">
               <Trans>About</Trans>

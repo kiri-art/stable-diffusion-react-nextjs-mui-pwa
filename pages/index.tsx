@@ -31,7 +31,15 @@ const Home: NextPage = () => {
             variant="contained"
             sx={{ my: 1 }}
           >
-            txt2img
+            <Trans>Text to Image</Trans>
+          </Button>
+          <Button
+            component={Link}
+            href="/img2img"
+            variant="contained"
+            sx={{ my: 1 }}
+          >
+            <Trans>Image to Image</Trans>
           </Button>
           <Button
             component={Link}
