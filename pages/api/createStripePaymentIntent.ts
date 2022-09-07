@@ -53,12 +53,26 @@ export default async function craeateStripePaymentIntent(
     createdAt: new Date(),
   };
 
+  console.log("stripePaymentIntent", {
+    amount: order.amount,
+    currency: order.currency,
+    automatic_payment_methods: {
+      enabled: true,
+    },
+    receipt_email: user.emails[0].value,
+    customer: user.stripeCustomerId,
+  });
+
   const paymentIntent = await stripe.paymentIntents.create({
     amount: order.amount,
     currency: order.currency,
     automatic_payment_methods: {
       enabled: true,
     },
+    customer: user.stripeCustomerId,
+    // Automatic based on https://dashboard.stripe.com/settings/emails
+    // receipt_email: user.emails[0].value,
+    description: "50 credits on sd-mui.vercel.app",
   });
 
   order.stripePaymentIntentId = paymentIntent.id;
