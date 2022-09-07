@@ -23,6 +23,10 @@ msgstr ""
 msgid "<0>Learn more</0>"
 msgstr ""
 
+#: pages/_app.tsx:57
+msgid "A newer version of this web app is available, reload to update?"
+msgstr ""
+
 #: pages/about.tsx:16
 #: src/MyAppBar.tsx:96
 msgid "About"
