@@ -54,7 +54,7 @@ export default function Txt2Img() {
 
     // setLog(["[WebUI] Executing..."]);
     setImgSrc("/img/placeholder.png");
-    if (!prompt) inputs.prompt.set(randomPrompt);
+    if (!inputs.prompt.value) inputs.prompt.set(randomPrompt);
 
     await txt2img(
       {
