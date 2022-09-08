@@ -43,7 +43,7 @@ const Home: NextPage = () => {
           </Button>
           <Button
             component={Link}
-            href="/inpainting"
+            href="/inpaint"
             variant="contained"
             sx={{ my: 1 }}
           >

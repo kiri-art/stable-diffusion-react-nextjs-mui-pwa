@@ -23,6 +23,10 @@ const txt2imgOptsSchema = object({
   guidance_scale: number().default(7.5),
   // needs to be pre-processed
   seed: number().min(0).max(4294967295),
+
+  init_image: string(),
+  mask_image: string(),
+  strength: number(),
 });
 
 type Txt2ImgOpts = InferType<typeof txt2imgOptsSchema>;

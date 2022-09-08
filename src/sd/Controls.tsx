@@ -48,7 +48,7 @@ function Prompt({
 }: {
   value: ModelState["prompt"]["value"];
   setValue: ModelState["prompt"]["setValue"];
-  placeholder: string;
+  placeholder?: string;
 }) {
   return useMemo(() => {
     function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -258,7 +258,7 @@ export default function SDControls({
 }: {
   inputs: ModelState;
   go: (event: React.SyntheticEvent) => void;
-  randomPrompt: string;
+  randomPrompt?: string;
   uiState: {
     dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
   };
@@ -325,16 +325,20 @@ export default function SDControls({
           setValue={inputs.num_inference_steps.setValue}
           defaultValue={defaults.num_inference_steps}
         />
-        <Width_Grid_Slider
-          value={inputs.width.value}
-          setValue={inputs.width.setValue}
-          defaultValue={defaults.width}
-        />
-        <Height_Grid_Slider
-          value={inputs.height.value}
-          setValue={inputs.height.setValue}
-          defaultValue={defaults.height}
-        />
+        {inputs.width && (
+          <Width_Grid_Slider
+            value={inputs.width.value}
+            setValue={inputs.width.setValue}
+            defaultValue={defaults.width}
+          />
+        )}
+        {inputs.height && (
+          <Height_Grid_Slider
+            value={inputs.height.value}
+            setValue={inputs.height.setValue}
+            defaultValue={defaults.height}
+          />
+        )}
       </Grid>
     </form>
   );
