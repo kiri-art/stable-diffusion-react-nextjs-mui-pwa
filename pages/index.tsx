@@ -43,6 +43,14 @@ const Home: NextPage = () => {
           </Button>
           <Button
             component={Link}
+            href="/inpainting"
+            variant="contained"
+            sx={{ my: 1 }}
+          >
+            <Trans>Inpainting</Trans>
+          </Button>
+          <Button
+            component={Link}
             href="/about"
             variant="outlined"
             sx={{ my: 1 }}

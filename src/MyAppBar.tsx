@@ -92,6 +92,9 @@ export default function MyAppBar({ title }: { title: string }) {
             <MenuItem onClick={handleClose} component={Link} href="/img2img">
               <Trans>Image to Image</Trans>
             </MenuItem>
+            <MenuItem onClick={handleClose} component={Link} href="/inpainting">
+              <Trans>Inpainting</Trans>
+            </MenuItem>
             <MenuItem onClick={handleClose} component={Link} href="/about">
               <Trans>About</Trans>
             </MenuItem>
