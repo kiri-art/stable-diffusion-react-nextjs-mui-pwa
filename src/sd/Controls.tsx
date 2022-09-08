@@ -41,6 +41,75 @@ function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   );
 }
 
+function Prompt({
+  value,
+  setValue,
+  placeholder,
+}: {
+  value: ModelState["prompt"]["value"];
+  setValue: ModelState["prompt"]["set"];
+  placeholder: string;
+}) {
+  return useMemo(() => {
+    function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+      // Submit on "enter" but allow newline creation on shift-enter.
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+
+        // @ts-expect-error: TODO
+        event.target.form.dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true })
+        );
+      }
+    }
+
+    return (
+      <TextField
+        label="Prompt"
+        fullWidth
+        multiline
+        onKeyDown={promptKeyDown}
+        value={value}
+        placeholder={placeholder}
+        InputLabelProps={{ shrink: true }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value);
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setValue("")}>
+                <Clear />
+              </IconButton>
+              <Tooltip
+                title={
+                  <Box>
+                    <Trans>
+                      Description / caption of your desired image. May include
+                      art styles like &apos;impressionist&apos;, &apos;digital
+                      art&apos;, photographic styles and lenses, and other
+                      hints.
+                    </Trans>{" "}
+                    <Trans>
+                      <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                        Learn more
+                      </a>
+                    </Trans>
+                  </Box>
+                }
+                enterTouchDelay={0}
+                leaveDelay={2000}
+              >
+                <Help />
+              </Tooltip>
+            </InputAdornment>
+          ),
+        }}
+      />
+    );
+  }, [value, setValue, placeholder]);
+}
+
 function CFS_Grid_Slider({
   value,
   setValue,
@@ -199,55 +268,14 @@ export default function SDControls({
     db.collection("users").find({ _id: userId })
   );
 
-  function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    // Submit on "enter" but allow newline creation on shift-enter.
-    if (event.key === "Enter" && !event.shiftKey) go(event);
-  }
-
   return (
     <form onSubmit={go}>
-      <TextField
-        label="Prompt"
-        fullWidth
-        multiline
-        onKeyDown={promptKeyDown}
+      <Prompt
         value={inputs.prompt.value}
+        setValue={inputs.prompt.set}
         placeholder={randomPrompt}
-        InputLabelProps={{ shrink: true }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          inputs.prompt.set(event.target.value);
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => inputs.prompt.set("")}>
-                <Clear />
-              </IconButton>
-              <Tooltip
-                title={
-                  <Box>
-                    <Trans>
-                      Description / caption of your desired image. May include
-                      art styles like &apos;impressionist&apos;, &apos;digital
-                      art&apos;, photographic styles and lenses, and other
-                      hints.
-                    </Trans>{" "}
-                    <Trans>
-                      <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
-                        Learn more
-                      </a>
-                    </Trans>
-                  </Box>
-                }
-                enterTouchDelay={0}
-                leaveDelay={2000}
-              >
-                <Help />
-              </Tooltip>
-            </InputAdornment>
-          ),
-        }}
       />
+
       {isDev ? (
         <Grid container sx={{ my: 1 }}>
           <Grid item xs={7} sm={8} md={9}>
