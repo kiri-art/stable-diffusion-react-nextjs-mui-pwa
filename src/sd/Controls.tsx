@@ -47,7 +47,7 @@ function Prompt({
   placeholder,
 }: {
   value: ModelState["prompt"]["value"];
-  setValue: ModelState["prompt"]["set"];
+  setValue: ModelState["prompt"]["setValue"];
   placeholder: string;
 }) {
   return useMemo(() => {
@@ -116,7 +116,7 @@ function CFS_Grid_Slider({
   defaultValue,
 }: {
   value: ModelState["guidance_scale"]["value"];
-  setValue: ModelState["guidance_scale"]["set"];
+  setValue: ModelState["guidance_scale"]["setValue"];
   defaultValue: typeof defaults.guidance_scale;
 }) {
   return useMemo(
@@ -158,7 +158,7 @@ function Steps_Grid_Slider({
   defaultValue,
 }: {
   value: ModelState["guidance_scale"]["value"];
-  setValue: ModelState["guidance_scale"]["set"];
+  setValue: ModelState["guidance_scale"]["setValue"];
   defaultValue: typeof defaults.guidance_scale;
 }) {
   return useMemo(
@@ -197,7 +197,7 @@ function Width_Grid_Slider({
   defaultValue,
 }: {
   value: ModelState["guidance_scale"]["value"];
-  setValue: ModelState["guidance_scale"]["set"];
+  setValue: ModelState["guidance_scale"]["setValue"];
   defaultValue: typeof defaults.guidance_scale;
 }) {
   return useMemo(
@@ -227,7 +227,7 @@ function Height_Grid_Slider({
   defaultValue,
 }: {
   value: ModelState["guidance_scale"]["value"];
-  setValue: ModelState["guidance_scale"]["set"];
+  setValue: ModelState["guidance_scale"]["setValue"];
   defaultValue: typeof defaults.guidance_scale;
 }) {
   return useMemo(
@@ -272,7 +272,7 @@ export default function SDControls({
     <form onSubmit={go}>
       <Prompt
         value={inputs.prompt.value}
-        setValue={inputs.prompt.set}
+        setValue={inputs.prompt.setValue}
         placeholder={randomPrompt}
       />
 
@@ -317,22 +317,22 @@ export default function SDControls({
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <CFS_Grid_Slider
           value={inputs.guidance_scale.value}
-          setValue={inputs.guidance_scale.set}
+          setValue={inputs.guidance_scale.setValue}
           defaultValue={defaults.guidance_scale}
         />
         <Steps_Grid_Slider
           value={inputs.num_inference_steps.value}
-          setValue={inputs.num_inference_steps.set}
+          setValue={inputs.num_inference_steps.setValue}
           defaultValue={defaults.num_inference_steps}
         />
         <Width_Grid_Slider
           value={inputs.width.value}
-          setValue={inputs.width.set}
+          setValue={inputs.width.setValue}
           defaultValue={defaults.width}
         />
         <Height_Grid_Slider
           value={inputs.height.value}
-          setValue={inputs.height.set}
+          setValue={inputs.height.setValue}
           defaultValue={defaults.height}
         />
       </Grid>

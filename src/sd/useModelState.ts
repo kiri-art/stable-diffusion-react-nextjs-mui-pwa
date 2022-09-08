@@ -6,7 +6,7 @@ function useSdState<T>(initialValue: T) {
   const state = React.useState<T>(initialValue);
   return {
     value: state[0],
-    set: state[1],
+    setValue: state[1],
   };
 }
 
@@ -16,9 +16,22 @@ export function modelStateValues(modelState: ModelState) {
   );
 }
 
-export type ModelState = ReturnType<typeof useModelState>;
+//export type ModelState = ReturnType<typeof useModelState>;
 
-export default function useModelState(_inputs?: string[]) {
+type ValueSetValue<T> = {
+  value: T;
+  setValue: React.Dispatch<React.SetStateAction<T>>;
+};
+
+export interface ModelState {
+  prompt: ValueSetValue<string>;
+  num_inference_steps: ValueSetValue<string | number>;
+  guidance_scale: ValueSetValue<string | number>;
+  width: ValueSetValue<string | number>;
+  height: ValueSetValue<string | number>;
+}
+
+export default function useModelState(inputs?: string[]): ModelState {
   const allStates = {
     prompt: useSdState(""),
     num_inference_steps: useSdState<number | string>(
@@ -29,13 +42,11 @@ export default function useModelState(_inputs?: string[]) {
     height: useSdState<number | string>(defaults.height),
   };
 
-  return allStates;
+  // return allStates;
 
-  /*
   return inputs
-    ? Object.fromEntries(
+    ? (Object.fromEntries(
         Object.entries(allStates).filter(([key]) => inputs.includes(key))
-      )
+      ) as unknown as ModelState) // TODO, clever typescript way to inspect inputs
     : allStates;
-  */
 }
