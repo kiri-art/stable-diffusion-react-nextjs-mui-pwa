@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { t, Trans } from "@lingui/macro";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { useGongoUserId, useGongoOne } from "gongo-client-react";
 
+import type { ModelState } from "./useModelState";
 import { isDev, REQUIRE_REGISTRATION } from "../lib/client-env";
 
 import {
@@ -40,16 +41,158 @@ function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   );
 }
 
+function CFS_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["guidance_scale"]["value"];
+  setValue: ModelState["guidance_scale"]["set"];
+  defaultValue: typeof defaults.guidance_scale;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <InputSlider
+          label={t`Classifier-Free Guidance (Scale)`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          tooltip={
+            <Box>
+              <Trans>
+                How closely to follow the prompt. Lower values = more creative,
+                more variety. Higher values = more exact, may cause artifacts.
+                Values of 5 - 15 tend to work best.
+              </Trans>{" "}
+              <Trans>
+                <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                  Learn more
+                </a>
+              </Trans>
+            </Box>
+          }
+          icon={<Scale />}
+          min={1}
+          max={50}
+          step={0.1}
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
+function Steps_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["guidance_scale"]["value"];
+  setValue: ModelState["guidance_scale"]["set"];
+  defaultValue: typeof defaults.guidance_scale;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <InputSlider
+          label={t`Number of Inference Steps`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          icon={<EmojiIcon>👣</EmojiIcon>}
+          tooltip={
+            <Box>
+              <Trans>
+                Number of denoising steps (how many times to iterate over and
+                improve the image). Larger numbers take longer to render but may
+                produce higher quality results.
+              </Trans>{" "}
+              <Trans>
+                <a href="https://huggingface.co/blog/stable_diffusion">
+                  Learn more
+                </a>
+              </Trans>
+            </Box>
+          }
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
+function Width_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["guidance_scale"]["value"];
+  setValue: ModelState["guidance_scale"]["set"];
+  defaultValue: typeof defaults.guidance_scale;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        {" "}
+        <InputSlider
+          label={t`Width`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          icon={<EmojiIcon>⭤</EmojiIcon>}
+          step={8}
+          min={8}
+          max={2048}
+          marks={true}
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
+function Height_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["guidance_scale"]["value"];
+  setValue: ModelState["guidance_scale"]["set"];
+  defaultValue: typeof defaults.guidance_scale;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <InputSlider
+          label={t`Height`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          icon={<Height />}
+          step={8}
+          min={8}
+          max={2048}
+          marks={true}
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
 export default function SDControls({
   inputs,
   go,
   randomPrompt,
   uiState,
 }: {
-  inputs: any;
-  go: any;
+  inputs: ModelState;
+  go: (event: React.SyntheticEvent) => void;
   randomPrompt: string;
-  uiState: any;
+  uiState: {
+    dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
+  };
 }) {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -144,81 +287,26 @@ export default function SDControls({
       )}
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <InputSlider
-            label={t`Classifier-Free Guidance (Scale)`}
-            value={inputs.guidance_scale.value}
-            setValue={inputs.guidance_scale.set}
-            defaultValue={defaults.guidance_scale}
-            tooltip={
-              <Box>
-                <Trans>
-                  How closely to follow the prompt. Lower values = more
-                  creative, more variety. Higher values = more exact, may cause
-                  artifacts. Values of 5 - 15 tend to work best.
-                </Trans>{" "}
-                <Trans>
-                  <a href="https://benanne.github.io/2022/05/26/guidance.html">
-                    Learn more
-                  </a>
-                </Trans>
-              </Box>
-            }
-            icon={<Scale />}
-            min={1}
-            max={50}
-            step={0.1}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <InputSlider
-            label={t`Number of Inference Steps`}
-            value={inputs.num_inference_steps.value}
-            setValue={inputs.num_inference_steps.set}
-            defaultValue={defaults.num_inference_steps}
-            icon={<EmojiIcon>👣</EmojiIcon>}
-            tooltip={
-              <Box>
-                <Trans>
-                  Number of denoising steps (how many times to iterate over and
-                  improve the image). Larger numbers take longer to render but
-                  may produce higher quality results.
-                </Trans>{" "}
-                <Trans>
-                  <a href="https://huggingface.co/blog/stable_diffusion">
-                    Learn more
-                  </a>
-                </Trans>
-              </Box>
-            }
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <InputSlider
-            label={t`Width`}
-            value={inputs.width.value}
-            setValue={inputs.width.set}
-            defaultValue={defaults.width}
-            icon={<EmojiIcon>⭤</EmojiIcon>}
-            step={8}
-            min={8}
-            max={2048}
-            marks={true}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-          <InputSlider
-            label={t`Height`}
-            value={inputs.height.value}
-            setValue={inputs.height.set}
-            defaultValue={defaults.height}
-            icon={<Height />}
-            step={8}
-            min={8}
-            max={2048}
-            marks={true}
-          />
-        </Grid>
+        <CFS_Grid_Slider
+          value={inputs.guidance_scale.value}
+          setValue={inputs.guidance_scale.set}
+          defaultValue={defaults.guidance_scale}
+        />
+        <Steps_Grid_Slider
+          value={inputs.num_inference_steps.value}
+          setValue={inputs.num_inference_steps.set}
+          defaultValue={defaults.num_inference_steps}
+        />
+        <Width_Grid_Slider
+          value={inputs.width.value}
+          setValue={inputs.width.set}
+          defaultValue={defaults.width}
+        />
+        <Height_Grid_Slider
+          value={inputs.height.value}
+          setValue={inputs.height.set}
+          defaultValue={defaults.height}
+        />
       </Grid>
     </form>
   );

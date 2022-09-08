@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 import defaults from "./defaults";
 
@@ -10,13 +10,15 @@ function useSdState<T>(initialValue: T) {
   };
 }
 
-export function modelStateValues(modelState) {
+export function modelStateValues(modelState: ModelState) {
   return Object.fromEntries(
-    Object.entries(modelState).map((key, state) => [key, state.value])
+    Object.entries(modelState).map(([key, { value }]) => [key, value])
   );
 }
 
-export default function useModelState(inputs?: string[]) {
+export type ModelState = ReturnType<typeof useModelState>;
+
+export default function useModelState(_inputs?: string[]) {
   const allStates = {
     prompt: useSdState(""),
     num_inference_steps: useSdState<number | string>(
@@ -29,9 +31,11 @@ export default function useModelState(inputs?: string[]) {
 
   return allStates;
 
+  /*
   return inputs
     ? Object.fromEntries(
         Object.entries(allStates).filter(([key]) => inputs.includes(key))
       )
     : allStates;
+  */
 }

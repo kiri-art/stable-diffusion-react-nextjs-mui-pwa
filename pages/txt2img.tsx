@@ -1,11 +1,11 @@
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
 
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import React from "react";
