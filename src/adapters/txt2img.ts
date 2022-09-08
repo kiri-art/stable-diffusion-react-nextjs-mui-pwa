@@ -5,11 +5,11 @@ async function exec(
   opts: Txt2ImgOpts,
   {
     setLog,
-    imgResult,
+    setImgSrc,
     _auth,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.RefObject<HTMLImageElement>;
+    setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     _auth?: Record<string, unknown>;
   }
 ) {
@@ -52,7 +52,7 @@ async function exec(
           const response = await fetch("/api/imgFetchAndDelete?dir=" + obj.dir);
           const blob = await response.blob();
           const objectURL = URL.createObjectURL(blob);
-          if (imgResult.current) imgResult.current.src = objectURL;
+          setImgSrc(objectURL);
           setLog([]);
         } else {
           console.log(obj);
@@ -71,12 +71,12 @@ async function banana(
   opts: Txt2ImgOpts,
   {
     setLog,
-    imgResult,
+    setImgSrc,
     dest,
     auth,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.RefObject<HTMLImageElement>;
+    setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     dest: string; // "banana-local" | "banana-remote" | "exec";
     auth?: Record<string, unknown>;
   }
@@ -119,7 +119,7 @@ async function banana(
   const buffer = Buffer.from(imgBase64, "base64");
   const blob = new Blob([buffer], { type: "image/png" });
   const objectURL = URL.createObjectURL(blob);
-  if (imgResult.current) imgResult.current.src = objectURL;
+  setImgSrc(objectURL);
   setLog([]);
 
   // console.log(result);
@@ -131,12 +131,12 @@ export default async function txt2img(
   opts: unknown,
   {
     setLog,
-    imgResult,
+    setImgSrc,
     dest,
     auth,
   }: {
     setLog: (log: string[]) => void;
-    imgResult: React.RefObject<HTMLImageElement>;
+    setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
   }
@@ -146,6 +146,6 @@ export default async function txt2img(
   //console.log("runner", dest, runner);
   console.log(opts);
   const modelOpts = txt2imgOptsSchema.cast(opts);
-  const result = await runner(modelOpts, { setLog, imgResult, dest, auth });
+  const result = await runner(modelOpts, { setLog, setImgSrc, dest, auth });
   return result;
 }

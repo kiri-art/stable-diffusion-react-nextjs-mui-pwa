@@ -1,5 +1,3 @@
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
@@ -21,49 +19,17 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import {
-  Clear,
-  ContentCopy,
-  Download,
-  Height,
-  Help,
-  Share,
-  Scale,
-} from "@mui/icons-material";
+import { Clear, Height, Help, Scale } from "@mui/icons-material";
 
 import InputSlider from "../src/InputSlider";
 import MyAppBar from "../src/MyAppBar";
 import React from "react";
 import txt2img from "../src/adapters/txt2img";
-
-const canShare =
-  typeof navigator === "undefined" || // draw on SSR
-  (!!navigator.share && !!navigator.canShare);
+import OutputImage from "../src/OutputImage";
 
 const isDev =
   process.env.NODE_ENV === "development" ||
   (typeof location === "object" && !!location.href.match(/localhost/));
-
-function Timer() {
-  const [s, setS] = React.useState(0);
-
-  React.useEffect(() => {
-    const timeout = setTimeout(() => setS(s + 0.1), 100);
-    return () => clearTimeout(timeout);
-  }, [s]);
-
-  return <div>{s.toFixed(1)}</div>;
-}
-
-function Log({ log }: { log: string[] }) {
-  const ref = React.useRef<HTMLPreElement>(null);
-
-  React.useEffect(() => {
-    if (ref.current) ref.current.scrollIntoView(false);
-  });
-
-  return log.length ? <pre ref={ref}>{log.join("\n")}</pre> : null;
-}
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -105,12 +71,11 @@ function useRandomPrompt() {
 }
 
 export default function Txt2Img() {
+  const [imgSrc, setImgSrc] = React.useState<string>("");
   const [log, setLog] = React.useState([] as Array<string>);
-  const imgResult = React.useRef<HTMLImageElement>(null);
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
-  const [mouseOver, setMouseOver] = React.useState(false);
   const randomPrompt = useRandomPrompt();
 
   const userId = useGongoUserId();
@@ -141,7 +106,7 @@ export default function Txt2Img() {
     }
 
     // setLog(["[WebUI] Executing..."]);
-    if (imgResult.current) imgResult.current.src = "/img/placeholder.png";
+    // if (imgResult.current) imgResult.current.src = "/img/placeholder.png"; TODO
     if (!prompt) setPrompt(randomPrompt);
 
     await txt2img(
@@ -153,46 +118,8 @@ export default function Txt2Img() {
         guidance_scale,
       },
       // @ts-expect-error: TODO, db auth type
-      { setLog, imgResult, dest, auth: db.auth.authInfoToSend() }
+      { setLog, setImgSrc, dest, auth: db.auth.authInfoToSend() }
     );
-  }
-
-  async function copy() {
-    if (!imgResult.current) return;
-    const blob = await fetch(imgResult.current.src).then((r) => r.blob());
-    const item = new ClipboardItem({ "image/png": blob });
-    await navigator.clipboard.write([item]);
-    toast("✅ PNG copied to clipboard");
-  }
-
-  async function download() {
-    if (!imgResult.current) return;
-    //const blob = await fetch(imgResult.current.src).then(r => r.blob());
-    const a = document.createElement("a");
-    a.setAttribute("download", prompt + ".png");
-    a.setAttribute("href-lang", "image/png");
-    a.setAttribute("href", imgResult.current.src);
-    a.click();
-  }
-
-  async function share() {
-    if (!imgResult.current) return;
-    const blob = await fetch(imgResult.current.src).then((r) => r.blob());
-    const shareData = {
-      title: prompt,
-      text: prompt,
-      files: [
-        new File([blob], prompt + ".png", {
-          type: "image/png",
-          lastModified: new Date().getTime(),
-        }),
-      ],
-    };
-    if (navigator.canShare && navigator.canShare(shareData)) {
-      navigator.share(shareData);
-    } else {
-      toast("Sharing failed");
-    }
   }
 
   function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -204,98 +131,7 @@ export default function Txt2Img() {
     <>
       <MyAppBar title={t`Text to Image`} />
       <Container maxWidth="lg">
-        <Box
-          sx={{
-            mt: 1,
-            mb: 2,
-            width: "100%",
-            height: "calc(100vw - 46px)",
-            maxHeight: 512,
-          }}
-        >
-          <Box
-            onMouseOver={() => setMouseOver(true)}
-            onMouseOut={() => setMouseOver(false)}
-            sx={{
-              width: "calc(100vw - 46px)",
-              maxWidth: 512,
-              height: "100%",
-              position: "relative",
-              margin: "auto",
-              border: "1px solid #ddd",
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt="model output"
-              ref={imgResult}
-              width="100%"
-              height="100%"
-              src="/img/placeholder.png"
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-              }}
-            />
-            {mouseOver && log.length === 0 && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 10,
-                  right: 10,
-                }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-                  onClick={copy}
-                >
-                  <ContentCopy />
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-                  onClick={download}
-                >
-                  <Download />
-                </Button>
-                {canShare && (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      px: 0.5,
-                      mx: 0.5,
-                      background: "rgba(170,170,170,0.7)",
-                    }}
-                    onClick={share}
-                  >
-                    <Share />
-                  </Button>
-                )}
-              </Box>
-            )}
-            {log.length > 0 && (
-              <Box
-                sx={{
-                  py: 0.5,
-                  px: 2,
-                  width: "100%",
-                  height: "100%",
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  overflow: "auto",
-                }}
-              >
-                <div style={{ position: "absolute", right: 10, top: 10 }}>
-                  <Timer />
-                </div>
-                <Log log={log} />
-              </Box>
-            )}
-          </Box>
-        </Box>
+        <OutputImage prompt={prompt} imgSrc={imgSrc} log={log} />
         <form onSubmit={go}>
           <TextField
             label="Prompt"
@@ -470,17 +306,6 @@ export default function Txt2Img() {
           &amp; images.
         </p>
       </Container>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={1500}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-      />
     </>
   );
 }

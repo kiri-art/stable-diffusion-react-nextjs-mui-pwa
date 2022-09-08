@@ -3,6 +3,8 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 // import { useGongoIsPopulated } from "gongo-client-react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -66,6 +68,17 @@ export default function MyApp(props: MyAppProps) {
           <Component {...pageProps} />
         </ThemeProvider>
       </I18nProvider>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
     </CacheProvider>
   );
 }
