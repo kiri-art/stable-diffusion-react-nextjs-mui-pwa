@@ -24,7 +24,7 @@ export default function Inpainting() {
           <Trans>Coming Soon</Trans>
         </p>
 
-        <p>This doesn't work yet but it's almost done :)</p>
+        <p>This doesn&apos;t work yet but it&apos;s almost done :)</p>
 
         <Inpaint />
       </Container>

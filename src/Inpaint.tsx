@@ -19,10 +19,10 @@ function MaskCanvas({
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
 
-  function mouseDown(event: React.SyntheticEvent) {
+  function mouseDown(_event: React.SyntheticEvent) {
     setDrawing(true);
   }
-  function mouseUp(event: React.SyntheticEvent) {
+  function mouseUp(_event: React.SyntheticEvent) {
     setDrawing(false);
     lastRef.current = null;
   }
@@ -31,6 +31,7 @@ function MaskCanvas({
     const ctx = ctxRef.current;
     if (!drawing || !ctx) return;
 
+    // @ts-expect-error: TODO
     const { offsetX, offsetY } = event.nativeEvent;
     const last = lastRef.current;
     if (last) {
@@ -53,7 +54,7 @@ function MaskCanvas({
       ctx.lineCap = "round";
       ctx.strokeStyle = "white";
     }
-  }, []);
+  }, [canvasRef]);
 
   return (
     <canvas
@@ -105,11 +106,13 @@ export default function Inpainting() {
   console.log(inputs);
 
   function fileChange(event: React.SyntheticEvent) {
+    // @ts-expect-error: TODO
     const file = event.target.files[0];
     console.log(file);
     const fr = new FileReader();
     fr.onload = () => {
       console.log("onload");
+      // @ts-expect-error: TODO
       inImgRef.current.src = fr.result;
       console.log(fr.result);
       setInImgLoaded(true);
@@ -136,6 +139,8 @@ export default function Inpainting() {
     // setLog(["[WebUI] Executing..."]);
     setImgSrc("/img/placeholder.png");
 
+    if (!inImgRef.current) throw new Error("inImgRef.current not set");
+
     const init_image_blob = await fetch(inImgRef.current.src).then((r) =>
       r.blob()
     );
@@ -145,8 +150,10 @@ export default function Inpainting() {
       return;
     }
 
-    const mask_image_blob = (await new Promise((resolve) =>
-      canvasRef.current.toBlob((blob: Blob | null) => resolve(blob))
+    const mask_image_blob = (await new Promise(
+      (resolve) =>
+        canvasRef.current &&
+        canvasRef.current.toBlob((blob: Blob | null) => resolve(blob))
     )) as Blob | null;
 
     if (!mask_image_blob) {
@@ -180,7 +187,9 @@ export default function Inpainting() {
   return (
     <>
       <div style={{ position: "relative", height: 512, width: 512 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          alt="init_image"
           style={{
             position: "absolute",
             top: 0,
