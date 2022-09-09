@@ -16,38 +16,16 @@ function MaskCanvas({
 }: {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
 }) {
-  const [drawing, setDrawing] = React.useState(false);
+  //const [drawing, setDrawing] = React.useState(false);
   // const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
-
-  function mouseDown(_event: React.SyntheticEvent) {
-    setDrawing(true);
-  }
-  function mouseUp(_event: React.SyntheticEvent) {
-    setDrawing(false);
-    lastRef.current = null;
-  }
-  function mouseMove(event: React.SyntheticEvent) {
-    event.preventDefault();
-    const ctx = ctxRef.current;
-    if (!drawing || !ctx) return;
-
-    // @ts-expect-error: TODO
-    const { offsetX, offsetY } = event.nativeEvent;
-    const last = lastRef.current;
-    if (last) {
-      ctx.beginPath();
-      ctx.moveTo(last.x, last.y);
-      ctx.lineTo(offsetX, offsetY);
-      ctx.closePath();
-      ctx.stroke();
-    }
-    lastRef.current = { x: offsetX, y: offsetY };
-  }
+  const isDrawing = React.useRef(false);
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) throw new Error("no canvas ref");
+
     const ctx = (ctxRef.current =
       // We'll drop the alpha channel anyway when we convert to jpeg
       // For now it's convenient to have transparent background
@@ -59,20 +37,64 @@ function MaskCanvas({
       ctx.lineCap = "round";
       ctx.strokeStyle = "white";
     }
+
+    function mouseDown(_event: MouseEvent | TouchEvent) {
+      isDrawing.current = true;
+      //setDrawing(true);
+    }
+    function mouseUp(_event: MouseEvent | TouchEvent) {
+      isDrawing.current = false;
+      // setDrawing(false);
+      lastRef.current = null;
+    }
+    function mouseMove(event: MouseEvent | TouchEvent) {
+      const canvas = canvasRef.current;
+      const ctx = ctxRef.current;
+      if (!isDrawing.current || !ctx || !canvas) return;
+
+      event.preventDefault();
+
+      const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
+      const parent = canvas.parentNode as HTMLDivElement;
+
+      const mouse = {
+        x: tEvent.pageX - parent.offsetLeft,
+        y: tEvent.pageY - parent.offsetTop,
+      };
+
+      const last = lastRef.current;
+      if (last) {
+        ctx.beginPath();
+        ctx.moveTo(last.x, last.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.closePath();
+        ctx.stroke();
+      }
+      lastRef.current = { x: mouse.x, y: mouse.y };
+    }
+
+    canvas.addEventListener("mousedown", mouseDown);
+    canvas.addEventListener("touchstart", mouseDown, { passive: false });
+    canvas.addEventListener("mousemove", mouseMove);
+    canvas.addEventListener("touchmove", mouseMove, { passive: false });
+    canvas.addEventListener("mouseup", mouseUp);
+    canvas.addEventListener("touchend", mouseUp, { passive: false });
+    return () => {
+      canvas.removeEventListener("mousedown", mouseDown);
+      canvas.removeEventListener("touchstart", mouseDown);
+      canvas.removeEventListener("mousemove", mouseMove);
+      canvas.removeEventListener("touchmove", mouseMove);
+      canvas.removeEventListener("mousedown", mouseUp);
+      canvas.removeEventListener("touchend", mouseUp);
+    };
   }, [canvasRef]);
 
   return (
     <canvas
-      style={{ position: "absolute", top: 0, left: 0 }}
+      style={{ position: "absolute", top: 0, left: 0, touchAction: "none" }}
       ref={canvasRef}
       width={512}
       height={512}
-      onMouseDown={mouseDown}
-      onTouchStart={mouseDown}
-      onMouseMove={mouseMove}
-      onTouchMove={mouseMove}
-      onMouseUp={mouseUp}
-      onTouchEnd={mouseUp}
     ></canvas>
   );
 }
