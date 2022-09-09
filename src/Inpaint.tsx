@@ -99,7 +99,6 @@ async function blobToBase64(blob: Blob) {
 }
 
 export default function Inpainting() {
-  const inImgRef = React.useRef<HTMLImageElement>(null);
   const inCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const inputFile = React.useRef<HTMLInputElement>(null);
   const [inImgLoaded, setInImgLoaded] = React.useState(false);
@@ -130,7 +129,7 @@ export default function Inpainting() {
 
       console.log("onload");
       const image = new Image();
-      image.onload = function (imageEvent) {
+      image.onload = function (_imageEvent) {
         const canvas = inCanvasRef.current;
         if (!canvas) throw new Error("no canvas");
 
@@ -239,7 +238,6 @@ export default function Inpainting() {
         dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
-        // @ts-expect-error: TODO, db auth type
         MODEL_NAME: "INPAINT",
       }
     );

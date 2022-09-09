@@ -7,12 +7,12 @@ async function exec(
     setLog,
     setImgSrc,
     _auth,
-    MODEL_NAME,
+    _MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     _auth?: Record<string, unknown>;
-    MODEL_NAME?: string;
+    _MODEL_NAME?: string;
   }
 ) {
   let log: string[] = [];
