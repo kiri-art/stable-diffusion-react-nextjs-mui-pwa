@@ -8,6 +8,7 @@ import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
+import { toast } from "react-toastify";
 
 function MaskCanvas({
   canvasRef,
@@ -46,7 +47,10 @@ function MaskCanvas({
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = (ctxRef.current = canvas && canvas.getContext("2d"));
+    const ctx = (ctxRef.current =
+      // We'll drop the alpha channel anyway when we convert to jpeg
+      // For now it's convenient to have transparent background
+      canvas && canvas.getContext("2d" /* { alpha: false } */));
 
     if (ctx) {
       ctx.lineWidth = 30;
@@ -90,6 +94,7 @@ async function blobToBase64(blob: Blob) {
 
 export default function Inpainting() {
   const inImgRef = React.useRef<HTMLImageElement>(null);
+  const inCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const inputFile = React.useRef<HTMLInputElement>(null);
   const [inImgLoaded, setInImgLoaded] = React.useState(false);
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -103,21 +108,56 @@ export default function Inpainting() {
   const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(inpaintState);
-  console.log(inputs);
 
   function fileChange(event: React.SyntheticEvent) {
     // @ts-expect-error: TODO
     const file = event.target.files[0];
+
     console.log(file);
-    const fr = new FileReader();
-    fr.onload = () => {
+    if (!file.type.match(/^image\//)) return toast("Not an image");
+
+    const fileReader = new FileReader();
+    fileReader.onload = function (readerEvent) {
+      //event.target.result
+      // const result = event.target.result;
+      //const result = fileReader.result;
+
       console.log("onload");
-      // @ts-expect-error: TODO
-      inImgRef.current.src = fr.result;
-      console.log(fr.result);
-      setInImgLoaded(true);
+      const image = new Image();
+      image.onload = function (imageEvent) {
+        const canvas = inCanvasRef.current;
+        if (!canvas) throw new Error("no canvas");
+
+        // TODO, scaling
+        const width = 512; // image.width;
+        const height = 512; // image.height;
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d" /*, { alpha: false } */);
+        if (!ctx) throw new Error("no 2d contxt from canvas");
+
+        ctx.drawImage(image, 0, 0, width, height);
+        setInImgLoaded(true);
+        console.log("loaded");
+        //const dataUrl = canvas.toDataURL("image/jpeg");
+        //const
+      };
+
+      if (!readerEvent) throw new Error("no readerEevent");
+      if (!readerEvent.target) throw new Error("no readerEevent.target");
+
+      const result = readerEvent.target.result;
+      const sample = "data:image/jpeg;base64,/9j/4Ty6RXhpZgA....FyyDbU//2Q==";
+      if (typeof result !== "string")
+        throw new Error(
+          `readerEvent.target.result is not a string, expected "${sample}" but got: ` +
+            JSON.stringify(result)
+        );
+
+      image.src = result;
     };
-    fr.readAsDataURL(file);
+    fileReader.readAsDataURL(file);
   }
 
   const userId = useGongoUserId();
@@ -139,11 +179,16 @@ export default function Inpainting() {
     // setLog(["[WebUI] Executing..."]);
     setImgSrc("/img/placeholder.png");
 
-    if (!inImgRef.current) throw new Error("inImgRef.current not set");
+    if (!inCanvasRef.current) throw new Error("inCanvasRef.current not set");
 
-    const init_image_blob = await fetch(inImgRef.current.src).then((r) =>
-      r.blob()
-    );
+    const init_image_blob = (await new Promise(
+      (resolve) =>
+        inCanvasRef.current &&
+        inCanvasRef.current.toBlob(
+          (blob: Blob | null) => resolve(blob),
+          "image/jpeg"
+        )
+    )) as Blob | null;
 
     if (!init_image_blob) {
       console.log("no init image blob");
@@ -153,7 +198,10 @@ export default function Inpainting() {
     const mask_image_blob = (await new Promise(
       (resolve) =>
         canvasRef.current &&
-        canvasRef.current.toBlob((blob: Blob | null) => resolve(blob))
+        canvasRef.current.toBlob(
+          (blob: Blob | null) => resolve(blob),
+          "image/jpeg"
+        )
     )) as Blob | null;
 
     if (!mask_image_blob) {
@@ -199,17 +247,27 @@ export default function Inpainting() {
           }}
           ref={inImgRef}
         ></img>
+        <canvas
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: 512,
+            height: 512,
+          }}
+          ref={inCanvasRef}
+        ></canvas>
         {inImgLoaded && <MaskCanvas canvasRef={canvasRef} />}
-        {imgSrc && (
-          <OutputImage
-            prompt={inputs.prompt.value.toString()}
-            imgSrc={imgSrc}
-            log={log}
-          />
-        )}
       </div>
       <input type="file" ref={inputFile} onChange={fileChange}></input>
       <br />
+      {imgSrc && (
+        <OutputImage
+          prompt={inputs.prompt.value.toString()}
+          imgSrc={imgSrc}
+          log={log}
+        />
+      )}
       <br />
 
       <Controls go={go} inputs={inputs} uiState={uiState} />
