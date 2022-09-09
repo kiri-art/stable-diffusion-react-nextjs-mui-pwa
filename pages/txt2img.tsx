@@ -41,7 +41,7 @@ export default function Txt2Img() {
   const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(txt2imgState);
-  console.log(inputs);
+  // console.log(inputs);
 
   async function go(event: React.SyntheticEvent) {
     event.preventDefault();
