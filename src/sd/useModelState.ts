@@ -29,6 +29,7 @@ export interface ModelState {
   guidance_scale: ValueSetValue<string | number>;
   width: ValueSetValue<string | number>;
   height: ValueSetValue<string | number>;
+  strength: ValueSetValue<string | number>;
 }
 
 export default function useModelState(inputs?: string[]): ModelState {
@@ -40,6 +41,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     guidance_scale: useSdState<number | string>(defaults.guidance_scale),
     width: useSdState<number | string>(defaults.width),
     height: useSdState<number | string>(defaults.height),
+    strength: useSdState<number | string>(defaults.strength),
   };
 
   // return allStates;

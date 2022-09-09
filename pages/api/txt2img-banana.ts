@@ -9,7 +9,6 @@ import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
 import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 
 const apiKey = process.env.BANANA_API_KEY;
-const modelKey = process.env.BANANA_MODEL_KEY;
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
@@ -17,9 +16,17 @@ const gs = new GongoServer({
   dba: new Database(MONGO_URL, "sd-mui"),
 });
 
-async function bananaSdkRun(modelOpts: Txt2ImgOpts) {
+async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
+
+  const modelKey =
+    process.env["BANANA_MODEL_KEY" + (MODEL_NAME ? "_" + MODEL_NAME : "")];
+  console.log({
+    var: "BANANA_MODEL_KEY" + (MODEL_NAME ? "_" + MODEL_NAME : ""),
+    key: modelKey,
+  });
+
   if (typeof modelKey !== "string")
     throw new Error("process.env.BANANA_MODEL_KEY is not a string");
 
@@ -78,12 +85,28 @@ const runners = {
   "banana-remote": bananaSdkRun,
 };
 
+const shorten = (str: string) =>
+  str.substring(0, 5) + "...[snip]..." + str.substring(str.length - 5);
+
+function log(out: Record<string, unknown>) {
+  console.log(
+    JSON.stringify(
+      out,
+      function replacer(key, value) {
+        if (key.endsWith("_image") || key.startsWith("image_"))
+          return shorten(value);
+        return value;
+      },
+      2
+    )
+  );
+}
+
 export default async function txt2imgFetch(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
-  console.log(req.body);
   if (typeof req.body !== "object") throw new Error("Body not decoded");
   if (!req.body.modelOpts) throw new Error("No modelOpts provided");
 
@@ -125,29 +148,15 @@ export default async function txt2imgFetch(
     credits = user.credits;
   }
 
-  console.log("sending", modelOpts);
+  log(modelOpts);
 
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 
-  const out = await runner(modelOpts);
+  const out = await runner(modelOpts, fetchOpts.MODEL_NAME);
   if (REQUIRE_REGISTRATION) out.credits = credits;
 
-  const toLog: object = { ...out };
-  // @ts-expect-error: just some logging `:)
-  toLog.modelOutputs = toLog.modelOutputs.map((output) => {
-    if (output.image_base64)
-      return {
-        ...output,
-        image_base64:
-          output.image_base64.substr(0, 5) +
-          "...[snip]..." +
-          output.image_base64.substr(output.image_base64.length - 5),
-      };
-    return output;
-  });
-
-  console.log(toLog);
+  log(out);
 
   res.status(200).json(out);
 }

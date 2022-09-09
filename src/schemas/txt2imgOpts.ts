@@ -26,7 +26,7 @@ const txt2imgOptsSchema = object({
 
   init_image: string(),
   mask_image: string(),
-  strength: number(),
+  strength: number().min(0).max(1),
 });
 
 type Txt2ImgOpts = InferType<typeof txt2imgOptsSchema>;

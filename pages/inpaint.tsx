@@ -20,12 +20,6 @@ export default function Inpainting() {
           <Trans>Inpainting</Trans>
         </Typography>
 
-        <p>
-          <Trans>Coming Soon</Trans>
-        </p>
-
-        <p>This doesn&apos;t work yet but it&apos;s almost done :)</p>
-
         <Inpaint />
       </Container>
     </>

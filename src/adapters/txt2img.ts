@@ -7,10 +7,12 @@ async function exec(
     setLog,
     setImgSrc,
     _auth,
+    MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     _auth?: Record<string, unknown>;
+    MODEL_NAME?: string;
   }
 ) {
   let log: string[] = [];
@@ -74,11 +76,13 @@ async function banana(
     setImgSrc,
     dest,
     auth,
+    MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     dest: string; // "banana-local" | "banana-remote" | "exec";
     auth?: Record<string, unknown>;
+    MODEL_NAME?: string;
   }
 ) {
   // This is quite distracting, need to rethink this ;)
@@ -89,7 +93,10 @@ async function banana(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ modelOpts: opts, fetchOpts: { dest, auth } }),
+    body: JSON.stringify({
+      modelOpts: opts,
+      fetchOpts: { dest, auth, MODEL_NAME },
+    }),
   });
 
   let result;
@@ -134,11 +141,13 @@ export default async function txt2img(
     setImgSrc,
     dest,
     auth,
+    MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
+    MODEL_NAME?: string;
   }
 ) {
   const proto = dest.split("-")[0] as "exec" | "banana";
@@ -146,6 +155,12 @@ export default async function txt2img(
   //console.log("runner", dest, runner);
   console.log(opts);
   const modelOpts = txt2imgOptsSchema.cast(opts);
-  const result = await runner(modelOpts, { setLog, setImgSrc, dest, auth });
+  const result = await runner(modelOpts, {
+    setLog,
+    setImgSrc,
+    dest,
+    auth,
+    MODEL_NAME,
+  });
   return result;
 }

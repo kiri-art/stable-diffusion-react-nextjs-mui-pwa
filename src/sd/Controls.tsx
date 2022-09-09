@@ -110,6 +110,50 @@ function Prompt({
   }, [value, setValue, placeholder]);
 }
 
+function Strength_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["strength"]["value"];
+  setValue: ModelState["strength"]["setValue"];
+  defaultValue: typeof defaults.strength;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        {/*
+          tooltip={
+            <Box>
+              <Trans>
+                How closely to follow the prompt. Lower values = more creative,
+                more variety. Higher values = more exact, may cause artifacts.
+                Values of 5 - 15 tend to work best.
+              </Trans>{" "}
+              <Trans>
+                <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                  Learn more
+                </a>
+              </Trans>
+            </Box>
+          }
+          */}
+        <InputSlider
+          label={t`(Denoising) Strength`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          icon={<EmojiIcon>💪</EmojiIcon>}
+          min={0}
+          max={1}
+          step={0.05}
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
 function CFS_Grid_Slider({
   value,
   setValue,
@@ -315,6 +359,13 @@ export default function SDControls({
       )}
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
+        {inputs.strength && (
+          <Strength_Grid_Slider
+            value={inputs.strength.value}
+            setValue={inputs.strength.setValue}
+            defaultValue={defaults.strength}
+          />
+        )}
         <CFS_Grid_Slider
           value={inputs.guidance_scale.value}
           setValue={inputs.guidance_scale.setValue}

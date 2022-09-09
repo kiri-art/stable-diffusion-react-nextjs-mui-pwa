@@ -9,6 +9,7 @@ import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
+import { Trans } from "@lingui/macro";
 
 function MaskCanvas({
   canvasRef,
@@ -62,7 +63,7 @@ function MaskCanvas({
 
   return (
     <canvas
-      style={{ position: "absolute", top: 0, left: 0, border: "1px solid red" }}
+      style={{ position: "absolute", top: 0, left: 0 }}
       ref={canvasRef}
       width={512}
       height={512}
@@ -76,7 +77,12 @@ function MaskCanvas({
   );
 }
 
-const inpaintState = ["prompt", "num_inference_steps", "guidance_scale"];
+const inpaintState = [
+  "prompt",
+  "strength",
+  "num_inference_steps",
+  "guidance_scale",
+];
 
 async function blobToBase64(blob: Blob) {
   const data = await new Promise((resolve) => {
@@ -227,26 +233,54 @@ export default function Inpainting() {
         mask_image: await blobToBase64(mask_image_blob),
         strength: 0.75,
       },
-      // @ts-expect-error: TODO, db auth type
-      { setLog, setImgSrc, dest, auth: db.auth.authInfoToSend() }
+      {
+        setLog,
+        setImgSrc,
+        dest,
+        // @ts-expect-error: TODO, db auth type
+        auth: db.auth.authInfoToSend(),
+        // @ts-expect-error: TODO, db auth type
+        MODEL_NAME: "INPAINT",
+      }
     );
   }
 
   return (
     <>
-      <div style={{ position: "relative", height: 512, width: 512 }}>
+      <div
+        style={{
+          position: "relative",
+          height: 514,
+          width: 514,
+          border: "1px solid black",
+        }}
+      >
+        <div style={{ position: "absolute", top: 0, left: 0, padding: "20px" }}>
+          <p>
+            <Trans>Status: In Active Development</Trans>
+          </p>
+
+          <p>This works, but only just :)</p>
+
+          <ol>
+            <li>
+              Upload an image with button below
+              <br />
+              (drag &amp; drop, sharing coming soon)
+            </li>
+            <li>Use mouse/finger to draw mask over it</li>
+            <li>Adjust prompt and GO</li>
+          </ol>
+
+          <p>Roadmap / Notes / Coming Soon</p>
+
+          <ul>
+            <li>UI needs work</li>
+            <li>Image hardcoded to 512x512 (for now)</li>
+            <li>Better instructions / guide</li>
+          </ul>
+        </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt="init_image"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: 512,
-            height: 512,
-          }}
-          ref={inImgRef}
-        ></img>
         <canvas
           style={{
             position: "absolute",
