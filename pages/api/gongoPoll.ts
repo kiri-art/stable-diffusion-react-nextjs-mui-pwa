@@ -1,4 +1,5 @@
 import gs, { CreditCode, User } from "../../src/api-lib/db";
+import { userIsAdmin } from "gongo-server-db-mongo/lib/collection";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -137,16 +138,15 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
 });
 
 if (gs.dba) {
-  /*
-  gs.dba.collection("users").on("preInsertMany", async (props, args) => {
-    return;
-    /*
-    const userId = props.auth.userId;
-    const user = await props.dba.collection("users").findOne(userId);
-    */
-  /*
-  });
-  */
+  const db = gs.dba;
+
+  const users = db.collection("users");
+  users.allow("update", userIsAdmin);
+
+  const creditCodes = db.collection("creditCodes");
+  creditCodes.allow("insert", userIsAdmin);
+  creditCodes.allow("update", userIsAdmin);
+  creditCodes.allow("remove", userIsAdmin);
 }
 
 module.exports = gs.expressPost();
