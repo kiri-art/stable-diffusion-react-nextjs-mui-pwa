@@ -19,7 +19,7 @@ function MaskCanvas({
   initImageCanvasRef,
   maskImageCanvasRef,
 }: {
-  file: File;
+  file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   maskImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
 }) {
@@ -163,7 +163,7 @@ export default function Inpainting() {
 
   const inputs = useModelState(inpaintState);
 
-  function fileChange(event: Event) {
+  function fileChange(event: React.SyntheticEvent) {
     const target = event.target as HTMLInputElement;
     if (!(target instanceof HTMLInputElement))
       throw new Error("Event target is not an HTMLInputElement");

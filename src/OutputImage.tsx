@@ -49,7 +49,7 @@ export default function OutputImage({
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
 
-  function onload(event: ReactEventHandler<HTMLImageElement>) {
+  function onLoad(_event: React.SyntheticEvent<HTMLImageElement>) {
     const img = imgResult.current;
     if (!img) throw new Error("no imgResult.current");
     setAspectRatio(img.naturalWidth + " / " + img.naturalHeight);
@@ -114,7 +114,7 @@ export default function OutputImage({
         width="100%"
         height="100%"
         src={imgSrc || "/img/placeholder.png"}
-        onLoad={onload}
+        onLoad={onLoad}
         style={{
           position: "absolute",
           left: 0,
