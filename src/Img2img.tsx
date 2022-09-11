@@ -11,7 +11,7 @@ import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
-//import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 // import { Trans } from "@lingui/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
@@ -39,10 +39,10 @@ interface Op {
 }
 
 function Canvas({
-  file,
+  // file,
   initImageCanvasRef,
 }: {
-  file: File | null;
+  // file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
 }) {
   //const [drawing, setDrawing] = React.useState(false);
@@ -70,6 +70,10 @@ function Canvas({
 
     const initImageCanvas = initImageCanvasRef.current;
     if (!initImageCanvas) throw new Error("No initImageCanvas");
+
+    // console.log({ file });
+    // if (file) return;
+    // console.log("init");
 
     canvas.width = initImageCanvas.width;
     canvas.height = initImageCanvas.height;
@@ -119,7 +123,9 @@ function Canvas({
       const ctx = ctxRef.current;
       if (!isDrawing.current || !ctx || !canvas) return;
 
-      event.preventDefault();
+      // disable scroll if we're drawing (i.e. no file)
+      // if (!file) event.preventDefault();
+      // console.log(1);
 
       const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
 
@@ -164,13 +170,13 @@ function Canvas({
       canvas.removeEventListener("mousedown", mouseUp);
       canvas.removeEventListener("touchend", mouseUp);
     };
-  }, [initImageCanvasRef, file]);
+  }, [initImageCanvasRef /*, file */]);
 
   function redraw() {
     const canvas = initImageCanvasRef.current;
     const ctx = ctxRef.current;
     if (!(canvas && ctx)) throw new Error("canvas or ctx not defined");
-    ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < opsIndexRef.current; i++) {
       const op = ops.current[i];
       ctx.strokeStyle = op.style.color;
@@ -202,66 +208,69 @@ function Canvas({
   return (
     <>
       <canvas
-        id="maskImageCanvas"
+        id="initImageCanvas"
         style={{
           // position: "absolute",
           // top: 0,
           // left: 0,
-          touchAction: "none",
+          // disable scroll if we're drawing (i.e. no file)
+          touchAction: "none", // file ? undefined : "none",
           // border: DRAW_BORDERS ? "1px solid red" : undefined,
           // Canvas is cropped image size, browser will scale to fill window
           width: "100%",
           aspectRatio: "1",
           border: "1px solid black",
         }}
-        width={512}
-        height={512}
+        // width={512}
+        // height={512}
         ref={initImageCanvasRef}
       />
-      <div>
-        <IconButton onClick={clearOps}>
-          <Clear />
-        </IconButton>
-        <IconButton disabled={opsIndex === 0} onClick={undoOp}>
-          <Undo />
-        </IconButton>
-        <IconButton disabled={opsIndex === opsCount} onClick={redoOp}>
-          <Redo />
-        </IconButton>
-        <ToggleButtonGroup
-          sx={{
-            position: "relative",
-            top: 0,
-            left: 10,
-          }}
-          value={color}
-          onChange={(_event, value) => setColor((colorRef.current = value))}
-          exclusive
-          aria-label="color"
-        >
-          {colors.map((color) => (
-            <ToggleButton
-              sx={{
-                background: color,
-                color: color,
-                fontSize: "5%",
-                "&:hover": {
+      {
+        /*!file &&*/ <div>
+          <IconButton onClick={clearOps}>
+            <Clear />
+          </IconButton>
+          <IconButton disabled={opsIndex === 0} onClick={undoOp}>
+            <Undo />
+          </IconButton>
+          <IconButton disabled={opsIndex === opsCount} onClick={redoOp}>
+            <Redo />
+          </IconButton>
+          <ToggleButtonGroup
+            sx={{
+              position: "relative",
+              top: 0,
+              left: 10,
+            }}
+            value={color}
+            onChange={(_event, value) => setColor((colorRef.current = value))}
+            exclusive
+            aria-label="color"
+          >
+            {colors.map((color) => (
+              <ToggleButton
+                sx={{
                   background: color,
-                },
-                "&.MuiToggleButton-root.Mui-selected": {
-                  background: color,
-                  color: "black",
-                },
-              }}
-              key={color}
-              value={color}
-              aria-label={color}
-            >
-              X
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </div>
+                  color: color,
+                  fontSize: "5%",
+                  "&:hover": {
+                    background: color,
+                  },
+                  "&.MuiToggleButton-root.Mui-selected": {
+                    background: color,
+                    color: "black",
+                  },
+                }}
+                key={color}
+                value={color}
+                aria-label={color}
+              >
+                X
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </div>
+      }
     </>
   );
 }
@@ -288,10 +297,11 @@ async function blobToBase64(blob: Blob) {
 }
 
 export default function Img2img() {
-  // const inputFile = React.useRef<HTMLInputElement>(null);
+  const inputFile = React.useRef<HTMLInputElement>(null);
   const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
   // const [initImageLoaded, setInImgLoaded] = React.useState(false);
-  const [file, _setFile] = React.useState<File | null>(null);
+  // const [file, setFile] = React.useState<File | null>(null);
+  // const fileIsLoading = React.useRef(false);
 
   const [imgSrc, setImgSrc] = React.useState<string>("");
   const [log, setLog] = React.useState([] as Array<string>);
@@ -303,7 +313,6 @@ export default function Img2img() {
 
   const inputs = useModelState(inpaintState);
 
-  /*
   function fileChange(event: React.SyntheticEvent) {
     const target = event.target as HTMLInputElement;
     if (!(target instanceof HTMLInputElement))
@@ -318,6 +327,7 @@ export default function Img2img() {
     setImgSrc("");
 
     const fileReader = new FileReader();
+    // fileIsLoading.current = true;
     fileReader.onload = function (readerEvent) {
       //event.target.result
       // const result = event.target.result;
@@ -355,19 +365,19 @@ export default function Img2img() {
 
         const aspectRatio = width / height;
 
-        const parent = canvas.parentNode as HTMLDivElement;
-        parent.style.aspectRatio = aspectRatio.toString();
+        //const parent = canvas.parentNode as HTMLDivElement;
+        canvas.style.aspectRatio = aspectRatio.toString();
 
         canvas.width = width;
         canvas.height = height;
         canvas.style.display = "block";
 
-        const ctx = canvas.getContext("2d" /*, { alpha: false } */ /*);
+        const ctx = canvas.getContext("2d" /*, { alpha: false } */);
         if (!ctx) throw new Error("no 2d contxt from canvas");
 
         ctx.drawImage(image, 0, 0, width, height);
-        setInImgLoaded(true);
-        setFile(file);
+        //setInImgLoaded(true);
+        //setFile(file);
       };
 
       if (!readerEvent) throw new Error("no readerEevent");
@@ -382,10 +392,10 @@ export default function Img2img() {
         );
 
       image.src = result;
+      // fileIsLoading.current = false;
     };
     fileReader.readAsDataURL(file);
   }
-  */
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -452,10 +462,8 @@ export default function Img2img() {
 
   return (
     <>
-      <Canvas initImageCanvasRef={initImageCanvasRef} file={file} />
-      {/* 
+      <Canvas initImageCanvasRef={initImageCanvasRef} />
       <input type="file" ref={inputFile} onChange={fileChange}></input>
-      */}
       {imgSrc && (
         <OutputImage
           prompt={inputs.prompt.value.toString()}
