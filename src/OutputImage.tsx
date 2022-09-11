@@ -23,7 +23,14 @@ function Log({ log }: { log: string[] }) {
   const ref = React.useRef<HTMLPreElement>(null);
 
   React.useEffect(() => {
-    if (ref.current) ref.current.scrollIntoView(false);
+    const timer = ref.current;
+    if (timer) {
+      // const parentDiv = timer?.parentNode as HTMLDivElement;
+      // if (parentDiv.scrollHeight > parentDiv.clientHeight - )
+      // timer.scrollIntoView(false);
+      // actually, we need to listen to scroll status, to see if
+      // user scrolled away from bottom at some point, toggle.
+    }
   });
 
   return log.length ? <pre ref={ref}>{log.join("\n")}</pre> : null;
