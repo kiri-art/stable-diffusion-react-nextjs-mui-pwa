@@ -41,9 +41,11 @@ interface Op {
 function Canvas({
   // file,
   initImageCanvasRef,
+  imageRef,
 }: {
   // file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  imageRef: React.MutableRefObject<HTMLImageElement | null>;
 }) {
   //const [drawing, setDrawing] = React.useState(false);
   // const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -75,8 +77,16 @@ function Canvas({
     // if (file) return;
     // console.log("init");
 
-    canvas.width = initImageCanvas.width;
-    canvas.height = initImageCanvas.height;
+    console.log(5, imageRef.current);
+    if (imageRef.current) {
+      // move logic to here?  currently we do it in imgload handler
+    } else {
+      canvas.width = 512;
+      canvas.height = 512;
+    }
+
+    //canvas.width = initImageCanvas.width;
+    //canvas.height = initImageCanvas.height;
 
     const ctx = (ctxRef.current =
       // We'll drop the alpha channel anyway when we convert to jpeg
@@ -170,7 +180,7 @@ function Canvas({
       canvas.removeEventListener("mousedown", mouseUp);
       canvas.removeEventListener("touchend", mouseUp);
     };
-  }, [initImageCanvasRef /*, file */]);
+  }, [initImageCanvasRef, imageRef /*, file */]);
 
   function redraw() {
     const canvas = initImageCanvasRef.current;
@@ -299,6 +309,7 @@ async function blobToBase64(blob: Blob) {
 export default function Img2img() {
   const inputFile = React.useRef<HTMLInputElement>(null);
   const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
+  const imageRef = React.useRef<HTMLImageElement | null>(null);
   // const [initImageLoaded, setInImgLoaded] = React.useState(false);
   // const [file, setFile] = React.useState<File | null>(null);
   // const fileIsLoading = React.useRef(false);
@@ -334,7 +345,7 @@ export default function Img2img() {
       //const result = fileReader.result;
 
       console.log("initImage loaded from disk");
-      const image = new Image();
+      const image = (imageRef.current = new Image());
       image.onload = function (_imageEvent) {
         console.log("initImage loaded to image");
         const canvas = initImageCanvasRef.current;
@@ -462,7 +473,7 @@ export default function Img2img() {
 
   return (
     <>
-      <Canvas initImageCanvasRef={initImageCanvasRef} />
+      <Canvas initImageCanvasRef={initImageCanvasRef} imageRef={imageRef} />
       <input type="file" ref={inputFile} onChange={fileChange}></input>
       {imgSrc && (
         <OutputImage
