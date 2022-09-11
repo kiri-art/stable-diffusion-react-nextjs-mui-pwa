@@ -98,12 +98,10 @@ export default function OutputImage({
       onMouseOver={() => setMouseOver(true)}
       onMouseOut={() => setMouseOver(false)}
       sx={{
-        mt: 1,
-        mb: 2,
+        my: 2,
         width: "100%",
         aspectRatio,
         position: "relative",
-        margin: "auto",
         border: "1px solid black",
       }}
     >
