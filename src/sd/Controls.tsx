@@ -254,15 +254,16 @@ function Width_Grid_Slider({
           setValue={setValue}
           defaultValue={defaultValue}
           icon={<EmojiIcon>⭤</EmojiIcon>}
-          step={8}
-          min={8}
+          step={64}
+          min={64}
           max={1024}
           marks={true}
           tooltip={
             <Box>
               <Trans>Width of output image.</Trans>{" "}
               <Trans>
-                Maximum size is 1024x768 or 768x1024 because of memory limits.
+                Must be a multiple of 64. Maximum image size is 1024x768 or
+                768x1024 because of memory limits.
               </Trans>
             </Box>
           }
@@ -291,8 +292,8 @@ function Height_Grid_Slider({
           setValue={setValue}
           defaultValue={defaultValue}
           icon={<Height />}
-          step={8}
-          min={8}
+          step={64}
+          min={64}
           max={1024}
           marks={true}
           tooltip={
@@ -338,14 +339,36 @@ export default function SDControls({
     } else {
       if (width > 768) width = 768;
     }
+
     if (width !== inputs.width.value) inputs.width.setValue(width);
     if (height !== inputs.height.value) inputs.height.setValue(height);
+
     return which === "width" ? width : height;
   }
   const setWidth = (width: number | string) =>
     setWidthHeight(width, inputs.height.value, "width");
   const setHeight = (height: number | string) =>
     setWidthHeight(inputs.width.value, height, "height");
+
+  React.useEffect(() => {
+    if (!inputs.width) return;
+    const timeout = setTimeout(() => {
+      const width = inputs.width.value;
+      if (width !== "" && Number(width) % 64 !== 0)
+        inputs.width.setValue(64 * Math.round(Number(width) / 64));
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [inputs.width]);
+
+  React.useEffect(() => {
+    if (!inputs.height) return;
+    const timeout = setTimeout(() => {
+      const height = inputs.height.value;
+      if (height !== "" && Number(height) % 64 !== 0)
+        inputs.height.setValue(64 * Math.round(Number(height) / 64));
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [inputs.height]);
 
   return (
     <Box sx={{ my: 2 }}>

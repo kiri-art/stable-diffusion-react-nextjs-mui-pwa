@@ -8,16 +8,16 @@ const txt2imgOptsSchema = object({
   width: number()
     .default(512)
     .test(
-      "divisible_by_8",
-      "must be divisible by 8",
-      (value) => value % 8 === 0
+      "divisible_by_64",
+      "must be divisible by 64",
+      (value) => value % 64 === 0
     ),
   height: number()
     .default(512)
     .test(
-      "divisible_by_8",
-      "must be divisible by 8",
-      (value) => value % 8 === 0
+      "divisible_by_64",
+      "must be divisible by 64",
+      (value) => value % 64 === 0
     ),
   num_inference_steps: number().default(15),
   guidance_scale: number().default(7.5),
