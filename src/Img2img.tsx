@@ -3,7 +3,7 @@ import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import { IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { Clear, Redo, Undo } from "@mui/icons-material";
+import { Clear, Redo, Undo, Circle, FormatPaint } from "@mui/icons-material";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
@@ -12,61 +12,60 @@ import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
+import FloodFill from "q-floodfill";
 // import { Trans } from "@lingui/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
 
-const colors = [
-  "black",
-  "gray",
-  "white",
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "purple",
-  "sienna",
-  "aqua",
-  "blue",
-];
+const brushes = { small: 20, medium: 35, large: 50 };
+
+const hexColor = {
+  black: "#000000",
+  gray: "#c0c0c0",
+  white: "#ffffff",
+  red: "#ff0000",
+  orange: "#ffa500",
+  yellow: "#ffff00",
+  green: "#008000",
+  purple: "#800080",
+  sienna: "#a0522d",
+  aqua: "#00ffff",
+  blue: "#0000ff",
+};
+
+const colors = Object.keys(hexColor);
 
 interface Op {
-  style: {
-    color: string;
-  };
+  drawState: DrawState;
   steps: [number, number][];
 }
 
 function Canvas({
-  // file,
   initImageCanvasRef,
   imageRef,
+  drawState,
+  setOpsCount,
+  setOpsIndex,
+  ctxRef,
+  ops,
+  opsIndexRef,
 }: {
   // file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   imageRef: React.MutableRefObject<HTMLImageElement | null>;
+  drawState: React.MutableRefObject<DrawState>;
+  setOpsCount: React.Dispatch<React.SetStateAction<number>>;
+  setOpsIndex: React.Dispatch<React.SetStateAction<number>>;
+  ctxRef: React.MutableRefObject<CanvasRenderingContext2D | null>;
+  ops: React.MutableRefObject<Op[]>;
+  opsIndexRef: React.MutableRefObject<number>;
 }) {
-  //const [drawing, setDrawing] = React.useState(false);
-  // const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
-  const lastRef = React.useRef<{ x: number; y: number } | null>(null);
   const isDrawing = React.useRef(false);
-  const [color, setColor] = React.useState("black");
-  const colorRef = React.useRef("black");
-
-  /*
-   * [
-   *   [ [x,y], [x,y], [x,y], ... ]  // op #0
-   * ]
-   */
-  const ops = React.useRef<Op[]>([]);
-  const opsIndexRef = React.useRef(0);
-  const [opsCount, setOpsCount] = React.useState(0);
-  const [opsIndex, setOpsIndex] = React.useState(0);
-  // console.log({ opsIndex, opsCount });
+  const lastRef = React.useRef<{ x: number; y: number } | null>(null);
 
   React.useEffect(() => {
+    console.log("Canvas useEffect");
     const canvas = initImageCanvasRef.current;
     if (!canvas) throw new Error("no canvas ref");
 
@@ -77,7 +76,6 @@ function Canvas({
     // if (file) return;
     // console.log("init");
 
-    console.log(5, imageRef.current);
     if (imageRef.current) {
       // move logic to here?  currently we do it in imgload handler
     } else {
@@ -88,21 +86,24 @@ function Canvas({
     //canvas.width = initImageCanvas.width;
     //canvas.height = initImageCanvas.height;
 
-    const ctx = (ctxRef.current =
-      // We'll drop the alpha channel anyway when we convert to jpeg
-      // For now it's convenient to have transparent background
-      canvas && canvas.getContext("2d" /* { alpha: false } */));
+    const ctx = (ctxRef.current = canvas.getContext("2d"));
+    if (!ctx) throw new Error("Couldn't get new 2d context");
 
-    if (ctx) {
-      ctx.lineWidth = 30;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "black";
-    }
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "black";
 
-    function mouseDown(_event: MouseEvent | TouchEvent) {
+    function mouseDown(event: MouseEvent | TouchEvent) {
+      if (!canvas) throw new Error("no canvas");
+
+      const ds = drawState.current;
+
       isDrawing.current = true;
-      if (ctx) ctx.strokeStyle = colorRef.current;
+      if (!ctx) throw new Error("no context");
+
+      ctx.strokeStyle = ds.color;
+      if (ds.brush !== "fill") ctx.lineWidth = brushes[ds.brush];
+
       //setDrawing(true);
       console.log({
         opsIndexRef: opsIndexRef.current,
@@ -110,13 +111,34 @@ function Canvas({
       });
 
       if (opsIndexRef.current === ops.current.length) {
-        ops.current.push({ style: { color: colorRef.current }, steps: [] });
+        ops.current.push({ drawState: ds, steps: [] });
       } else {
         ops.current.splice(
           opsIndexRef.current,
           ops.current.length - opsIndexRef.current,
-          { style: { color: colorRef.current }, steps: [] }
+          { drawState: ds, steps: [] }
         );
+      }
+
+      if (ds.brush === "fill") {
+        const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
+
+        const mouse = {
+          x: Math.round(
+            (tEvent.pageX - canvas.offsetLeft) *
+              (canvas.width / canvas.clientWidth)
+          ),
+          y: Math.round(
+            (tEvent.pageY - canvas.offsetTop) *
+              (canvas.height / canvas.clientHeight)
+          ),
+        };
+
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const floodFill = new FloodFill(imgData);
+        floodFill.fill(hexColor[ds.color], mouse.x, mouse.y, 0);
+        ctx.putImageData(floodFill.imageData, 0, 0);
+        ops.current[ops.current.length - 1].steps.push([mouse.x, mouse.y]);
       }
       setOpsCount(ops.current.length);
       setOpsIndex((opsIndexRef.current = ops.current.length));
@@ -172,7 +194,7 @@ function Canvas({
     canvas.addEventListener("mouseup", mouseUp);
     canvas.addEventListener("touchend", mouseUp, { passive: false });
     return () => {
-      ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.removeEventListener("mousedown", mouseDown);
       canvas.removeEventListener("touchstart", mouseDown);
       canvas.removeEventListener("mousemove", mouseMove);
@@ -180,7 +202,77 @@ function Canvas({
       canvas.removeEventListener("mousedown", mouseUp);
       canvas.removeEventListener("touchend", mouseUp);
     };
-  }, [initImageCanvasRef, imageRef /*, file */]);
+  }, [
+    initImageCanvasRef,
+    imageRef,
+    ctxRef,
+    drawState,
+    ops,
+    opsIndexRef,
+    setOpsCount,
+    setOpsIndex,
+    /*, file */
+    ,
+  ]);
+  return (
+    <canvas
+      id="initImageCanvas"
+      style={{
+        // position: "absolute",
+        // top: 0,
+        // left: 0,
+        // disable scroll if we're drawing (i.e. no file)
+        touchAction: "none", // file ? undefined : "none",
+        // border: DRAW_BORDERS ? "1px solid red" : undefined,
+        // Canvas is cropped image size, browser will scale to fill window
+        width: "100%",
+        aspectRatio: "1",
+        border: "1px solid black",
+      }}
+      // width={512}
+      // height={512}
+      ref={initImageCanvasRef}
+    />
+  );
+}
+
+interface DrawState {
+  color: keyof typeof hexColor;
+  brush: "small" | "medium" | "large" | "fill";
+}
+
+function Paint({
+  // file,
+  initImageCanvasRef,
+  imageRef,
+}: {
+  // file: File | null;
+  initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  imageRef: React.MutableRefObject<HTMLImageElement | null>;
+}) {
+  //const [drawing, setDrawing] = React.useState(false);
+  // const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
+  const ops = React.useRef<Op[]>([]);
+  const opsIndexRef = React.useRef(0);
+
+  const [color, setColor] = React.useState<DrawState["color"]>("black");
+  const [brush, setBrush] = React.useState<DrawState["brush"]>("medium");
+
+  const drawState = React.useRef({ brush, color });
+  React.useEffect(() => {
+    drawState.current = { brush, color };
+  }, [brush, color]);
+
+  /*
+   * [
+   *   [ [x,y], [x,y], [x,y], ... ]  // op #0
+   * ]
+   */
+  const [opsCount, setOpsCount] = React.useState(0);
+  const [opsIndex, setOpsIndex] = React.useState(0);
+  // console.log({ opsIndex, opsCount });
 
   function redraw() {
     const canvas = initImageCanvasRef.current;
@@ -189,7 +281,21 @@ function Canvas({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < opsIndexRef.current; i++) {
       const op = ops.current[i];
-      ctx.strokeStyle = op.style.color;
+      if (op.drawState.brush === "fill") {
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const floodFill = new FloodFill(imgData);
+        floodFill.fill(
+          hexColor[op.drawState.color],
+          op.steps[0][0],
+          op.steps[0][1],
+          0
+        );
+        ctx.putImageData(floodFill.imageData, 0, 0);
+        continue;
+      }
+
+      ctx.lineWidth = brushes[op.drawState.brush];
+      ctx.strokeStyle = op.drawState.color;
       const steps = op.steps;
       for (let j = 1; j < steps.length; j++) {
         ctx.beginPath();
@@ -217,23 +323,15 @@ function Canvas({
 
   return (
     <>
-      <canvas
-        id="initImageCanvas"
-        style={{
-          // position: "absolute",
-          // top: 0,
-          // left: 0,
-          // disable scroll if we're drawing (i.e. no file)
-          touchAction: "none", // file ? undefined : "none",
-          // border: DRAW_BORDERS ? "1px solid red" : undefined,
-          // Canvas is cropped image size, browser will scale to fill window
-          width: "100%",
-          aspectRatio: "1",
-          border: "1px solid black",
-        }}
-        // width={512}
-        // height={512}
-        ref={initImageCanvasRef}
+      <Canvas
+        initImageCanvasRef={initImageCanvasRef}
+        imageRef={imageRef}
+        drawState={drawState}
+        setOpsCount={setOpsCount}
+        setOpsIndex={setOpsIndex}
+        ctxRef={ctxRef}
+        ops={ops}
+        opsIndexRef={opsIndexRef}
       />
       {
         /*!file &&*/ <div>
@@ -247,13 +345,34 @@ function Canvas({
             <Redo />
           </IconButton>
           <ToggleButtonGroup
+            value={brush}
+            onChange={(_event, value) => setBrush(value)}
+            exclusive
+            aria-label="color"
+          >
+            <ToggleButton value="small">
+              <Circle sx={{ fontSize: "40%" }} />
+            </ToggleButton>
+            <ToggleButton value="medium">
+              {" "}
+              <Circle sx={{ fontSize: "70%" }} />
+            </ToggleButton>
+            <ToggleButton value="large">
+              {" "}
+              <Circle sx={{ fontSize: "100%" }} />
+            </ToggleButton>
+            <ToggleButton value="fill">
+              <FormatPaint sx={{ fontSize: "120%" }} />
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
             sx={{
               position: "relative",
               top: 0,
               left: 10,
             }}
             value={color}
-            onChange={(_event, value) => setColor((colorRef.current = value))}
+            onChange={(_event, value) => setColor(value)}
             exclusive
             aria-label="color"
           >
@@ -473,7 +592,7 @@ export default function Img2img() {
 
   return (
     <>
-      <Canvas initImageCanvasRef={initImageCanvasRef} imageRef={imageRef} />
+      <Paint initImageCanvasRef={initImageCanvasRef} imageRef={imageRef} />
       <input type="file" ref={inputFile} onChange={fileChange}></input>
       {imgSrc && (
         <OutputImage
