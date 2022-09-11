@@ -2,6 +2,9 @@ import React from "react";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
+import { IconButton } from "@mui/material";
+import { Clear, Redo, Undo } from "@mui/icons-material";
+
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import txt2img from "../src/adapters/txt2img";
@@ -29,6 +32,17 @@ function MaskCanvas({
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
   const isDrawing = React.useRef(false);
 
+  /*
+   * [
+   *   [ [x,y], [x,y], [x,y], ... ]  // op #0
+   * ]
+   */
+  const ops = React.useRef<Array<Array<[number, number]>>>([]);
+  const opsIndexRef = React.useRef(0);
+  const [opsCount, setOpsCount] = React.useState(0);
+  const [opsIndex, setOpsIndex] = React.useState(0);
+  // console.log({ opsIndex, opsCount });
+
   React.useEffect(() => {
     const canvas = maskImageCanvasRef.current;
     if (!canvas) throw new Error("no canvas ref");
@@ -54,12 +68,30 @@ function MaskCanvas({
     function mouseDown(_event: MouseEvent | TouchEvent) {
       isDrawing.current = true;
       //setDrawing(true);
+      console.log({
+        opsIndexRef: opsIndexRef.current,
+        opsLength: ops.current.length,
+      });
+
+      if (opsIndexRef.current === ops.current.length) {
+        ops.current.push([]);
+      } else {
+        ops.current.splice(
+          opsIndexRef.current,
+          ops.current.length - opsIndexRef.current,
+          []
+        );
+      }
+      setOpsCount(ops.current.length);
+      setOpsIndex((opsIndexRef.current = ops.current.length));
     }
+
     function mouseUp(_event: MouseEvent | TouchEvent) {
       isDrawing.current = false;
       // setDrawing(false);
       lastRef.current = null;
     }
+
     function mouseMove(event: MouseEvent | TouchEvent) {
       const canvas = maskImageCanvasRef.current;
       const ctx = ctxRef.current;
@@ -88,6 +120,12 @@ function MaskCanvas({
         ctx.stroke();
       }
       lastRef.current = { x: mouse.x, y: mouse.y };
+
+      const op = ops.current[ops.current.length - 1];
+      const lastDraw = op[op.length - 1];
+      if (last && !(lastDraw[0] === last.x && lastDraw[1] === last.y))
+        op.push([last.x, last.y]);
+      op.push([mouse.x, mouse.y]);
     }
 
     canvas.addEventListener("mousedown", mouseDown);
@@ -107,21 +145,72 @@ function MaskCanvas({
     };
   }, [initImageCanvasRef, maskImageCanvasRef, file]);
 
+  function redraw() {
+    const canvas = maskImageCanvasRef.current;
+    const ctx = ctxRef.current;
+    if (!(canvas && ctx)) throw new Error("canvas or ctx not defined");
+    ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < opsIndexRef.current; i++) {
+      const op = ops.current[i];
+      for (let j = 1; j < op.length; j++) {
+        ctx.beginPath();
+        ctx.moveTo(op[j - 1][0], op[j - 1][1]);
+        ctx.lineTo(op[j][0], op[j][1]);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+  }
+  function clearOps() {
+    ops.current = [];
+    setOpsIndex((opsIndexRef.current = 0));
+    setOpsCount(0);
+    redraw();
+  }
+  function undoOp() {
+    console.log("undo", opsIndexRef.current, opsIndexRef.current - 1);
+    setOpsIndex(--opsIndexRef.current);
+    redraw();
+  }
+  function redoOp() {
+    setOpsIndex(++opsIndexRef.current);
+    redraw();
+  }
+
   return (
-    <canvas
-      id="maskImageCanvas"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        touchAction: "none",
-        border: DRAW_BORDERS ? "1px solid red" : undefined,
-        // Canvas is cropped image size, browser will scale to fill window
-        width: "100%",
-        height: "100%",
-      }}
-      ref={maskImageCanvasRef}
-    ></canvas>
+    <>
+      <div
+        style={{
+          position: "absolute",
+          top: -38,
+          left: 120,
+        }}
+      >
+        <IconButton onClick={clearOps}>
+          <Clear />
+        </IconButton>
+        <IconButton disabled={opsIndex === 0} onClick={undoOp}>
+          <Undo />
+        </IconButton>
+        <IconButton disabled={opsIndex === opsCount} onClick={redoOp}>
+          <Redo />
+        </IconButton>
+      </div>
+      <canvas
+        id="maskImageCanvas"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          touchAction: "none",
+          border: DRAW_BORDERS ? "1px solid red" : undefined,
+          // Canvas is cropped image size, browser will scale to fill window
+          width: "100%",
+          height: "100%",
+        }}
+        ref={maskImageCanvasRef}
+      />
+    </>
   );
 }
 
