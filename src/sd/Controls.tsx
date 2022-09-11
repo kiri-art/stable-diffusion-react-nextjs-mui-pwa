@@ -256,8 +256,16 @@ function Width_Grid_Slider({
           icon={<EmojiIcon>⭤</EmojiIcon>}
           step={8}
           min={8}
-          max={2048}
+          max={1024}
           marks={true}
+          tooltip={
+            <Box>
+              <Trans>Width of output image.</Trans>{" "}
+              <Trans>
+                Maximum size is 1024x768 or 768x1024 because of memory limits.
+              </Trans>
+            </Box>
+          }
         />
       </Grid>
     ),
@@ -285,8 +293,16 @@ function Height_Grid_Slider({
           icon={<Height />}
           step={8}
           min={8}
-          max={2048}
+          max={1024}
           marks={true}
+          tooltip={
+            <Box>
+              <Trans>Width of output image.</Trans>{" "}
+              <Trans>
+                Maximum size is 1024x768 or 768x1024 because of memory limits.
+              </Trans>
+            </Box>
+          }
         />
       </Grid>
     ),
@@ -312,85 +328,113 @@ export default function SDControls({
     db.collection("users").find({ _id: userId })
   );
 
+  function setWidthHeight(
+    width: number | string,
+    height: number | string,
+    which: string
+  ) {
+    if (width > height) {
+      if (height > 768) height = 768;
+    } else {
+      if (width > 768) width = 768;
+    }
+    if (width !== inputs.width.value) inputs.width.setValue(width);
+    if (height !== inputs.height.value) inputs.height.setValue(height);
+    return which === "width" ? width : height;
+  }
+  const setWidth = (width: number | string) =>
+    setWidthHeight(width, inputs.height.value, "width");
+  const setHeight = (height: number | string) =>
+    setWidthHeight(inputs.width.value, height, "height");
+
   return (
-    <form onSubmit={go}>
-      <Prompt
-        value={inputs.prompt.value}
-        setValue={inputs.prompt.setValue}
-        placeholder={randomPrompt}
-      />
+    <Box sx={{ my: 2 }}>
+      <form onSubmit={go}>
+        <Prompt
+          value={inputs.prompt.value}
+          setValue={inputs.prompt.setValue}
+          placeholder={randomPrompt}
+        />
 
-      {isDev ? (
-        <Grid container sx={{ my: 1 }}>
-          <Grid item xs={7} sm={8} md={9}>
-            <Button variant="contained" fullWidth sx={{ my: 1 }} type="submit">
-              {!REQUIRE_REGISTRATION ||
-              user?.credits?.free > 0 ||
-              user?.credits?.paid > 0 ? (
-                <Trans>Go</Trans>
-              ) : user ? (
-                <Trans>Get More Credits</Trans>
-              ) : (
-                <Trans>Login</Trans>
-              )}
-            </Button>
-          </Grid>
-          <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
-            <FormControl fullWidth size="small">
-              <InputLabel id="dest-select-label">Dest</InputLabel>
-              <Select
-                labelId="dest-select-label"
-                id="dest-select"
-                value={uiState.dest.value}
-                label="Dest"
-                onChange={(e) => uiState.dest.set(e.target.value as string)}
+        {isDev ? (
+          <Grid container sx={{ my: 1 }}>
+            <Grid item xs={7} sm={8} md={9}>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ my: 1 }}
+                type="submit"
               >
-                <MenuItem value="exec">exec (local)</MenuItem>
-                <MenuItem value="banana-local">banana (local)</MenuItem>
-                <MenuItem value="banana-remote">banana (remote)</MenuItem>
-              </Select>
-            </FormControl>
+                {!REQUIRE_REGISTRATION ||
+                user?.credits?.free > 0 ||
+                user?.credits?.paid > 0 ? (
+                  <Trans>Go</Trans>
+                ) : user ? (
+                  <Trans>Get More Credits</Trans>
+                ) : (
+                  <Trans>Login</Trans>
+                )}
+              </Button>
+            </Grid>
+            <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
+              <FormControl fullWidth size="small">
+                <InputLabel id="dest-select-label">Dest</InputLabel>
+                <Select
+                  labelId="dest-select-label"
+                  id="dest-select"
+                  value={uiState.dest.value}
+                  label="Dest"
+                  onChange={(e) => uiState.dest.set(e.target.value as string)}
+                >
+                  <MenuItem value="exec">exec (local)</MenuItem>
+                  <MenuItem value="banana-local">banana (local)</MenuItem>
+                  <MenuItem value="banana-remote">banana (remote)</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      ) : (
-        <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-          Go
-        </Button>
-      )}
+        ) : (
+          <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
+            Go
+          </Button>
+        )}
 
-      <Grid container spacing={2} sx={{ mt: 1 }}>
-        {inputs.strength && (
-          <Strength_Grid_Slider
-            value={inputs.strength.value}
-            setValue={inputs.strength.setValue}
-            defaultValue={defaults.strength}
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          {inputs.strength && (
+            <Strength_Grid_Slider
+              value={inputs.strength.value}
+              setValue={inputs.strength.setValue}
+              defaultValue={defaults.strength}
+            />
+          )}
+          <CFS_Grid_Slider
+            value={inputs.guidance_scale.value}
+            setValue={inputs.guidance_scale.setValue}
+            defaultValue={defaults.guidance_scale}
           />
-        )}
-        <CFS_Grid_Slider
-          value={inputs.guidance_scale.value}
-          setValue={inputs.guidance_scale.setValue}
-          defaultValue={defaults.guidance_scale}
-        />
-        <Steps_Grid_Slider
-          value={inputs.num_inference_steps.value}
-          setValue={inputs.num_inference_steps.setValue}
-          defaultValue={defaults.num_inference_steps}
-        />
-        {inputs.width && (
-          <Width_Grid_Slider
-            value={inputs.width.value}
-            setValue={inputs.width.setValue}
-            defaultValue={defaults.width}
+          <Steps_Grid_Slider
+            value={inputs.num_inference_steps.value}
+            setValue={inputs.num_inference_steps.setValue}
+            defaultValue={defaults.num_inference_steps}
           />
-        )}
-        {inputs.height && (
-          <Height_Grid_Slider
-            value={inputs.height.value}
-            setValue={inputs.height.setValue}
-            defaultValue={defaults.height}
-          />
-        )}
-      </Grid>
-    </form>
+          {inputs.width && (
+            <Width_Grid_Slider
+              value={inputs.width.value}
+              // @ts-expect-error: TODO
+              setValue={setWidth}
+              defaultValue={defaults.width}
+            />
+          )}
+          {inputs.height && (
+            <Height_Grid_Slider
+              value={inputs.height.value}
+              // @ts-expect-error: TODO
+              setValue={setHeight}
+              defaultValue={defaults.height}
+            />
+          )}
+        </Grid>
+      </form>
+    </Box>
   );
 }

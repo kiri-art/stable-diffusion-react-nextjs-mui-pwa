@@ -394,7 +394,6 @@ export default function Inpainting() {
         )}
       </div>
       <input type="file" ref={inputFile} onChange={fileChange}></input>
-      <br />
       {imgSrc && (
         <OutputImage
           prompt={inputs.prompt.value.toString()}
@@ -402,7 +401,6 @@ export default function Inpainting() {
           log={log}
         />
       )}
-      <br />
 
       <Controls go={go} inputs={inputs} uiState={uiState} />
       <Footer />
