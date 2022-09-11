@@ -2,7 +2,7 @@ import React from "react";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
-import { IconButton } from "@mui/material";
+import { IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Clear, Redo, Undo } from "@mui/icons-material";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
@@ -11,40 +11,61 @@ import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
-import { toast } from "react-toastify";
-import { Trans } from "@lingui/macro";
+//import { toast } from "react-toastify";
+// import { Trans } from "@lingui/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
-const DRAW_BORDERS = false;
+// const DRAW_BORDERS = false;
 
-function MaskCanvas({
+const colors = [
+  "black",
+  "gray",
+  "white",
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "purple",
+  "sienna",
+  "aqua",
+  "blue",
+];
+
+interface Op {
+  style: {
+    color: string;
+  };
+  steps: [number, number][];
+}
+
+function Canvas({
   file,
   initImageCanvasRef,
-  maskImageCanvasRef,
 }: {
   file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
-  maskImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
 }) {
   //const [drawing, setDrawing] = React.useState(false);
   // const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
   const isDrawing = React.useRef(false);
+  const [color, setColor] = React.useState("black");
+  const colorRef = React.useRef("black");
 
   /*
    * [
    *   [ [x,y], [x,y], [x,y], ... ]  // op #0
    * ]
    */
-  const ops = React.useRef<Array<Array<[number, number]>>>([]);
+  const ops = React.useRef<Op[]>([]);
   const opsIndexRef = React.useRef(0);
   const [opsCount, setOpsCount] = React.useState(0);
   const [opsIndex, setOpsIndex] = React.useState(0);
   // console.log({ opsIndex, opsCount });
 
   React.useEffect(() => {
-    const canvas = maskImageCanvasRef.current;
+    const canvas = initImageCanvasRef.current;
     if (!canvas) throw new Error("no canvas ref");
 
     const initImageCanvas = initImageCanvasRef.current;
@@ -62,11 +83,12 @@ function MaskCanvas({
       ctx.lineWidth = 30;
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "black";
     }
 
     function mouseDown(_event: MouseEvent | TouchEvent) {
       isDrawing.current = true;
+      if (ctx) ctx.strokeStyle = colorRef.current;
       //setDrawing(true);
       console.log({
         opsIndexRef: opsIndexRef.current,
@@ -74,12 +96,12 @@ function MaskCanvas({
       });
 
       if (opsIndexRef.current === ops.current.length) {
-        ops.current.push([]);
+        ops.current.push({ style: { color: colorRef.current }, steps: [] });
       } else {
         ops.current.splice(
           opsIndexRef.current,
           ops.current.length - opsIndexRef.current,
-          []
+          { style: { color: colorRef.current }, steps: [] }
         );
       }
       setOpsCount(ops.current.length);
@@ -93,21 +115,20 @@ function MaskCanvas({
     }
 
     function mouseMove(event: MouseEvent | TouchEvent) {
-      const canvas = maskImageCanvasRef.current;
+      const canvas = initImageCanvasRef.current;
       const ctx = ctxRef.current;
       if (!isDrawing.current || !ctx || !canvas) return;
 
       event.preventDefault();
 
       const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
-      const parent = canvas.parentNode as HTMLDivElement;
 
       const mouse = {
         x:
-          (tEvent.pageX - parent.offsetLeft) *
+          (tEvent.pageX - canvas.offsetLeft) *
           (canvas.width / canvas.clientWidth),
         y:
-          (tEvent.pageY - parent.offsetTop) *
+          (tEvent.pageY - canvas.offsetTop) *
           (canvas.height / canvas.clientHeight),
       };
 
@@ -122,10 +143,10 @@ function MaskCanvas({
       lastRef.current = { x: mouse.x, y: mouse.y };
 
       const op = ops.current[ops.current.length - 1];
-      const lastDraw = op[op.length - 1];
+      const lastDraw = op.steps[op.steps.length - 1];
       if (last && !(lastDraw[0] === last.x && lastDraw[1] === last.y))
-        op.push([last.x, last.y]);
-      op.push([mouse.x, mouse.y]);
+        op.steps.push([last.x, last.y]);
+      op.steps.push([mouse.x, mouse.y]);
     }
 
     canvas.addEventListener("mousedown", mouseDown);
@@ -143,19 +164,21 @@ function MaskCanvas({
       canvas.removeEventListener("mousedown", mouseUp);
       canvas.removeEventListener("touchend", mouseUp);
     };
-  }, [initImageCanvasRef, maskImageCanvasRef, file]);
+  }, [initImageCanvasRef, file]);
 
   function redraw() {
-    const canvas = maskImageCanvasRef.current;
+    const canvas = initImageCanvasRef.current;
     const ctx = ctxRef.current;
     if (!(canvas && ctx)) throw new Error("canvas or ctx not defined");
     ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < opsIndexRef.current; i++) {
       const op = ops.current[i];
-      for (let j = 1; j < op.length; j++) {
+      ctx.strokeStyle = op.style.color;
+      const steps = op.steps;
+      for (let j = 1; j < steps.length; j++) {
         ctx.beginPath();
-        ctx.moveTo(op[j - 1][0], op[j - 1][1]);
-        ctx.lineTo(op[j][0], op[j][1]);
+        ctx.moveTo(steps[j - 1][0], steps[j - 1][1]);
+        ctx.lineTo(steps[j][0], steps[j][1]);
         ctx.closePath();
         ctx.stroke();
       }
@@ -178,13 +201,24 @@ function MaskCanvas({
 
   return (
     <>
-      <div
+      <canvas
+        id="maskImageCanvas"
         style={{
-          position: "absolute",
-          top: -38,
-          left: 120,
+          // position: "absolute",
+          // top: 0,
+          // left: 0,
+          touchAction: "none",
+          // border: DRAW_BORDERS ? "1px solid red" : undefined,
+          // Canvas is cropped image size, browser will scale to fill window
+          width: "100%",
+          aspectRatio: "1",
+          border: "1px solid black",
         }}
-      >
+        width={512}
+        height={512}
+        ref={initImageCanvasRef}
+      />
+      <div>
         <IconButton onClick={clearOps}>
           <Clear />
         </IconButton>
@@ -194,21 +228,40 @@ function MaskCanvas({
         <IconButton disabled={opsIndex === opsCount} onClick={redoOp}>
           <Redo />
         </IconButton>
+        <ToggleButtonGroup
+          sx={{
+            position: "relative",
+            top: 0,
+            left: 10,
+          }}
+          value={color}
+          onChange={(_event, value) => setColor((colorRef.current = value))}
+          exclusive
+          aria-label="color"
+        >
+          {colors.map((color) => (
+            <ToggleButton
+              sx={{
+                background: color,
+                color: color,
+                fontSize: "5%",
+                "&:hover": {
+                  background: color,
+                },
+                "&.MuiToggleButton-root.Mui-selected": {
+                  background: color,
+                  color: "black",
+                },
+              }}
+              key={color}
+              value={color}
+              aria-label={color}
+            >
+              X
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
       </div>
-      <canvas
-        id="maskImageCanvas"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          touchAction: "none",
-          border: DRAW_BORDERS ? "1px solid red" : undefined,
-          // Canvas is cropped image size, browser will scale to fill window
-          width: "100%",
-          height: "100%",
-        }}
-        ref={maskImageCanvasRef}
-      />
     </>
   );
 }
@@ -234,12 +287,11 @@ async function blobToBase64(blob: Blob) {
   return data.split(",")[1];
 }
 
-export default function Inpainting() {
-  const inputFile = React.useRef<HTMLInputElement>(null);
+export default function Img2img() {
+  // const inputFile = React.useRef<HTMLInputElement>(null);
   const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
-  const maskImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
-  const [initImageLoaded, setInImgLoaded] = React.useState(false);
-  const [file, setFile] = React.useState<File | null>(null);
+  // const [initImageLoaded, setInImgLoaded] = React.useState(false);
+  const [file, _setFile] = React.useState<File | null>(null);
 
   const [imgSrc, setImgSrc] = React.useState<string>("");
   const [log, setLog] = React.useState([] as Array<string>);
@@ -251,6 +303,7 @@ export default function Inpainting() {
 
   const inputs = useModelState(inpaintState);
 
+  /*
   function fileChange(event: React.SyntheticEvent) {
     const target = event.target as HTMLInputElement;
     if (!(target instanceof HTMLInputElement))
@@ -309,7 +362,7 @@ export default function Inpainting() {
         canvas.height = height;
         canvas.style.display = "block";
 
-        const ctx = canvas.getContext("2d" /*, { alpha: false } */);
+        const ctx = canvas.getContext("2d" /*, { alpha: false } */ /*);
         if (!ctx) throw new Error("no 2d contxt from canvas");
 
         ctx.drawImage(image, 0, 0, width, height);
@@ -332,6 +385,7 @@ export default function Inpainting() {
     };
     fileReader.readAsDataURL(file);
   }
+  */
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -369,25 +423,10 @@ export default function Inpainting() {
       return;
     }
 
-    const mask_image_blob = (await new Promise(
-      (resolve) =>
-        maskImageCanvasRef.current &&
-        maskImageCanvasRef.current.toBlob(
-          (blob: Blob | null) => resolve(blob),
-          "image/jpeg"
-        )
-    )) as Blob | null;
-
-    if (!mask_image_blob) {
-      console.log("no mask image");
-      return;
-    }
-
     console.log({
       ...modelStateValues(inputs),
       prompt: inputs.prompt.value,
       init_image: await blobToBase64(init_image_blob),
-      mask_image: await blobToBase64(mask_image_blob),
       strength: inputs.strength.value,
     });
 
@@ -398,7 +437,6 @@ export default function Inpainting() {
         ...modelStateValues(inputs),
         prompt: inputs.prompt.value,
         init_image: await blobToBase64(init_image_blob),
-        mask_image: await blobToBase64(mask_image_blob),
         strength: inputs.strength.value,
       },
       {
@@ -407,81 +445,17 @@ export default function Inpainting() {
         dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
-        MODEL_NAME: "INPAINT",
+        MODEL_NAME: "IMG2IMG",
       }
     );
   }
 
   return (
     <>
-      <div
-        id="imageOuterDiv"
-        style={{
-          position: "relative",
-          width: "100%",
-          // height: "calc(100vw - 46px)",
-          aspectRatio: "1", // initial value; updated on imgLoad
-          //maxWidth: 514,
-          //maxHeight: 514,
-          border: "1px solid black",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            padding: "20px",
-            display: initImageLoaded ? "none" : "block",
-          }}
-        >
-          <b>
-            <Trans>Status: In Active Development</Trans>
-          </b>
-
-          <ol>
-            <li>
-              Upload an image with button below
-              <br />
-              (drag &amp; drop, sharing coming soon)
-            </li>
-            <li>Use mouse/finger to draw mask over it</li>
-            <li>Adjust prompt and GO</li>
-          </ol>
-
-          <div style={{ fontSize: "85%" }}>
-            <p>Roadmap / Notes / Coming Soon</p>
-
-            <ul>
-              <li>Image will be scaled to max 512x512</li>
-              <li>TODO: Better instructions / guide</li>
-            </ul>
-          </div>
-        </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <canvas
-          id="initImageCanvas"
-          style={{
-            border: DRAW_BORDERS ? "1px solid green" : undefined,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            display: "none",
-            // Canvas is cropped image size, browser will scale to fill window
-            width: "100%",
-            height: "100%",
-          }}
-          ref={initImageCanvasRef}
-        ></canvas>
-        {initImageLoaded && (
-          <MaskCanvas
-            file={file}
-            initImageCanvasRef={initImageCanvasRef}
-            maskImageCanvasRef={maskImageCanvasRef}
-          />
-        )}
-      </div>
+      <Canvas initImageCanvasRef={initImageCanvasRef} file={file} />
+      {/* 
       <input type="file" ref={inputFile} onChange={fileChange}></input>
+      */}
       {imgSrc && (
         <OutputImage
           prompt={inputs.prompt.value.toString()}

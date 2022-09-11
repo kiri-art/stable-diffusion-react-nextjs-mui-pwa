@@ -1,0 +1,21 @@
+#!/bin/sh
+
+INIT_IMAGE="overture-creations-5sI6fQgYIuo.png"
+
+mkdir tmp
+base64 $INIT_IMAGE > tmp/init_image
+
+jq \
+  --null-input \
+  --compact-output \
+  --arg prompt "A cat sits on a bench" \
+  --rawfile init_image tmp/init_image \
+  '{"prompt": $prompt, "init_image": $init_image}' \
+| curl \
+  -X POST \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d @- \
+  http://localhost:8000/
+
+

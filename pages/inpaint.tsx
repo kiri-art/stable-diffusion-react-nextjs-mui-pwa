@@ -14,7 +14,7 @@ import MyAppBar from "../src/MyAppBar";
 export default function Inpainting() {
   return (
     <>
-      <MyAppBar title={t`Image to Image`} />
+      <MyAppBar title={t`Inpainting`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
         <Typography variant="h5">
           <Trans>Inpainting</Trans>
