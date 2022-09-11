@@ -11,10 +11,17 @@ import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 import { Trans } from "@lingui/macro";
 
+// Border around inImg{Canvas,Mask}, useful in dev
+const DRAW_BORDERS = false;
+
 function MaskCanvas({
-  canvasRef,
+  file,
+  initImageCanvasRef,
+  maskImageCanvasRef,
 }: {
-  canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  file: File;
+  initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  maskImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
 }) {
   //const [drawing, setDrawing] = React.useState(false);
   // const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -23,8 +30,14 @@ function MaskCanvas({
   const isDrawing = React.useRef(false);
 
   React.useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = maskImageCanvasRef.current;
     if (!canvas) throw new Error("no canvas ref");
+
+    const initImageCanvas = initImageCanvasRef.current;
+    if (!initImageCanvas) throw new Error("No initImageCanvas");
+
+    canvas.width = initImageCanvas.width;
+    canvas.height = initImageCanvas.height;
 
     const ctx = (ctxRef.current =
       // We'll drop the alpha channel anyway when we convert to jpeg
@@ -48,7 +61,7 @@ function MaskCanvas({
       lastRef.current = null;
     }
     function mouseMove(event: MouseEvent | TouchEvent) {
-      const canvas = canvasRef.current;
+      const canvas = maskImageCanvasRef.current;
       const ctx = ctxRef.current;
       if (!isDrawing.current || !ctx || !canvas) return;
 
@@ -58,8 +71,12 @@ function MaskCanvas({
       const parent = canvas.parentNode as HTMLDivElement;
 
       const mouse = {
-        x: tEvent.pageX - parent.offsetLeft,
-        y: tEvent.pageY - parent.offsetTop,
+        x:
+          (tEvent.pageX - parent.offsetLeft) *
+          (canvas.width / canvas.clientWidth),
+        y:
+          (tEvent.pageY - parent.offsetTop) *
+          (canvas.height / canvas.clientHeight),
       };
 
       const last = lastRef.current;
@@ -80,6 +97,7 @@ function MaskCanvas({
     canvas.addEventListener("mouseup", mouseUp);
     canvas.addEventListener("touchend", mouseUp, { passive: false });
     return () => {
+      ctx && ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.removeEventListener("mousedown", mouseDown);
       canvas.removeEventListener("touchstart", mouseDown);
       canvas.removeEventListener("mousemove", mouseMove);
@@ -87,14 +105,22 @@ function MaskCanvas({
       canvas.removeEventListener("mousedown", mouseUp);
       canvas.removeEventListener("touchend", mouseUp);
     };
-  }, [canvasRef]);
+  }, [initImageCanvasRef, maskImageCanvasRef, file]);
 
   return (
     <canvas
-      style={{ position: "absolute", top: 0, left: 0, touchAction: "none" }}
-      ref={canvasRef}
-      width={512}
-      height={512}
+      id="maskImageCanvas"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        touchAction: "none",
+        border: DRAW_BORDERS ? "1px solid red" : undefined,
+        // Canvas is cropped image size, browser will scale to fill window
+        width: "100%",
+        height: "100%",
+      }}
+      ref={maskImageCanvasRef}
     ></canvas>
   );
 }
@@ -121,10 +147,11 @@ async function blobToBase64(blob: Blob) {
 }
 
 export default function Inpainting() {
-  const inCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const inputFile = React.useRef<HTMLInputElement>(null);
-  const [inImgLoaded, setInImgLoaded] = React.useState(false);
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
+  const maskImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
+  const [initImageLoaded, setInImgLoaded] = React.useState(false);
+  const [file, setFile] = React.useState<File | null>(null);
 
   const [imgSrc, setImgSrc] = React.useState<string>("");
   const [log, setLog] = React.useState([] as Array<string>);
@@ -136,12 +163,18 @@ export default function Inpainting() {
 
   const inputs = useModelState(inpaintState);
 
-  function fileChange(event: React.SyntheticEvent) {
-    // @ts-expect-error: TODO
-    const file = event.target.files[0];
+  function fileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (!(target instanceof HTMLInputElement))
+      throw new Error("Event target is not an HTMLInputElement");
+
+    // @ts-expect-error: I can't be any clearer, typescript
+    const file = target.files[0];
 
     console.log(file);
     if (!file.type.match(/^image\//)) return toast("Not an image");
+
+    setImgSrc("");
 
     const fileReader = new FileReader();
     fileReader.onload = function (readerEvent) {
@@ -149,26 +182,51 @@ export default function Inpainting() {
       // const result = event.target.result;
       //const result = fileReader.result;
 
-      console.log("onload");
+      console.log("initImage loaded from disk");
       const image = new Image();
       image.onload = function (_imageEvent) {
-        const canvas = inCanvasRef.current;
+        console.log("initImage loaded to image");
+        const canvas = initImageCanvasRef.current;
         if (!canvas) throw new Error("no canvas");
 
-        // TODO, scaling
-        const width = 512; // image.width;
-        const height = 512; // image.height;
+        // Later we could get fancy and clip around just the mask at send time.
+        let width, height;
+        // const SD_MAX = [1024, 768]; // can also be 768x1024
+        const SD_MAX = [512, 512];
+
+        if (image.width >= image.height && image.width > SD_MAX[0]) {
+          width = SD_MAX[0];
+          height = Math.floor((image.height / image.width) * SD_MAX[0]);
+          if (height > SD_MAX[1]) height = SD_MAX[1];
+        } else if (image.height > image.width && image.height > SD_MAX[0]) {
+          height = SD_MAX[0];
+          width = Math.floor((image.width / image.height) * SD_MAX[0]);
+          if (width > SD_MAX[1]) width = SD_MAX[1];
+        } else {
+          width = image.width;
+          height = image.height;
+        }
+
+        console.log(`Original Image: ${image.width}x${image.height}`);
+        console.log(`  Scaled Image: ${width}x${height}`);
+
+        // Need to clip at 8.
+
+        const aspectRatio = width / height;
+
+        const parent = canvas.parentNode as HTMLDivElement;
+        parent.style.aspectRatio = aspectRatio.toString();
 
         canvas.width = width;
         canvas.height = height;
+        canvas.style.display = "block";
+
         const ctx = canvas.getContext("2d" /*, { alpha: false } */);
         if (!ctx) throw new Error("no 2d contxt from canvas");
 
         ctx.drawImage(image, 0, 0, width, height);
         setInImgLoaded(true);
-        console.log("loaded");
-        //const dataUrl = canvas.toDataURL("image/jpeg");
-        //const
+        setFile(file);
       };
 
       if (!readerEvent) throw new Error("no readerEevent");
@@ -206,12 +264,13 @@ export default function Inpainting() {
     // setLog(["[WebUI] Executing..."]);
     setImgSrc("/img/placeholder.png");
 
-    if (!inCanvasRef.current) throw new Error("inCanvasRef.current not set");
+    if (!initImageCanvasRef.current)
+      throw new Error("initImageCanvasRef.current not set");
 
     const init_image_blob = (await new Promise(
       (resolve) =>
-        inCanvasRef.current &&
-        inCanvasRef.current.toBlob(
+        initImageCanvasRef.current &&
+        initImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
           "image/jpeg"
         )
@@ -224,8 +283,8 @@ export default function Inpainting() {
 
     const mask_image_blob = (await new Promise(
       (resolve) =>
-        canvasRef.current &&
-        canvasRef.current.toBlob(
+        maskImageCanvasRef.current &&
+        maskImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
           "image/jpeg"
         )
@@ -268,19 +327,29 @@ export default function Inpainting() {
   return (
     <>
       <div
+        id="imageOuterDiv"
         style={{
           position: "relative",
-          height: 514,
-          width: 514,
+          width: "100%",
+          // height: "calc(100vw - 46px)",
+          aspectRatio: "1", // initial value; updated on imgLoad
+          //maxWidth: 514,
+          //maxHeight: 514,
           border: "1px solid black",
         }}
       >
-        <div style={{ position: "absolute", top: 0, left: 0, padding: "20px" }}>
-          <p>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            padding: "20px",
+            display: initImageLoaded ? "none" : "block",
+          }}
+        >
+          <b>
             <Trans>Status: In Active Development</Trans>
-          </p>
-
-          <p>This works, but only just :)</p>
+          </b>
 
           <ol>
             <li>
@@ -292,26 +361,37 @@ export default function Inpainting() {
             <li>Adjust prompt and GO</li>
           </ol>
 
-          <p>Roadmap / Notes / Coming Soon</p>
+          <div style={{ fontSize: "85%" }}>
+            <p>Roadmap / Notes / Coming Soon</p>
 
-          <ul>
-            <li>UI needs work</li>
-            <li>Image hardcoded to 512x512 (for now)</li>
-            <li>Better instructions / guide</li>
-          </ul>
+            <ul>
+              <li>Image will be scaled to max 512x512</li>
+              <li>TODO: Better instructions / guide</li>
+            </ul>
+          </div>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <canvas
+          id="initImageCanvas"
           style={{
+            border: DRAW_BORDERS ? "1px solid green" : undefined,
             position: "absolute",
             top: 0,
             left: 0,
-            width: 512,
-            height: 512,
+            display: "none",
+            // Canvas is cropped image size, browser will scale to fill window
+            width: "100%",
+            height: "100%",
           }}
-          ref={inCanvasRef}
+          ref={initImageCanvasRef}
         ></canvas>
-        {inImgLoaded && <MaskCanvas canvasRef={canvasRef} />}
+        {initImageLoaded && (
+          <MaskCanvas
+            file={file}
+            initImageCanvasRef={initImageCanvasRef}
+            maskImageCanvasRef={maskImageCanvasRef}
+          />
+        )}
       </div>
       <input type="file" ref={inputFile} onChange={fileChange}></input>
       <br />
