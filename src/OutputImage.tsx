@@ -47,6 +47,13 @@ export default function OutputImage({
 }) {
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
+  const [aspectRatio, setAspectRatio] = React.useState("1");
+
+  function onload(event: ReactEventHandler<HTMLImageElement>) {
+    const img = imgResult.current;
+    if (!img) throw new Error("no imgResult.current");
+    setAspectRatio(img.naturalWidth + " / " + img.naturalHeight);
+  }
 
   async function copy() {
     if (!imgResult.current) return;
@@ -88,96 +95,88 @@ export default function OutputImage({
 
   return (
     <Box
+      onMouseOver={() => setMouseOver(true)}
+      onMouseOut={() => setMouseOver(false)}
       sx={{
         mt: 1,
         mb: 2,
         width: "100%",
-        height: "calc(100vw - 46px)",
-        maxHeight: 512,
+        aspectRatio,
+        position: "relative",
+        margin: "auto",
+        border: "1px solid black",
       }}
     >
-      <Box
-        onMouseOver={() => setMouseOver(true)}
-        onMouseOut={() => setMouseOver(false)}
-        sx={{
-          width: "calc(100vw - 46px)",
-          maxWidth: 512,
-          height: "100%",
-          position: "relative",
-          margin: "auto",
-          border: "1px solid #ddd",
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        alt="model output"
+        ref={imgResult}
+        width="100%"
+        height="100%"
+        src={imgSrc || "/img/placeholder.png"}
+        onLoad={onload}
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
         }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          alt="model output"
-          ref={imgResult}
-          width="100%"
-          height="100%"
-          src={imgSrc || "/img/placeholder.png"}
-          style={{
+      />
+      {mouseOver && log.length === 0 && (
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 10,
+            right: 10,
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+            onClick={copy}
+          >
+            <ContentCopy />
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+            onClick={download}
+          >
+            <Download />
+          </Button>
+          {canShare && (
+            <Button
+              variant="contained"
+              sx={{
+                px: 0.5,
+                mx: 0.5,
+                background: "rgba(170,170,170,0.7)",
+              }}
+              onClick={share}
+            >
+              <Share />
+            </Button>
+          )}
+        </Box>
+      )}
+      {log.length > 0 && (
+        <Box
+          sx={{
+            py: 0.5,
+            px: 2,
+            width: "100%",
+            height: "100%",
             position: "absolute",
             left: 0,
             top: 0,
+            overflow: "auto",
           }}
-        />
-        {mouseOver && log.length === 0 && (
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 10,
-              right: 10,
-            }}
-          >
-            <Button
-              variant="contained"
-              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-              onClick={copy}
-            >
-              <ContentCopy />
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-              onClick={download}
-            >
-              <Download />
-            </Button>
-            {canShare && (
-              <Button
-                variant="contained"
-                sx={{
-                  px: 0.5,
-                  mx: 0.5,
-                  background: "rgba(170,170,170,0.7)",
-                }}
-                onClick={share}
-              >
-                <Share />
-              </Button>
-            )}
-          </Box>
-        )}
-        {log.length > 0 && (
-          <Box
-            sx={{
-              py: 0.5,
-              px: 2,
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-              left: 0,
-              top: 0,
-              overflow: "auto",
-            }}
-          >
-            <div style={{ position: "absolute", right: 10, top: 10 }}>
-              <Timer />
-            </div>
-            <Log log={log} />
-          </Box>
-        )}
-      </Box>
+        >
+          <div style={{ position: "absolute", right: 10, top: 10 }}>
+            <Timer />
+          </div>
+          <Log log={log} />
+        </Box>
+      )}
     </Box>
   );
 }
