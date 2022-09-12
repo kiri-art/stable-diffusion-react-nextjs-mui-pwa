@@ -5,9 +5,9 @@ const Inpaint = dynamic(() => import("../src/Img2img"), {
 });
 
 import React from "react";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/macro";
 
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 
