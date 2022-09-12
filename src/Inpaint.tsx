@@ -182,6 +182,20 @@ function MaskCanvas({
 
   return (
     <>
+      <canvas
+        id="maskImageCanvas"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          touchAction: "none",
+          border: DRAW_BORDERS ? "1px solid red" : undefined,
+          // Canvas is cropped image size, browser will scale to fill window
+          width: "100%",
+          height: "100%",
+        }}
+        ref={maskImageCanvasRef}
+      />
       <div
         style={{
           position: "absolute",
@@ -199,20 +213,6 @@ function MaskCanvas({
           <Redo />
         </IconButton>
       </div>
-      <canvas
-        id="maskImageCanvas"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          touchAction: "none",
-          border: DRAW_BORDERS ? "1px solid red" : undefined,
-          // Canvas is cropped image size, browser will scale to fill window
-          width: "100%",
-          height: "100%",
-        }}
-        ref={maskImageCanvasRef}
-      />
     </>
   );
 }
@@ -440,6 +440,9 @@ export default function Inpainting() {
             padding: "20px",
             display: initImageLoaded ? "none" : "block",
             direction: "ltr",
+            width: "100%",
+            height: "100%",
+            overflow: "auto",
           }}
         >
           <b>Quick Start</b>
