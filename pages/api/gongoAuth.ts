@@ -40,7 +40,7 @@ gongoAuth.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: ROOT_URL + "/api/gongoAuth",
+      callbackURL: ROOT_URL + "/api/gongoAuth?service=google",
       passReqToCallback: true,
     },
     gongoAuth.passportVerify
@@ -56,7 +56,7 @@ gongoAuth.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: ROOT_URL + "/api/gongoAuth",
+      callbackURL: ROOT_URL + "/api/gongoAuth?service=github",
       passReqToCallback: true,
     },
     gongoAuth.passportVerify
@@ -86,21 +86,20 @@ if (gs.dba) {
 }
 
 // @ts-expect-error: any
-export default function handler(req, res, next) {
+export default function handler(req, res) {
   if (req.query.type === "setup") {
     gongoAuth.ensureDbStrategyData().then(() => res.end("OK"));
     return;
   }
 
-  passport.authenticate("google", gongoAuth.boundPassportComplete(req, res))(
-    req,
-    res,
-    next
-  );
+  if (!req.query.service)
+    return res.status(400).end("No ?service= param specified");
 
-  passport.authenticate("github", gongoAuth.boundPassportComplete(req, res))(
-    req,
-    res,
-    next
-  );
+  const next = () =>
+    res.status(400).end("No such service: " + req.query.service);
+
+  passport.authenticate(
+    req.query.service,
+    gongoAuth.boundPassportComplete(req, res)
+  )(req, res, next);
 }
