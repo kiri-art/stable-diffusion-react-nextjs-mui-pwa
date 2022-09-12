@@ -13,22 +13,26 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: pages/index.tsx:98
+#: src/sd/Controls.tsx:142
+msgid "(Denoising) Strength"
+msgstr "(Denoising) Strength"
+
+#: pages/index.tsx:106
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr ""
 
-#: pages/txt2img.tsx:320
-#: pages/txt2img.tsx:393
-#: pages/txt2img.tsx:420
+#: src/sd/Controls.tsx:93
+#: src/sd/Controls.tsx:181
+#: src/sd/Controls.tsx:224
 msgid "<0>Learn more</0>"
 msgstr ""
 
-#: pages/_app.tsx:57
+#: src/workboxStuff.tsx:42
 msgid "A newer version of this web app is available, reload to update?"
 msgstr ""
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:96
+#: src/MyAppBar.tsx:99
 msgid "About"
 msgstr ""
 
@@ -37,7 +41,7 @@ msgid "Access Denied."
 msgstr ""
 
 #: pages/admin.tsx:219
-#: src/MyAppBar.tsx:100
+#: src/MyAppBar.tsx:103
 msgid "Admin"
 msgstr ""
 
@@ -49,11 +53,11 @@ msgstr ""
 msgid "Back to Credits"
 msgstr ""
 
-#: pages/index.tsx:55
+#: pages/index.tsx:63
 msgid "Be Responsible"
 msgstr ""
 
-#: pages/credits.tsx:153
+#: pages/credits.tsx:155
 msgid "Buy 50 credits for $1"
 msgstr ""
 
@@ -62,20 +66,20 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: pages/txt2img.tsx:382
+#: src/sd/Controls.tsx:170
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/credits.tsx:30
-#: pages/credits.tsx:30
+#: pages/credits.tsx:32
+#: pages/credits.tsx:32
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
 #: pages/img2img.tsx:18
-msgid "Coming Soon"
-msgstr ""
+#~ msgid "Coming Soon"
+#~ msgstr ""
 
-#: src/MyAppBar.tsx:193
+#: src/MyAppBar.tsx:196
 msgid "Credits:"
 msgstr ""
 
@@ -87,31 +91,31 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: pages/txt2img.tsx:314
+#: src/sd/Controls.tsx:87
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr ""
 
-#: pages/index.tsx:59
+#: pages/index.tsx:67
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
-#: pages/credits.tsx:130
+#: pages/credits.tsx:132
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr ""
 
-#: pages/credits.tsx:116
+#: pages/credits.tsx:118
 msgid "Free Credits"
 msgstr ""
 
-#: pages/txt2img.tsx:350
+#: src/sd/Controls.tsx:396
 msgid "Get More Credits"
 msgstr ""
 
-#: pages/txt2img.tsx:348
+#: src/sd/Controls.tsx:394
 msgid "Go"
 msgstr ""
 
-#: pages/txt2img.tsx:444
+#: src/sd/Controls.tsx:290
 msgid "Height"
 msgstr ""
 
@@ -120,7 +124,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: pages/txt2img.tsx:388
+#: src/sd/Controls.tsx:176
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr ""
 
@@ -128,48 +132,63 @@ msgstr ""
 #~ msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best. <0>Learn more</0>"
 #~ msgstr ""
 
-#: pages/img2img.tsx:11
-#: pages/img2img.tsx:14
+#: pages/img2img.tsx:17
+#: pages/img2img.tsx:20
 #: pages/index.tsx:42
 #: src/MyAppBar.tsx:93
 msgid "Image to Image"
 msgstr ""
 
-#: pages/credits.tsx:52
+#: pages/index.tsx:50
+#: pages/inpaint.tsx:17
+#: pages/inpaint.tsx:20
+#: src/MyAppBar.tsx:96
+msgid "Inpainting"
+msgstr "Inpainting"
+
+#: pages/credits.tsx:54
 msgid "Loading..."
 msgstr ""
 
-#: pages/txt2img.tsx:352
-#: src/MyAppBar.tsx:215
+#: src/MyAppBar.tsx:218
+#: src/sd/Controls.tsx:398
 msgid "Login"
 msgstr ""
 
-#: src/MyAppBar.tsx:204
+#: src/MyAppBar.tsx:207
 msgid "Logout"
 msgstr ""
 
-#: pages/credits.tsx:103
+#: src/sd/Controls.tsx:302
+msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
+msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
+
+#: src/sd/Controls.tsx:264
+msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
+msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
+
+#: pages/credits.tsx:105
 msgid "My Credits"
 msgstr ""
 
-#: pages/credits.tsx:123
+#: pages/credits.tsx:125
 msgid "Next credits on:"
 msgstr ""
 
-#: pages/index.tsx:64
+#: pages/index.tsx:72
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr ""
 
-#: pages/credits.tsx:27
-#: pages/credits.tsx:27
+#: pages/credits.tsx:29
+#: pages/credits.tsx:29
 msgid "No such code exists."
 msgstr ""
 
-#: pages/txt2img.tsx:408
+#: src/sd/Controls.tsx:212
 msgid "Number of Inference Steps"
 msgstr ""
 
-#: pages/txt2img.tsx:415
+#: src/sd/Controls.tsx:219
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr ""
 
@@ -177,7 +196,7 @@ msgstr ""
 #~ msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results. <0>Learn more</0>"
 #~ msgstr ""
 
-#: pages/credits.tsx:175
+#: pages/credits.tsx:177
 #: pages/order/[_id].tsx:75
 msgid "Order History"
 msgstr ""
@@ -199,20 +218,20 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-#: pages/credits.tsx:151
+#: pages/credits.tsx:153
 #: src/CheckoutForm.tsx:58
 msgid "Please wait..."
 msgstr ""
 
-#: pages/credits.tsx:107
+#: pages/credits.tsx:109
 msgid "Purchase Successful!"
 msgstr ""
 
-#: pages/credits.tsx:136
+#: pages/credits.tsx:138
 msgid "Purchased Credits"
 msgstr ""
 
-#: pages/credits.tsx:138
+#: pages/credits.tsx:140
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr ""
 
@@ -220,15 +239,15 @@ msgstr ""
 msgid "Reason"
 msgstr ""
 
-#: pages/credits.tsx:52
+#: pages/credits.tsx:54
 msgid "Redeem"
 msgstr ""
 
-#: pages/credits.tsx:43
+#: pages/credits.tsx:45
 msgid "Redeem Credit Code"
 msgstr ""
 
-#: pages/credits.tsx:179
+#: pages/credits.tsx:181
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr ""
 
@@ -244,56 +263,65 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: pages/credits.tsx:37
-#: pages/credits.tsx:37
+#: src/Inpaint.tsx:439
+msgid "Status: In Active Development"
+msgstr "Status: In Active Development"
+
+#: pages/credits.tsx:39
+#: pages/credits.tsx:39
 msgid "Successfully redeemed {0} credits."
 msgstr ""
 
-#: pages/index.tsx:95
+#: pages/index.tsx:103
 msgid "Terms of Service"
 msgstr ""
 
 #: pages/index.tsx:34
-#: pages/txt2img.tsx:200
+#: pages/txt2img.tsx:72
 #: src/MyAppBar.tsx:90
 msgid "Text to Image"
 msgstr ""
 
-#: pages/credits.tsx:159
+#: pages/credits.tsx:161
 #: src/CheckoutForm.tsx:62
 msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 msgstr ""
 
-#: pages/index.tsx:86
+#: pages/index.tsx:94
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
-#: pages/credits.tsx:166
+#: pages/credits.tsx:168
 msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
 msgstr ""
 
-#: pages/credits.tsx:111
+#: pages/credits.tsx:113
 msgid "Total Credits"
 msgstr ""
 
-#: pages/credits.tsx:113
+#: pages/credits.tsx:115
 msgid "Total credits available for immediate use."
 msgstr ""
 
-#: pages/txt2img.tsx:431
+#: src/sd/Controls.tsx:252
 msgid "Width"
 msgstr ""
+
+#: src/sd/Controls.tsx:263
+#: src/sd/Controls.tsx:301
+msgid "Width of output image."
+msgstr "Width of output image."
 
 #: pages/about.tsx:44
 msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
 msgstr ""
 
-#: pages/credits.tsx:33
-#: pages/credits.tsx:33
+#: pages/credits.tsx:35
+#: pages/credits.tsx:35
 msgid "You have already redeemed this code before."
 msgstr ""
 
-#: pages/index.tsx:70
+#: pages/index.tsx:78
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr ""
 
@@ -301,6 +329,6 @@ msgstr ""
 #~ msgid "You receive free credits every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr ""
 
-#: pages/credits.tsx:118
+#: pages/credits.tsx:120
 msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 msgstr ""

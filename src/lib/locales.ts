@@ -17,6 +17,7 @@ const locales: Record<string, locale> = {
     label: {
       "en-US": "English (US)",
       "he-IL": 'אנגלית (ארה"ב)',
+      "ja-JP": "英語 (米国)",
     },
   },
 
@@ -27,10 +28,25 @@ const locales: Record<string, locale> = {
     region: "il",
     label: {
       "en-US": "English (US)",
-      "he-IL": "ישראל (עברית)",
+      "he-IL": "עברית (ישראל)",
+      "ja-JP": "ヘブライ語 (イスラエル)",
+    },
+  },
+
+  "ja-JP": {
+    id: "ja-JP",
+    dir: "ltr",
+    language: "ja",
+    region: "jp",
+    label: {
+      "en-US": "Japanese (JP)",
+      "he-IL": "יפנית (יפן)",
+      "ja-JP": "日本語（日本）",
     },
   },
 };
 
-export { defaultLocale };
+const localeArray = Object.keys(locales);
+
+export { defaultLocale, localeArray };
 export default locales;

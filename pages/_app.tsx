@@ -44,6 +44,8 @@ export default function MyApp(props: MyAppProps) {
     }
 
     // Lingui
+    // When we need to add dynamic language loading...
+    // https://lingui.js.org/guides/dynamic-loading-catalogs.html#final-i18n-loader-helper
     i18n.activate(locale.id);
   }, [locale]);
 
