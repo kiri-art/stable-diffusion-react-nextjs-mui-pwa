@@ -11,320 +11,320 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;"
 
 #: src/sd/Controls.tsx:142
 msgid "(Denoising) Strength"
-msgstr ""
+msgstr "(ノイズ除去) 強度"
 
 #: pages/index.tsx:106
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
-msgstr ""
+msgstr "1) 自己責任でご使用ください。このプロジェクトの使用（または誤用）の結果として生じる結果について、当社は一切の責任を負いません。2) このサイトまたはプロジェクトを使用することは、上記の「自己責任」の原則、Stable Diffusion の <0>CreativeML Open RAIL-M ライセンス</0>、およびこのプロジェクトの <1>MIT ライセンス</1>を含む、その条項および規則に同意することを意味します。"
 
 #: src/sd/Controls.tsx:93
 #: src/sd/Controls.tsx:181
 #: src/sd/Controls.tsx:224
 msgid "<0>Learn more</0>"
-msgstr ""
+msgstr "<0>詳細を見る</0>"
 
 #: src/workboxStuff.tsx:42
 msgid "A newer version of this web app is available, reload to update?"
-msgstr ""
+msgstr "このウェブアプリの新しいバージョンが利用可能です。再読み込みしてアップデートしますか？"
 
 #: pages/about.tsx:16
 #: src/MyAppBar.tsx:99
 msgid "About"
-msgstr ""
+msgstr "概要"
 
 #: pages/admin.tsx:213
 msgid "Access Denied."
-msgstr ""
+msgstr "アクセスが拒否されました。"
 
 #: pages/admin.tsx:219
 #: src/MyAppBar.tsx:103
 msgid "Admin"
-msgstr ""
+msgstr "管理者"
 
 #: pages/order/[_id].tsx:58
 msgid "Amount"
-msgstr ""
+msgstr "総額"
 
 #: pages/order/[_id].tsx:72
 msgid "Back to Credits"
-msgstr ""
+msgstr "クレジットに戻る"
 
 #: pages/index.tsx:63
 msgid "Be Responsible"
-msgstr ""
+msgstr "責任を持ちましょう"
 
 #: pages/credits.tsx:155
 msgid "Buy 50 credits for $1"
-msgstr ""
+msgstr "$1 で 50 クレジットを購入"
 
 #: pages/checkout.tsx:60
 #: pages/checkout.tsx:63
 msgid "Checkout"
-msgstr ""
+msgstr "お支払い"
 
 #: src/sd/Controls.tsx:170
 msgid "Classifier-Free Guidance (Scale)"
-msgstr ""
+msgstr "分類子なしのガイダンス (スケール)"
 
 #: pages/credits.tsx:32
 #: pages/credits.tsx:32
 msgid "Code already redeeemed maximum number of times, sorry."
-msgstr ""
+msgstr "申し訳ありませんが、コードの使用回数がすでに最大数に達しています。"
 
 #: pages/login.tsx:64
 msgid "Connect with {0}"
-msgstr ""
+msgstr "{0} とつなげる"
 
 #: src/MyAppBar.tsx:196
 msgid "Credits:"
-msgstr ""
+msgstr "クレジット: "
 
 #: pages/order/[_id].tsx:61
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #: pages/order/[_id].tsx:55
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #: src/sd/Controls.tsx:87
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
-msgstr ""
+msgstr "ご希望の画像の説明/キャプション。 「印象派」、「デジタルアート」、写真のスタイルやレンズなどのアートスタイル、その他のヒントが含まれる場合があります。"
 
 #: pages/index.tsx:67
 msgid "Do not create any harmful content (racist, inciteful, etc)."
-msgstr ""
+msgstr "有害なコンテンツ (人種差別、扇動的など) を作成しないでください。"
 
 #: pages/credits.tsx:132
 msgid "Earn free credits by contributing to the project on GitHub!"
-msgstr ""
+msgstr "GitHub でプロジェクトに貢献して、無料クレジットを獲得しましょう！"
 
 #: pages/credits.tsx:118
 msgid "Free Credits"
-msgstr ""
+msgstr "無料クレジット"
 
 #: src/sd/Controls.tsx:396
 msgid "Get More Credits"
-msgstr ""
+msgstr "クレジットをさらに取得"
 
 #: pages/login.tsx:27
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: src/sd/Controls.tsx:394
 msgid "Go"
-msgstr ""
+msgstr "進む"
 
 #: pages/login.tsx:19
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #: src/sd/Controls.tsx:290
 msgid "Height"
-msgstr ""
+msgstr "高さ"
 
 #: pages/index.tsx:14
 #: src/MyAppBar.tsx:87
 msgid "Home"
-msgstr ""
+msgstr "ホーム"
 
 #: src/sd/Controls.tsx:176
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
-msgstr ""
+msgstr "プロンプトに従う程度。 値が低い = より創造的で、より多様性があります。 値が高い = より正確で、アーティファクトが発生する場合があります。 5 ～ 15 の値が最適です。"
 
 #: pages/img2img.tsx:17
 #: pages/img2img.tsx:20
 #: pages/index.tsx:42
 #: src/MyAppBar.tsx:93
 msgid "Image to Image"
-msgstr ""
+msgstr "画像から画像へ"
 
 #: pages/index.tsx:50
 #: pages/inpaint.tsx:17
 #: pages/inpaint.tsx:20
 #: src/MyAppBar.tsx:96
 msgid "Inpainting"
-msgstr ""
+msgstr "インペインティング"
 
 #: pages/credits.tsx:54
 msgid "Loading..."
-msgstr ""
+msgstr "読み込み中..."
 
 #: src/MyAppBar.tsx:218
 #: src/sd/Controls.tsx:398
 msgid "Login"
-msgstr ""
+msgstr "ログイン"
 
 #: src/MyAppBar.tsx:207
 msgid "Logout"
-msgstr ""
+msgstr "ログアウト"
 
 #: src/sd/Controls.tsx:302
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
-msgstr ""
+msgstr "メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
 
 #: src/sd/Controls.tsx:264
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
-msgstr ""
+msgstr "64 の倍数である必要があります。 メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
 
 #: pages/credits.tsx:105
 msgid "My Credits"
-msgstr ""
+msgstr "私のクレジット"
 
 #: pages/credits.tsx:125
 msgid "Next credits on:"
-msgstr ""
+msgstr "次のクレジット："
 
 #: pages/index.tsx:72
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
-msgstr ""
+msgstr "フェアユース以外のディープフェイクはありません（例：ユーモア、教育、誤解を招くもの、政治的なもの）。"
 
 #: pages/credits.tsx:29
 #: pages/credits.tsx:29
 msgid "No such code exists."
-msgstr ""
+msgstr "そのようなコードは存在しません。"
 
 #: src/sd/Controls.tsx:212
 msgid "Number of Inference Steps"
-msgstr ""
+msgstr "推論ステップ数"
 
 #: src/sd/Controls.tsx:219
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
-msgstr ""
+msgstr "ノイズ除去のステップ数 (画像をやり直して改善する回数)。 数値が大きいほどレンダリングに時間がかかりますが、より質が高い結果が得られる場合があります。"
 
 #: pages/credits.tsx:177
 #: pages/order/[_id].tsx:75
 msgid "Order History"
-msgstr ""
+msgstr "注文履歴"
 
 #: pages/order/[_id].tsx:49
 #: pages/orders.tsx:44
 msgid "Order Status"
-msgstr ""
+msgstr "注文状況"
 
 #: pages/order/[_id].tsx:52
 msgid "Order {_id}"
-msgstr ""
+msgstr "注文 {_id}"
 
 #: pages/orders.tsx:47
 msgid "Orders"
-msgstr ""
+msgstr "注文"
 
 #: src/CheckoutForm.tsx:58
 msgid "Pay"
-msgstr ""
+msgstr "支払う"
 
 #: pages/credits.tsx:153
 #: src/CheckoutForm.tsx:58
 msgid "Please wait..."
-msgstr ""
+msgstr "お待ちください..."
 
 #: pages/credits.tsx:109
 msgid "Purchase Successful!"
-msgstr ""
+msgstr "購入しました!"
 
 #: pages/credits.tsx:138
 msgid "Purchased Credits"
-msgstr ""
+msgstr "購入したクレジット"
 
 #: pages/credits.tsx:140
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
-msgstr ""
+msgstr "購入したクレジットはその月の無料クレジットがなくなると使用され、有効期限はありません。"
 
 #: pages/order/[_id].tsx:68
 msgid "Reason"
-msgstr ""
+msgstr "理由"
 
 #: pages/credits.tsx:54
 msgid "Redeem"
-msgstr ""
+msgstr "利用する"
 
 #: pages/credits.tsx:45
 msgid "Redeem Credit Code"
-msgstr ""
+msgstr "クレジットコードを利用する"
 
 #: pages/credits.tsx:181
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
-msgstr ""
+msgstr "ご注意: これは無料オープンソースソフトウェアです。 適切なグラフィックカードまたは安価な Banana.Dev アカウントを使用して、ご自身の PC でご自身のコピーを無料で実行できます。 詳しくは<0>ページについて</0>をご覧ください。"
 
 #: pages/about.tsx:57
 msgid "Rendering can be performed either 1) locally with a Banana.Dev docker image (recommended), 2) locally with an existing Stable Diffusion installation, or 3) remotely via a Banana.Dev account. Details in the <0>project README</0>."
-msgstr ""
+msgstr "レンダリングは、1) Banana.Dev Docker の画像を使用してローカルで (推奨) 実行、2) すでにインストールされた Stable Diffusion を使用してローカルで実行、または 3) Banana.Dev アカウントを介してリモートで実行できます。 詳細は<0>プロジェクトの README</0> でご確認ください。"
 
 #: pages/about.tsx:32
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
-msgstr ""
+msgstr "SD-MUI は、<0>Stability.AI</0> の <1>Stable Diffusion</1> web UI のフロントエンドです。 これは FOSS (無料オープンソースソフトウェアフロントエンド) であり、コミュニティによって開発されています。"
 
 #: pages/order/[_id].tsx:64
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 #: src/Inpaint.tsx:439
 msgid "Status: In Active Development"
-msgstr ""
+msgstr "ステータス：開発中"
 
 #: pages/credits.tsx:39
 #: pages/credits.tsx:39
 msgid "Successfully redeemed {0} credits."
-msgstr ""
+msgstr "{0}クレジットを利用しました。"
 
 #: pages/index.tsx:103
 msgid "Terms of Service"
-msgstr ""
+msgstr "利用規約"
 
 #: pages/index.tsx:34
 #: pages/txt2img.tsx:72
 #: src/MyAppBar.tsx:90
 msgid "Text to Image"
-msgstr ""
+msgstr "テキストから画像へ"
 
 #: pages/credits.tsx:161
 #: src/CheckoutForm.tsx:62
 msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
-msgstr ""
+msgstr "「Wastelands Networking」または「Wastelands* SD-MUI」から請求されます。"
 
 #: pages/index.tsx:94
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
-msgstr ""
+msgstr "このプロジェクトは、無料オープンソースソフトウェアに基づいています。 ご自身のコンピューターで無料で実行できます (適切な GPU がある場合、またはご自身の Banana サーバーレス GPU アカウントを使用している場合)。 参加したいですか? <0>概要</0>ページをご覧ください。"
 
 #: pages/credits.tsx:168
 msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
-msgstr ""
+msgstr "このプロジェクトは、ボランティアが空き時間に運営するコミュニティです。 保証は一切ありません。 いつでも機能しなくなる可能性があり、返金はいたしません。 そのため、一度に購入できるのは 1 ドル相当のクレジットのみです。"
 
 #: pages/credits.tsx:113
 msgid "Total Credits"
-msgstr ""
+msgstr "合計クレジット"
 
 #: pages/credits.tsx:115
 msgid "Total credits available for immediate use."
-msgstr ""
+msgstr "すぐに使用できる合計クレジット。"
 
 #: src/sd/Controls.tsx:252
 msgid "Width"
-msgstr ""
+msgstr "幅"
 
 #: src/sd/Controls.tsx:263
 #: src/sd/Controls.tsx:301
 msgid "Width of output image."
-msgstr ""
+msgstr "出力画像の幅。"
 
 #: pages/about.tsx:44
 msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
-msgstr ""
+msgstr "ご自身のコンピューター (適切な GPU がある場合) で無料で実行するか、<0>Banana.Dev</0> のサーバーレス GPU クラウドからの実行も非常に安価です。 <1>GitHub プロジェクト</1>に参加して、素晴らしいものを一緒に作りましょう。"
 
 #: pages/credits.tsx:35
 #: pages/credits.tsx:35
 msgid "You have already redeemed this code before."
-msgstr ""
+msgstr "このコードは以前に利用したことがあります。"
 
 #: pages/index.tsx:78
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
-msgstr ""
+msgstr "他の場所で共有するコンテンツについては、その画像がコンピューターで生成されたものであることを明確に示す必要があります。"
 
 #: pages/credits.tsx:120
 msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
-msgstr ""
+msgstr "無料クレジットは毎月チャージされます。 これらは、支払ったクレジットの前に使用されます。 未使用のクレジットは持ち越されません。"
