@@ -65,6 +65,8 @@ function Prompt({
 
     return (
       <TextField
+        dir="ltr"
+        lang="en"
         label="Prompt"
         fullWidth
         multiline

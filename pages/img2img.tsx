@@ -16,10 +16,6 @@ export default function Img2img() {
     <>
       <MyAppBar title={t`Image to Image`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
-        <Typography variant="h5">
-          <Trans>Image to Image</Trans>
-        </Typography>
-
         <Inpaint />
       </Container>
     </>

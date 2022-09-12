@@ -12,7 +12,8 @@ import OutputImage from "../src/OutputImage";
 import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
-import { Trans } from "@lingui/macro";
+// import { Trans } from "@lingui/macro";
+import locales from "../src/lib/locales";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -31,6 +32,9 @@ function MaskCanvas({
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
   const isDrawing = React.useRef(false);
+  const router = useRouter();
+  const locale = locales[router.locale || defaultLocale];
+  const dir = locale.dir as "ltr" | "rtl";
 
   /*
    * [
@@ -181,8 +185,8 @@ function MaskCanvas({
       <div
         style={{
           position: "absolute",
-          top: -38,
-          left: 120,
+          bottom: -38,
+          [dir == "ltr" ? "right" : "left"]: 10,
         }}
       >
         <IconButton onClick={clearOps}>
@@ -421,9 +425,11 @@ export default function Inpainting() {
           width: "100%",
           // height: "calc(100vw - 46px)",
           aspectRatio: "1", // initial value; updated on imgLoad
-          //maxWidth: 514,
-          //maxHeight: 514,
+          maxWidth: 512,
+          maxHeight: 512,
           border: "1px solid black",
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
         <div
@@ -433,11 +439,10 @@ export default function Inpainting() {
             left: 0,
             padding: "20px",
             display: initImageLoaded ? "none" : "block",
+            direction: "ltr",
           }}
         >
-          <b>
-            <Trans>Status: In Active Development</Trans>
-          </b>
+          <b>Quick Start</b>
 
           <ol>
             <li>
@@ -481,7 +486,15 @@ export default function Inpainting() {
           />
         )}
       </div>
-      <input type="file" ref={inputFile} onChange={fileChange}></input>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 512,
+          margin: "auto",
+        }}
+      >
+        <input type="file" ref={inputFile} onChange={fileChange}></input>
+      </div>
       {imgSrc && (
         <OutputImage
           prompt={inputs.prompt.value.toString()}

@@ -215,24 +215,35 @@ function Canvas({
     ,
   ]);
   return (
-    <canvas
-      id="initImageCanvas"
+    <div
       style={{
-        // position: "absolute",
-        // top: 0,
-        // left: 0,
-        // disable scroll if we're drawing (i.e. no file)
-        touchAction: "none", // file ? undefined : "none",
-        // border: DRAW_BORDERS ? "1px solid red" : undefined,
-        // Canvas is cropped image size, browser will scale to fill window
-        width: "100%",
-        aspectRatio: "1",
-        border: "1px solid black",
+        maxWidth: 512,
+        maxHeight: 512,
+        marginLeft: "auto",
+        marginRight: "auto",
       }}
-      // width={512}
-      // height={512}
-      ref={initImageCanvasRef}
-    />
+    >
+      <canvas
+        id="initImageCanvas"
+        style={{
+          // position: "absolute",
+          // top: 0,
+          // left: 0,
+          // disable scroll if we're drawing (i.e. no file)
+          touchAction: "none", // file ? undefined : "none",
+          // border: DRAW_BORDERS ? "1px solid red" : undefined,
+          // Canvas is cropped image size, browser will scale to fill window
+          width: "100%",
+          maxWidth: 512,
+          maxHeight: 512,
+          aspectRatio: "1",
+          border: "1px solid black",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+        ref={initImageCanvasRef}
+      />
+    </div>
   );
 }
 
@@ -334,7 +345,7 @@ function Paint({
         opsIndexRef={opsIndexRef}
       />
       {
-        /*!file &&*/ <div>
+        /*!file &&*/ <div style={{ textAlign: "center" }}>
           <IconButton onClick={clearOps}>
             <Clear />
           </IconButton>
@@ -593,7 +604,9 @@ export default function Img2img() {
   return (
     <>
       <Paint initImageCanvasRef={initImageCanvasRef} imageRef={imageRef} />
-      <input type="file" ref={inputFile} onChange={fileChange}></input>
+      <div style={{ textAlign: "center" }}>
+        <input type="file" ref={inputFile} onChange={fileChange}></input>
+      </div>
       {imgSrc && (
         <OutputImage
           prompt={inputs.prompt.value.toString()}

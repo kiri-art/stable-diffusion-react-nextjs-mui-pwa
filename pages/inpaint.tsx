@@ -16,10 +16,6 @@ export default function Inpainting() {
     <>
       <MyAppBar title={t`Inpainting`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
-        <Typography variant="h5">
-          <Trans>Inpainting</Trans>
-        </Typography>
-
         <Inpaint />
       </Container>
     </>

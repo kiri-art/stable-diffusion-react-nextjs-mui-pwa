@@ -100,6 +100,9 @@ export default function OutputImage({
       sx={{
         my: 2,
         width: "100%",
+        maxWidth: 512,
+        marginLeft: "auto",
+        marginRight: "auto",
         aspectRatio,
         position: "relative",
         border: "1px solid black",
