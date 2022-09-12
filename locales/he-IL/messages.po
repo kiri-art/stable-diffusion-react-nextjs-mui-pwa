@@ -79,6 +79,10 @@ msgstr ""
 #~ msgid "Coming Soon"
 #~ msgstr ""
 
+#: pages/login.tsx:64
+msgid "Connect with {0}"
+msgstr ""
+
 #: src/MyAppBar.tsx:196
 msgid "Credits:"
 msgstr ""
@@ -111,8 +115,16 @@ msgstr ""
 msgid "Get More Credits"
 msgstr ""
 
+#: pages/login.tsx:27
+msgid "GitHub"
+msgstr ""
+
 #: src/sd/Controls.tsx:394
 msgid "Go"
+msgstr ""
+
+#: pages/login.tsx:19
+msgid "Google"
 msgstr ""
 
 #: src/sd/Controls.tsx:290

@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: ja-JP\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #: src/sd/Controls.tsx:142
 msgid "(Denoising) Strength"
@@ -69,6 +75,10 @@ msgstr ""
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
+#: pages/login.tsx:64
+msgid "Connect with {0}"
+msgstr ""
+
 #: src/MyAppBar.tsx:196
 msgid "Credits:"
 msgstr ""
@@ -101,8 +111,16 @@ msgstr ""
 msgid "Get More Credits"
 msgstr ""
 
+#: pages/login.tsx:27
+msgid "GitHub"
+msgstr ""
+
 #: src/sd/Controls.tsx:394
 msgid "Go"
+msgstr ""
+
+#: pages/login.tsx:19
+msgid "Google"
 msgstr ""
 
 #: src/sd/Controls.tsx:290
