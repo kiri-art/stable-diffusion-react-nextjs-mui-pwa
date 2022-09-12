@@ -13,7 +13,7 @@ import Controls from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 // import { Trans } from "@lingui/macro";
-import locales from "../src/lib/locales";
+import locales, { defaultLocale } from "../src/lib/locales";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
