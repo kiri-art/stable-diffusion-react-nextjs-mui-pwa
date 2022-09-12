@@ -449,6 +449,12 @@ export default function Img2img() {
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
+  const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
+    null
+  );
+  const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
+    null
+  );
 
   const uiState = { dest: { value: dest, set: setDest } };
 
@@ -583,6 +589,9 @@ export default function Img2img() {
 
     // return;
 
+    setRequestStartTime(Date.now());
+    setRequestEndTime(null);
+
     await txt2img(
       {
         ...modelStateValues(inputs),
@@ -599,6 +608,8 @@ export default function Img2img() {
         MODEL_NAME: "IMG2IMG",
       }
     );
+
+    setRequestEndTime(Date.now());
   }
 
   return (
@@ -612,6 +623,8 @@ export default function Img2img() {
           prompt={inputs.prompt.value.toString()}
           imgSrc={imgSrc}
           log={log}
+          requestStartTime={requestStartTime}
+          requestEndTime={requestEndTime}
         />
       )}
 

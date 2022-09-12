@@ -8,15 +8,37 @@ const canShare =
   typeof navigator === "undefined" || // draw on SSR
   (!!navigator.share && !!navigator.canShare);
 
-function Timer() {
+function Timer({
+  requestStartTime,
+  requestEndTime,
+  mouseOver,
+}: {
+  requestStartTime: number | null;
+  requestEndTime: number | null;
+  mouseOver: boolean;
+}) {
   const [s, setS] = React.useState(0);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setS(s + 0.1), 100);
-    return () => clearTimeout(timeout);
-  }, [s]);
+    if (!requestStartTime) return;
+    if (requestEndTime) return setS((requestEndTime - requestStartTime) / 1000);
+    setS((Date.now() - requestStartTime) / 1000);
+    const interval = setInterval(
+      () => setS((Date.now() - requestStartTime) / 1000),
+      100
+    );
+    return () => {
+      clearInterval(interval);
+    };
+  }, [requestStartTime, requestEndTime]);
 
-  return <div>{s.toFixed(1)}</div>;
+  if (!requestStartTime || (requestEndTime && !mouseOver)) return null;
+
+  const style = requestEndTime
+    ? { color: "white", textShadow: "0 0 4px black" }
+    : { color: "black" };
+
+  return <div style={style}>{s.toFixed(1)}</div>;
 }
 
 function Log({ log }: { log: string[] }) {
@@ -40,10 +62,14 @@ export default function OutputImage({
   prompt,
   imgSrc,
   log,
+  requestStartTime,
+  requestEndTime,
 }: {
   prompt: string;
   imgSrc: string;
   log: string[];
+  requestStartTime: number | null;
+  requestEndTime: number | null;
 }) {
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
@@ -159,25 +185,27 @@ export default function OutputImage({
           )}
         </Box>
       )}
-      {log.length > 0 && (
-        <Box
-          sx={{
-            py: 0.5,
-            px: 2,
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            left: 0,
-            top: 0,
-            overflow: "auto",
-          }}
-        >
-          <div style={{ position: "absolute", right: 10, top: 10 }}>
-            <Timer />
-          </div>
-          <Log log={log} />
-        </Box>
-      )}
+      <Box
+        sx={{
+          py: 0.5,
+          px: 2,
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+          top: 0,
+          overflow: "auto",
+        }}
+      >
+        <div style={{ position: "absolute", right: 10, top: 10 }}>
+          <Timer
+            requestStartTime={requestStartTime}
+            requestEndTime={requestEndTime}
+            mouseOver={mouseOver}
+          />
+        </div>
+        <Log log={log} />
+      </Box>
     </Box>
   );
 }

@@ -29,6 +29,12 @@ export default function Txt2Img() {
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
+  const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
+    null
+  );
+  const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
+    null
+  );
   const randomPrompt = useRandomPrompt();
 
   const userId = useGongoUserId();
@@ -57,6 +63,9 @@ export default function Txt2Img() {
     setImgSrc("/img/placeholder.png");
     if (!inputs.prompt.value) inputs.prompt.setValue(randomPrompt);
 
+    setRequestStartTime(Date.now());
+    setRequestEndTime(null);
+
     await txt2img(
       {
         ...modelStateValues(inputs),
@@ -65,6 +74,8 @@ export default function Txt2Img() {
       // @ts-expect-error: TODO, db auth type
       { setLog, setImgSrc, dest, auth: db.auth.authInfoToSend() }
     );
+
+    setRequestEndTime(Date.now());
   }
 
   return (
@@ -75,6 +86,8 @@ export default function Txt2Img() {
           prompt={inputs.prompt.value.toString()}
           imgSrc={imgSrc}
           log={log}
+          requestStartTime={requestStartTime}
+          requestEndTime={requestEndTime}
         />
         <Controls
           go={go}
