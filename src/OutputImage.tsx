@@ -148,6 +148,27 @@ export default function OutputImage({
           top: 0,
         }}
       />
+      <Box
+        sx={{
+          py: 0.5,
+          px: 2,
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+          top: 0,
+          overflow: "auto",
+        }}
+      >
+        <div style={{ position: "absolute", right: 10, top: 10 }}>
+          <Timer
+            requestStartTime={requestStartTime}
+            requestEndTime={requestEndTime}
+            mouseOver={mouseOver}
+          />
+        </div>
+        <Log log={log} />
+      </Box>{" "}
       {mouseOver && log.length === 0 && (
         <Box
           sx={{
@@ -185,27 +206,6 @@ export default function OutputImage({
           )}
         </Box>
       )}
-      <Box
-        sx={{
-          py: 0.5,
-          px: 2,
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          left: 0,
-          top: 0,
-          overflow: "auto",
-        }}
-      >
-        <div style={{ position: "absolute", right: 10, top: 10 }}>
-          <Timer
-            requestStartTime={requestStartTime}
-            requestEndTime={requestEndTime}
-            mouseOver={mouseOver}
-          />
-        </div>
-        <Log log={log} />
-      </Box>
     </Box>
   );
 }
