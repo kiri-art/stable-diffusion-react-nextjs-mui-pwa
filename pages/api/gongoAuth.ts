@@ -8,15 +8,17 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // import passport from "passport";
 // import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+const GithubStrategy = require("passport-github2").Strategy;
 
 const env = process.env;
 const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
-const ROOT_URL =
+const ROOT_URL = (
   env.ROOT_URL ||
   "http" +
     (env.VERCEL_URL && env.VERCEL_URL.match(/^localhost:/) ? "" : "s") +
     "://" +
-    env.VERCEL_URL;
+    env.VERCEL_URL
+).replace(/\/$/, "");
 
 /*
 console.log({
@@ -49,6 +51,22 @@ gongoAuth.use(
   }
 );
 
+gongoAuth.use(
+  new GithubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: ROOT_URL + "/api/gongoAuth",
+      passReqToCallback: true,
+    },
+    gongoAuth.passportVerify
+  ),
+  {
+    //scope: 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email'
+    scope: "user:email",
+  }
+);
+
 //module.exports = passport.authenticate('google', gongoAuth.passportComplete);
 
 if (gs.dba) {
@@ -75,6 +93,12 @@ export default function handler(req, res, next) {
   }
 
   passport.authenticate("google", gongoAuth.boundPassportComplete(req, res))(
+    req,
+    res,
+    next
+  );
+
+  passport.authenticate("github", gongoAuth.boundPassportComplete(req, res))(
     req,
     res,
     next

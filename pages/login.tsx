@@ -1,8 +1,9 @@
 import React from "react";
 import { db, useGongoUserId } from "gongo-client-react";
 import { useRouter } from "next/router";
+import { t, Trans } from "@lingui/macro";
 
-import GoogleIcon from "@mui/icons-material/Google";
+import { Google, GitHub } from "@mui/icons-material";
 
 import AppBar from "../src/MyAppBar";
 
@@ -11,6 +12,25 @@ import { Container, Box, Button } from "@mui/material";
 export default function Login() {
   const router = useRouter();
   const userId = useGongoUserId();
+
+  const services = [
+    {
+      id: "google",
+      name: t`Google`,
+      startIcon: <Google />,
+      style: {
+        background: "#57f",
+      },
+    },
+    {
+      id: "github",
+      name: t`GitHub`,
+      startIcon: <GitHub />,
+      style: {
+        background: "#555",
+      },
+    },
+  ];
 
   if (userId) {
     const from = router.query.from;
@@ -28,18 +48,22 @@ export default function Login() {
         </p>
         <p>SD-MUI</p>
 
-        <Button
-          variant="contained"
-          startIcon={<GoogleIcon />}
-          style={{
-            background: "#57f",
-            width: "90%",
-          }}
-          // @ts-expect-error: TODO
-          onClick={() => db.auth.loginWithService("google")}
-        >
-          Connect with Google
-        </Button>
+        {services.map((service) => (
+          <Button
+            sx={{ my: 0.5 }}
+            key={service.id}
+            variant="contained"
+            startIcon={service.startIcon}
+            style={{
+              ...service.style,
+              width: "90%",
+            }}
+            // @ts-expect-error: TODO
+            onClick={() => db.auth.loginWithService(service.id)}
+          >
+            <Trans>Connect with {service.name}</Trans>
+          </Button>
+        ))}
       </Container>
     </Box>
   );
