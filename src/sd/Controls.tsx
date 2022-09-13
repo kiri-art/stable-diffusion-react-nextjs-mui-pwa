@@ -379,10 +379,11 @@ export default function SDControls({
   }, [inputs.height]);
 
   console.log("SDControls");
+  const buttonDisabled = !!(requestStartTime && !requestEndTime);
   console.log({
     requestStartTime,
     requestEndTime,
-    disabled: !!(requestStartTime && !requestEndTime),
+    buttonDisabled,
   });
 
   return (
@@ -402,7 +403,7 @@ export default function SDControls({
                 fullWidth
                 sx={{ my: 1 }}
                 type="submit"
-                disabled={!!(requestStartTime && !requestEndTime)}
+                disabled={buttonDisabled}
               >
                 {!REQUIRE_REGISTRATION ||
                 user?.credits?.free > 0 ||
