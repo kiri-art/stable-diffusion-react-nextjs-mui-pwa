@@ -110,21 +110,23 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
   const user = await db.collection("users").findOne({ _id: userId });
   if (!user || !user.admin) return [];
 
+  const query = { _id: { $ne: userId } };
+  if (updatedAt.users)
+    // @ts-expect-error: i don't have time for you typescript
+    query.__updatedAt = { $gt: updatedAt.users };
+
   const realUsers = await db.collection("users").getReal();
   const users = await realUsers
-    .find(
-      { _id: { $ne: userId }, __updatedAt: { $gt: updatedAt.users } },
-      {
-        projection: {
-          _id: true,
-          emails: true,
-          displayName: true,
-          credits: true,
-          admin: true,
-          __updatedAt: true,
-        },
-      }
-    )
+    .find(query, {
+      projection: {
+        _id: true,
+        emails: true,
+        displayName: true,
+        credits: true,
+        admin: true,
+        __updatedAt: true,
+      },
+    })
     .toArray();
 
   return users.length
