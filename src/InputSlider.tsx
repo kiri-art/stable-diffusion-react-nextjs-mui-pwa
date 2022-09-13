@@ -64,7 +64,13 @@ export default function InputSlider({
       <Typography id="input-slider" gutterBottom>
         {label}
         {tooltip && (
-          <Tooltip title={tooltip} enterTouchDelay={0} leaveDelay={2000}>
+          <Tooltip
+            title={tooltip}
+            enterDelay={0}
+            leaveDelay={0}
+            enterTouchDelay={0}
+            leaveTouchDelay={4000}
+          >
             <HelpIcon sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }} />
           </Tooltip>
         )}

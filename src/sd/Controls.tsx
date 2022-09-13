@@ -99,8 +99,10 @@ function Prompt({
                     </Trans>
                   </Box>
                 }
+                enterDelay={0}
                 enterTouchDelay={0}
-                leaveDelay={2000}
+                leaveDelay={0}
+                leaveTouchDelay={4000}
               >
                 <Help />
               </Tooltip>
