@@ -378,6 +378,13 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
+  console.log("SDControls");
+  console.log({
+    requestStartTime,
+    requestEndTime,
+    disabled: !!(requestStartTime && !requestEndTime),
+  });
+
   return (
     <Box sx={{ my: 2 }}>
       <form onSubmit={go}>
