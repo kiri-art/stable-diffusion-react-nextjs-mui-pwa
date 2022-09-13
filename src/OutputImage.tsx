@@ -99,6 +99,10 @@ export default function OutputImage({
     a.click();
   }
 
+  React.useEffect(() => {
+    if (imgResult.current) imgResult.current.scrollIntoView();
+  }, [requestStartTime, requestEndTime]);
+
   async function share() {
     if (!imgResult.current) return;
     const blob = await fetch(imgSrc).then((r) => r.blob());
