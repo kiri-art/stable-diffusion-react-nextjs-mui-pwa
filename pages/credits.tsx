@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import type { WithId } from "gongo-client/lib/browser/Collection";
 import addMonths from "date-fns/addMonths";
 //import RevolutCheckout from "@revolut/checkout";
 
@@ -9,8 +10,9 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
+import type { User } from "../src/schemas";
 
-function RedeemCreditCode() {
+function RedeemCreditCode({ user }: { user: WithId<User> }) {
   const [creditCode, setCreditCode] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [disabled, setDisabled] = React.useState(false);
@@ -22,8 +24,10 @@ function RedeemCreditCode() {
       creditCode: creditCode.toUpperCase(),
     });
     setDisabled(false);
+    console.log(result);
 
     if (!result) return setMessage("Failed with unknown error.");
+
     if (result.$error) {
       if (result.$error === "NO_SUCH_CODE")
         return setMessage(t`No such code exists.`);
@@ -35,8 +39,17 @@ function RedeemCreditCode() {
         return setMessage(t`You have already redeemed this code before.`);
       if (typeof result.$error === "string") return setMessage(result.$error);
     }
-    if (result.$success)
+
+    if (result.$success) {
+      db.collection("users").updateId(user._id, {
+        $set: {
+          "credits.free": user.credits.free + (result.credits as number),
+        },
+      });
       return setMessage(t`Successfully redeemed ${result.credits} credits.`);
+    }
+
+    return setMessage("Failed with unknown error.");
   }
 
   return (
@@ -63,7 +76,7 @@ function RedeemCreditCode() {
 export default function Credits() {
   const router = useRouter();
   const { redirect_status } = router.query;
-  const userId = useGongoUserId();
+  const userId = useGongoUserId() as string | null;
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
@@ -126,7 +139,7 @@ export default function Credits() {
           {nextCreditDate.toLocaleDateString()}
         </p>
 
-        <RedeemCreditCode />
+        <RedeemCreditCode user={user} />
 
         <p>
           <Trans>
