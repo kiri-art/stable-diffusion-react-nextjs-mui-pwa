@@ -318,6 +318,8 @@ export default function SDControls({
   go,
   randomPrompt,
   uiState,
+  requestStartTime,
+  requestEndTime,
 }: {
   inputs: ModelState;
   go: (event: React.SyntheticEvent) => void;
@@ -325,6 +327,8 @@ export default function SDControls({
   uiState: {
     dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
   };
+  requestStartTime: number | null;
+  requestEndTime: number | null;
 }) {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -389,6 +393,7 @@ export default function SDControls({
                 fullWidth
                 sx={{ my: 1 }}
                 type="submit"
+                disabled={!!(requestStartTime && !requestEndTime)}
               >
                 {!REQUIRE_REGISTRATION ||
                 user?.credits?.free > 0 ||

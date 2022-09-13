@@ -519,7 +519,13 @@ export default function Inpainting() {
         />
       )}
 
-      <Controls go={go} inputs={inputs} uiState={uiState} />
+      <Controls
+        go={go}
+        inputs={inputs}
+        uiState={uiState}
+        requestStartTime={requestStartTime}
+        requestEndTime={requestEndTime}
+      />
       <Footer />
     </>
   );

@@ -628,7 +628,13 @@ export default function Img2img() {
         />
       )}
 
-      <Controls go={go} inputs={inputs} uiState={uiState} />
+      <Controls
+        go={go}
+        inputs={inputs}
+        uiState={uiState}
+        requestStartTime={requestStartTime}
+        requestEndTime={requestEndTime}
+      />
       <Footer />
     </>
   );

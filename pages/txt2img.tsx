@@ -94,6 +94,8 @@ export default function Txt2Img() {
           inputs={inputs}
           randomPrompt={randomPrompt}
           uiState={uiState}
+          requestStartTime={requestStartTime}
+          requestEndTime={requestEndTime}
         />
         <Footer />
       </Container>
