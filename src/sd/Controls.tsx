@@ -378,14 +378,6 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
-  console.log("SDControls");
-  const buttonDisabled = !!(requestStartTime && !requestEndTime);
-  console.log({
-    requestStartTime,
-    requestEndTime,
-    buttonDisabled,
-  });
-
   return (
     <Box sx={{ my: 2 }}>
       <form onSubmit={go}>
@@ -395,27 +387,32 @@ export default function SDControls({
           placeholder={randomPrompt}
         />
 
-        {isDev ? (
-          <Grid container sx={{ my: 1 }}>
-            <Grid item xs={7} sm={8} md={9}>
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{ my: 1 }}
-                type="submit"
-                disabled={buttonDisabled}
-              >
-                {!REQUIRE_REGISTRATION ||
-                user?.credits?.free > 0 ||
-                user?.credits?.paid > 0 ? (
-                  <Trans>Go</Trans>
-                ) : user ? (
-                  <Trans>Get More Credits</Trans>
-                ) : (
-                  <Trans>Login</Trans>
-                )}
-              </Button>
-            </Grid>
+        <Grid container sx={{ my: 1 }}>
+          <Grid
+            item
+            xs={isDev ? 7 : 12}
+            sm={isDev ? 8 : 12}
+            md={isDev ? 9 : 12}
+          >
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ my: 1 }}
+              type="submit"
+              disabled={!!(requestStartTime && !requestEndTime)}
+            >
+              {!REQUIRE_REGISTRATION ||
+              user?.credits?.free > 0 ||
+              user?.credits?.paid > 0 ? (
+                <Trans>Go</Trans>
+              ) : user ? (
+                <Trans>Get More Credits</Trans>
+              ) : (
+                <Trans>Login</Trans>
+              )}
+            </Button>
+          </Grid>
+          {isDev && (
             <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
               <FormControl fullWidth size="small">
                 <InputLabel id="dest-select-label">Dest</InputLabel>
@@ -432,12 +429,8 @@ export default function SDControls({
                 </Select>
               </FormControl>
             </Grid>
-          </Grid>
-        ) : (
-          <Button variant="contained" fullWidth sx={{ my: 1 }} onClick={go}>
-            Go
-          </Button>
-        )}
+          )}
+        </Grid>
 
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (
