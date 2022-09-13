@@ -42,6 +42,7 @@ gongoAuth.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: ROOT_URL + "/api/gongoAuth?service=google",
       passReqToCallback: true,
+      scope: "email+profile",
     },
     gongoAuth.passportVerify
   ),
@@ -58,6 +59,8 @@ gongoAuth.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: ROOT_URL + "/api/gongoAuth?service=github",
       passReqToCallback: true,
+      scope: "user:email",
+      allRawEmails: true,
     },
     gongoAuth.passportVerify
   ),
@@ -85,6 +88,7 @@ if (gs.dba) {
   };
 }
 
+// TODO Sure we can move this all into gongo-server.
 // @ts-expect-error: any
 export default function handler(req, res) {
   if (req.query.type === "setup") {
@@ -98,8 +102,16 @@ export default function handler(req, res) {
   const next = () =>
     res.status(400).end("No such service: " + req.query.service);
 
+  const strategy = passport._strategies[req.query.service];
+  if (!strategy) res.status(400).end("No such service: " + req.query.service);
+  const authOpts: { scope?: string } = {};
+
+  // untested with multiple scopes, _scopeSeparator, array, etc.
+  if (strategy._scope) authOpts.scope = strategy._scope;
+
   passport.authenticate(
     req.query.service,
+    authOpts,
     gongoAuth.boundPassportComplete(req, res)
   )(req, res, next);
 }
