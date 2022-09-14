@@ -2,13 +2,38 @@ import * as React from "react";
 import type { NextPage } from "next";
 import { t, Trans } from "@lingui/macro";
 
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 
 import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
 import Copyright from "../src/Copyright";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const itemData = [
+    {
+      title: t`Text to Image`,
+      href: "/txt2img",
+      img: "/img/pages/txt2img.png",
+      alt: "txt2img",
+    },
+    {
+      title: t`Image to Image`,
+      href: "/img2img",
+      img: "/img/pages/img2img.png",
+      alt: "img2img",
+    },
+    {
+      title: t`Inpainting`,
+      href: "/inpaint",
+      img: "/img/pages/inpaint.png",
+      alt: "inpaint",
+    },
+  ];
+
   return (
     <>
       <MyAppBar title={t`Home`} />
@@ -25,38 +50,40 @@ const Home: NextPage = () => {
           <Typography variant="h6" component="h1" gutterBottom>
             stable-diffusion-react-nextjs-mui-pwa
           </Typography>
-          <Button
-            component={Link}
-            href="/txt2img"
-            variant="contained"
-            sx={{ my: 1 }}
-          >
-            <Trans>Text to Image</Trans>
-          </Button>
-          <Button
-            component={Link}
-            href="/img2img"
-            variant="contained"
-            sx={{ my: 1 }}
-          >
-            <Trans>Image to Image</Trans>
-          </Button>
-          <Button
-            component={Link}
-            href="/inpaint"
-            variant="contained"
-            sx={{ my: 1 }}
-          >
-            <Trans>Inpainting</Trans>
-          </Button>
-          <Button
-            component={Link}
-            href="/about"
-            variant="outlined"
-            sx={{ my: 1 }}
-          >
-            About
-          </Button>
+          <Grid container spacing={2}>
+            {itemData.map((item) => (
+              <Grid item key={item.href}>
+                <Box
+                  sx={{
+                    p: 0,
+                    m: 0,
+                    background: "#eee",
+                    border: "1px solid #aaa",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => router.push(item.href)}
+                >
+                  <Image
+                    width={150}
+                    height={150}
+                    src={item.img}
+                    alt={item.title}
+                  />
+                </Box>
+
+                <Button
+                  fullWidth
+                  component={Link}
+                  href={item.href}
+                  variant="contained"
+                  sx={{ my: 1 }}
+                >
+                  {item.title}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
         <Box sx={{ my: 1 }}>
           <b>
