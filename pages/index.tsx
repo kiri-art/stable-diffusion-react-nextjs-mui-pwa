@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                     m: 0,
                     background: "#eee",
                     border: "1px solid #aaa",
-                    borderRadius: "5px",
+                    borderRadius: "12px",
                     cursor: "pointer",
                     textAlign: "center",
                   }}
