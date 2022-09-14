@@ -15,7 +15,17 @@ db.extend("transport", HTTPTransport, {
   idleTimeout: 60 * 1000,
 });
 
-db.subscribe("user");
+db.subscribe("user", {}, { minInterval: 10_000, maxInterval: 60_000 });
+// db.subscribe("user", {}, { minInterval: 1000000, maxInterval: 300000000 });
+
+if (typeof window !== "undefined")
+  setTimeout(() => {
+    // TODO disable in gongo-client?
+    // Disabled here since we can subscribe just when Login() component active
+    const accounts = db.subscriptions.get('["accounts"]');
+    if (accounts) accounts.active = false;
+  }, 5000);
+
 db.collection("users").persist();
 db.collection("orders").persist();
 db.collection("creditCodes").persist();

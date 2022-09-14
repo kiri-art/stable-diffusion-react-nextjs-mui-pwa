@@ -41,11 +41,25 @@ function RedeemCreditCode({ user }: { user: WithId<User> }) {
     }
 
     if (result.$success) {
+      setTimeout(() => {
+        // @ts-expect-error: TODO
+        const _id = db.auth.userId;
+        // TODO, _update should allow mongo modifier
+        // const users = db.collection("users");
+        // const user = users.findOne({ _id });
+        // if (!user) return;
+        user.credits.free = user.credits.free + (result.credits as number);
+        db.collection("users")._update(_id, user);
+      }, 100);
+
+      /*
       db.collection("users").updateId(user._id, {
         $set: {
           "credits.free": user.credits.free + (result.credits as number),
         },
       });
+      */
+
       return setMessage(t`Successfully redeemed ${result.credits} credits.`);
     }
 

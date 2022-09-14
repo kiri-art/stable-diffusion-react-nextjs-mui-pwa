@@ -1,5 +1,5 @@
 import React from "react";
-import { db, useGongoUserId } from "gongo-client-react";
+import { db, useGongoUserId, useGongoSub } from "gongo-client-react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 
@@ -12,6 +12,7 @@ import { Container, Box, Button } from "@mui/material";
 export default function Login() {
   const router = useRouter();
   const userId = useGongoUserId();
+  useGongoSub("accounts");
 
   const services = [
     {

@@ -1,5 +1,7 @@
 import txt2imgOptsSchema from "../schemas/txt2imgOpts";
 import type { Txt2ImgOpts } from "../schemas/txt2imgOpts";
+import { db } from "gongo-client-react";
+import { REQUIRE_REGISTRATION } from "../lib/client-env";
 
 async function exec(
   opts: Txt2ImgOpts,
@@ -130,6 +132,17 @@ async function banana(
   setLog([]);
 
   // console.log(result);
+
+  if (REQUIRE_REGISTRATION) {
+    // @ts-expect-error: TODO
+    const _id = db.auth.userId;
+    // TODO, _update should allow mongo modifier
+    const users = db.collection("users");
+    const user = users.findOne({ _id });
+    if (!user) return;
+    user.credits = result.credits;
+    db.collection("users")._update(_id, user);
+  }
 }
 
 const runners = { exec, banana };
