@@ -16,7 +16,8 @@ db.extend("transport", HTTPTransport, {
 });
 
 // see also login.tsx TODO TMP
-db.subscribe("user", {}, { minInterval: 10_000, maxInterval: 60_000 });
+db.subscribe("user");
+//db.subscribe("user", {}, { minInterval: 10_000, maxInterval: 60_000 });
 // db.subscribe("user", {}, { minInterval: 1000000, maxInterval: 300000000 });
 
 if (typeof window !== "undefined")

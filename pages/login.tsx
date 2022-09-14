@@ -17,6 +17,7 @@ export default function Login() {
   // TODO, see also db.js.  Need cleaner way to do this.
   // Ideally sub should recall previous settings and pop them.
   // Needed for case where login creates new user!
+  /*
   React.useEffect(() => {
     const userSub = db.subscriptions.get('["user"]');
     if (userSub && userSub.opts) {
@@ -31,6 +32,7 @@ export default function Login() {
       }
     };
   }, []);
+  */
 
   const services = [
     {
