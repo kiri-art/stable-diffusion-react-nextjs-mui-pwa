@@ -26,7 +26,7 @@
     "date-fns": "^2.29.2",
     "gongo-client": "2.3.0",
     "gongo-client-react": "0.2.0",
-    "gongo-server": "2.1.0",
+    "gongo-server": "3.0.0",
     "gongo-server-db-mongo": "2.2.1",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
