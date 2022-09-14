@@ -3157,15 +3157,15 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gongo-client-react@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.1.0.tgz#2433940922d36d9d1b03d27e7be81243b5f62ee4"
-  integrity sha512-TIKuMj/4wASMr2EwoNVCcT9BeUWHyqN2jzirrWbDCNZ3wNFFo9c3X0hdglYsnzDwKdtOKaTMgl0Vp+/Xf88bDQ==
+gongo-client-react@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.0.tgz#8a2b557a3ec90069010aa8bdc85d88e53f0a2600"
+  integrity sha512-00lHKNmqFU2DDV5D1CNM2eDPJiFWbyGFJ4q21PMB4UDBv5LUfw+xztEEh70iAmiRZ/j3CYQvI/aCHM6Z/+gQ7g==
 
-gongo-client@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.2.0.tgz#81c2850d6e30b97d2691ce6ab4a80130f9ea3863"
-  integrity sha512-SoT3PYgvvIFeYz7Tc6AGrwXDHC1ZwEM6DggHSehdQ+okBwI3jTCdM5CAoWkAT5QRSdAmkWr76T4TwO/rgNndyg==
+gongo-client@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.3.0.tgz#86a4fdb903943aa949067e3d1130213ba495744e"
+  integrity sha512-yIf9vtXbQ099Avq6STjCpgC3v97fMNUsuO0jqTBWv0LbHcLp93s+mD67OTC+wgLagz3MSX7uMR+UceOj3EfE/A==
   dependencies:
     arson "^0.2.6"
     bson-objectid "^2.0.3"
@@ -3176,19 +3176,19 @@ gongo-client@2.2.0:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.2.0.tgz#707fc3b1ca799b23ff3dc0e88a4d73da5de87a27"
-  integrity sha512-Ps6mY2NZ/d7n9XvkZo3GxAzs3UIjTBqv3z7gBhU9R07NCfLSbJ8k33dCdsZBUbQW83Gz0emiJ4GqKb8jVC14Gg==
+gongo-server-db-mongo@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.2.1.tgz#5b2b294de4c79cde400fd5a9ddc24072e87ace27"
+  integrity sha512-6+5lYU0HpqLAZMjvRNvHY7l0sjRuiFf7tKdezoT1q1S4q0qq9VMXFgD344hRdxhmT3xkhdbIpll7ejmvoJWsaQ==
   dependencies:
     json-pointer "^0.6.2"
     jsonpatch-to-mongodb "^1.0.0"
     mongodb "^4.6.0"
 
-gongo-server@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/gongo-server/-/gongo-server-2.1.0.tgz#039f9a1ec243d4617ba9a4f3f5b574f2b4f431fc"
-  integrity sha512-MVzOYH+iuVYyqrOf5WGVYNsZkKnXa4SuEkpQLbnKVVFv+eVGeGkuRimwR8ThND1MewiMK0NWOzTrhfl26gOX5w==
+gongo-server@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/gongo-server/-/gongo-server-3.0.0.tgz#c8aa0e4280085df59fedecaac63b1ed06a76bdc2"
+  integrity sha512-qbthJb83AA664mlAhBGwYPQW1klM/gn3pUCD6pPDJIqFi1c6sE+/n2YRsxLcrkwFFK1Atq6h/guTNzVLs8X7rA==
   dependencies:
     "@types/passport" "^1.0.8"
     "@types/passport-oauth2" "^1.4.11"

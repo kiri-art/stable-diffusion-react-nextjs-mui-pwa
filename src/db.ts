@@ -15,6 +15,7 @@ db.extend("transport", HTTPTransport, {
   idleTimeout: 60 * 1000,
 });
 
+// see also login.tsx TODO TMP
 db.subscribe("user", {}, { minInterval: 10_000, maxInterval: 60_000 });
 // db.subscribe("user", {}, { minInterval: 1000000, maxInterval: 300000000 });
 

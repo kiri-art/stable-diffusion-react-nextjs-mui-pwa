@@ -14,6 +14,24 @@ export default function Login() {
   const userId = useGongoUserId();
   useGongoSub("accounts");
 
+  // TODO, see also db.js.  Need cleaner way to do this.
+  // Ideally sub should recall previous settings and pop them.
+  // Needed for case where login creates new user!
+  React.useEffect(() => {
+    const userSub = db.subscriptions.get('["user"]');
+    if (userSub && userSub.opts) {
+      userSub.opts.minInterval = 500;
+      userSub.opts.maxInterval = 500;
+    }
+    return () => {
+      const userSub = db.subscriptions.get('["user"]');
+      if (userSub && userSub.opts) {
+        userSub.opts.minInterval = 10_000;
+        userSub.opts.maxInterval = 60_000;
+      }
+    };
+  }, []);
+
   const services = [
     {
       id: "google",
