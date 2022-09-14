@@ -56,9 +56,9 @@ const Home: NextPage = () => {
           <Typography variant="h6" component="h1" gutterBottom>
             stable-diffusion-react-nextjs-mui-pwa
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} width="100%">
             {itemData.map((item) => (
-              <Grid key={item.href} xs={6} sm={4} md={4} lg={4} xl={4}>
+              <Grid key={item.href} xs={6} sm={4} md={3} lg={3} xl={3}>
                 <Box
                   sx={{
                     p: 0,
