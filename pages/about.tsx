@@ -84,6 +84,40 @@ const About: NextPage = () => {
               </Button>
             </Box>
           </Box>
+
+          <Typography variant="h6" component="h1" gutterBottom>
+            <Trans>Acknowledements and Thanks</Trans>
+          </Typography>
+
+          <p>
+            <Trans>
+              We cannot overstate our thanks, appreciation and gratitude towards
+              the following researchers, organizations and companies for their
+              role in helping to <b>democratize AI</b>.
+            </Trans>
+          </p>
+
+          <Box>
+            <ul>
+              <li>
+                <Trans>
+                  <a href="https://stability.ai">Stability.Ai</a> - for their
+                  incredible time, work and efforts in creating{" "}
+                  <b>StableDiffusion</b> and no less so, their decision to
+                  release it publicly with an open source license.
+                </Trans>
+              </li>
+              <br />
+              <li>
+                <a href="https://huggingface.co/">HuggingFace</a> - for their
+                passion and inspiration for making machine learning more
+                accessibe to developers, and in particular, their{" "}
+                <a href="https://github.com/huggingface/diffusers">Diffusers</a>{" "}
+                Library.
+              </li>
+            </ul>
+          </Box>
+
           <Copyright />
         </Box>
       </Container>
