@@ -100,7 +100,7 @@ export default function OutputImage({
   }
 
   React.useEffect(() => {
-    if (imgResult.current) imgResult.current.scrollIntoView();
+    if (requestEndTime && imgResult.current) imgResult.current.scrollIntoView();
   }, [requestStartTime, requestEndTime]);
 
   async function share() {
@@ -150,6 +150,7 @@ export default function OutputImage({
           position: "absolute",
           left: 0,
           top: 0,
+          scrollMarginTop: "10px",
         }}
       />
       <Box
