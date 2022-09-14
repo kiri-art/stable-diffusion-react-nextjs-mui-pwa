@@ -20,7 +20,7 @@
     "@emotion/styled": "11.10.4",
     "@lingui/react": "^3.14.0",
     "@mui/icons-material": "5.10.3",
-    "@mui/material": "5.10.3",
+    "@mui/material": "5.10.5",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
     "date-fns": "^2.29.2",

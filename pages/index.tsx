@@ -2,7 +2,13 @@ import * as React from "react";
 import type { NextPage } from "next";
 import { t, Trans } from "@lingui/macro";
 
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Unstable_Grid2 as Grid,
+  Typography,
+} from "@mui/material";
 
 import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
@@ -52,7 +58,7 @@ const Home: NextPage = () => {
           </Typography>
           <Grid container spacing={2}>
             {itemData.map((item) => (
-              <Grid item key={item.href}>
+              <Grid key={item.href} xs={6} sm={4} md={4} lg={4} xl={4}>
                 <Box
                   sx={{
                     p: 0,
@@ -61,10 +67,12 @@ const Home: NextPage = () => {
                     border: "1px solid #aaa",
                     borderRadius: "5px",
                     cursor: "pointer",
+                    textAlign: "center",
                   }}
                   onClick={() => router.push(item.href)}
                 >
                   <Image
+                    layout="responsive"
                     width={150}
                     height={150}
                     src={item.img}
