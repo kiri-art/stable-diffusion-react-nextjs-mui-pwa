@@ -33,7 +33,7 @@ const txt2imgOptsSchema = object({
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
-    "rinnakk/japanese-stable-diffusion",
+    "rinna/japanese-stable-diffusion",
   ]),
   // .default("CompVis/stable-diffusion-v1-4"),
   PIPELINE: string().oneOf([
