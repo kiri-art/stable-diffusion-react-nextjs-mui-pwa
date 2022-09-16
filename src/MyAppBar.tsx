@@ -14,6 +14,12 @@ import {
   MenuItem,
   // Tooltip,
   Avatar,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -22,6 +28,8 @@ import {
 
 import Link from "../src/Link";
 import locales from "../src/lib/locales";
+
+const drawerWidth = 240;
 
 export default function MyAppBar({ title }: { title: string }) {
   const router = useRouter();
@@ -36,13 +44,103 @@ export default function MyAppBar({ title }: { title: string }) {
   );
   const isAdmin = user && user.admin;
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle}>
+      <Typography variant="h6" sx={{ my: 2, ml: 4 }}>
+        SD-MUI
+      </Typography>
+      <Divider />
+      <List>
+        <ListItem>
+          <ListItemButton component={Link} href="/">
+            <ListItemText>
+              <Trans>Home</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} href="/txt2img">
+            <ListItemText>
+              <Trans>Text to Image</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} href="/img2img">
+            <ListItemText>
+              <Trans>Image to Image</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} href="/inpaint">
+            <ListItemText>
+              <Trans>Inpainting</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+
+        <ListItem>
+          <ListItemButton component={Link} href="/credits">
+            <ListItemText>
+              <Trans>Credits:</Trans> {user.credits.free + user.credits.paid}
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+          <ListItemButton component={Link} href="/resources">
+            <ListItemText>
+              <Trans>Resources</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} href="/news">
+            <ListItemText>
+              <Trans>News</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton
+            component={Link}
+            href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa"
+          >
+            <ListItemText>
+              <Trans>GitHub</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} href="/about">
+            <ListItemText>
+              <Trans>About</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        {isAdmin ? (
+          <ListItem>
+            <ListItemButton component={Link} href="/admin">
+              <ListItemText>
+                <Trans>Admin</Trans>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+        ) : undefined}
+      </List>
+    </Box>
+  );
+
+  const container =
+    window !== undefined ? () => window.document.body : undefined;
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -59,51 +157,14 @@ export default function MyAppBar({ title }: { title: string }) {
       <AppBar position="static">
         <Toolbar>
           <IconButton
-            size="large"
-            edge="start"
             color="inherit"
-            aria-label="menu"
-            onClick={handleMenu}
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose} component={Link} href="/">
-              <Trans>Home</Trans>
-            </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} href="/txt2img">
-              <Trans>Text to Image</Trans>
-            </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} href="/img2img">
-              <Trans>Image to Image</Trans>
-            </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} href="/inpaint">
-              <Trans>Inpainting</Trans>
-            </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} href="/about">
-              <Trans>About</Trans>
-            </MenuItem>
-            {isAdmin ? (
-              <MenuItem onClick={handleClose} component={Link} href="/admin">
-                <Trans>Admin</Trans>
-              </MenuItem>
-            ) : undefined}
-          </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
@@ -220,6 +281,27 @@ export default function MyAppBar({ title }: { title: string }) {
           )}{" "}
         </Toolbar>
       </AppBar>
+
+      <Box component="nav">
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </Box>
     </Box>
   );
 }

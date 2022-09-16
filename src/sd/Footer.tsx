@@ -1,17 +1,32 @@
 import React from "react";
+import { Trans } from "@lingui/macro";
+import { Box, Button, Divider } from "@mui/material";
+
+import Link from "../Link";
 
 export default function SDFooter() {
   return (
     <>
-      <p>NEWS: img2img (coming soon), inpainting (useable!)</p>
-      <p>
-        <a href="https://github.com/Maks-s/sd-akashic">SD Akashic Guide</a> - SD
-        studies, art styles, prompts.
-      </p>
-      <p>
-        <a href="https://lexica.art">Lexica.art</a> - Search 5M+ SD prompts
-        &amp; images.
-      </p>
+      <Divider />
+      <Box sx={{ textAlign: "center" }}>
+        <Button
+          variant="outlined"
+          component={Link}
+          href="/resources"
+          sx={{ m: 2, width: "150px" }}
+        >
+          <Trans>Resources</Trans>
+        </Button>
+
+        <Button
+          variant="outlined"
+          component={Link}
+          href="/news"
+          sx={{ m: 2, width: "150px" }}
+        >
+          <Trans>News</Trans>
+        </Button>
+      </Box>
     </>
   );
 }
