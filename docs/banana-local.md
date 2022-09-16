@@ -1,5 +1,8 @@
 # banana-local
 
+UPDATED INSTRUCTIONS COMING SOON
+SEE https://github.com/gadicc/banana-sd-base
+
 ## How to run / develop a banana docker image locally.
 
 1. (Fork and) clone https://github.com/bananaml/serverless-template-stable-diffusion
