@@ -42,6 +42,11 @@ async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
   if (typeof modelKey !== "string")
     throw new Error(`${envName} is not a string`);
 
+  // These are hardcoded into the deployed models (we could assert though?)
+  delete modelOpts.MODEL_ID;
+  delete modelOpts.PIPELINE;
+  delete modelOpts.SCHEDULER;
+
   /*
     {
       id: '236f1501-d363-4a8d-adcc-71e036126741',
@@ -70,6 +75,12 @@ async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
 
 async function localSdkRun(modelOpts: Txt2ImgOpts) {
   const created = Math.floor(Date.now() / 1000);
+
+  if (false) {
+    delete modelOpts.MODEL_ID;
+    delete modelOpts.PIPELINE;
+    delete modelOpts.SCHEDULER;
+  }
 
   const response = await fetch("http://localhost:8000", {
     method: "POST",
