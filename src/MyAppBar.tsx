@@ -173,6 +173,10 @@ export default function MyAppBar({ title }: { title: string }) {
     setAnchorElUser(null);
   };
 
+  const iOS =
+    typeof navigator !== "undefined" &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -306,6 +310,8 @@ export default function MyAppBar({ title }: { title: string }) {
       <Box component="nav">
         <SwipeableDrawer
           swipeAreaWidth={10}
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
           container={container}
           open={mobileOpen}
           onClose={toggleDrawer(false)}
