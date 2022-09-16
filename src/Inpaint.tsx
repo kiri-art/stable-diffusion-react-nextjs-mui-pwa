@@ -222,6 +222,7 @@ const inpaintState = [
   "strength",
   "num_inference_steps",
   "guidance_scale",
+  "MODEL_ID",
 ];
 
 async function blobToBase64(blob: Blob) {
@@ -393,36 +394,36 @@ export default function Inpainting() {
       return;
     }
 
-    console.log({
-      ...modelStateValues(inputs),
+    const modelInputs = modelStateValues(inputs);
+
+    // K-LMS scheduler for in-paint #341 (not available in 0.3.0)
+    // https://github.com/huggingface/diffusers/issues/341
+    const PIPELINE = "StableDiffusionInpaintPipeline";
+    const SCHEDULER = "DDIM";
+
+    const data = {
+      ...modelInputs,
       prompt: inputs.prompt.value,
       init_image: await blobToBase64(init_image_blob),
       mask_image: await blobToBase64(mask_image_blob),
       strength: inputs.strength.value,
-    });
+      PIPELINE,
+      SCHEDULER,
+    };
 
     // return;
 
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    await txt2img(
-      {
-        ...modelStateValues(inputs),
-        prompt: inputs.prompt.value,
-        init_image: await blobToBase64(init_image_blob),
-        mask_image: await blobToBase64(mask_image_blob),
-        strength: inputs.strength.value,
-      },
-      {
-        setLog,
-        setImgSrc,
-        dest,
-        // @ts-expect-error: TODO, db auth type
-        auth: db.auth.authInfoToSend(),
-        MODEL_NAME: "INPAINT",
-      }
-    );
+    await txt2img(data, {
+      setLog,
+      setImgSrc,
+      dest,
+      // @ts-expect-error: TODO, db auth type
+      auth: db.auth.authInfoToSend(),
+      MODEL_NAME: "INPAINT",
+    });
 
     setRequestEndTime(Date.now());
   }

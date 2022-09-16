@@ -315,6 +315,76 @@ function Height_Grid_Slider({
   );
 }
 
+function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
+  return (
+    <Box sx={{ textAlign: "center", width: "100%" }}>
+      <div style={{ fontWeight: "bold" }}>{value}</div>
+      <div>{desc}</div>
+    </Box>
+  );
+}
+
+function ModelSelect({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["MODEL_ID"]["value"];
+  setValue: ModelState["MODEL_ID"]["setValue"];
+  defaultValue: typeof defaults.MODEL_ID;
+}) {
+  return useMemo(
+    () => (
+      <FormControl fullWidth>
+        <InputLabel id="model-select-label">
+          <Trans>Model</Trans>
+        </InputLabel>
+        <Select
+          id="model-select"
+          label={t`Model`}
+          labelId="model-select-label"
+          value={value}
+          defaultValue={defaultValue}
+          onChange={(event) => setValue(event.target.value)}
+          size="small"
+        >
+          {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
+          <MenuItem
+            value="CompVis/stable-diffusion-v1-4"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="CompVis/stable-diffusion-v1-4"
+              desc={t`Original model, best for most cases.`}
+            />
+          </MenuItem>
+
+          <MenuItem
+            value="hakurei/waifu-diffusion"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="hakurei/waifu-diffusion"
+              desc={t`Best for Anime characters`}
+            />
+          </MenuItem>
+
+          <MenuItem
+            value="rinnakk/japanese-stable-diffusion"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="rinnakk/japanese-stable-diffusion"
+              desc={t`Japanese / Japanglish prompt input, style`}
+            />
+          </MenuItem>
+        </Select>
+      </FormControl>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
 export default function SDControls({
   inputs,
   go,
@@ -431,6 +501,12 @@ export default function SDControls({
             </Grid>
           )}
         </Grid>
+
+        <ModelSelect
+          value={inputs.MODEL_ID.value}
+          setValue={inputs.MODEL_ID.setValue}
+          defaultValue={defaults.MODEL_ID}
+        />
 
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (

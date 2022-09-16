@@ -417,6 +417,7 @@ function Paint({
 
 const inpaintState = [
   "prompt",
+  "MODEL_ID",
   "strength",
   "num_inference_steps",
   "guidance_scale",
@@ -580,34 +581,33 @@ export default function Img2img() {
       return;
     }
 
-    console.log({
-      ...modelStateValues(inputs),
-      prompt: inputs.prompt.value,
+    const modelInputs = modelStateValues(inputs);
+
+    const PIPELINE = "StableDiffusionImg2ImgPipeline";
+    const SCHEDULER = "LMS";
+
+    const data = {
+      ...modelInputs,
+      // prompt: inputs.prompt.value || randomPrompt,
       init_image: await blobToBase64(init_image_blob),
       strength: inputs.strength.value,
-    });
+      PIPELINE,
+      SCHEDULER,
+    };
 
-    // return;
+    // return console.log(data);
 
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    await txt2img(
-      {
-        ...modelStateValues(inputs),
-        prompt: inputs.prompt.value,
-        init_image: await blobToBase64(init_image_blob),
-        strength: inputs.strength.value,
-      },
-      {
-        setLog,
-        setImgSrc,
-        dest,
-        // @ts-expect-error: TODO, db auth type
-        auth: db.auth.authInfoToSend(),
-        MODEL_NAME: "IMG2IMG",
-      }
-    );
+    await txt2img(data, {
+      setLog,
+      setImgSrc,
+      dest,
+      // @ts-expect-error: TODO, db auth type
+      auth: db.auth.authInfoToSend(),
+      MODEL_NAME: "IMG2IMG",
+    });
 
     setRequestEndTime(Date.now());
   }

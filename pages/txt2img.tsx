@@ -17,6 +17,7 @@ import Footer from "../src/sd/Footer";
 
 const txt2imgState = [
   "prompt",
+  "MODEL_ID",
   "num_inference_steps",
   "guidance_scale",
   "width",
@@ -35,7 +36,6 @@ export default function Txt2Img() {
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
     null
   );
-  const randomPrompt = useRandomPrompt();
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -48,6 +48,7 @@ export default function Txt2Img() {
 
   const inputs = useModelState(txt2imgState);
   // console.log(inputs);
+  const randomPrompt = useRandomPrompt(inputs.MODEL_ID.value);
 
   async function go(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -66,10 +67,22 @@ export default function Txt2Img() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
+    const modelInputs = modelStateValues(inputs);
+
+    const PIPELINE = "StableDiffusionPipeline";
+    const SCHEDULER = "LMS";
+    /*
+    if (modelInputs.MODEL_ID === "hakurei/waifu-diffusion") {
+      SCHEDULER = "DDIM";
+    }
+    */
+
     await txt2img(
       {
-        ...modelStateValues(inputs),
+        ...modelInputs,
         prompt: inputs.prompt.value || randomPrompt,
+        PIPELINE,
+        SCHEDULER,
       },
       // @ts-expect-error: TODO, db auth type
       { setLog, setImgSrc, dest, auth: db.auth.authInfoToSend() }

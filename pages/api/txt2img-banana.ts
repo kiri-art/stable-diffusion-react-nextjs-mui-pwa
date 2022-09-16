@@ -20,15 +20,27 @@ async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
 
-  const modelKey =
-    process.env["BANANA_MODEL_KEY" + (MODEL_NAME ? "_" + MODEL_NAME : "")];
+  let envName = "BANANA_MODEL_KEY";
+  if (MODEL_NAME) envName += "_" + MODEL_NAME;
+
+  switch (modelOpts.MODEL_ID) {
+    case "hakurei/waifu-diffusion":
+      envName += "_WAIFU";
+      break;
+    case "rinnakk/japanese-stable-diffusion":
+      envName += "_JP";
+      break;
+  }
+
+  const modelKey = process.env[envName];
+
   console.log({
-    var: "BANANA_MODEL_KEY" + (MODEL_NAME ? "_" + MODEL_NAME : ""),
+    var: envName,
     key: modelKey,
   });
 
   if (typeof modelKey !== "string")
-    throw new Error("process.env.BANANA_MODEL_KEY is not a string");
+    throw new Error(`${envName} is not a string`);
 
   /*
     {
