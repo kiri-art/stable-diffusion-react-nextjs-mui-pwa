@@ -84,8 +84,14 @@ export default function Txt2Img() {
         PIPELINE,
         SCHEDULER,
       },
-      // @ts-expect-error: TODO, db auth type
-      { setLog, setImgSrc, dest, auth: db.auth.authInfoToSend() }
+      {
+        setLog,
+        setImgSrc,
+        dest,
+        // @ts-expect-error: TODO, db auth type
+        auth: db.auth.authInfoToSend(),
+        MODEL_NAME: "TXT2IMG",
+      }
     );
 
     setRequestEndTime(Date.now());
