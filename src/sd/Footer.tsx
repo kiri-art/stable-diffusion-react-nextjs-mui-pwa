@@ -13,7 +13,7 @@ export default function SDFooter() {
           variant="outlined"
           component={Link}
           href="/resources"
-          sx={{ m: 2, width: "150px" }}
+          sx={{ my: 2, mx: 1, width: "130px" }}
         >
           <Trans>Resources</Trans>
         </Button>
@@ -22,7 +22,7 @@ export default function SDFooter() {
           variant="outlined"
           component={Link}
           href="/news"
-          sx={{ m: 2, width: "150px" }}
+          sx={{ my: 2, mx: 1, width: "130px" }}
         >
           <Trans>News</Trans>
         </Button>
