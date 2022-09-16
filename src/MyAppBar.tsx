@@ -309,7 +309,8 @@ export default function MyAppBar({ title }: { title: string }) {
 
       <Box component="nav">
         <SwipeableDrawer
-          swipeAreaWidth={10}
+          swipeAreaWidth={15}
+          hysteresis={0.3}
           disableBackdropTransition={!iOS}
           disableDiscovery={iOS}
           container={container}
