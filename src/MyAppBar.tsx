@@ -15,11 +15,11 @@ import {
   // Tooltip,
   Avatar,
   Divider,
-  Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  SwipeableDrawer,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -46,12 +46,32 @@ export default function MyAppBar({ title }: { title: string }) {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  /*
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  */
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setMobileOpen(open);
+    };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle}>
+    <Box
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
       <Typography variant="h6" sx={{ my: 2, ml: 4 }}>
         SD-MUI
       </Typography>
@@ -90,7 +110,8 @@ export default function MyAppBar({ title }: { title: string }) {
         <ListItem>
           <ListItemButton component={Link} href="/credits">
             <ListItemText>
-              <Trans>Credits:</Trans> {user.credits.free + user.credits.paid}
+              <Trans>Credits:</Trans>{" "}
+              {user && user.credits.free + user.credits.paid}
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -160,7 +181,7 @@ export default function MyAppBar({ title }: { title: string }) {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
+            onClick={toggleDrawer(true)}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
@@ -283,11 +304,12 @@ export default function MyAppBar({ title }: { title: string }) {
       </AppBar>
 
       <Box component="nav">
-        <Drawer
+        <SwipeableDrawer
+          swipeAreaWidth={10}
           container={container}
-          variant="temporary"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -300,7 +322,7 @@ export default function MyAppBar({ title }: { title: string }) {
           }}
         >
           {drawer}
-        </Drawer>
+        </SwipeableDrawer>
       </Box>
     </Box>
   );
