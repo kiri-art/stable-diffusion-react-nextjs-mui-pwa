@@ -22,7 +22,6 @@ export default function News() {
         <Typography variant="h6">What&apos;s Next?</Typography>
 
         <ul>
-          <li>Fix for 60s timeout issue</li>
           <li>Better updates while waiting</li>
           <li>Faster inferences (generation time)</li>
         </ul>
@@ -38,6 +37,14 @@ export default function News() {
         <Typography variant="h6">Updates</Typography>
 
         <ul>
+          <li>
+            <b>Sat Sep 17, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>Fixed error on requests longer than 60s</li>
+            </ul>
+          </li>
+          <br />
+
           <li>
             <b>Fri Sep 16, 2022</b>
             <ul style={{ marginTop: "10px" }}>
