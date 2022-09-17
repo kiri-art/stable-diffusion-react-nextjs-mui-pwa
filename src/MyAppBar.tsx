@@ -160,9 +160,6 @@ export default function MyAppBar({ title }: { title: string }) {
     </Box>
   );
 
-  const container =
-    window !== undefined ? () => window.document.body : undefined;
-
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -313,7 +310,6 @@ export default function MyAppBar({ title }: { title: string }) {
           hysteresis={0.3}
           disableBackdropTransition={!iOS}
           disableDiscovery={iOS}
-          container={container}
           open={mobileOpen}
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
@@ -321,7 +317,7 @@ export default function MyAppBar({ title }: { title: string }) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            // display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
