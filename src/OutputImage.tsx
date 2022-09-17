@@ -103,6 +103,15 @@ export default function OutputImage({
     if (requestEndTime && imgResult.current) imgResult.current.scrollIntoView();
   }, [requestStartTime, requestEndTime]);
 
+  // Give extra scroll space if we're within the AppBar scroll area
+  React.useEffect(() => {
+    const img = imgResult.current;
+    if (!img) return;
+    const parentNode = img.parentNode as HTMLDivElement | null;
+    if (parentNode && parentNode.offsetTop < 100)
+      img.style.scrollMarginTop = 56 + 12 + "px";
+  }, [imgResult.current]);
+
   async function share() {
     if (!imgResult.current) return;
     const blob = await fetch(imgSrc).then((r) => r.blob());
