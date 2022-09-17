@@ -11,28 +11,32 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;"
+"Plural-Forms: nplurals=2; plural=n != 1;"\n"
 
-#: src/sd/Controls.tsx:142
+#: src/sd/Controls.tsx:146
 msgid "(Denoising) Strength"
 msgstr "(הפחתת רעש) עוצמה"
 
-#: pages/index.tsx:106
+#: pages/index.tsx:141
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) השימוש הוא על אחריותך בלבד, איננו אחראים להשלכות שימושכם בפרויקט זה (או שימוש בלתי הולם בו). 2) כל שימוש באתר או בפרויקט זה מהווה הסכמה לתנאים ולכללים שלו, כולל כללי \"גילוי אחריות\" כמפורט למעלה, <0>רישיון {LRM}CreativeML Open RAIL-M</0> וגם <1>רישיון {LRM}MIT</1> של פרויקט זה."
 
-#: src/sd/Controls.tsx:93
-#: src/sd/Controls.tsx:181
-#: src/sd/Controls.tsx:224
+#: src/sd/Controls.tsx:95
+#: src/sd/Controls.tsx:185
+#: src/sd/Controls.tsx:228
 msgid "<0>Learn more</0>"
 msgstr "<0>למידע נוסף</0>"
+
+#: pages/about.tsx:103
+msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
+msgstr ""
 
 #: src/workboxStuff.tsx:42
 msgid "A newer version of this web app is available, reload to update?"
 msgstr "קיימת גרסה חדשה של יישום רשת זה. האם לטעון מחדש כדי לעדכן?"
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:99
+#: src/MyAppBar.tsx:158
 msgid "About"
 msgstr "אודות"
 
@@ -40,8 +44,12 @@ msgstr "אודות"
 msgid "Access Denied."
 msgstr "הגישה נדחתה."
 
+#: pages/about.tsx:89
+msgid "Acknowledements and Thanks"
+msgstr ""
+
 #: pages/admin.tsx:219
-#: src/MyAppBar.tsx:103
+#: src/MyAppBar.tsx:166
 msgid "Admin"
 msgstr "מנהל"
 
@@ -53,11 +61,15 @@ msgstr "ערך"
 msgid "Back to Credits"
 msgstr "חזרה לנקודות קרדיט"
 
-#: pages/index.tsx:63
+#: pages/index.tsx:98
 msgid "Be Responsible"
 msgstr "גילוי אחריות"
 
-#: pages/credits.tsx:155
+#: src/sd/Controls.tsx:368
+msgid "Best for Anime characters"
+msgstr ""
+
+#: pages/credits.tsx:182
 msgid "Buy 50 credits for $1"
 msgstr "רכישת 50 נקודות קרדיט ב-$1"
 
@@ -66,20 +78,21 @@ msgstr "רכישת 50 נקודות קרדיט ב-$1"
 msgid "Checkout"
 msgstr "השלמת קנייה"
 
-#: src/sd/Controls.tsx:170
+#: src/sd/Controls.tsx:174
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "הנחייה ללא סיווג (סולם)"
 
-#: pages/credits.tsx:32
-#: pages/credits.tsx:32
+#: pages/credits.tsx:36
+#: pages/credits.tsx:36
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr "מצטערים, הקוד כבר מומש מספר מרבי של פעמים."
 
-#: pages/login.tsx:64
+#: pages/login.tsx:85
 msgid "Connect with {0}"
 msgstr "להתחבר אל {0}"
 
-#: src/MyAppBar.tsx:196
+#: src/MyAppBar.tsx:125
+#: src/MyAppBar.tsx:294
 msgid "Credits:"
 msgstr "נקודות קרדיט:"
 
@@ -91,112 +104,126 @@ msgstr "מטבע"
 msgid "Date"
 msgstr "תאריך"
 
-#: src/sd/Controls.tsx:87
+#: src/sd/Controls.tsx:89
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "תיאור / כתובית לתמונה הרצויה. יכולים לכלול סגנונות אמנות כמו \"אימפרסיוניזם\", \"אמנות דיגיטלית\", סגנונות ועדשות צילום ורמזים נוספים."
 
-#: pages/index.tsx:67
+#: pages/index.tsx:102
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "אין לייצר תוכן פוגעני (גזעני, מסית וכד')."
 
-#: pages/credits.tsx:132
+#: pages/credits.tsx:159
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "צבור נקודות קרדיט בחינם על-ידי תרומה לפרויקט ב-GitHub!"
 
-#: pages/credits.tsx:118
+#: pages/credits.tsx:145
 msgid "Free Credits"
 msgstr "נקודות קרדיט בחינם"
 
-#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:479
 msgid "Get More Credits"
 msgstr "קבל עוד נקודות קרדיט"
 
-#: pages/login.tsx:27
+#: pages/login.tsx:48
+#: src/MyAppBar.tsx:151
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/sd/Controls.tsx:394
+#: src/sd/Controls.tsx:477
 msgid "Go"
 msgstr "קדימה"
 
-#: pages/login.tsx:19
+#: pages/login.tsx:40
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:290
+#: src/sd/Controls.tsx:294
 msgid "Height"
 msgstr "גובה"
 
-#: pages/index.tsx:14
-#: src/MyAppBar.tsx:87
+#: pages/index.tsx:45
+#: src/MyAppBar.tsx:95
 msgid "Home"
 msgstr "דף הבית"
 
-#: src/sd/Controls.tsx:176
+#: src/sd/Controls.tsx:180
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "עד כמה יש להיצמד להנחיה. ערכים נמוכים יותר = יותר יצירתיות וגיוון. ערכים גבוהים יותר = יותר דיוק, ייתכנו ארטיפקטים. בדרך כלל הערכים הטובים ביותר הם 5 - 15."
 
 #: pages/img2img.tsx:17
-#: pages/img2img.tsx:20
-#: pages/index.tsx:42
-#: src/MyAppBar.tsx:93
+#: pages/index.tsx:30
+#: src/MyAppBar.tsx:109
 msgid "Image to Image"
 msgstr "תמונה לתמונה"
 
-#: pages/index.tsx:50
+#: pages/index.tsx:36
 #: pages/inpaint.tsx:17
-#: pages/inpaint.tsx:20
-#: src/MyAppBar.tsx:96
+#: src/MyAppBar.tsx:116
 msgid "Inpainting"
 msgstr "תיקון תמונה"
 
-#: pages/credits.tsx:54
+#: src/sd/Controls.tsx:378
+msgid "Japanese / Japanglish prompt input, style"
+msgstr ""
+
+#: pages/credits.tsx:81
 msgid "Loading..."
 msgstr "טוען..."
 
-#: src/MyAppBar.tsx:218
-#: src/sd/Controls.tsx:398
+#: src/MyAppBar.tsx:316
+#: src/sd/Controls.tsx:478
 msgid "Login"
 msgstr "התחברות"
 
-#: src/MyAppBar.tsx:207
+#: src/MyAppBar.tsx:305
 msgid "Logout"
 msgstr "ציאה"
 
-#: src/sd/Controls.tsx:302
+#: src/sd/Controls.tsx:306
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "עקב הגבלות הזיכרון הגודל המקסימלי הוא 1024x768 או 768x1024."
 
-#: src/sd/Controls.tsx:264
+#: src/sd/Controls.tsx:340
+#: src/sd/Controls.tsx:344
+msgid "Model"
+msgstr ""
+
+#: src/sd/Controls.tsx:268
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "חייב להיות כפולה של 64. עקב הגבלות הזיכרון גודל התמונה המקסימלי הוא 1024x768 או 768x1024."
 
-#: pages/credits.tsx:105
+#: pages/credits.tsx:132
 msgid "My Credits"
 msgstr "הקרדיט שלי"
 
-#: pages/credits.tsx:125
+#: pages/news.tsx:11
+#: src/MyAppBar.tsx:141
+#: src/sd/Footer.tsx:27
+msgid "News"
+msgstr ""
+
+#: pages/credits.tsx:152
 msgid "Next credits on:"
 msgstr "נקודות הקרדיט הבאות ב-:"
 
-#: pages/index.tsx:72
+#: pages/index.tsx:107
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr "דיפ-פייק אסור, פרט למה שעומד בכללי שימוש הוגן (למשל הומור, חינוך, ללא תכנים מטעים או פוליטיים)."
 
-#: pages/credits.tsx:29
-#: pages/credits.tsx:29
+#: pages/credits.tsx:33
+#: pages/credits.tsx:33
 msgid "No such code exists."
 msgstr "אין קוד כזה"
 
-#: src/sd/Controls.tsx:212
+#: src/sd/Controls.tsx:216
 msgid "Number of Inference Steps"
 msgstr "מספר שלבי ההיסק"
 
-#: src/sd/Controls.tsx:219
+#: src/sd/Controls.tsx:223
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "מספר השלבים בהפחתת רעש (כמה פעמים לחזור על הפעולה ולשפר את התמונה). עבור מספרים גדולים הרנדור לוקח יותר זמן, אבל ייתכן שהתוצאות שיתקבלו יהיו איכותיות יותר."
 
-#: pages/credits.tsx:177
+#: pages/credits.tsx:204
 #: pages/order/[_id].tsx:75
 msgid "Order History"
 msgstr "היסטוריית הזמנות"
@@ -214,24 +241,28 @@ msgstr "הזמנה {_id}"
 msgid "Orders"
 msgstr "הזמנות"
 
+#: src/sd/Controls.tsx:358
+msgid "Original model, best for most cases."
+msgstr ""
+
 #: src/CheckoutForm.tsx:58
 msgid "Pay"
 msgstr "תשלום"
 
-#: pages/credits.tsx:153
+#: pages/credits.tsx:180
 #: src/CheckoutForm.tsx:58
 msgid "Please wait..."
 msgstr "נא להמתין..."
 
-#: pages/credits.tsx:109
+#: pages/credits.tsx:136
 msgid "Purchase Successful!"
 msgstr "הרכישה בוצעה בהצלחה!"
 
-#: pages/credits.tsx:138
+#: pages/credits.tsx:165
 msgid "Purchased Credits"
 msgstr "נקודות קרדיט שנרכשו"
 
-#: pages/credits.tsx:140
+#: pages/credits.tsx:167
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr "נקודות קרדיט שנרכשו מנוצלות אחרי שנגמרו נקודות הקרדיט הניתנות בחינם באותו החודש, ואין להן תוקף."
 
@@ -239,21 +270,27 @@ msgstr "נקודות קרדיט שנרכשו מנוצלות אחרי שנגמר�
 msgid "Reason"
 msgstr "סיבה"
 
-#: pages/credits.tsx:54
+#: pages/credits.tsx:81
 msgid "Redeem"
 msgstr "מימוש"
 
-#: pages/credits.tsx:45
+#: pages/credits.tsx:72
 msgid "Redeem Credit Code"
 msgstr "מימוש קוד קרדיט"
 
-#: pages/credits.tsx:181
+#: pages/credits.tsx:208
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr "תזכורת: זוהי תוכנה חינמית עם קוד פתוח. ניתן להפעיל בחינם עותק משלך במחשב האישי שלך, עם כרטיס גרפי מתאים או חשבון Banana.Dev זול.  מידע נוסף ניתן למצוא <0>בדף \"אודות\"</0>."
 
 #: pages/about.tsx:57
 msgid "Rendering can be performed either 1) locally with a Banana.Dev docker image (recommended), 2) locally with an existing Stable Diffusion installation, or 3) remotely via a Banana.Dev account. Details in the <0>project README</0>."
 msgstr "ניתן לבצע רינדור או 1) באופן מקומי עם תמונת docker של Banana.Dev (מומלץ), 2) באופן מקומי עם התקנה קיימת של Stable Diffusion, או 3) מרחוק, דרך חשבון Banana.Dev. פרטים <0>בקובץ ה-README של הפרויקט</0>."
+
+#: pages/resources.tsx:11
+#: src/MyAppBar.tsx:134
+#: src/sd/Footer.tsx:18
+msgid "Resources"
+msgstr ""
 
 #: pages/about.tsx:32
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
@@ -264,51 +301,55 @@ msgid "Status"
 msgstr "סטטוס"
 
 #: src/Inpaint.tsx:439
-msgid "Status: In Active Development"
-msgstr "סטטוס: בפיתוח פעיל"
+#~ msgid "Status: In Active Development"
+#~ msgstr "סטטוס: בפיתוח פעיל"
 
-#: pages/credits.tsx:39
-#: pages/credits.tsx:39
+#: pages/credits.tsx:63
+#: pages/credits.tsx:63
 msgid "Successfully redeemed {0} credits."
 msgstr "{0} נקודות קרדיט מומשו בהצלחה."
 
-#: pages/index.tsx:103
+#: pages/index.tsx:138
 msgid "Terms of Service"
 msgstr "תנאי השירות"
 
-#: pages/index.tsx:34
-#: pages/txt2img.tsx:72
-#: src/MyAppBar.tsx:90
+#: pages/index.tsx:24
+#: pages/txt2img.tsx:102
+#: src/MyAppBar.tsx:102
 msgid "Text to Image"
 msgstr "טקסט לתמונה"
 
-#: pages/credits.tsx:161
+#: pages/credits.tsx:188
 #: src/CheckoutForm.tsx:62
 msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 msgstr "החיוב יופיע תחת \"Wastelands Networking\" או \"Wastelands* SD-MUI\"."
 
-#: pages/index.tsx:94
+#: pages/index.tsx:129
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "פרויקט זה מבוסס על תוכנה חינמית עם קוד פתוח. ניתן להפעיל אותה במחשב האישי שלך בחינם (אם יש לך מעבד גרפי מתאים, או עם חשבון עיבוד גרפי Banana משלך ללא שרת). רוצה להשתתף? ראה את הדף <0>אודות</0>."
 
-#: pages/credits.tsx:168
+#: pages/credits.tsx:195
 msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
 msgstr "זהו פרויקט קהילתי המיושם על-ידי מתנדבים בזמן החופשי שלנו. איננו נותנים שום אחריות. הוא עלול להפסיק לעבוד בכל עת, ולא יינתן החזר כספי. בהתאם לזאת, ניתן לרכוש נקודות קרדיט בשווי דולר אחד בלבד בכל פעם."
 
-#: pages/credits.tsx:113
+#: pages/credits.tsx:140
 msgid "Total Credits"
 msgstr "סה\"כ נקודות קרדיט"
 
-#: pages/credits.tsx:115
+#: pages/credits.tsx:142
 msgid "Total credits available for immediate use."
 msgstr "סה\"כ נקודות קרדיט זמינות לניצול מיידי."
 
-#: src/sd/Controls.tsx:252
+#: pages/about.tsx:93
+msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
+msgstr ""
+
+#: src/sd/Controls.tsx:256
 msgid "Width"
 msgstr "רוחב"
 
-#: src/sd/Controls.tsx:263
-#: src/sd/Controls.tsx:301
+#: src/sd/Controls.tsx:267
+#: src/sd/Controls.tsx:305
 msgid "Width of output image."
 msgstr "רוחב תמונת הפלט"
 
@@ -316,15 +357,23 @@ msgstr "רוחב תמונת הפלט"
 msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
 msgstr "ניתן להפעיל אותה במחשב האישי שלך בחינם (אם יש לך מעבד גרפי מתאים), או עם חשבון עיבוד גרפי ללא שרת {LRM}<0>Banana.Dev</0> בעלות נמוכה מאוד. השתתף <1>בפרויקט GitHub שלנו</1>, הבה נבנה משהו אדיר ביחד."
 
-#: pages/credits.tsx:35
-#: pages/credits.tsx:35
+#: pages/credits.tsx:39
+#: pages/credits.tsx:39
 msgid "You have already redeemed this code before."
 msgstr "כבר מימשת קוד זה בעבר."
 
-#: pages/index.tsx:78
+#: pages/index.tsx:113
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr "חובה להבהיר בכל תוכן אותו משתפים בכל מקום אחר כי התמונה הזו נוצרה באמצעות מחשב."
 
-#: pages/credits.tsx:120
+#: pages/credits.tsx:147
 msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 msgstr "נקודות הקרדיט הניתנות בחינם מתווספות בכל חודש. הן מנוצלות לפני ניצול הנקודות בתשלום. נקודות קרדיט שלא נוצלו אינן מועברות."
+
+#: src/sd/Controls.tsx:480
+msgid "{0} Credit"
+msgstr ""
+
+#: src/sd/Controls.tsx:493
+msgid "{credits} credits remaining"
+msgstr ""
