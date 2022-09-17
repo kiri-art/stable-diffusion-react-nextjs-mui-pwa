@@ -448,7 +448,7 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
-  const credits = user?.credits?.free && user?.credits?.paid;
+  const credits = user?.credits?.free + user?.credits?.paid;
 
   return (
     <Box sx={{ my: 2 }}>
