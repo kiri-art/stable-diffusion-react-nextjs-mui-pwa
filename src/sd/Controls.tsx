@@ -448,6 +448,8 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
+  const credits = user?.credits?.free && user?.credits?.paid;
+
   return (
     <Box sx={{ my: 2 }}>
       <form onSubmit={go}>
@@ -471,16 +473,26 @@ export default function SDControls({
               type="submit"
               disabled={!!(requestStartTime && !requestEndTime)}
             >
-              {!REQUIRE_REGISTRATION ||
-              user?.credits?.free > 0 ||
-              user?.credits?.paid > 0 ? (
-                <Trans>Go</Trans>
-              ) : user ? (
-                <Trans>Get More Credits</Trans>
-              ) : (
-                <Trans>Login</Trans>
-              )}
+              {(function () {
+                if (!REQUIRE_REGISTRATION) return <Trans>Go</Trans>;
+                if (!user) return <Trans>Login</Trans>;
+                if (!credits) return <Trans>Get More Credits</Trans>;
+                return <Trans>{1} Credit</Trans>;
+              })()}
             </Button>
+            {REQUIRE_REGISTRATION && user && (
+              <Box
+                sx={{
+                  fontSize: "70%",
+                  color: "#aaa",
+                  textAlign: "center",
+                  mt: -0.5,
+                  mb: 1,
+                }}
+              >
+                <Trans>{credits} credits remaining</Trans>
+              </Box>
+            )}
           </Grid>
           {isDev && (
             <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
