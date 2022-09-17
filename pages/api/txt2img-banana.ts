@@ -1,10 +1,12 @@
-import * as banana from "@banana-dev/banana-dev";
+// import * as banana from "@banana-dev/banana-dev";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
 import Database /* ObjectID */ from "gongo-server-db-mongo";
+import { v4 as uuidv4 } from "uuid";
 
 import type { Txt2ImgOpts } from "../../src/schemas/txt2imgOpts";
+import type { BananaRequest } from "../../src/schemas/bananaRequest";
 import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
 import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 
@@ -42,6 +44,8 @@ async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
   if (typeof modelKey !== "string")
     throw new Error(`${envName} is not a string`);
 
+  // const { MODEL_ID, PIPELINE, SCHEDULER } = modelOpts;
+
   // These are hardcoded into the deployed models (we could assert though?)
   delete modelOpts.MODEL_ID;
   delete modelOpts.PIPELINE;
@@ -65,12 +69,54 @@ async function bananaSdkRun(modelOpts: Txt2ImgOpts, MODEL_NAME: string) {
     modelOutputs: [ { message: "No prompt provided" } ]
   */
 
-  const out = await banana.run(apiKey, modelKey, modelOpts);
+  // const out = await banana.run(apiKey, modelKey, modelOpts);
+  // const id = await banana.start(apiKey, modelKey, modelOpts);
+
+  const now = new Date();
+
+  const payload = {
+    id: uuidv4(),
+    created: Math.floor(now.getTime() / 1000),
+    apiKey,
+    modelKey,
+    modelInputs: modelOpts,
+    startOnly: true,
+  };
+
+  const response = await fetch("https://api.banana.dev/start/v4/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  // TODO, error handling `:)
+
+  const result = await response.json();
+
   // fs.writeFileSync("out.json", JSON.stringify(out));
   // console.log(out);
   // const out = JSON.parse(fs.readFileSync("out.json").toString("utf-8"));
 
-  return out;
+  if (modelOpts.init_image) modelOpts.init_image = "[truncated]";
+  if (modelOpts.mask_image) modelOpts.mask_image = "[truncated]";
+
+  const bananaRequest: BananaRequest = {
+    // bananaId: result.id,
+    message: result.message,
+    createdAt: now,
+    apiVersion: result.apiVersion,
+    callID: result.callID,
+    finished: result.finished,
+    modelInputs: modelOpts,
+    steps: {},
+  };
+
+  if (gs && gs.dba)
+    await gs.dba.collection("bananaRequests").insertOne(bananaRequest);
+
+  return result;
 }
 
 async function localSdkRun(modelOpts: Txt2ImgOpts) {

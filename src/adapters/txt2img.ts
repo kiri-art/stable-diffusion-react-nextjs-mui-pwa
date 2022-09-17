@@ -1,7 +1,32 @@
+import { db } from "gongo-client-react";
+import { v4 as uuidv4 } from "uuid";
+
+import { REQUIRE_REGISTRATION } from "../lib/client-env";
 import txt2imgOptsSchema from "../schemas/txt2imgOpts";
 import type { Txt2ImgOpts } from "../schemas/txt2imgOpts";
-import { db } from "gongo-client-react";
-import { REQUIRE_REGISTRATION } from "../lib/client-env";
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function updateFinishedStep(
+  callID: string,
+  timestampMs: number,
+  value: Record<string, unknown>
+) {
+  await fetch("/api/bananaUpdate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      callID,
+      step: {
+        name: "finished",
+        date: timestampMs,
+        value: value,
+      },
+    }),
+  });
+}
 
 async function exec(
   opts: Txt2ImgOpts,
@@ -110,6 +135,56 @@ async function banana(
     return;
   }
 
+  if (REQUIRE_REGISTRATION) {
+    // @ts-expect-error: TODO
+    const _id = db.auth.userId;
+    // TODO, _update should allow mongo modifier
+    const users = db.collection("users");
+    const user = users.findOne({ _id });
+    if (!(user && result.credits)) return;
+    user.credits = result.credits;
+    db.collection("users")._update(_id, user);
+  }
+
+  const callID = result.callID;
+  const initialResult = result;
+  console.log({ initialResult });
+
+  while (!(result.finished || result.modelOutputs)) {
+    await sleep(500);
+    console.log("Request");
+    /*
+    const response = await fetch(
+      "/api/bananaCheck?callID=" + callID
+    );
+    */
+
+    const payload = {
+      id: uuidv4(),
+      created: Math.floor(Date.now() / 1000),
+      longPoll: true,
+      callID: callID,
+    };
+
+    const response = await fetch("https://api.banana.dev/check/v4/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    try {
+      result = await response.json();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      setLog(["FAILED: " + message]);
+      return;
+    }
+
+    console.log(result);
+  }
+
   // It turns out sometimes we can still get { message: "" } and success.
   // if (!result.message) {
   if (
@@ -120,10 +195,16 @@ async function banana(
       result.modelOutputs[0].image_base64
     )
   ) {
+    updateFinishedStep(
+      callID,
+      (result.created && result.created * 1000) || Date.now(),
+      { $error: result }
+    );
     setLog(JSON.stringify(result, null, 2).split("\n"));
     return;
   }
 
+  updateFinishedStep(callID, result.created * 1000, { $success: true });
   const imgBase64 = result.modelOutputs[0].image_base64;
   const buffer = Buffer.from(imgBase64, "base64");
   const blob = new Blob([buffer], { type: "image/png" });
@@ -132,17 +213,6 @@ async function banana(
   setLog([]);
 
   // console.log(result);
-
-  if (REQUIRE_REGISTRATION) {
-    // @ts-expect-error: TODO
-    const _id = db.auth.userId;
-    // TODO, _update should allow mongo modifier
-    const users = db.collection("users");
-    const user = users.findOne({ _id });
-    if (!user) return;
-    user.credits = result.credits;
-    db.collection("users")._update(_id, user);
-  }
 }
 
 const runners = { exec, banana };
