@@ -183,6 +183,11 @@ async function banana(
     }
 
     console.log(result);
+
+    if (result.message.match(/error/)) {
+      setLog(["FAILED: " + result.message]);
+      return;
+    }
   }
 
   // It turns out sometimes we can still get { message: "" } and success.
