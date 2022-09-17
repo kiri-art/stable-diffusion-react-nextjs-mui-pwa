@@ -195,16 +195,18 @@ async function banana(
       result.modelOutputs[0].image_base64
     )
   ) {
-    updateFinishedStep(
-      callID,
-      (result.created && result.created * 1000) || Date.now(),
-      { $error: result }
-    );
+    if (callID)
+      updateFinishedStep(
+        callID,
+        (result.created && result.created * 1000) || Date.now(),
+        { $error: result }
+      );
     setLog(JSON.stringify(result, null, 2).split("\n"));
     return;
   }
 
-  updateFinishedStep(callID, result.created * 1000, { $success: true });
+  if (callID)
+    updateFinishedStep(callID, result.created * 1000, { $success: true });
   const imgBase64 = result.modelOutputs[0].image_base64;
   const buffer = Buffer.from(imgBase64, "base64");
   const blob = new Blob([buffer], { type: "image/png" });
