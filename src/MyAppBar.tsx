@@ -2,6 +2,7 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import { Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import Image from "next/image";
 
 import {
   AppBar,
@@ -18,6 +19,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   SwipeableDrawer,
   Slide,
@@ -26,12 +28,19 @@ import {
 import {
   Menu as MenuIcon,
   Language as LanguageIcon,
+  Home,
+  Newspaper,
+  GitHub,
+  Info,
+  AdminPanelSettings,
+  Bookmarks,
+  ConfirmationNumber,
 } from "@mui/icons-material";
 
 import Link from "../src/Link";
 import locales from "../src/lib/locales";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 function HideOnScroll({ children }: { children: React.ReactElement }) {
   const trigger = useScrollTrigger();
@@ -89,29 +98,56 @@ export default function MyAppBar({ title }: { title: string }) {
       </Typography>
       <Divider />
       <List>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/">
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Home</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/txt2img">
+            <ListItemIcon>
+              <Image
+                alt="txt2img"
+                src="/img/pages/txt2img.png"
+                width={25}
+                height={25}
+              />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Text to Image</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/img2img">
+            <ListItemIcon>
+              <Image
+                alt="txt2img"
+                src="/img/pages/img2img.png"
+                width={25}
+                height={25}
+              />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Image to Image</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/inpaint">
+            <ListItemIcon>
+              <Image
+                alt="txt2img"
+                src="/img/pages/inpaint.png"
+                width={25}
+                height={25}
+              />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Inpainting</Trans>
             </ListItemText>
@@ -119,8 +155,11 @@ export default function MyAppBar({ title }: { title: string }) {
         </ListItem>
         <Divider />
 
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/credits">
+            <ListItemIcon>
+              <ConfirmationNumber />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Credits:</Trans>{" "}
               {user && user.credits.free + user.credits.paid}
@@ -128,40 +167,55 @@ export default function MyAppBar({ title }: { title: string }) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/resources">
+            <ListItemIcon>
+              <Bookmarks />
+            </ListItemIcon>
             <ListItemText>
               <Trans>Resources</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/news">
+            <ListItemIcon>
+              <Newspaper />
+            </ListItemIcon>
             <ListItemText>
               <Trans>News</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton
             component={Link}
             href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa"
           >
+            <ListItemIcon>
+              <GitHub />
+            </ListItemIcon>
             <ListItemText>
               <Trans>GitHub</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} href="/about">
+            <ListItemIcon>
+              <Info />
+            </ListItemIcon>
             <ListItemText>
               <Trans>About</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
         {isAdmin ? (
-          <ListItem>
+          <ListItem disablePadding>
             <ListItemButton component={Link} href="/admin">
+              <ListItemIcon>
+                <AdminPanelSettings />
+              </ListItemIcon>
               <ListItemText>
                 <Trans>Admin</Trans>
               </ListItemText>
