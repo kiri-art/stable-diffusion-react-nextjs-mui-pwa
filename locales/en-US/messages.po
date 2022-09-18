@@ -13,17 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/sd/Controls.tsx:146
+#: src/sd/Controls.tsx:151
 msgid "(Denoising) Strength"
 msgstr "(Denoising) Strength"
+
+#: src/Inpaint.tsx:471
+msgid "(drag & drop, sharing coming soon)"
+msgstr "(drag & drop, sharing coming soon)"
 
 #: pages/index.tsx:141
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr ""
 
-#: src/sd/Controls.tsx:95
-#: src/sd/Controls.tsx:185
-#: src/sd/Controls.tsx:228
+#: src/sd/Controls.tsx:100
+#: src/sd/Controls.tsx:190
+#: src/sd/Controls.tsx:233
 msgid "<0>Learn more</0>"
 msgstr ""
 
@@ -48,6 +52,10 @@ msgstr ""
 msgid "Acknowledements and Thanks"
 msgstr "Acknowledements and Thanks"
 
+#: src/Inpaint.tsx:477
+msgid "Adjust prompt and GO"
+msgstr "Adjust prompt and GO"
+
 #: pages/admin.tsx:219
 #: src/MyAppBar.tsx:166
 msgid "Admin"
@@ -65,7 +73,7 @@ msgstr ""
 msgid "Be Responsible"
 msgstr ""
 
-#: src/sd/Controls.tsx:368
+#: src/sd/Controls.tsx:493
 msgid "Best for Anime characters"
 msgstr "Best for Anime characters"
 
@@ -78,7 +86,7 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: src/sd/Controls.tsx:174
+#: src/sd/Controls.tsx:179
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
@@ -87,9 +95,9 @@ msgstr ""
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
-#: pages/img2img.tsx:18
-#~ msgid "Coming Soon"
-#~ msgstr ""
+#: src/Inpaint.tsx:484
+msgid "Coming Soon"
+msgstr ""
 
 #: pages/login.tsx:85
 msgid "Connect with {0}"
@@ -108,7 +116,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/sd/Controls.tsx:89
+#: src/sd/Controls.tsx:94
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr ""
 
@@ -124,7 +132,7 @@ msgstr ""
 msgid "Free Credits"
 msgstr ""
 
-#: src/sd/Controls.tsx:479
+#: src/sd/Controls.tsx:614
 msgid "Get More Credits"
 msgstr ""
 
@@ -133,7 +141,7 @@ msgstr ""
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/sd/Controls.tsx:477
+#: src/sd/Controls.tsx:612
 msgid "Go"
 msgstr ""
 
@@ -141,7 +149,7 @@ msgstr ""
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:294
+#: src/sd/Controls.tsx:299
 msgid "Height"
 msgstr ""
 
@@ -150,7 +158,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: src/sd/Controls.tsx:180
+#: src/sd/Controls.tsx:185
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr ""
 
@@ -164,13 +172,17 @@ msgstr ""
 msgid "Image to Image"
 msgstr ""
 
+#: src/Inpaint.tsx:489
+msgid "Image will be scaled to max 512x512 (for now)"
+msgstr "Image will be scaled to max 512x512 (for now)"
+
 #: pages/index.tsx:36
 #: pages/inpaint.tsx:17
 #: src/MyAppBar.tsx:116
 msgid "Inpainting"
 msgstr "Inpainting"
 
-#: src/sd/Controls.tsx:378
+#: src/sd/Controls.tsx:503
 msgid "Japanese / Japanglish prompt input, style"
 msgstr "Japanese / Japanglish prompt input, style"
 
@@ -179,7 +191,7 @@ msgid "Loading..."
 msgstr ""
 
 #: src/MyAppBar.tsx:316
-#: src/sd/Controls.tsx:478
+#: src/sd/Controls.tsx:613
 msgid "Login"
 msgstr ""
 
@@ -187,16 +199,16 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: src/sd/Controls.tsx:306
+#: src/sd/Controls.tsx:311
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
 
-#: src/sd/Controls.tsx:340
-#: src/sd/Controls.tsx:344
+#: src/sd/Controls.tsx:465
+#: src/sd/Controls.tsx:469
 msgid "Model"
 msgstr "Model"
 
-#: src/sd/Controls.tsx:268
+#: src/sd/Controls.tsx:273
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 
@@ -223,11 +235,15 @@ msgstr ""
 msgid "No such code exists."
 msgstr ""
 
-#: src/sd/Controls.tsx:216
+#: src/Inpaint.tsx:483
+msgid "Notes"
+msgstr "Notes"
+
+#: src/sd/Controls.tsx:221
 msgid "Number of Inference Steps"
 msgstr ""
 
-#: src/sd/Controls.tsx:223
+#: src/sd/Controls.tsx:228
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr ""
 
@@ -253,7 +269,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: src/sd/Controls.tsx:358
+#: src/sd/Controls.tsx:483
 msgid "Original model, best for most cases."
 msgstr "Original model, best for most cases."
 
@@ -261,10 +277,19 @@ msgstr "Original model, best for most cases."
 msgid "Pay"
 msgstr ""
 
+#: src/sd/Controls.tsx:350
+msgid "Please enter a valid seed or turn \"Randomize\" back on."
+msgstr "Please enter a valid seed or turn \"Randomize\" back on."
+
 #: pages/credits.tsx:180
 #: src/CheckoutForm.tsx:58
 msgid "Please wait..."
 msgstr ""
+
+#: pages/privacy.tsx:14
+#: src/Copyright.tsx:26
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
 
 #: pages/credits.tsx:136
 msgid "Purchase Successful!"
@@ -277,6 +302,22 @@ msgstr ""
 #: pages/credits.tsx:167
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr ""
+
+#: src/Inpaint.tsx:464
+msgid "Quick Start"
+msgstr "Quick Start"
+
+#: src/sd/Controls.tsx:413
+msgid "Randomize"
+msgstr "Randomize"
+
+#: src/sd/Controls.tsx:417
+msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
+msgstr "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
+
+#: pages/index.tsx:156
+msgid "Read the full Terms of Service below."
+msgstr "Read the full Terms of Service below."
 
 #: pages/order/[_id].tsx:68
 msgid "Reason"
@@ -304,9 +345,17 @@ msgstr ""
 msgid "Resources"
 msgstr "Resources"
 
+#: src/Inpaint.tsx:483
+msgid "Roadmap"
+msgstr "Roadmap"
+
 #: pages/about.tsx:32
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
 msgstr ""
+
+#: src/sd/Controls.tsx:340
+msgid "Seed"
+msgstr "Seed"
 
 #: pages/order/[_id].tsx:64
 msgid "Status"
@@ -322,11 +371,12 @@ msgid "Successfully redeemed {0} credits."
 msgstr ""
 
 #: pages/index.tsx:138
+#: src/Copyright.tsx:22
 msgid "Terms of Service"
 msgstr ""
 
 #: pages/index.tsx:24
-#: pages/txt2img.tsx:102
+#: pages/txt2img.tsx:106
 #: src/MyAppBar.tsx:102
 msgid "Text to Image"
 msgstr ""
@@ -352,16 +402,28 @@ msgstr ""
 msgid "Total credits available for immediate use."
 msgstr ""
 
+#: src/Inpaint.tsx:469
+msgid "Upload an image with button below"
+msgstr "Upload an image with button below"
+
+#: src/Inpaint.tsx:474
+msgid "Use mouse / finger to draw mask over it"
+msgstr "Use mouse / finger to draw mask over it"
+
+#: src/sd/Controls.tsx:361
+msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
+msgstr "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
+
 #: pages/about.tsx:93
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 
-#: src/sd/Controls.tsx:256
+#: src/sd/Controls.tsx:261
 msgid "Width"
 msgstr ""
 
-#: src/sd/Controls.tsx:267
-#: src/sd/Controls.tsx:305
+#: src/sd/Controls.tsx:272
+#: src/sd/Controls.tsx:310
 msgid "Width of output image."
 msgstr "Width of output image."
 
@@ -386,10 +448,18 @@ msgstr ""
 msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 msgstr ""
 
-#: src/sd/Controls.tsx:480
-msgid "{0} Credit"
-msgstr "{0} Credit"
+#: src/sd/Controls.tsx:615
+msgid "{0, plural, one {# Credit} other {# Credits}}"
+msgstr "{0, plural, one {# Credit} other {# Credits}}"
 
-#: src/sd/Controls.tsx:493
-msgid "{credits} credits remaining"
-msgstr "{credits} credits remaining"
+#: src/sd/Controls.tsx:480
+#~ msgid "{0} Credit"
+#~ msgstr "{0} Credit"
+
+#: src/sd/Controls.tsx:628
+msgid "{credits, plural, one {# credit remaining} other {# credits remaining}}"
+msgstr "{credits, plural, one {# credit remaining} other {# credits remaining}}"
+
+#: src/sd/Controls.tsx:628
+#~ msgid "{credits} credits remaining"
+#~ msgstr "{credits} credits remaining"

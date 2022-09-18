@@ -151,8 +151,9 @@ const Home: NextPage = () => {
             <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa/blob/main/LICENSE.txt">
               MIT license
             </a>
-            . <Trans>Read the full Terms of Service below.</Trans>
+            .
           </Trans>
+          <Trans>Read the full Terms of Service below.</Trans>
         </Box>
         <Copyright />
       </Container>

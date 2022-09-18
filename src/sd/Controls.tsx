@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { t, Trans } from "@lingui/macro";
+import { t, Trans, Plural } from "@lingui/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 
 import type { ModelState } from "./useModelState";
@@ -612,7 +612,7 @@ export default function SDControls({
                 if (!REQUIRE_REGISTRATION) return <Trans>Go</Trans>;
                 if (!user) return <Trans>Login</Trans>;
                 if (!credits) return <Trans>Get More Credits</Trans>;
-                return <Trans>{1} Credit</Trans>;
+                return <Plural value={1} one="# Credit" other="# Credits" />;
               })()}
             </Button>
             {REQUIRE_REGISTRATION && user && (
@@ -625,7 +625,11 @@ export default function SDControls({
                   mb: 1,
                 }}
               >
-                <Trans>{credits} credits remaining</Trans>
+                <Plural
+                  value={credits}
+                  one="# credit remaining"
+                  other="# credits remaining"
+                />
               </Box>
             )}
           </Grid>

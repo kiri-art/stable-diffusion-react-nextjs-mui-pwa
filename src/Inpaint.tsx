@@ -14,6 +14,7 @@ import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 // import { Trans } from "@lingui/macro";
 import locales, { defaultLocale } from "../src/lib/locales";
+import { Trans } from "@lingui/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -459,24 +460,34 @@ export default function Inpainting() {
             overflow: "auto",
           }}
         >
-          <b>Quick Start</b>
+          <b>
+            <Trans>Quick Start</Trans>
+          </b>
 
           <ol>
             <li>
-              Upload an image with button below
+              <Trans>Upload an image with button below</Trans>
               <br />
-              (drag &amp; drop, sharing coming soon)
+              <Trans>(drag &amp; drop, sharing coming soon)</Trans>
             </li>
-            <li>Use mouse/finger to draw mask over it</li>
-            <li>Adjust prompt and GO</li>
+            <li>
+              <Trans>Use mouse / finger to draw mask over it</Trans>
+            </li>
+            <li>
+              <Trans>Adjust prompt and GO</Trans>
+            </li>
           </ol>
 
           <div style={{ fontSize: "85%" }}>
-            <p>Roadmap / Notes / Coming Soon</p>
+            <p>
+              <Trans>Roadmap</Trans> / <Trans>Notes</Trans> /{" "}
+              <Trans>Coming Soon</Trans>
+            </p>
 
             <ul>
-              <li>Image will be scaled to max 512x512</li>
-              <li>TODO: Better instructions / guide</li>
+              <li>
+                <Trans>Image will be scaled to max 512x512 (for now)</Trans>
+              </li>
             </ul>
           </div>
         </div>
