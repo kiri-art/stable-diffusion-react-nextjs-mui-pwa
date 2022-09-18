@@ -11,7 +11,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Plural-Forms: nplurals=1; plural=0;"\n"
+"Plural-Forms: nplurals=1; plural=0;"
 
 #: src/sd/Controls.tsx:151
 msgid "(Denoising) Strength"
@@ -19,7 +19,7 @@ msgstr "(ノイズ除去) 強度"
 
 #: src/Inpaint.tsx:471
 msgid "(drag & drop, sharing coming soon)"
-msgstr ""
+msgstr "(ドラッグ & ドロップ、共有が間もなく追加されます)"
 
 #: pages/index.tsx:141
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
@@ -33,7 +33,7 @@ msgstr "<0>詳細を見る</0>"
 
 #: pages/about.tsx:103
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
-msgstr ""
+msgstr "<0>Stability.Ai</0> - <1>StableDiffusion</1> の開発に費やされた膨大な時間と作業、努力、そしてオープンソースライセンスでの一般リリースの決断に。"
 
 #: src/workboxStuff.tsx:42
 msgid "A newer version of this web app is available, reload to update?"
@@ -50,11 +50,11 @@ msgstr "アクセスが拒否されました。"
 
 #: pages/about.tsx:89
 msgid "Acknowledements and Thanks"
-msgstr ""
+msgstr "謝辞"
 
 #: src/Inpaint.tsx:477
 msgid "Adjust prompt and GO"
-msgstr ""
+msgstr "プロンプトを調整して移動"
 
 #: pages/admin.tsx:219
 #: src/MyAppBar.tsx:166
@@ -75,7 +75,7 @@ msgstr "責任を持ちましょう"
 
 #: src/sd/Controls.tsx:493
 msgid "Best for Anime characters"
-msgstr ""
+msgstr "アニメキャラクターに最適"
 
 #: pages/credits.tsx:182
 msgid "Buy 50 credits for $1"
@@ -97,7 +97,7 @@ msgstr "申し訳ありませんが、コードの使用回数がすでに最大
 
 #: src/Inpaint.tsx:484
 msgid "Coming Soon"
-msgstr ""
+msgstr "近日追加予定"
 
 #: pages/login.tsx:85
 msgid "Connect with {0}"
@@ -170,7 +170,7 @@ msgstr "画像から画像へ"
 
 #: src/Inpaint.tsx:489
 msgid "Image will be scaled to max 512x512 (for now)"
-msgstr ""
+msgstr "画像は最大 512x512 にスケール調整されます (現時点では)"
 
 #: pages/index.tsx:36
 #: pages/inpaint.tsx:17
@@ -180,7 +180,7 @@ msgstr "インペインティング"
 
 #: src/sd/Controls.tsx:503
 msgid "Japanese / Japanglish prompt input, style"
-msgstr ""
+msgstr "日本語 / 日本語英語のプロンプト入力、スタイル"
 
 #: pages/credits.tsx:81
 msgid "Loading..."
@@ -202,7 +202,7 @@ msgstr "メモリの制限により、最大解像度は 1024x768 または 768x
 #: src/sd/Controls.tsx:465
 #: src/sd/Controls.tsx:469
 msgid "Model"
-msgstr ""
+msgstr "モデル"
 
 #: src/sd/Controls.tsx:273
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
@@ -216,7 +216,7 @@ msgstr "私のクレジット"
 #: src/MyAppBar.tsx:141
 #: src/sd/Footer.tsx:27
 msgid "News"
-msgstr ""
+msgstr "ニュース"
 
 #: pages/credits.tsx:152
 msgid "Next credits on:"
@@ -233,7 +233,7 @@ msgstr "そのようなコードは存在しません。"
 
 #: src/Inpaint.tsx:483
 msgid "Notes"
-msgstr ""
+msgstr "メモ"
 
 #: src/sd/Controls.tsx:221
 msgid "Number of Inference Steps"
@@ -263,7 +263,7 @@ msgstr "注文"
 
 #: src/sd/Controls.tsx:483
 msgid "Original model, best for most cases."
-msgstr ""
+msgstr "元のモデル、ほとんどのケースに最適"
 
 #: src/CheckoutForm.tsx:58
 msgid "Pay"
@@ -271,7 +271,7 @@ msgstr "支払う"
 
 #: src/sd/Controls.tsx:350
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
-msgstr ""
+msgstr "有効なシードを入力するか、「ランダム化」をもう一度有効にしてください。"
 
 #: pages/credits.tsx:180
 #: src/CheckoutForm.tsx:58
@@ -281,7 +281,7 @@ msgstr "お待ちください..."
 #: pages/privacy.tsx:14
 #: src/Copyright.tsx:26
 msgid "Privacy Policy"
-msgstr ""
+msgstr "プライバシーポリシー"
 
 #: pages/credits.tsx:136
 msgid "Purchase Successful!"
@@ -297,19 +297,19 @@ msgstr "購入したクレジットはその月の無料クレジットがなく
 
 #: src/Inpaint.tsx:464
 msgid "Quick Start"
-msgstr ""
+msgstr "クイックスタート"
 
 #: src/sd/Controls.tsx:413
 msgid "Randomize"
-msgstr ""
+msgstr "ランダム化"
 
 #: src/sd/Controls.tsx:417
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
-msgstr ""
+msgstr "すべての要求でシードをランダム化します。 つまり、新しい画像はそれぞれ完全に異なるものになります。 代わりに前回の作品を「調整」したい場合は、この機能をオフにしてください。"
 
 #: pages/index.tsx:156
 msgid "Read the full Terms of Service below."
-msgstr ""
+msgstr "下の完全なサービス規約をお読みください。"
 
 #: pages/order/[_id].tsx:68
 msgid "Reason"
@@ -335,11 +335,11 @@ msgstr "レンダリングは、1) Banana.Dev Docker の画像を使用してロ
 #: src/MyAppBar.tsx:134
 #: src/sd/Footer.tsx:18
 msgid "Resources"
-msgstr ""
+msgstr "リソース"
 
 #: src/Inpaint.tsx:483
 msgid "Roadmap"
-msgstr ""
+msgstr "ロードマップ"
 
 #: pages/about.tsx:32
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
@@ -347,7 +347,7 @@ msgstr "SD-MUI は、<0>Stability.AI</0> の <1>Stable Diffusion</1> web UI の�
 
 #: src/sd/Controls.tsx:340
 msgid "Seed"
-msgstr ""
+msgstr "シード"
 
 #: pages/order/[_id].tsx:64
 msgid "Status"
@@ -396,19 +396,19 @@ msgstr "すぐに使用できる合計クレジット。"
 
 #: src/Inpaint.tsx:469
 msgid "Upload an image with button below"
-msgstr ""
+msgstr "下のボタンで画像をアップロードします"
 
 #: src/Inpaint.tsx:474
 msgid "Use mouse / finger to draw mask over it"
-msgstr ""
+msgstr "マウスまたは指を使って、重ねてマスクを描きます"
 
 #: src/sd/Controls.tsx:361
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
-msgstr ""
+msgstr "同じシードとオプション (プロンプト、ガイダンススケールなど) を使うと、常に同じ画像が作成されます。 これは、以前の作品を調整したり、(「ランダム」な要素を取り除いて) 他のオプションがプロセスに与える影響を把握したり、作品を共有したりする際に便利です。 {0} から {MAX_SEED_VALUE} の間の数字。"
 
 #: pages/about.tsx:93
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
-msgstr ""
+msgstr "<0>誰もが AI を使えるようにする</0>取り組みにご協力いただいた、次の研究者、団体、企業の皆様への感謝の気持ちは、言葉では表しきれません。"
 
 #: src/sd/Controls.tsx:261
 msgid "Width"
@@ -438,7 +438,7 @@ msgstr "無料クレジットは毎月チャージされます。 これらは�
 
 #: src/sd/Controls.tsx:615
 msgid "{0, plural, one {# Credit} other {# Credits}}"
-msgstr ""
+msgstr "{0, plural, one {# クレジット} other {# クレジット}}"
 
 #: src/sd/Controls.tsx:480
 #~ msgid "{0} Credit"
@@ -446,7 +446,7 @@ msgstr ""
 
 #: src/sd/Controls.tsx:628
 msgid "{credits, plural, one {# credit remaining} other {# credits remaining}}"
-msgstr ""
+msgstr "{credits, plural, one {残り # クレジット} other {残り # クレジット}}j"
 
 #: src/sd/Controls.tsx:628
 #~ msgid "{credits} credits remaining"
