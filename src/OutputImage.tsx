@@ -110,7 +110,7 @@ export default function OutputImage({
     const parentNode = img.parentNode as HTMLDivElement | null;
     if (parentNode && parentNode.offsetTop < 100)
       img.style.scrollMarginTop = 56 + 12 + "px";
-  }, [imgResult.current]);
+  }, []);
 
   async function share() {
     if (!imgResult.current) return;
