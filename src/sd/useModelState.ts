@@ -31,6 +31,8 @@ export interface ModelState {
   height: ValueSetValue<string | number>;
   strength: ValueSetValue<string | number>;
   MODEL_ID: ValueSetValue<string>;
+  seed: ValueSetValue<string | number>;
+  randomizeSeed: ValueSetValue<boolean>;
 }
 
 export default function useModelState(inputs?: string[]): ModelState {
@@ -44,6 +46,8 @@ export default function useModelState(inputs?: string[]): ModelState {
     height: useSdState<number | string>(defaults.height),
     strength: useSdState<number | string>(defaults.strength),
     MODEL_ID: useSdState<string>(defaults.MODEL_ID),
+    seed: useSdState<number | string>(defaults.seed),
+    randomizeSeed: useSdState<boolean>(defaults.randomizeSeed),
   };
 
   // return allStates;

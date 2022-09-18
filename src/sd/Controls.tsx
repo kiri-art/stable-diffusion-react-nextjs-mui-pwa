@@ -9,19 +9,24 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
   Select,
+  Switch,
   TextField,
   Tooltip,
 } from "@mui/material";
-import { Clear, Height, Help, Scale } from "@mui/icons-material";
+import { Clear, Height, Help, HelpOutline, Scale } from "@mui/icons-material";
 
 import InputSlider from "../InputSlider";
 import defaults from "../sd/defaults";
+
+const MAX_SEED_VALUE = 4294967295;
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -315,6 +320,126 @@ function Height_Grid_Slider({
   );
 }
 
+function Seed({
+  value,
+  setValue,
+  _defaultValue,
+  randomizeSeedValue,
+}: {
+  value: ModelState["seed"]["value"];
+  setValue: ModelState["seed"]["setValue"];
+  _defaultValue: string | number;
+  randomizeSeedValue: boolean;
+}) {
+  return useMemo(() => {
+    const error = !(value || randomizeSeedValue);
+
+    return (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <TextField
+          label={t`Seed`}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          size="small"
+          fullWidth
+          error={error}
+          type="number"
+          disabled={randomizeSeedValue}
+          helperText={
+            error && (
+              <Trans>
+                Please enter a valid seed or turn &quot;Randomize&quot; back on.
+              </Trans>
+            )
+          }
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Using an identical seed with identical options (prompt,
+                        guidance scale, etc) will always produce the same image.
+                        This can be useful to tweak prior creations, to
+                        understand how the other options affect the process (by
+                        removing the &quot;random&quot; element), or when
+                        sharing your work. A number between {0} and{" "}
+                        {MAX_SEED_VALUE}.
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={5000}
+                >
+                  <HelpOutline
+                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+                  />
+                </Tooltip>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Grid>
+    );
+  }, [value, setValue, randomizeSeedValue]);
+}
+
+function RandomizeSeed({
+  value,
+  setValue,
+  _defaultValue,
+}: {
+  value: ModelState["randomizeSeed"]["value"];
+  setValue: ModelState["randomizeSeed"]["setValue"];
+  _defaultValue: boolean;
+}) {
+  return useMemo(() => {
+    return (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <FormGroup sx={{ alignItems: "center" }}>
+          <FormControlLabel
+            sx={{ mr: 0 }}
+            control={
+              <Switch
+                checked={value}
+                onChange={(event) => setValue(event.target.checked)}
+              />
+            }
+            label={
+              <Box>
+                <Trans>Randomize</Trans>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Randomize Seed on every request. This means each new
+                        image will be completely different. If you want to,
+                        instead, &quot;tweak&quot; your last creation, turn this
+                        off.
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={3000}
+                >
+                  <HelpOutline
+                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+                  />
+                </Tooltip>
+              </Box>
+            }
+          />
+        </FormGroup>
+      </Grid>
+    );
+  }, [value, setValue]);
+}
+
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
     <Box sx={{ textAlign: "center", width: "100%" }}>
@@ -383,6 +508,16 @@ function ModelSelect({
     ),
     [value, setValue, defaultValue]
   );
+}
+
+export function randomizeSeedIfChecked(inputs: ModelState) {
+  if (inputs.randomizeSeed.value) {
+    const seed = Math.floor(Math.random() * MAX_SEED_VALUE);
+    inputs.seed.setValue(seed);
+    return seed;
+  } else {
+    return inputs.seed.value;
+  }
 }
 
 export default function SDControls({
@@ -554,6 +689,17 @@ export default function SDControls({
               defaultValue={defaults.height}
             />
           )}
+          <Seed
+            value={inputs.seed.value}
+            setValue={inputs.seed.setValue}
+            randomizeSeedValue={inputs.randomizeSeed.value}
+            _defaultValue={defaults.seed}
+          />
+          <RandomizeSeed
+            value={inputs.randomizeSeed.value}
+            setValue={inputs.randomizeSeed.setValue}
+            _defaultValue={defaults.randomizeSeed}
+          />
         </Grid>
       </form>
     </Box>

@@ -5,6 +5,8 @@ const defaults = {
   height: 512,
   strength: 0.75,
   MODEL_ID: "CompVis/stable-diffusion-v1-4",
+  seed: "",
+  randomizeSeed: true,
 };
 
 export default defaults;

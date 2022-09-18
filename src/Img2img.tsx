@@ -421,6 +421,8 @@ const inpaintState = [
   "strength",
   "num_inference_steps",
   "guidance_scale",
+  "seed",
+  "randomizeSeed",
 ];
 
 async function blobToBase64(blob: Blob) {

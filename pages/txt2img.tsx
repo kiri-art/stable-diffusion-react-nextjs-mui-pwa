@@ -11,7 +11,7 @@ import MyAppBar from "../src/MyAppBar";
 import React from "react";
 import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
-import Controls from "../src/sd/Controls";
+import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import useRandomPrompt from "../src/sd/useRandomPrompt";
 import Footer from "../src/sd/Footer";
 
@@ -22,6 +22,8 @@ const txt2imgState = [
   "guidance_scale",
   "width",
   "height",
+  "seed",
+  "randomizeSeed",
 ];
 
 export default function Txt2Img() {
@@ -68,6 +70,7 @@ export default function Txt2Img() {
     setRequestEndTime(null);
 
     const modelInputs = modelStateValues(inputs);
+    const seed = randomizeSeedIfChecked(inputs);
 
     const PIPELINE = "StableDiffusionPipeline";
     const SCHEDULER = "LMS";
@@ -81,6 +84,7 @@ export default function Txt2Img() {
       {
         ...modelInputs,
         prompt: inputs.prompt.value || randomPrompt,
+        seed,
         PIPELINE,
         SCHEDULER,
       },
