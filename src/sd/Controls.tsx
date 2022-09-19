@@ -505,7 +505,7 @@ function ShareInputs({
             enterDelay={0}
             enterTouchDelay={0}
             leaveDelay={0}
-            leaveTouchDelay={2000}
+            leaveTouchDelay={3000}
           >
             <HelpOutline
               sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
