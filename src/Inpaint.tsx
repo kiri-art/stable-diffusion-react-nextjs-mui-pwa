@@ -226,6 +226,7 @@ const inpaintState = [
   "MODEL_ID",
   "seed",
   "randomizeSeed",
+  "shareInputs",
 ];
 
 async function blobToBase64(blob: Blob) {
@@ -524,7 +525,7 @@ export default function Inpainting() {
       </div>
       {imgSrc && (
         <OutputImage
-          prompt={inputs.prompt.value.toString()}
+          inputs={inputs}
           imgSrc={imgSrc}
           log={log}
           requestStartTime={requestStartTime}

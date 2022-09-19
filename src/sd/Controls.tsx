@@ -24,9 +24,7 @@ import {
 import { Clear, Height, Help, HelpOutline, Scale } from "@mui/icons-material";
 
 import InputSlider from "../InputSlider";
-import defaults from "../sd/defaults";
-
-const MAX_SEED_VALUE = 4294967295;
+import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -328,7 +326,7 @@ function Seed({
 }: {
   value: ModelState["seed"]["value"];
   setValue: ModelState["seed"]["setValue"];
-  _defaultValue: string | number;
+  _defaultValue: typeof defaults.seed;
   randomizeSeedValue: boolean;
 }) {
   return useMemo(() => {
@@ -391,23 +389,27 @@ function RandomizeSeed({
   value,
   setValue,
   _defaultValue,
+  setSeed,
+  defaultSeed,
 }: {
   value: ModelState["randomizeSeed"]["value"];
   setValue: ModelState["randomizeSeed"]["setValue"];
   _defaultValue: boolean;
+  setSeed: ModelState["seed"]["setValue"];
+  defaultSeed: typeof defaults.seed;
 }) {
   return useMemo(() => {
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.checked);
+      if (event.target.checked) setSeed(defaultSeed());
+    };
+
     return (
       <Grid item xs={6} sm={4} md={3} lg={2}>
         <FormGroup sx={{ alignItems: "center" }}>
           <FormControlLabel
             sx={{ mr: 0 }}
-            control={
-              <Switch
-                checked={value}
-                onChange={(event) => setValue(event.target.checked)}
-              />
-            }
+            control={<Switch checked={value} onChange={onChange} />}
             label={
               <Box>
                 <Trans>Randomize</Trans>
@@ -437,7 +439,68 @@ function RandomizeSeed({
         </FormGroup>
       </Grid>
     );
-  }, [value, setValue]);
+  }, [value, setValue, setSeed, defaultSeed]);
+}
+
+function ShareInputs({
+  value,
+  setValue,
+  _defaultValue,
+  cfg,
+  steps,
+  seed,
+}: {
+  value: ModelState["shareInputs"]["value"];
+  setValue: ModelState["shareInputs"]["setValue"];
+  _defaultValue: boolean;
+  cfg: string | number;
+  steps: string | number;
+  seed: string | number;
+}) {
+  return React.useMemo(() => {
+    const sharedInputs = `CFG: ${cfg}, Steps: ${steps}, Seed: ${
+      seed || Math.floor(Math.random() * MAX_SEED_VALUE)
+    }`;
+
+    return (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <FormGroup sx={{ alignItems: "center" }}>
+          <FormControlLabel
+            sx={{ mr: 0 }}
+            control={
+              <Switch
+                checked={value}
+                onChange={(event) => setValue(event.target.checked)}
+              />
+            }
+            label={
+              <Box>
+                <Trans>Share Inputs</Trans>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        &quot;Share&quot; button / filename will include &quot;
+                        {sharedInputs}&quot; after the prompt.
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={2000}
+                >
+                  <HelpOutline
+                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+                  />
+                </Tooltip>
+              </Box>
+            }
+          />
+        </FormGroup>
+      </Grid>
+    );
+  }, [value, setValue, cfg, seed, steps]);
 }
 
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
@@ -703,6 +766,16 @@ export default function SDControls({
             value={inputs.randomizeSeed.value}
             setValue={inputs.randomizeSeed.setValue}
             _defaultValue={defaults.randomizeSeed}
+            setSeed={inputs.seed.setValue}
+            defaultSeed={defaults.seed}
+          />
+          <ShareInputs
+            value={inputs.shareInputs.value}
+            setValue={inputs.shareInputs.setValue}
+            _defaultValue={defaults.shareInputs}
+            cfg={inputs.guidance_scale.value}
+            steps={inputs.num_inference_steps.value}
+            seed={inputs.seed.value}
           />
         </Grid>
       </form>

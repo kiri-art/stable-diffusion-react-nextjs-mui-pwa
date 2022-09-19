@@ -24,6 +24,7 @@ const txt2imgState = [
   "height",
   "seed",
   "randomizeSeed",
+  "shareInputs",
 ];
 
 export default function Txt2Img() {
@@ -108,7 +109,7 @@ export default function Txt2Img() {
       <MyAppBar title={t`Text to Image`} />
       <Container maxWidth="lg">
         <OutputImage
-          prompt={inputs.prompt.value.toString()}
+          inputs={inputs}
           imgSrc={imgSrc}
           log={log}
           requestStartTime={requestStartTime}

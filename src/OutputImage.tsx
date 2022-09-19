@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 import { Box, Button } from "@mui/material";
 import { ContentCopy, Download, Share } from "@mui/icons-material";
+import { ModelState } from "./sd/useModelState";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -59,13 +60,13 @@ function Log({ log }: { log: string[] }) {
 }
 
 export default function OutputImage({
-  prompt,
+  inputs,
   imgSrc,
   log,
   requestStartTime,
   requestEndTime,
 }: {
-  prompt: string;
+  inputs: ModelState;
   imgSrc: string;
   log: string[];
   requestStartTime: number | null;
@@ -74,6 +75,12 @@ export default function OutputImage({
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
+  const prompt = inputs.prompt.value;
+  const text =
+    prompt +
+    (inputs.shareInputs.value
+      ? `, CFG: ${inputs.guidance_scale.value}, Steps: ${inputs.num_inference_steps.value}, Seed: ${inputs.seed.value}`
+      : "");
 
   function onLoad(_event: React.SyntheticEvent<HTMLImageElement>) {
     const img = imgResult.current;
@@ -93,7 +100,7 @@ export default function OutputImage({
     if (!imgResult.current) return;
     //const blob = await fetch(imgResult.current.src).then(r => r.blob());
     const a = document.createElement("a");
-    a.setAttribute("download", prompt + ".png");
+    a.setAttribute("download", text.replace(/:/g, " ") + ".png");
     a.setAttribute("href-lang", "image/png");
     a.setAttribute("href", imgSrc);
     a.click();
@@ -117,10 +124,10 @@ export default function OutputImage({
     if (!imgResult.current) return;
     const blob = await fetch(imgSrc).then((r) => r.blob());
     const shareData = {
-      title: prompt,
-      text: prompt,
+      title: text,
+      text: text,
       files: [
-        new File([blob], prompt + ".png", {
+        new File([blob], text + ".png", {
           type: "image/png",
           lastModified: new Date().getTime(),
         }),
