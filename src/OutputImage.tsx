@@ -116,7 +116,7 @@ export default function OutputImage({
     const img = imgResult.current;
     if (!img) return;
     const parentNode = img.parentNode as HTMLDivElement | null;
-    if (parentNode && parentNode.offsetTop < 100)
+    if (parentNode && parentNode.offsetTop < 150)
       img.style.scrollMarginTop = 56 + 12 + "px";
   }, []);
 
