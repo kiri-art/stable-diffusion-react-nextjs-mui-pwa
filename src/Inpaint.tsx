@@ -9,7 +9,7 @@ import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
-import Controls from "../src/sd/Controls";
+import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 // import { Trans } from "@lingui/macro";
@@ -403,6 +403,7 @@ export default function Inpainting() {
       init_image: await blobToBase64(init_image_blob),
       mask_image: await blobToBase64(mask_image_blob),
       strength: inputs.strength.value,
+      seed: randomizeSeedIfChecked(inputs),
     };
 
     const callInputs = {
