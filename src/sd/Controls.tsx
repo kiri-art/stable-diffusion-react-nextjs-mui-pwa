@@ -471,40 +471,47 @@ function ShareInputs({
 
     return (
       <Grid item xs={6} sm={4} md={3} lg={2}>
-        <FormGroup sx={{ alignItems: "center" }}>
-          <FormControlLabel
-            sx={{ mr: 0 }}
-            control={
-              <Switch
-                checked={value}
-                onChange={(event) => setValue(event.target.checked)}
-              />
-            }
-            label={
+        <Stack
+          direction="row"
+          spacing={0}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FormGroup sx={{ alignItems: "center" }}>
+            <FormControlLabel
+              sx={{ mr: 0 }}
+              control={
+                <Switch
+                  checked={value}
+                  onChange={(event) => setValue(event.target.checked)}
+                />
+              }
+              label={
+                <Box>
+                  <Trans>Share Inputs</Trans>
+                </Box>
+              }
+            />
+          </FormGroup>
+          <Tooltip
+            title={
               <Box>
-                <Trans>Share Inputs</Trans>
-                <Tooltip
-                  title={
-                    <Box>
-                      <Trans>
-                        &quot;Share&quot; button / filename will include &quot;
-                        {sharedInputs}&quot; after the prompt.
-                      </Trans>
-                    </Box>
-                  }
-                  enterDelay={0}
-                  enterTouchDelay={0}
-                  leaveDelay={0}
-                  leaveTouchDelay={2000}
-                >
-                  <HelpOutline
-                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
-                  />
-                </Tooltip>
+                <Trans>
+                  &quot;Share&quot; button / filename will include &quot;
+                  {sharedInputs}&quot; after the prompt.
+                </Trans>
               </Box>
             }
-          />
-        </FormGroup>
+            enterDelay={0}
+            enterTouchDelay={0}
+            leaveDelay={0}
+            leaveTouchDelay={2000}
+          >
+            <HelpOutline
+              sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+            />
+          </Tooltip>
+        </Stack>
       </Grid>
     );
   }, [value, setValue, cfg, seed, steps]);
