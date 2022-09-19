@@ -241,162 +241,175 @@ export default function MyAppBar({ title }: { title: string }) {
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   return (
-    // Fixed height because of HideOnScroll, no longer position: static, so need
-    // to create empty space at top of page that is usually covered.
-    <Box sx={{ flexGrow: 1, height: "56px" }}>
-      <HideOnScroll>
-        <AppBar>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={toggleDrawer(true)}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {title}
-            </Typography>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={(event) => setAnchorElLang(event.currentTarget)}
-            >
-              <LanguageIcon />
-            </IconButton>
-            <Menu
-              id="lang-select"
-              anchorEl={anchorElLang}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElLang)}
-              onClose={() => setAnchorElLang(null)}
-              sx={{
-                display: { xs: "block", md: "block" },
-              }}
-            >
-              {Object.values(locales).map((locale) => (
-                <MenuItem
-                  key={locale.id}
-                  onClick={() => {
-                    router.push({ pathname, query }, asPath, {
-                      locale: locale.id,
-                    });
-                    setAnchorElLang(null);
-                  }}
-                >
-                  <Typography textAlign="center">
-                    <Link
-                      href={asPath}
-                      color="inherit"
-                      underline="none"
-                      locale={locale.id}
-                    >
-                      {locale.label[locale.id]}
-                    </Link>
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-            {user ? (
-              <Box sx={{ flexGrow: 0 }}>
-                {/* <Tooltip title="Open settings"> */}
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={
-                      typeof user.displayName === "string"
-                        ? user.displayName
-                        : "avatar"
-                    }
-                    src={
-                      /* @ts-expect-error: TODO */
-                      user.photos[0].value
-                    }
-                    imgProps={{ referrerPolicy: "no-referrer" }}
-                  />
-                </IconButton>
-                {/* </Tooltip> */}
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem component={Link} href="/credits">
-                    <Trans>Credits:</Trans>{" "}
-                    {user.credits.free + user.credits.paid}
-                  </MenuItem>
+    <>
+      {/*
+          // Fixed height because of HideOnScroll, no longer position: static, so need
+          // to create empty space at top of page that is usually covered.
+      */}
+      <Box sx={{ flexGrow: 1, height: "56px" }}>
+        <HideOnScroll>
+          <AppBar>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={toggleDrawer(true)}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                {title}
+              </Typography>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={(event) => setAnchorElLang(event.currentTarget)}
+              >
+                <LanguageIcon />
+              </IconButton>
+              <Menu
+                id="lang-select"
+                anchorEl={anchorElLang}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElLang)}
+                onClose={() => setAnchorElLang(null)}
+                sx={{
+                  display: { xs: "block", md: "block" },
+                }}
+              >
+                {Object.values(locales).map((locale) => (
                   <MenuItem
+                    key={locale.id}
                     onClick={() => {
-                      handleCloseUserMenu();
-                      /* @ts-expect-error: TODO */
-                      db.auth.clear();
+                      router.push({ pathname, query }, asPath, {
+                        locale: locale.id,
+                      });
+                      setAnchorElLang(null);
                     }}
                   >
                     <Typography textAlign="center">
-                      <Trans>Logout</Trans>
+                      <Link
+                        href={asPath}
+                        color="inherit"
+                        underline="none"
+                        locale={locale.id}
+                      >
+                        {locale.label[locale.id]}
+                      </Link>
                     </Typography>
                   </MenuItem>
-                </Menu>
-              </Box>
-            ) : (
-              <Button
-                color="inherit"
-                component={Link}
-                href={"/login?from=" + location.pathname + location.search}
-              >
-                <Trans>Login</Trans>
-              </Button>
-            )}{" "}
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
+                ))}
+              </Menu>
+              {user ? (
+                <Box sx={{ flexGrow: 0 }}>
+                  {/* <Tooltip title="Open settings"> */}
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt={
+                        typeof user.displayName === "string"
+                          ? user.displayName
+                          : "avatar"
+                      }
+                      src={
+                        /* @ts-expect-error: TODO */
+                        user.photos[0].value
+                      }
+                      imgProps={{ referrerPolicy: "no-referrer" }}
+                    />
+                  </IconButton>
+                  {/* </Tooltip> */}
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem component={Link} href="/credits">
+                      <Trans>Credits:</Trans>{" "}
+                      {user.credits.free + user.credits.paid}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        /* @ts-expect-error: TODO */
+                        db.auth.clear();
+                      }}
+                    >
+                      <Typography textAlign="center">
+                        <Trans>Logout</Trans>
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              ) : (
+                <Button
+                  color="inherit"
+                  component={Link}
+                  href={"/login?from=" + location.pathname + location.search}
+                >
+                  <Trans>Login</Trans>
+                </Button>
+              )}{" "}
+            </Toolbar>
+          </AppBar>
+        </HideOnScroll>
 
-      <Box component="nav">
-        <SwipeableDrawer
-          swipeAreaWidth={15}
-          hysteresis={0.3}
-          disableBackdropTransition={!iOS}
-          disableDiscovery={iOS}
-          open={mobileOpen}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            // display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </SwipeableDrawer>
+        <Box component="nav">
+          <SwipeableDrawer
+            swipeAreaWidth={15}
+            hysteresis={0.3}
+            disableBackdropTransition={!iOS}
+            disableDiscovery={iOS}
+            open={mobileOpen}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              // display: { xs: "block", sm: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+            }}
+          >
+            {drawer}
+          </SwipeableDrawer>
+        </Box>
       </Box>
-    </Box>
+      <div style={{ padding: 20, paddingBottom: 0 }}>
+        <span style={{ color: "red" }}>
+          Sep 19/20: Our GPU provider is currently experiencing issues and not
+          all functions are working correctly. Will be fixed soon, sorry for the
+          inconvenience.
+        </span>{" "}
+        Most things work fine if a little slower than usual. Known issues:
+        img2img and inpainting (CompVis model only).
+      </div>
+    </>
   );
 }
