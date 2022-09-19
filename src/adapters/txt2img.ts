@@ -254,6 +254,10 @@ export default async function txt2img(
   const modelInputs = stableDiffusionInputsSchema.cast(model_inputs);
   const callInputs = bananaCallInputsSchema.cast(call_inputs);
 
+  // TODO need to fix this in Controlers
+  // @ts-expect-error: doesn't exist, need to fix as above
+  delete modelInputs.randomizeSeed;
+
   if (modelInputs.MODEL_ID) {
     callInputs.MODEL_ID = modelInputs.MODEL_ID;
     delete modelInputs.MODEL_ID;
