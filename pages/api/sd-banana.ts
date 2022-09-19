@@ -58,6 +58,12 @@ async function bananaSdkRun(
   delete callInputs.PIPELINE;
   delete callInputs.SCHEDULER;
 
+  // Let's just be sure until we sort this properly
+  // @ts-expect-error: doesn't exist, need to fix as above
+  delete modelInputs.randomizeSeed;
+  // @ts-expect-error: doesn't exist, need to fix as above
+  delete modelInputs.shareInputs;
+
   /*
     {
       id: '236f1501-d363-4a8d-adcc-71e036126741',
