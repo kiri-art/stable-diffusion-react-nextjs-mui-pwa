@@ -100,7 +100,8 @@ export default function OutputImage({
   }
 
   React.useEffect(() => {
-    if (imgResult.current) imgResult.current.scrollIntoView();
+    if (requestStartTime && imgResult.current)
+      imgResult.current.scrollIntoView();
   }, [requestStartTime, requestEndTime]);
 
   // Give extra scroll space if we're within the AppBar scroll area
