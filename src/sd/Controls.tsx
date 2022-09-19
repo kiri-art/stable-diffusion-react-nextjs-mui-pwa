@@ -17,6 +17,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   Switch,
   TextField,
   Tooltip,
@@ -406,37 +407,43 @@ function RandomizeSeed({
 
     return (
       <Grid item xs={6} sm={4} md={3} lg={2}>
-        <FormGroup sx={{ alignItems: "center" }}>
-          <FormControlLabel
-            sx={{ mr: 0 }}
-            control={<Switch checked={value} onChange={onChange} />}
-            label={
+        <Stack
+          direction="row"
+          spacing={0}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FormGroup sx={{ alignItems: "center" }}>
+            <FormControlLabel
+              sx={{ mr: 0 }}
+              control={<Switch checked={value} onChange={onChange} />}
+              label={
+                <Box>
+                  <Trans>Randomize</Trans>
+                </Box>
+              }
+            />
+          </FormGroup>
+          <Tooltip
+            title={
               <Box>
-                <Trans>Randomize</Trans>
-                <Tooltip
-                  title={
-                    <Box>
-                      <Trans>
-                        Randomize Seed on every request. This means each new
-                        image will be completely different. If you want to,
-                        instead, &quot;tweak&quot; your last creation, turn this
-                        off.
-                      </Trans>
-                    </Box>
-                  }
-                  enterDelay={0}
-                  enterTouchDelay={0}
-                  leaveDelay={0}
-                  leaveTouchDelay={3000}
-                >
-                  <HelpOutline
-                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
-                  />
-                </Tooltip>
+                <Trans>
+                  Randomize Seed on every request. This means each new image
+                  will be completely different. If you want to, instead,
+                  &quot;tweak&quot; your last creation, turn this off.
+                </Trans>
               </Box>
             }
-          />
-        </FormGroup>
+            enterDelay={0}
+            enterTouchDelay={0}
+            leaveDelay={0}
+            leaveTouchDelay={3000}
+          >
+            <HelpOutline
+              sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+            />
+          </Tooltip>
+        </Stack>
       </Grid>
     );
   }, [value, setValue, setSeed, defaultSeed]);
