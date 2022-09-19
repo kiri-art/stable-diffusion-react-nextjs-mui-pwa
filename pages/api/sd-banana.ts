@@ -86,8 +86,10 @@ async function bananaSdkRun(
     created: Math.floor(now.getTime() / 1000),
     apiKey,
     modelKey,
-    // modelInputs: { modelInputs, callInputs, },
-    modelInputs: { ...modelInputs, ...callInputs }, // for now
+    modelInputs: {
+      modelInputs,
+      callInputs,
+    },
     startOnly: true,
   };
 
@@ -145,8 +147,7 @@ async function localSdkRun(
     headers: {
       "Content-Type": "application/json",
     },
-    // body: JSON.stringify({ modelInputs, callInputs }),
-    body: JSON.stringify({ ...modelInputs, ...callInputs }), // for now
+    body: JSON.stringify({ modelInputs, callInputs }),
   });
 
   const data = await response.json();
