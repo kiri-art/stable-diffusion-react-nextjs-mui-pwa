@@ -403,12 +403,10 @@ export default function MyAppBar({ title }: { title: string }) {
       </Box>
       <div style={{ padding: 20, paddingBottom: 0 }}>
         <span style={{ color: "red" }}>
-          Sep 19/20: Our GPU provider is currently experiencing issues and not
-          all functions are working correctly. Will be fixed soon, sorry for the
-          inconvenience.
+          +/- Sep 18th, sorry for breakages and slowness due to upstream
+          provider issues.
         </span>{" "}
-        Most things work fine if a little slower than usual. Known issues:
-        img2img and inpainting (CompVis model only).
+        Recent users get 30 free credits.
       </div>
     </>
   );
