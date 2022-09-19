@@ -16,6 +16,7 @@ const bananaRequestSchema = object({
   callID: string(),
   finished: boolean(),
   modelInputs: object(),
+  callInputs: object(),
   steps: object({
     started: stepSchema.optional(),
     inference: stepSchema.optional(),

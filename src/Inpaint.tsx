@@ -397,21 +397,19 @@ export default function Inpainting() {
       return;
     }
 
-    const modelInputs = modelStateValues(inputs);
-
-    // K-LMS scheduler for in-paint #341 (not available in 0.3.0)
-    // https://github.com/huggingface/diffusers/issues/341
-    const PIPELINE = "StableDiffusionInpaintPipeline";
-    const SCHEDULER = "DDIM";
-
-    const data = {
-      ...modelInputs,
+    const modelInputs = {
+      ...modelStateValues(inputs),
       prompt: inputs.prompt.value,
       init_image: await blobToBase64(init_image_blob),
       mask_image: await blobToBase64(mask_image_blob),
       strength: inputs.strength.value,
-      PIPELINE,
-      SCHEDULER,
+    };
+
+    const callInputs = {
+      // K-LMS scheduler for in-paint #341 (not available in 0.3.0)
+      // https://github.com/huggingface/diffusers/issues/341
+      PIPELINE: "StableDiffusionInpaintPipeline",
+      SCHEDULER: "DDIM",
     };
 
     // return;
@@ -419,7 +417,7 @@ export default function Inpainting() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    await txt2img(data, {
+    await txt2img(modelInputs, callInputs, {
       setLog,
       setImgSrc,
       dest,

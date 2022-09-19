@@ -1,6 +1,6 @@
 import { object, string, number, InferType } from "yup";
 
-const txt2imgOptsSchema = object({
+const stableDiffusionInputsSchema = object({
   prompt: string(),
   // n_iter: number().default(1),
 
@@ -28,25 +28,17 @@ const txt2imgOptsSchema = object({
   mask_image: string(),
   strength: number().min(0).max(1),
 
-  // Dev only.  Not passed to model.
-  // This should probably go somewhere else.
+  // temporary, until we adjust Controls to have callInputs too.
+  // note, in the adapter, we move this to callInputs
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
     "rinna/japanese-stable-diffusion",
   ]),
-  // .default("CompVis/stable-diffusion-v1-4"),
-  PIPELINE: string().oneOf([
-    "StableDiffusionPipeline",
-    "StableDiffusionImg2ImgPipeline",
-    "StableDiffusionInpaintPipeline",
-  ]),
-  // .default("StableDiffusionPipeline"),
-  SCHEDULER: string().oneOf(["PNDM", "DDIM", "LMS"]), // .default("DDIM"),
 });
 
-type Txt2ImgOpts = InferType<typeof txt2imgOptsSchema>;
+type StableDiffusionInputs = InferType<typeof stableDiffusionInputsSchema>;
 
-export type { Txt2ImgOpts };
-export { txt2imgOptsSchema };
-export default txt2imgOptsSchema;
+export type { StableDiffusionInputs };
+export { stableDiffusionInputsSchema };
+export default stableDiffusionInputsSchema;

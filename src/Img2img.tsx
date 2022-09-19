@@ -583,18 +583,16 @@ export default function Img2img() {
       return;
     }
 
-    const modelInputs = modelStateValues(inputs);
-
-    const PIPELINE = "StableDiffusionImg2ImgPipeline";
-    const SCHEDULER = "LMS";
-
-    const data = {
-      ...modelInputs,
+    const modelInputs = {
+      ...modelStateValues(inputs),
       // prompt: inputs.prompt.value || randomPrompt,
       init_image: await blobToBase64(init_image_blob),
       strength: inputs.strength.value,
-      PIPELINE,
-      SCHEDULER,
+    };
+
+    const callInputs = {
+      PIPELINE: "StableDiffusionImg2ImgPipeline",
+      SCHEDULER: "LMS",
     };
 
     // return console.log(data);
@@ -602,7 +600,7 @@ export default function Img2img() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    await txt2img(data, {
+    await txt2img(modelInputs, callInputs, {
       setLog,
       setImgSrc,
       dest,

@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import type { NextApiRequest, NextApiResponse } from "next";
-import txt2imgOptsSchema from "../../src/schemas/txt2imgOpts";
+import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
 
 const { STABLE_DIFFUSION_HOME } = process.env;
 console.log({ STABLE_DIFFUSION_HOME });
@@ -21,7 +21,7 @@ export default async function txt2imgExec(
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "sd-mui-"));
   const dir = tmpDir.split(path.sep).pop();
   const opts = req.query;
-  const modelOpts = txt2imgOptsSchema.cast(opts);
+  const modelOpts = stableDiffusionInputsSchema.cast(opts);
   console.log({ modelOpts });
 
   const cmdOpts = Object.fromEntries(

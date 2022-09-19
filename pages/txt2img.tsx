@@ -85,6 +85,8 @@ export default function Txt2Img() {
         ...modelInputs,
         prompt: inputs.prompt.value || randomPrompt,
         seed,
+      },
+      {
         PIPELINE,
         SCHEDULER,
       },

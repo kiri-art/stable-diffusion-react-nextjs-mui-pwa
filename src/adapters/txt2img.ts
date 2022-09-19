@@ -2,8 +2,11 @@ import { db } from "gongo-client-react";
 import { v4 as uuidv4 } from "uuid";
 
 import { REQUIRE_REGISTRATION } from "../lib/client-env";
-import txt2imgOptsSchema from "../schemas/txt2imgOpts";
-import type { Txt2ImgOpts } from "../schemas/txt2imgOpts";
+import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
+import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
+import bananaCallInputsSchema, {
+  BananaCallInputs,
+} from "../schemas/bananaCallInputs";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -29,7 +32,8 @@ async function updateFinishedStep(
 }
 
 async function exec(
-  opts: Txt2ImgOpts,
+  opts: StableDiffusionInputs,
+  callInputs: BananaCallInputs,
   {
     setLog,
     setImgSrc,
@@ -97,7 +101,8 @@ async function exec(
 }
 
 async function banana(
-  opts: Txt2ImgOpts,
+  modelInputs: StableDiffusionInputs,
+  callInputs: BananaCallInputs,
   {
     setLog,
     setImgSrc,
@@ -115,13 +120,14 @@ async function banana(
   // This is quite distracting, need to rethink this ;)
   // setLog(["[WebUI] Sending " + dest + " request..."]);
   setLog([""]);
-  const response = await fetch("/api/txt2img-banana", {
+  const response = await fetch("/api/sd-banana", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      modelOpts: opts,
+      modelInputs,
+      callInputs,
       fetchOpts: { dest, auth, MODEL_NAME },
     }),
   });
@@ -225,7 +231,8 @@ async function banana(
 const runners = { exec, banana };
 
 export default async function txt2img(
-  opts: unknown,
+  model_inputs: unknown,
+  call_inputs: unknown,
   {
     setLog,
     setImgSrc,
@@ -243,9 +250,16 @@ export default async function txt2img(
   const proto = dest.split("-")[0] as "exec" | "banana";
   const runner = runners[proto];
   //console.log("runner", dest, runner);
-  console.log(opts);
-  const modelOpts = txt2imgOptsSchema.cast(opts);
-  const result = await runner(modelOpts, {
+  console.log({ model_inputs, call_inputs });
+  const modelInputs = stableDiffusionInputsSchema.cast(model_inputs);
+  const callInputs = bananaCallInputsSchema.cast(call_inputs);
+
+  if (modelInputs.MODEL_ID) {
+    callInputs.MODEL_ID = modelInputs.MODEL_ID;
+    delete modelInputs.MODEL_ID;
+  }
+
+  const result = await runner(modelInputs, callInputs, {
     setLog,
     setImgSrc,
     dest,
