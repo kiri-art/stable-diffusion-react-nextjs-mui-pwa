@@ -7,6 +7,7 @@ import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInp
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../schemas/bananaCallInputs";
+import blackImgBase64 from "../blackImgBase64";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -138,7 +139,7 @@ async function banana(
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     setLog(["FAILED: " + message]);
-    return;
+    return { $error: { message } };
   }
 
   if (REQUIRE_REGISTRATION) {
@@ -185,14 +186,14 @@ async function banana(
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       setLog(["FAILED: " + message]);
-      return;
+      return { $error: { message } };
     }
 
     console.log(result);
 
     if (result.message.match(/error/)) {
       setLog(["FAILED: " + result.message]);
-      return;
+      return { $error: result };
     }
   }
 
@@ -213,7 +214,7 @@ async function banana(
         { $error: result }
       );
     setLog(JSON.stringify(result, null, 2).split("\n"));
-    return;
+    return { $error: result };
   }
 
   if (callID)
@@ -226,6 +227,7 @@ async function banana(
   setLog([]);
 
   // console.log(result);
+  return { $success: result };
 }
 
 const runners = { exec, banana };
@@ -270,5 +272,13 @@ export default async function txt2img(
     auth,
     MODEL_NAME,
   });
+
+  console.log(result);
+
+  if (result?.$success?.modelOutputs?.[0].image_base64 === blackImgBase64) {
+    console.log("NSFW");
+    result.$success._NSFW = true;
+  }
+
   return result;
 }
