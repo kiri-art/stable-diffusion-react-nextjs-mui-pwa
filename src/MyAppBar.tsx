@@ -401,6 +401,7 @@ export default function MyAppBar({ title }: { title: string }) {
           </SwipeableDrawer>
         </Box>
       </Box>
+      {/* 
       <div style={{ padding: 20, paddingBottom: 0 }}>
         <span style={{ color: "red" }}>
           +/- Sep 18th, sorry for breakages and slowness due to upstream
@@ -408,6 +409,7 @@ export default function MyAppBar({ title }: { title: string }) {
         </span>{" "}
         Recent users get 30 free credits.
       </div>
+        */}
     </>
   );
 }

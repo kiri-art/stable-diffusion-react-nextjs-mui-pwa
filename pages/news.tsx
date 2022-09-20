@@ -38,6 +38,18 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Sun Sep 18, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>Breakages and slowness</b> due to upstream provider issues,
+                we apologize! Things are back up and running again and all
+                recent users were awarded 30 free credits for the inconvenience.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Sat Sep 17, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>Fixed error on requests longer than 60s</li>
