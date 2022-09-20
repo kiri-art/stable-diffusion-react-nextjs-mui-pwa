@@ -75,6 +75,8 @@ export default function OutputImage({
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
+  const [scrollMarginTop, setScrollMarginTop] = React.useState(10);
+
   const prompt = inputs.prompt.value;
   const text =
     prompt +
@@ -110,15 +112,6 @@ export default function OutputImage({
     if (requestStartTime && imgResult.current)
       imgResult.current.scrollIntoView();
   }, [requestStartTime, requestEndTime]);
-
-  // Give extra scroll space if we're within the AppBar scroll area
-  React.useEffect(() => {
-    const img = imgResult.current;
-    if (!img) return;
-    const parentNode = img.parentNode as HTMLDivElement | null;
-    if (parentNode && parentNode.offsetTop < 150)
-      img.style.scrollMarginTop = 56 + 12 + "px";
-  }, []);
 
   async function share() {
     if (!imgResult.current) return;
@@ -167,7 +160,7 @@ export default function OutputImage({
           position: "absolute",
           left: 0,
           top: 0,
-          scrollMarginTop: "10px",
+          scrollMarginTop: "73px",
         }}
       />
       <Box
