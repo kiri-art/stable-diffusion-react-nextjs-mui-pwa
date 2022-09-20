@@ -1,11 +1,8 @@
 // import * as banana from "@banana-dev/banana-dev";
 import type { NextApiRequest, NextApiResponse } from "next";
-import Auth from "gongo-server/lib/auth-class";
-import GongoServer from "gongo-server/lib/serverless";
-import Database /* ObjectID */ from "gongo-server-db-mongo";
-import { addDays, endOfDay, nextDay, startOfDay } from "date-fns";
+import { addDays, endOfDay, startOfDay } from "date-fns";
 
-import gs, { CreditCode, User } from "../../src/api-lib/db";
+import gs from "../../src/api-lib/db";
 
 const db = gs.dba;
 
@@ -13,7 +10,7 @@ export default async function buildStats(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const day = req.query.day;
+  // const day = req.query.day;
   // if (typeof day !== "string") return res.status(500).end("Invalid 'date' arg");
 
   const range = [];
