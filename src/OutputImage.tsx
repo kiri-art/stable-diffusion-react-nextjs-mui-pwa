@@ -75,7 +75,6 @@ export default function OutputImage({
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
-  const [scrollMarginTop, setScrollMarginTop] = React.useState(10);
 
   const prompt = inputs.prompt.value;
   const text =
