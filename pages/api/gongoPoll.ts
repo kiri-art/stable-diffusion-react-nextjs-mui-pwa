@@ -11,6 +11,10 @@ gs.publish("orders", async (db, {}, { auth }) => {
   return db.collection("orders").find({ userId });
 });
 
+gs.publish("statsDaily", async (db) => {
+  return db.collection("statsDaily").find();
+});
+
 /*
 gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {
   const userId = await auth.userId();
