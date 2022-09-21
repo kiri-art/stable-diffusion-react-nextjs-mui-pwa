@@ -572,11 +572,11 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
-            value="rinnakk/japanese-stable-diffusion"
+            value="rinna/japanese-stable-diffusion"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
-              value="rinnakk/japanese-stable-diffusion"
+              value="rinna/japanese-stable-diffusion"
               desc={t`Japanese / Japanglish prompt input, style`}
             />
           </MenuItem>

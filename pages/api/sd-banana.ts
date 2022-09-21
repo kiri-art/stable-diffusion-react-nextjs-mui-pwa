@@ -23,20 +23,17 @@ const gs = new GongoServer({
 
 async function bananaSdkRun(
   modelInputs: StableDiffusionInputs,
-  callInputs: BananaCallInputs,
-  MODEL_NAME: string
+  callInputs: BananaCallInputs
 ) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
 
-  let envName = "BANANA_MODEL_KEY";
-  if (MODEL_NAME) envName += "_" + MODEL_NAME;
-
+  let envName = "BANANA_MODEL_KEY_SD";
   switch (callInputs.MODEL_ID) {
     case "hakurei/waifu-diffusion":
       envName += "_WAIFU";
       break;
-    case "rinnakk/japanese-stable-diffusion":
+    case "rinna/japanese-stable-diffusion":
       envName += "_JP";
       break;
   }
@@ -50,19 +47,6 @@ async function bananaSdkRun(
 
   if (typeof modelKey !== "string")
     throw new Error(`${envName} is not a string`);
-
-  // const { MODEL_ID, PIPELINE, SCHEDULER } = modelOpts;
-
-  // These are hardcoded into the deployed models (we could assert though?)
-  delete callInputs.MODEL_ID;
-  delete callInputs.PIPELINE;
-  delete callInputs.SCHEDULER;
-
-  // Let's just be sure until we sort this properly
-  // @ts-expect-error: doesn't exist, need to fix as above
-  delete modelInputs.randomizeSeed;
-  // @ts-expect-error: doesn't exist, need to fix as above
-  delete modelInputs.shareInputs;
 
   /*
     {
@@ -93,7 +77,6 @@ async function bananaSdkRun(
     apiKey,
     modelKey,
     modelInputs: { modelInputs, callInputs },
-    // modelInputs: { ...modelInputs, ...callInputs }, // for now
     startOnly: true,
   };
 
@@ -118,10 +101,11 @@ async function bananaSdkRun(
 
   const bananaRequest: BananaRequest = {
     // bananaId: result.id,
-    message: result.message,
+    modelKey,
+    callID: result.callID,
     createdAt: now,
     apiVersion: result.apiVersion,
-    callID: result.callID,
+    message: result.message,
     finished: result.finished,
     modelInputs,
     callInputs,
@@ -139,12 +123,6 @@ async function localSdkRun(
   callInputs: BananaCallInputs
 ) {
   const created = Math.floor(Date.now() / 1000);
-
-  if (false) {
-    delete callInputs.MODEL_ID;
-    delete callInputs.PIPELINE;
-    delete callInputs.SCHEDULER;
-  }
 
   const response = await fetch("http://localhost:8000", {
     method: "POST",
@@ -202,6 +180,9 @@ export default async function txt2imgFetch(
   const callInputs = bananaCallInputsSchema.cast(req.body.callInputs);
   const fetchOpts = req.body.fetchOpts || {};
 
+  if (callInputs.MODEL_ID === "rinna/japanese-stable-diffusion")
+    callInputs.PIPELINE = "Japanese" + callInputs.PIPELINE;
+
   console.log({ modelInputs, callInputs, fetchOpts });
 
   let credits;
@@ -237,12 +218,27 @@ export default async function txt2imgFetch(
     credits = user.credits;
   }
 
+  // Let's just be sure until we sort this properly
+
+  // @ts-expect-error: doesn't exist, need to fix as above
+  if (modelInputs.randomizeSeed) {
+    // @ts-expect-error: doesn't exist, need to fix as above
+    delete modelInputs.randomizeSeed;
+    console.log("! Removed modelInputs.randomizeSeed - TODO");
+  }
+  // @ts-expect-error: doesn't exist, need to fix as above
+  if (modelInputs.shareInputs) {
+    // @ts-expect-error: doesn't exist, need to fix as above
+    delete modelInputs.shareInputs;
+    console.log("! Removed modelInputs.shareInputs - TODO");
+  }
+
   log(modelInputs);
 
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 
-  const out = await runner(modelInputs, callInputs, fetchOpts.MODEL_NAME);
+  const out = await runner(modelInputs, callInputs);
   if (REQUIRE_REGISTRATION) out.credits = credits;
 
   log(out);
