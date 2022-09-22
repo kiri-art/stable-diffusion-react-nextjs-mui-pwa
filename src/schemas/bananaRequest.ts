@@ -13,6 +13,7 @@ const bananaRequestSchema = object({
   apiVersion: string(),
   createdAt: date(),
   modelKey: string(),
+  startRequestId: string(),
   callID: string(),
   finished: boolean(),
   modelInputs: object(),
