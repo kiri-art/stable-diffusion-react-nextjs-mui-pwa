@@ -15,6 +15,18 @@ gs.publish("statsDaily", async (db) => {
   return db.collection("statsDaily").find();
 });
 
+gs.publish("csends", async (db) => {
+  /*
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const user = await db.collection("users").findOne({ _id: userId });
+  if (!user || !user.admin) return [];
+  */
+
+  return db.collection("csends").find();
+});
+
 /*
 gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {
   const userId = await auth.userId();

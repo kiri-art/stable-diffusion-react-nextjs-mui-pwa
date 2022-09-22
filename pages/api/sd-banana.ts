@@ -71,14 +71,18 @@ async function bananaSdkRun(
 
   const now = new Date();
 
+  const startRequestId = uuidv4();
+
   const payload = {
-    id: uuidv4(),
+    id: startRequestId,
     created: Math.floor(now.getTime() / 1000),
     apiKey,
     modelKey,
     modelInputs: { modelInputs, callInputs },
     startOnly: true,
   };
+
+  callInputs.startRequestId = startRequestId;
 
   const response = await fetch("https://api.banana.dev/start/v4/", {
     method: "POST",
@@ -100,12 +104,11 @@ async function bananaSdkRun(
   if (modelInputs.init_image) modelInputs.init_image = "[truncated]";
   if (modelInputs.mask_image) modelInputs.mask_image = "[truncated]";
 
-  callInputs.callID = callID;
-
   const bananaRequest: BananaRequest = {
     // bananaId: result.id,
     modelKey,
     callID,
+    startRequestId,
     createdAt: now,
     apiVersion: result.apiVersion,
     message: result.message,

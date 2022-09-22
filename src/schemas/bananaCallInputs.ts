@@ -16,7 +16,7 @@ const bananaCallInputsSchema = object({
   ]),
   // .default("StableDiffusionPipeline"),
   SCHEDULER: string().oneOf(["PNDM", "DDIM", "LMS"]), // .default("DDIM"),
-  callID: string(),
+  startRequestId: string(),
 });
 
 type BananaCallInputs = InferType<typeof bananaCallInputsSchema>;

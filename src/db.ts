@@ -32,6 +32,7 @@ db.collection("users").persist();
 db.collection("orders").persist();
 db.collection("creditCodes").persist();
 db.collection("statsDaily").persist();
+db.collection("csends").persist();
 
 declare module "gongo-client" {
   class Database {

@@ -28,6 +28,9 @@ export default async function CSend(req: NextApiRequest, res: NextApiResponse) {
 
   if (!match) return res.status(200).end("OK");
 
+  data.date = new Date(data.time);
+  delete data.time;
+
   console.log(JSON.stringify(data, null, 2));
   csends && (await csends.insertOne(data));
 
