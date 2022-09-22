@@ -91,6 +91,7 @@ async function bananaSdkRun(
   // TODO, error handling `:)
 
   const result = await response.json();
+  const callID = result.callID;
 
   // fs.writeFileSync("out.json", JSON.stringify(out));
   // console.log(out);
@@ -99,10 +100,12 @@ async function bananaSdkRun(
   if (modelInputs.init_image) modelInputs.init_image = "[truncated]";
   if (modelInputs.mask_image) modelInputs.mask_image = "[truncated]";
 
+  callInputs.callID = callID;
+
   const bananaRequest: BananaRequest = {
     // bananaId: result.id,
     modelKey,
-    callID: result.callID,
+    callID,
     createdAt: now,
     apiVersion: result.apiVersion,
     message: result.message,
@@ -183,7 +186,7 @@ export default async function txt2imgFetch(
   if (callInputs.MODEL_ID === "rinna/japanese-stable-diffusion")
     callInputs.PIPELINE = "Japanese" + callInputs.PIPELINE;
 
-  console.log({ modelInputs, callInputs, fetchOpts });
+  log({ modelInputs, callInputs, fetchOpts });
 
   let credits;
   if (REQUIRE_REGISTRATION) {
@@ -232,8 +235,6 @@ export default async function txt2imgFetch(
     delete modelInputs.shareInputs;
     console.log("! Removed modelInputs.shareInputs - TODO");
   }
-
-  log(modelInputs);
 
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
