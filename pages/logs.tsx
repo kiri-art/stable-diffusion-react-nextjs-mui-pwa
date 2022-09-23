@@ -216,22 +216,22 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
 
   if (!initStart) return <div>Missing init_start</div>;
 
+  const startToInit = initStart.date.getTime() - request.createdAt.getTime();
+
   return (
     <Box>
       <TableContainer>
         <Table>
           <TableBody>
-            <TableRow>
+            <TableRow
+              sx={{ background: startToInit > 15000 ? "#faa" : undefined }}
+            >
               <TableCell>
-                Request <code>start()</code> until container <code>init()</code>
-                :
+                Request <code>start()</code> until container <code>init()</code>{" "}
+                called:
               </TableCell>
               <TableCell align="right">
-                {nf.format(
-                  (initStart.date.getTime() - request.createdAt.getTime()) /
-                    1000
-                )}
-                s
+                {nf.format(startToInit / 1000)}s
               </TableCell>
             </TableRow>
           </TableBody>
@@ -255,6 +255,10 @@ function RequestRow({ request }: { request: BananaRequest }) {
       <TableRow
         sx={{
           "&:last-child td, &:last-child th": { border: 0 },
+          background:
+            request.totalTime && request.totalTime > 60000
+              ? "#faaa"
+              : undefined,
         }}
       >
         <TableCell align="left">
