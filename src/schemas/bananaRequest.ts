@@ -1,4 +1,6 @@
-import { object, date, string, InferType, boolean } from "yup";
+import { object, date, string, InferType, boolean, number } from "yup";
+import { bananaCallInputsSchema } from "./bananaCallInputs";
+import { stableDiffusionInputsSchema } from "./stableDiffusionInputs";
 
 const stepSchema = object({
   // name: string(),
@@ -11,18 +13,20 @@ const bananaRequestSchema = object({
   bananaId: string(),
   message: string(),
   apiVersion: string(),
-  createdAt: date(),
+  createdAt: date().required(),
   modelKey: string(),
   startRequestId: string(),
   callID: string(),
   finished: boolean(),
-  modelInputs: object(),
-  callInputs: object(),
+  modelInputs: stableDiffusionInputsSchema,
+  callInputs: bananaCallInputsSchema,
   steps: object({
     started: stepSchema.optional(),
     inference: stepSchema.optional(),
     finished: stepSchema.optional(),
   }),
+  finishedTime: date(),
+  totalTime: number(),
 });
 
 type BananaRequest = InferType<typeof bananaRequestSchema>;

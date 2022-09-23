@@ -27,6 +27,10 @@ gs.publish("csends", async (db) => {
   return db.collection("csends").find();
 });
 
+gs.publish("bananaRequests", async (db) => {
+  return db.collection("bananaRequests").find();
+});
+
 /*
 gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {
   const userId = await auth.userId();

@@ -4,7 +4,7 @@ import HTTPTransport from "gongo-client/lib/transports/http";
 import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
-import type { User, Order, CreditCode, CSend } from "./schemas";
+import type { User, Order, CreditCode, CSend, BananaRequest } from "./schemas";
 
 // const out = { db };
 
@@ -33,6 +33,7 @@ db.collection("orders").persist();
 db.collection("creditCodes").persist();
 db.collection("statsDaily").persist();
 db.collection("csends").persist();
+db.collection("bananaRequests").persist();
 
 declare module "gongo-client" {
   class Database {
@@ -40,6 +41,7 @@ declare module "gongo-client" {
     collection(name: "orders"): Collection<Order>;
     collection(name: "creditCodes"): Collection<CreditCode>;
     collection(name: "csends"): Collection<CSend>;
+    collection(name: "bananaRequests"): Collection<BananaRequest>;
   }
 }
 
