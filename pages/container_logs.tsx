@@ -47,16 +47,20 @@ function TabPanel(props: TabPanelProps) {
 
 function Chip({ type: _type, children }: { type: string; children: string }) {
   return (
-    <span
+    <div
       style={{
+        display: "inline-block",
         borderRadius: 5,
         padding: "5px 10px 5px 10px",
         background: "#ddd",
-        marginRight: 8,
+        marginRight: 2,
+        marginTop: 2,
+        marginBottom: 2,
+        whiteSpace: "nowrap",
       }}
     >
       {children}
-    </span>
+    </div>
   );
 }
 
@@ -82,9 +86,9 @@ function ByContainer({ csends }: { csends: CSend[] }) {
         const info = initInfo[cid];
         return (
           <div key={cid} style={{ marginBottom: 30 }}>
-            <div style={{ marginBottom: 10 }}>
-              <Chip type="model_id">{info.model_id}</Chip>
-              <Chip type="device">{info.device}</Chip>
+            <div style={{ marginBottom: 10, maxWidth: "100%" }}>
+              <Chip type="model_id">{info.model_id}</Chip>{" "}
+              <Chip type="device">{info.device}</Chip>{" "}
               <Chip type="hostname">{info.hostname}</Chip>
             </div>
             <div>
