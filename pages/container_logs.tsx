@@ -72,7 +72,7 @@ function ByContainer({ csends }: { csends: CSend[] }) {
     for (const csend of csends) {
       const cid = csend.container_id;
       const container = byContainer[cid] || (byContainer[cid] = []);
-      if (csend.status === "done") container.push(csend);
+      if (csend.status === "done") container.unshift(csend);
 
       if (csend.type === "init" && csend.status === "start")
         initInfo[cid] = csend.payload as PayloadInitStart;
