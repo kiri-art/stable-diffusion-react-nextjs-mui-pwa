@@ -94,9 +94,9 @@ const Home: NextPage = () => {
           </Grid>
         </Box>
         <Box sx={{ my: 1 }}>
-          <b>
+          <p style={{ textAlign: "center", fontWeight: "bold" }}>
             <Trans>Be Responsible</Trans>
-          </b>
+          </p>
           <ul>
             <li>
               <Trans>
@@ -116,6 +116,29 @@ const Home: NextPage = () => {
               </Trans>
             </li>
           </ul>
+        </Box>
+        <Box sx={{ my: 1 }}>
+          <p style={{ textAlign: "center", fontWeight: "bold" }}>
+            <Trans>Project Goals</Trans>
+          </p>
+          <ol>
+            <li>
+              <b>
+                <Trans>Super simple, easy to share.</Trans>
+              </b>{" "}
+              Zero setup, mobile-first. Easy for anyone - no matter their tech
+              experience - to have access to this technology, and be able to
+              play around and get excited about it.
+            </li>
+            <br />
+            <li>
+              <b>
+                <Trans>Open Source, developer friendly.</Trans>
+              </b>{" "}
+              Transparent development and easy for developers to get involved.
+              Especially web devs with background in Machine Learning.
+            </li>
+          </ol>
         </Box>
         <Box
           sx={{
