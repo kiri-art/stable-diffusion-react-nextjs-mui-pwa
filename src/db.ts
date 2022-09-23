@@ -4,7 +4,7 @@ import HTTPTransport from "gongo-client/lib/transports/http";
 import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
-import type { User, Order, CreditCode } from "./schemas";
+import type { User, Order, CreditCode, CSend } from "./schemas";
 
 // const out = { db };
 
@@ -39,6 +39,7 @@ declare module "gongo-client" {
     collection(name: "users"): Collection<User>;
     collection(name: "orders"): Collection<Order>;
     collection(name: "creditCodes"): Collection<CreditCode>;
+    collection(name: "csends"): Collection<CSend>;
   }
 }
 
