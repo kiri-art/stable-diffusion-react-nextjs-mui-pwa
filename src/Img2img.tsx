@@ -512,9 +512,19 @@ export default function Img2img() {
         console.log(`Original Image: ${image.width}x${image.height}`);
         console.log(`  Scaled Image: ${width}x${height}`);
 
-        // Need to clip at 8.
-
         const aspectRatio = width / height;
+
+        // Must be a multple of 64.  Scale for now, crop in future.
+        if (width % 64 !== 0) {
+          width = width - (width % 64);
+          height = Math.floor(width / aspectRatio);
+          if (height % 64 !== 0) height -= height % 64;
+        } else if (height % 64 !== 0) {
+          height = height - (height % 64);
+          width = Math.floor(height * aspectRatio);
+          if (width % 64 !== 0) width -= width % 64;
+        }
+        console.log(`   Fixed Image: ${width}x${height}`);
 
         //const parent = canvas.parentNode as HTMLDivElement;
         canvas.style.aspectRatio = aspectRatio.toString();

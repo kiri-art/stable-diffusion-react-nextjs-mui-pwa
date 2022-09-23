@@ -38,6 +38,21 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Fri Sep 23, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>
+                  Img2img / inpaint fix for uploaded images with unfortunate
+                  dimensions.
+                </b>{" "}
+                We now detect this case and scale the image appropriately (more
+                options to come in the future).
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Sun Sep 18, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>

@@ -360,7 +360,7 @@ const Logs: NextPage = () => {
 
   return (
     <>
-      <MyAppBar title={t`Stats`} />
+      <MyAppBar title={t`Event Log`} />
       <Container maxWidth="lg">
         <br />
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
