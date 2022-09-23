@@ -16,7 +16,6 @@ import {
   TableHead,
   TableRow,
   Tabs,
-  Typography,
 } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
