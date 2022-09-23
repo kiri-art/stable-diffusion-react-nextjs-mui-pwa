@@ -35,6 +35,7 @@ import {
   AdminPanelSettings,
   Bookmarks,
   ConfirmationNumber,
+  ShowChart,
 } from "@mui/icons-material";
 
 import Link from "../src/Link";
@@ -184,6 +185,16 @@ export default function MyAppBar({ title }: { title: string }) {
             </ListItemIcon>
             <ListItemText>
               <Trans>News</Trans>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component={Link} href="/stats">
+            <ListItemIcon>
+              <ShowChart />
+            </ListItemIcon>
+            <ListItemText>
+              <Trans>Stats</Trans>
             </ListItemText>
           </ListItemButton>
         </ListItem>
