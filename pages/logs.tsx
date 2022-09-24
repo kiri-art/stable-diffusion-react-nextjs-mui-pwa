@@ -22,7 +22,7 @@ import {
 import MyAppBar from "../src/MyAppBar";
 import type { CSend, PayloadInitStart } from "../src/schemas/csend";
 import { BananaRequest } from "../src/schemas";
-import { Info } from "@mui/icons-material";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -74,10 +74,12 @@ function ByContainerRow({
   csends,
   info,
   marginBottom = 30,
+  startRequestId,
 }: {
   csends: CSend[];
   info: PayloadInitStart;
   marginBottom?: number;
+  startRequestId?: string;
 }) {
   return (
     <div style={{ marginBottom: marginBottom }}>
@@ -101,20 +103,31 @@ function ByContainerRow({
               </TableHead>
             */}
             <TableBody>
-              {csends.map((csend) => (
-                <TableRow
-                  key={csend._id}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                  }}
-                >
-                  <TableCell align="left">
-                    {csend.date.toLocaleTimeString()}
-                  </TableCell>
-                  <TableCell align="center">{csend.type}</TableCell>
-                  <TableCell align="right">{nf.format(csend.tsl)} ms</TableCell>
-                </TableRow>
-              ))}
+              {csends.map((csend) => {
+                const bold =
+                  csends.length > 2 &&
+                  // @ts-expect-error: TODO
+                  csend?.payload?.startRequestId === startRequestId;
+                return (
+                  <TableRow
+                    key={csend._id}
+                    sx={{
+                      "& td": {
+                        fontWeight: bold ? "bold" : "",
+                      },
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell align="left">
+                      {csend.date.toLocaleTimeString()}
+                    </TableCell>
+                    <TableCell align="center">{csend.type}</TableCell>
+                    <TableCell align="right">
+                      {nf.format(csend.tsl)} ms
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -242,6 +255,7 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
         csends={csends}
         info={initStart.payload as PayloadInitStart}
         marginBottom={5}
+        startRequestId={request.startRequestId}
       />
     </Box>
   );
@@ -267,7 +281,7 @@ function RequestRow({ request }: { request: BananaRequest }) {
             onClick={() => setOpen(!open)}
             sx={{ opacity: open ? 1 : 0.3 }}
           >
-            <Info />
+            {open ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
         <TableCell align="right">
