@@ -10,6 +10,7 @@ const defaults = {
   seed: () => Math.floor(Math.random() * MAX_SEED_VALUE),
   randomizeSeed: true,
   shareInputs: false,
+  safety_checker: true,
 };
 
 export default defaults;

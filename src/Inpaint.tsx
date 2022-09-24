@@ -227,6 +227,7 @@ const inpaintState = [
   "seed",
   "randomizeSeed",
   "shareInputs",
+  "safety_checker",
 ];
 
 async function blobToBase64(blob: Blob) {
@@ -245,6 +246,7 @@ async function blobToBase64(blob: Blob) {
 
 export default function Inpainting() {
   const inputFile = React.useRef<HTMLInputElement>(null);
+  const [nsfw, setNsfw] = React.useState(false);
   const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const maskImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const [initImageLoaded, setInImgLoaded] = React.useState(false);
@@ -432,6 +434,7 @@ export default function Inpainting() {
     await txt2img(modelInputs, callInputs, {
       setLog,
       setImgSrc,
+      setNsfw,
       dest,
       // @ts-expect-error: TODO, db auth type
       auth: db.auth.authInfoToSend(),
@@ -537,6 +540,7 @@ export default function Inpainting() {
         <OutputImage
           inputs={inputs}
           imgSrc={imgSrc}
+          nsfw={nsfw}
           log={log}
           requestStartTime={requestStartTime}
           requestEndTime={requestEndTime}

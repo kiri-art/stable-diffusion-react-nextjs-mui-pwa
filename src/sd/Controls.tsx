@@ -517,6 +517,65 @@ function ShareInputs({
   }, [value, setValue, cfg, seed, steps]);
 }
 
+function SafetyChecker({
+  value,
+  setValue,
+  _defaultValue,
+}: {
+  value: ModelState["safety_checker"]["value"];
+  setValue: ModelState["safety_checker"]["setValue"];
+  _defaultValue: boolean;
+}) {
+  return React.useMemo(() => {
+    return (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <Stack
+          direction="row"
+          spacing={0}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FormGroup sx={{ alignItems: "center" }}>
+            <FormControlLabel
+              sx={{ mr: 0 }}
+              control={
+                <Switch
+                  checked={value}
+                  onChange={(event) => setValue(event.target.checked)}
+                />
+              }
+              label={
+                <Box>
+                  <Trans>NSFW Filter</Trans>
+                </Box>
+              }
+            />
+          </FormGroup>
+          <Tooltip
+            title={
+              <Box>
+                <Trans>
+                  Filter out images that may be NSFW (&quot;Not Safe for
+                  Work&quot;) and inappropriate for under 18s.
+                </Trans>{" "}
+                <Trans>A black image will be shown instead.</Trans>
+              </Box>
+            }
+            enterDelay={0}
+            enterTouchDelay={0}
+            leaveDelay={0}
+            leaveTouchDelay={3000}
+          >
+            <HelpOutline
+              sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+            />
+          </Tooltip>
+        </Stack>
+      </Grid>
+    );
+  }, [value, setValue]);
+}
+
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
     <Box sx={{ textAlign: "center", width: "100%" }}>
@@ -790,6 +849,11 @@ export default function SDControls({
             cfg={inputs.guidance_scale.value}
             steps={inputs.num_inference_steps.value}
             seed={inputs.seed.value}
+          />
+          <SafetyChecker
+            value={inputs.safety_checker.value}
+            setValue={inputs.safety_checker.setValue}
+            _defaultValue={defaults.safety_checker}
           />
         </Grid>
       </form>

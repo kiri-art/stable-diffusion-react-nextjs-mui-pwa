@@ -25,10 +25,12 @@ const txt2imgState = [
   "seed",
   "randomizeSeed",
   "shareInputs",
+  "safety_checker",
 ];
 
 export default function Txt2Img() {
   const [imgSrc, setImgSrc] = React.useState<string>("");
+  const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
@@ -94,6 +96,7 @@ export default function Txt2Img() {
       {
         setLog,
         setImgSrc,
+        setNsfw,
         dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
@@ -111,6 +114,7 @@ export default function Txt2Img() {
         <OutputImage
           inputs={inputs}
           imgSrc={imgSrc}
+          nsfw={nsfw}
           log={log}
           requestStartTime={requestStartTime}
           requestEndTime={requestEndTime}

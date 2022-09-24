@@ -238,12 +238,14 @@ export default async function txt2img(
   {
     setLog,
     setImgSrc,
+    setNsfw,
     dest,
     auth,
     MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
+    setNsfw: React.Dispatch<React.SetStateAction<boolean>>;
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
@@ -261,6 +263,11 @@ export default async function txt2img(
   delete modelInputs.randomizeSeed;
   // @ts-expect-error: doesn't exist, need to fix as above
   delete modelInputs.shareInputs;
+
+  // @ts-expect-error: doesn't exist, need to fix as above
+  callInputs.safety_checker = modelInputs.safety_checker;
+  // @ts-expect-error: doesn't exist, need to fix as above
+  delete modelInputs.safety_checker;
 
   if (modelInputs.MODEL_ID) {
     callInputs.MODEL_ID = modelInputs.MODEL_ID;
@@ -280,6 +287,9 @@ export default async function txt2img(
   if (result?.$success?.modelOutputs?.[0].image_base64 === blackImgBase64) {
     console.log("NSFW");
     result.$success._NSFW = true;
+    setNsfw(true);
+  } else {
+    setNsfw(false);
   }
 
   return result;

@@ -1,4 +1,4 @@
-import { object, string, InferType } from "yup";
+import { object, string, boolean, InferType } from "yup";
 
 const bananaCallInputsSchema = object({
   // Dev only.  Not passed to model.
@@ -17,6 +17,7 @@ const bananaCallInputsSchema = object({
   // .default("StableDiffusionPipeline"),
   SCHEDULER: string().oneOf(["PNDM", "DDIM", "LMS"]), // .default("DDIM"),
   startRequestId: string(),
+  safety_checker: boolean(),
 });
 
 type BananaCallInputs = InferType<typeof bananaCallInputsSchema>;

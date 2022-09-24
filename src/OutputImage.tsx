@@ -1,8 +1,10 @@
 import React from "react";
 import { toast } from "react-toastify";
+import { t } from "@lingui/macro";
 
-import { Box, Button } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { ContentCopy, Download, Share } from "@mui/icons-material";
+
 import { ModelState } from "./sd/useModelState";
 
 const canShare =
@@ -62,12 +64,14 @@ function Log({ log }: { log: string[] }) {
 export default function OutputImage({
   inputs,
   imgSrc,
+  nsfw,
   log,
   requestStartTime,
   requestEndTime,
 }: {
   inputs: ModelState;
   imgSrc: string;
+  nsfw: boolean;
   log: string[];
   requestStartTime: number | null;
   requestEndTime: number | null;
@@ -218,6 +222,22 @@ export default function OutputImage({
               <Share />
             </Button>
           )}
+        </Box>
+      )}
+      {imgSrc && !imgSrc.match(/placeholder/) && nsfw && (
+        <Box
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            padding: 1,
+          }}
+        >
+          <Tooltip
+            title={t`Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed.`}
+          >
+            <span>🔞{imgSrc}</span>
+          </Tooltip>
         </Box>
       )}
     </Box>

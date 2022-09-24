@@ -34,6 +34,7 @@ export interface ModelState {
   seed: ValueSetValue<string | number>;
   randomizeSeed: ValueSetValue<boolean>;
   shareInputs: ValueSetValue<boolean>;
+  safety_checker: ValueSetValue<boolean>;
 }
 
 export default function useModelState(inputs?: string[]): ModelState {
@@ -50,6 +51,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     seed: useSdState<number | string>(defaults.seed()),
     randomizeSeed: useSdState<boolean>(defaults.randomizeSeed),
     shareInputs: useSdState<boolean>(defaults.shareInputs),
+    safety_checker: useSdState<boolean>(defaults.safety_checker),
   };
 
   // return allStates;
