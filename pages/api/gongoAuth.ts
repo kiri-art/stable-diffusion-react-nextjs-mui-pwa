@@ -2,6 +2,7 @@
 import GongoServer from "gongo-server/lib/serverless";
 import GongoAuth from "gongo-server/lib/auth";
 import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
+import Auth from "gongo-server/lib/auth-class";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
@@ -9,6 +10,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // import passport from "passport";
 // import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 const GithubStrategy = require("passport-github2").Strategy;
+const TwitterStrategy = require("passport-twitter").Strategy;
 
 const env = process.env;
 const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
@@ -70,6 +72,20 @@ gongoAuth.use(
   }
 );
 
+gongoAuth.use(
+  new TwitterStrategy(
+    {
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+      callbackURL: ROOT_URL + "/api/gongoAuth?service=twitter",
+      passReqToCallback: true,
+      includeEmail: true,
+    },
+    gongoAuth.passportVerify
+  ),
+  {}
+);
+
 //module.exports = passport.authenticate('google', gongoAuth.passportComplete);
 
 if (gs.dba) {
@@ -90,14 +106,36 @@ if (gs.dba) {
 
 // TODO Sure we can move this all into gongo-server.
 // @ts-expect-error: any
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.query.type === "setup") {
     gongoAuth.ensureDbStrategyData().then(() => res.end("OK"));
     return;
   }
 
+  if (req.query.poll)
+    return gs.expressPost()(req, res, () => {
+      console.log("next");
+    });
+
   if (!req.query.service)
     return res.status(400).end("No ?service= param specified");
+
+  if (req.query.state) {
+    if (!gs.dba) throw new Error("no gs.dba");
+    const session = await gs.dba.collection("sessions").findOne({
+      $or: [
+        { ["oauth:" + req.query.service + ".state.handle"]: req.query.state },
+        { ["oauth2:" + req.query.service + ".state.handle"]: req.query.state },
+      ],
+    });
+    req.session = session;
+  } else if (req.query.oauth_token) {
+    if (!gs.dba) throw new Error("no gs.dba");
+    const session = await gs.dba.collection("sessions").findOne({
+      ["oauth:" + req.query.service + ".state.handle"]: req.query.state,
+    });
+    req.session = session;
+  }
 
   const next = () =>
     res.status(400).end("No such service: " + req.query.service);

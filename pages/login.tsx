@@ -3,7 +3,7 @@ import { db, useGongoUserId, useGongoSub } from "gongo-client-react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 
-import { Google, GitHub /*, Twitter */ } from "@mui/icons-material";
+import { Google, GitHub, Twitter } from "@mui/icons-material";
 
 import AppBar from "../src/MyAppBar";
 
@@ -43,7 +43,6 @@ export default function Login() {
         background: "#57f",
       },
     },
-    /*
     {
       id: "twitter",
       name: t`Twitter`,
@@ -52,7 +51,6 @@ export default function Login() {
         background: "#1DA1F2",
       },
     },
-    */
     {
       id: "github",
       name: t`GitHub`,
