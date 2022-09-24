@@ -2,7 +2,6 @@
 import GongoServer from "gongo-server/lib/serverless";
 import GongoAuth from "gongo-server/lib/auth";
 import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
-import Auth from "gongo-server/lib/auth-class";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
