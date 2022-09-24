@@ -18,6 +18,14 @@ export default function Resources() {
         </p>
 
         <p>
+          <a href="https://www.reddit.com/r/StableDiffusion/">
+            r/StableDiffusion (reddit)
+          </a>
+          <br />
+          Guides, image shares, experiments, finds, community.
+        </p>
+
+        <p>
           <a href="https://github.com/Maks-s/sd-akashic">SD Akashic Guide</a>
           <br />
           SD studies, art styles, prompts.
