@@ -123,16 +123,24 @@ export default async function handler(req, res) {
     if (!gs.dba) throw new Error("no gs.dba");
     const session = await gs.dba.collection("sessions").findOne({
       $or: [
-        { ["oauth:" + req.query.service + ".state.handle"]: req.query.state },
-        { ["oauth2:" + req.query.service + ".state.handle"]: req.query.state },
+        {
+          ["oauth:" + req.query.service + ".state.handle"]:
+            req.query.state || "NOMATCH",
+        },
+        {
+          ["oauth2:" + req.query.service + ".state.handle"]:
+            req.query.state || "NOMATCH",
+        },
       ],
     });
     req.session = session;
   } else if (req.query.oauth_token) {
     if (!gs.dba) throw new Error("no gs.dba");
-    const session = await gs.dba.collection("sessions").findOne({
-      ["oauth:" + req.query.service + ".state.handle"]: req.query.state,
-    });
+    const session =
+      (await gs.dba.collection("sessions").findOne({
+        ["oauth:" + req.query.service + ".oauth_token"]:
+          req.query.oauth_token || "NOMATCH",
+      })) || {};
     req.session = session;
   }
 
