@@ -28,11 +28,19 @@ async function aggregateRequestCsends(inferDone: CSend) {
     type: "init",
     status: "done",
   });
-  const inferStart = await csends.findOne({
-    container_id,
-    type: "inference",
-    status: "start",
-  });
+  const inferStart = (
+    await (
+      await csends.getReal()
+    )
+      .find({
+        container_id,
+        type: "inference",
+        status: "start",
+      })
+      .sort({ date: -1 })
+      .limit(1)
+      .toArray()
+  )[0];
 
   if (!(initStart && inferStart && initDone)) {
     console.warn("Missing", { initStart, inferStart, initDone });
