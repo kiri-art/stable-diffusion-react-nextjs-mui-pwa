@@ -25,6 +25,11 @@ const bananaRequestSchema = object({
     inference: stepSchema.optional(),
     finished: stepSchema.optional(),
   }),
+  times: object({
+    load: number(),
+    init: number(),
+    inference: number(),
+  }).optional(),
   finishedTime: date(),
   totalTime: number(),
 });

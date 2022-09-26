@@ -24,6 +24,11 @@ import type { CSend, PayloadInitStart } from "../src/schemas/csend";
 import { BananaRequest } from "../src/schemas";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
+const MAX_TIME_TOTAL = 60000;
+const MAX_TIME_LOAD = 10000;
+const MAX_TIME_INIT = 10000;
+const MAX_TIME_INFERENCE = 10000;
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -237,7 +242,9 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
         <Table>
           <TableBody>
             <TableRow
-              sx={{ background: startToInit > 15000 ? "#faa" : undefined }}
+              sx={{
+                background: startToInit > MAX_TIME_LOAD ? "#faa" : undefined,
+              }}
             >
               <TableCell>
                 Request <code>start()</code> until container <code>init()</code>{" "}
@@ -263,36 +270,69 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
 
 function RequestRow({ request }: { request: BananaRequest }) {
   const [open, setOpen] = React.useState(false);
+  const times = request.times;
 
   return (
     <>
       <TableRow
         sx={{
           "&:last-child td, &:last-child th": { border: 0 },
-          background:
-            request.totalTime && request.totalTime > 60000
-              ? "#faaa"
-              : undefined,
+          cursor: "pointer",
         }}
+        onClick={() => setOpen(!open)}
       >
-        <TableCell align="left">
+        <TableCell align="left" style={{ whiteSpace: "nowrap" }}>
           {request.createdAt.toLocaleTimeString()}
-          <IconButton
-            onClick={() => setOpen(!open)}
-            sx={{ opacity: open ? 1 : 0.3 }}
-          >
+          <IconButton sx={{ padding: 0, opacity: open ? 1 : 0.3 }}>
             {open ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
-        <TableCell align="right">
+        <TableCell
+          align="right"
+          style={{
+            color:
+              times?.load && times.load > MAX_TIME_LOAD ? "#a00" : undefined,
+          }}
+        >
+          {times?.load && nf.format(times.load / 1000)}
+        </TableCell>
+        <TableCell
+          align="right"
+          style={{
+            color:
+              times?.init && times.init > MAX_TIME_INIT ? "#a00" : undefined,
+          }}
+        >
+          {times?.init && nf.format(times.init / 1000)}
+        </TableCell>
+        <TableCell
+          align="right"
+          style={{
+            color:
+              times?.inference && times.inference > MAX_TIME_INFERENCE
+                ? "#a00"
+                : undefined,
+          }}
+        >
+          {times?.inference && nf.format(times.inference / 1000)}
+        </TableCell>
+        <TableCell
+          align="right"
+          style={{
+            color:
+              request.totalTime && request.totalTime > MAX_TIME_TOTAL
+                ? "#a00"
+                : undefined,
+          }}
+        >
           {request.totalTime
-            ? nf.format(Math.round(request.totalTime / 1000)) + " s"
+            ? nf.format(request.totalTime / 1000) // + " s"
             : request.message}
         </TableCell>
       </TableRow>
       {open && (
         <TableRow>
-          <TableCell colSpan={2}>
+          <TableCell colSpan={5}>
             <TableContainer>
               <Table>
                 <TableBody>
@@ -311,6 +351,13 @@ function RequestRow({ request }: { request: BananaRequest }) {
                   <TableRow>
                     <TableCell>CallID</TableCell>
                     <TableCell>{request.callID}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell colSpan={2}>
+                      Dimensions: {request.modelInputs.width}x
+                      {request.modelInputs.height}, steps:{" "}
+                      {request.modelInputs.num_inference_steps}x
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -335,20 +382,20 @@ function Requests() {
       <TableContainer component={Paper}>
         <Table
           aria-label="simple table"
-          // size="small"
+          size="small"
           sx={{ tableLayout: "fixed" }}
         >
-          {/*
-            <TableHead>
-              <TableRow>
-                <TableCell align="left" width={120}>
-                  Date
-                </TableCell>
-                <TableCell align="center">Type</TableCell>
-                <TableCell align="right">TSL (ms)</TableCell>
-              </TableRow>
-            </TableHead>
-          */}
+          <TableHead>
+            <TableRow>
+              <TableCell align="left" width={115}>
+                Date
+              </TableCell>
+              <TableCell align="right">Load (s)</TableCell>
+              <TableCell align="right">Init (s)</TableCell>
+              <TableCell align="right">Infer (s)</TableCell>
+              <TableCell align="right">Total (s)</TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             {requests.map((request) => (
               <RequestRow key={request._id} request={request} />

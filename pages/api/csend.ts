@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import GongoServer from "gongo-server/lib/serverless";
 import Database /* ObjectID */ from "gongo-server-db-mongo";
 import crypto from "crypto";
+import { CSend, BananaRequest } from "../../src/schemas";
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
@@ -10,8 +11,70 @@ const gs = new GongoServer({
 });
 
 const csends = gs.dba && gs.dba.collection("csends");
+const bananaRequests = gs.dba && gs.dba.collection("bananaRequests");
 
-export default async function CSend(req: NextApiRequest, res: NextApiResponse) {
+async function aggregateRequestCsends(inferDone: CSend) {
+  if (!(csends && bananaRequests)) return;
+
+  const { container_id } = inferDone;
+
+  const initStart = await csends.findOne({
+    container_id,
+    type: "init",
+    status: "start",
+  });
+  const initDone = await csends.findOne({
+    container_id,
+    type: "init",
+    status: "done",
+  });
+  const inferStart = await csends.findOne({
+    container_id,
+    type: "inference",
+    status: "start",
+  });
+
+  if (!(initStart && inferStart && initDone)) {
+    console.warn("Missing", { initStart, inferStart, initDone });
+    return;
+  }
+
+  // assume first inference for now... TODO...
+  const query = { startRequestId: inferStart.payload.startRequestId };
+  const bananaRequest = (await bananaRequests.findOne(
+    query
+  )) as BananaRequest | null;
+
+  if (bananaRequest) {
+    const loadTime =
+      initStart.date.getTime() - bananaRequest.createdAt.getTime();
+    const update = {
+      $set: {
+        times: {
+          load: loadTime > 0 ? loadTime : null,
+          init: loadTime > 0 ? initDone.tsl : null,
+          inference: inferDone.tsl,
+        },
+      },
+    };
+    // console.log(query, update);
+    await bananaRequests.updateOne(query, update);
+  }
+}
+
+export default async function CSendRequest(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  // TODO, remove.
+  if (req.method === "GET" && req.query.type === "rebuild" && csends) {
+    const events: CSend[] = (await csends
+      .find({ type: "inference", status: "done" })
+      .toArray()) as unknown as CSend[];
+    for (const event of events) await aggregateRequestCsends(event);
+    return res.status(200).end("OK");
+  }
+
   if (req.method !== "POST") return res.status(400).end("expected a POST");
   if (typeof req.body !== "object")
     return res.status(400).end("body not decoded");
@@ -33,6 +96,12 @@ export default async function CSend(req: NextApiRequest, res: NextApiResponse) {
 
   console.log(JSON.stringify(data, null, 2));
   csends && (await csends.insertOne(data));
+
+  if (data.type === "inference" && data.status === "done") {
+    if (!(csends && bananaRequests))
+      throw new Error("No csends / bananaRequests collections");
+    await aggregateRequestCsends(data);
+  }
 
   /*
 
