@@ -1,5 +1,9 @@
 import gs, { CreditCode, User } from "../../src/api-lib/db";
-import { userIsAdmin } from "gongo-server-db-mongo/lib/collection";
+import {
+  CollectionEventProps,
+  userIsAdmin,
+} from "gongo-server-db-mongo/lib/collection";
+import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -163,7 +167,27 @@ if (gs.dba) {
   const db = gs.dba;
 
   const users = db.collection("users");
-  users.allow("update", userIsAdmin);
+  users.allow(
+    "update",
+    async (
+      doc: Document | ChangeSetUpdate | string,
+      eventProps: CollectionEventProps
+    ) => {
+      const isAdmin = await userIsAdmin(doc, eventProps);
+      if (isAdmin === true) return true;
+
+      if (typeof doc === "object" && "patch" in doc) {
+        if (doc.patch.length === 1) {
+          if (doc.patch[0].path === "/dob") {
+            // Ok for now
+            return true;
+          }
+        }
+      }
+
+      return "ACCESS_DENIED";
+    }
+  );
 
   const creditCodes = db.collection("creditCodes");
   creditCodes.allow("insert", userIsAdmin);

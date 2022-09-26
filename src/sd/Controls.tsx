@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { t, Trans, Plural } from "@lingui/macro";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
+import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 
 import type { ModelState } from "./useModelState";
 import { isDev, REQUIRE_REGISTRATION } from "../lib/client-env";
@@ -26,6 +26,7 @@ import { Clear, Height, Help, HelpOutline, Scale } from "@mui/icons-material";
 
 import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
+import { differenceInYears } from "date-fns";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -526,54 +527,106 @@ function SafetyChecker({
   setValue: ModelState["safety_checker"]["setValue"];
   _defaultValue: boolean;
 }) {
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const over18 = React.useMemo(() => {
+    if (user?.dob instanceof Date) {
+      const age = differenceInYears(new Date(), user.dob);
+      return age >= 18;
+    }
+    return false;
+  }, [user]);
+
+  const confirmDob = React.useCallback(
+    function confirmDob(event: React.SyntheticEvent) {
+      event.preventDefault();
+
+      let dob: false | null | Date = false;
+      while (dob === false) {
+        const str = prompt("Please enter your Date of Birth");
+        if (str != null) {
+          const date = new Date(str);
+          if (isNaN(date.getTime())) {
+            dob = confirm("Invalid date, try again?") ? false : null;
+            if (dob === null) break;
+          } else {
+            dob = confirm(date.toLocaleDateString() + "\nIs that right?")
+              ? date
+              : false;
+          }
+        } else dob = null;
+
+        if (dob) {
+          console.log({ dob });
+          db.collection("users").update({ _id: userId }, { $set: { dob } });
+        }
+      }
+    },
+    [userId]
+  );
+
   return React.useMemo(() => {
     return (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
-        <Stack
-          direction="row"
-          spacing={0}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <FormGroup sx={{ alignItems: "center" }}>
-            <FormControlLabel
-              sx={{ mr: 0 }}
-              control={
-                <Switch
-                  checked={value}
-                  onChange={(event) => setValue(event.target.checked)}
+      <>
+        {(!user || !user.dob || over18) && (
+          <Grid item xs={6} sm={4} md={3} lg={2}>
+            <Stack
+              direction="row"
+              spacing={0}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <FormGroup sx={{ alignItems: "center" }}>
+                <FormControlLabel
+                  sx={{ mr: 0 }}
+                  control={
+                    <Switch
+                      checked={value}
+                      onChange={(event) => setValue(event.target.checked)}
+                      disabled={!over18}
+                    />
+                  }
+                  label={
+                    <Box>
+                      <Trans>NSFW Filter</Trans>
+                    </Box>
+                  }
                 />
-              }
-              label={
-                <Box>
-                  <Trans>NSFW Filter</Trans>
-                </Box>
-              }
-            />
-          </FormGroup>
-          <Tooltip
-            title={
-              <Box>
-                <Trans>
-                  Filter out images that may be NSFW (&quot;Not Safe for
-                  Work&quot;) and inappropriate for under 18s.
-                </Trans>{" "}
-                <Trans>A black image will be shown instead.</Trans>
-              </Box>
-            }
-            enterDelay={0}
-            enterTouchDelay={0}
-            leaveDelay={0}
-            leaveTouchDelay={3000}
-          >
-            <HelpOutline
-              sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
-            />
-          </Tooltip>
-        </Stack>
-      </Grid>
+              </FormGroup>
+              <Tooltip
+                title={
+                  <Box>
+                    <Trans>
+                      Filter out images that may be NSFW (&quot;Not Safe for
+                      Work&quot;) and inappropriate for under 18s.
+                    </Trans>{" "}
+                    <Trans>A black image will be shown instead.</Trans>
+                  </Box>
+                }
+                enterDelay={0}
+                enterTouchDelay={0}
+                leaveDelay={0}
+                leaveTouchDelay={3000}
+              >
+                <HelpOutline
+                  sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+                />
+              </Tooltip>
+            </Stack>
+          </Grid>
+        )}
+        {user && !user.dob && (
+          <Grid item xs={6} sm={4} md={3} lg={2} sx={{ textAlign: "center" }}>
+            <a href="#" onClick={confirmDob}>
+              <Trans>Confirm Date of Birth</Trans>
+            </a>
+          </Grid>
+        )}
+      </>
     );
-  }, [value, setValue]);
+  }, [value, setValue, confirmDob, over18, user]);
 }
 
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
