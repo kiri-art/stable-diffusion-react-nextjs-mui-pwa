@@ -38,6 +38,19 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Mon Sep 26, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>Fixed slowness, 50 credit top up.</b> Our upstream provider
+                had some intermittent issues but we are back up to full speed!
+                As an apology, and our thanks for your early support, we&apos;ve
+                topped everyone back up to 50 credits.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Fri Sep 23, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
