@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import type { WithId } from "gongo-client/lib/browser/Collection";
-import addMonths from "date-fns/addMonths";
+// import addMonths from "date-fns/addMonths";
+import addDays from "date-fns/addDays";
 //import RevolutCheckout from "@revolut/checkout";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
@@ -104,8 +105,9 @@ export default function Credits() {
   if (!user) return <div>Loading...</div>;
 
   const renewalDay = user.createdAt.getDate();
-  const nextCreditDate = addMonths(new Date(), 1);
-  nextCreditDate.setDate(renewalDay);
+  // const nextCreditDate = addMonths(new Date(), 1);
+  // nextCreditDate.setDate(renewalDay);
+  const nextCreditDate = addDays(new Date(), 1);
 
   async function buy(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -140,27 +142,31 @@ export default function Credits() {
           <Trans>Total Credits</Trans>: {user.credits.free + user.credits.paid}
         </Typography>
         <Trans>Total credits available for immediate use.</Trans>
-
         <Typography variant="h6" sx={{ mt: 2 }}>
           <Trans>Free Credits</Trans>: {user.credits.free}
         </Typography>
         <Trans>
-          Your free credits are topped up every month. They are used before your
-          paid credits. Unused credits don&apos;t carry over.
-        </Trans>
+          Your <b>20</b>
+          <sup>*</sup> free credits are topped up every <b>day</b>
+          <sup>*</sup>. They are used before your paid credits. Unused credits
+          don&apos;t carry over.
+        </Trans>{" "}
+        <span style={{ fontStyle: "italic", fontSize: "80%" }}>
+          <Trans>
+            <sup>*</sup>May change at any time.
+          </Trans>
+        </span>
         <p>
-          <Trans>Next credits on:</Trans>
-          {nextCreditDate.toLocaleDateString()}
+          <Trans>Next credits on:</Trans>{" "}
+          <b>{nextCreditDate.toLocaleDateString()}</b>
+          <br />
         </p>
-
         <RedeemCreditCode user={user} />
-
         <p>
           <Trans>
             Earn free credits by contributing to the project on GitHub!
           </Trans>
         </p>
-
         <Typography variant="h6" sx={{ mt: 2 }}>
           <Trans>Purchased Credits</Trans>: {user.credits.paid}
         </Typography>
@@ -168,7 +174,6 @@ export default function Credits() {
           Purchased credits are used after you run out of free credits that
           month, and don&apos;t expire.
         </Trans>
-
         <Box>
           <Button
             variant="contained"
@@ -183,14 +188,12 @@ export default function Credits() {
             )}
           </Button>
         </Box>
-
         <Box sx={{ my: 2, fontSize: "80%" }}>
           <Trans>
             The charge will appear from &quot;Wastelands Networking&quot; or
             &quot;Wastelands* SD-MUI&quot;.
           </Trans>
         </Box>
-
         <Box sx={{ my: 2 }}>
           <Trans>
             This project is community run by volunteers in our spare time. We
@@ -199,11 +202,9 @@ export default function Credits() {
             worth of credits at a time.
           </Trans>
         </Box>
-
         <Button component={Link} variant="outlined" href="/orders">
           <Trans>Order History</Trans>
         </Button>
-
         <Box sx={{ fontSize: "80%", py: 2 }}>
           <Trans>
             Reminder: this is Free and Open Source Software. You can run your
