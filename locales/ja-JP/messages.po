@@ -13,25 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: nplurals=1; plural=0;"\n"
 
-#: src/sd/Controls.tsx:499
+#: src/sd/Controls.tsx:500
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr ""
 
-#: src/sd/Controls.tsx:150
+#: src/sd/Controls.tsx:151
 msgid "(Denoising) Strength"
 msgstr "(ノイズ除去) 強度"
 
-#: src/Inpaint.tsx:471
+#: src/Inpaint.tsx:484
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(ドラッグ & ドロップ、共有が間もなく追加されます)"
 
-#: pages/index.tsx:141
+#: pages/index.tsx:164
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) 自己責任でご使用ください。このプロジェクトの使用（または誤用）の結果として生じる結果について、当社は一切の責任を負いません。2) このサイトまたはプロジェクトを使用することは、上記の「自己責任」の原則、Stable Diffusion の <0>CreativeML Open RAIL-M ライセンス</0>、およびこのプロジェクトの <1>MIT ライセンス</1>を含む、その条項および規則に同意することを意味します。"
 
-#: src/sd/Controls.tsx:99
-#: src/sd/Controls.tsx:189
-#: src/sd/Controls.tsx:232
+#: pages/credits.tsx:155
+msgid "<0>*</0>May change at any time."
+msgstr ""
+
+#: src/sd/Controls.tsx:100
+#: src/sd/Controls.tsx:190
+#: src/sd/Controls.tsx:233
 msgid "<0>Learn more</0>"
 msgstr "<0>詳細を見る</0>"
 
@@ -39,12 +43,16 @@ msgstr "<0>詳細を見る</0>"
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 msgstr "<0>Stability.Ai</0> - <1>StableDiffusion</1> の開発に費やされた膨大な時間と作業、努力、そしてオープンソースライセンスでの一般リリースの決断に。"
 
+#: src/sd/Controls.tsx:605
+msgid "A black image will be shown instead."
+msgstr ""
+
 #: src/workboxStuff.tsx:42
 msgid "A newer version of this web app is available, reload to update?"
 msgstr "このウェブアプリの新しいバージョンが利用可能です。再読み込みしてアップデートしますか？"
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:209
+#: src/MyAppBar.tsx:223
 msgid "About"
 msgstr "概要"
 
@@ -56,18 +64,22 @@ msgstr "アクセスが拒否されました。"
 msgid "Acknowledements and Thanks"
 msgstr "謝辞"
 
-#: src/Inpaint.tsx:477
+#: src/Inpaint.tsx:490
 msgid "Adjust prompt and GO"
 msgstr "プロンプトを調整して移動"
 
 #: pages/admin.tsx:219
-#: src/MyAppBar.tsx:220
+#: src/MyAppBar.tsx:234
 msgid "Admin"
 msgstr "管理者"
 
 #: pages/order/[_id].tsx:58
 msgid "Amount"
 msgstr "総額"
+
+#: pages/stats.tsx:51
+msgid "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
+msgstr ""
 
 #: pages/order/[_id].tsx:72
 msgid "Back to Credits"
@@ -77,11 +89,11 @@ msgstr "クレジットに戻る"
 msgid "Be Responsible"
 msgstr "責任を持ちましょう"
 
-#: src/sd/Controls.tsx:570
+#: src/sd/Controls.tsx:682
 msgid "Best for Anime characters"
 msgstr "アニメキャラクターに最適"
 
-#: pages/credits.tsx:182
+#: pages/credits.tsx:187
 msgid "Buy 50 credits for $1"
 msgstr "$1 で 50 クレジットを購入"
 
@@ -90,25 +102,29 @@ msgstr "$1 で 50 クレジットを購入"
 msgid "Checkout"
 msgstr "お支払い"
 
-#: src/sd/Controls.tsx:178
+#: src/sd/Controls.tsx:179
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "分類子なしのガイダンス (スケール)"
 
-#: pages/credits.tsx:36
-#: pages/credits.tsx:36
+#: pages/credits.tsx:37
+#: pages/credits.tsx:37
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr "申し訳ありませんが、コードの使用回数がすでに最大数に達しています。"
 
-#: src/Inpaint.tsx:484
+#: src/Inpaint.tsx:497
 msgid "Coming Soon"
 msgstr "近日追加予定"
 
-#: pages/login.tsx:85
+#: src/sd/Controls.tsx:623
+msgid "Confirm Date of Birth"
+msgstr ""
+
+#: pages/login.tsx:93
 msgid "Connect with {0}"
 msgstr "{0} とつなげる"
 
-#: src/MyAppBar.tsx:164
-#: src/MyAppBar.tsx:351
+#: src/MyAppBar.tsx:168
+#: src/MyAppBar.tsx:371
 msgid "Credits:"
 msgstr "クレジット: "
 
@@ -120,7 +136,7 @@ msgstr "通貨"
 msgid "Date"
 msgstr "日付"
 
-#: src/sd/Controls.tsx:93
+#: src/sd/Controls.tsx:94
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "ご希望の画像の説明/キャプション。 「印象派」、「デジタルアート」、写真のスタイルやレンズなどのアートスタイル、その他のヒントが含まれる場合があります。"
 
@@ -128,24 +144,32 @@ msgstr "ご希望の画像の説明/キャプション。 「印象派」、「�
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "有害なコンテンツ (人種差別、扇動的など) を作成しないでください。"
 
-#: pages/credits.tsx:159
+#: pages/credits.tsx:166
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "GitHub でプロジェクトに貢献して、無料クレジットを獲得しましょう！"
 
-#: pages/credits.tsx:145
+#: pages/logs.tsx:424
+msgid "Event Log"
+msgstr ""
+
+#: src/sd/Controls.tsx:601
+msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
+msgstr ""
+
+#: pages/credits.tsx:146
 msgid "Free Credits"
 msgstr "無料クレジット"
 
-#: src/sd/Controls.tsx:691
+#: src/sd/Controls.tsx:803
 msgid "Get More Credits"
 msgstr "クレジットをさらに取得"
 
-#: pages/login.tsx:48
-#: src/MyAppBar.tsx:199
+#: pages/login.tsx:56
+#: src/MyAppBar.tsx:213
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/sd/Controls.tsx:689
+#: src/sd/Controls.tsx:801
 msgid "Go"
 msgstr "進む"
 
@@ -153,76 +177,93 @@ msgstr "進む"
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:298
+#: src/sd/Controls.tsx:299
 msgid "Height"
 msgstr "高さ"
 
 #: pages/index.tsx:45
-#: src/MyAppBar.tsx:107
+#: src/MyAppBar.tsx:111
 msgid "Home"
 msgstr "ホーム"
 
-#: src/sd/Controls.tsx:184
+#: src/sd/Controls.tsx:185
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "プロンプトに従う程度。 値が低い = より創造的で、より多様性があります。 値が高い = より正確で、アーティファクトが発生する場合があります。 5 ～ 15 の値が最適です。"
 
 #: pages/img2img.tsx:17
 #: pages/index.tsx:30
-#: src/MyAppBar.tsx:137
+#: src/MyAppBar.tsx:141
 msgid "Image to Image"
 msgstr "画像から画像へ"
 
-#: src/Inpaint.tsx:489
+#: src/Inpaint.tsx:502
 msgid "Image will be scaled to max 512x512 (for now)"
 msgstr "画像は最大 512x512 にスケール調整されます (現時点では)"
 
 #: pages/index.tsx:36
 #: pages/inpaint.tsx:17
-#: src/MyAppBar.tsx:152
+#: src/MyAppBar.tsx:156
 msgid "Inpainting"
 msgstr "インペインティング"
 
-#: src/sd/Controls.tsx:580
+#: src/sd/Controls.tsx:692
 msgid "Japanese / Japanglish prompt input, style"
 msgstr "日本語 / 日本語英語のプロンプト入力、スタイル"
 
-#: pages/credits.tsx:81
+#: pages/stats.tsx:65
+#: pages/stats.tsx:153
+msgid "Last 30 days"
+msgstr ""
+
+#: pages/credits.tsx:82
 msgid "Loading..."
 msgstr "読み込み中..."
 
-#: src/MyAppBar.tsx:373
-#: src/sd/Controls.tsx:690
+#: src/MyAppBar.tsx:393
+#: src/sd/Controls.tsx:802
 msgid "Login"
 msgstr "ログイン"
 
-#: src/MyAppBar.tsx:362
+#: src/MyAppBar.tsx:382
 msgid "Logout"
 msgstr "ログアウト"
 
-#: src/sd/Controls.tsx:310
+#: src/sd/Controls.tsx:311
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
 
-#: src/sd/Controls.tsx:542
-#: src/sd/Controls.tsx:546
+#: src/sd/Controls.tsx:654
+#: src/sd/Controls.tsx:658
 msgid "Model"
 msgstr "モデル"
 
-#: src/sd/Controls.tsx:272
+#: src/sd/Controls.tsx:273
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "64 の倍数である必要があります。 メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
 
-#: pages/credits.tsx:132
+#: pages/credits.tsx:134
 msgid "My Credits"
 msgstr "私のクレジット"
 
+#: src/sd/Controls.tsx:593
+msgid "NSFW Filter"
+msgstr ""
+
+#: pages/stats.tsx:134
+msgid "New Requests"
+msgstr ""
+
+#: pages/stats.tsx:222
+msgid "New Users"
+msgstr ""
+
 #: pages/news.tsx:11
-#: src/MyAppBar.tsx:186
+#: src/MyAppBar.tsx:190
 #: src/sd/Footer.tsx:27
 msgid "News"
 msgstr "ニュース"
 
-#: pages/credits.tsx:152
+#: pages/credits.tsx:160
 msgid "Next credits on:"
 msgstr "次のクレジット："
 
@@ -230,24 +271,28 @@ msgstr "次のクレジット："
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr "フェアユース以外のディープフェイクはありません（例：ユーモア、教育、誤解を招くもの、政治的なもの）。"
 
-#: pages/credits.tsx:33
-#: pages/credits.tsx:33
+#: pages/credits.tsx:34
+#: pages/credits.tsx:34
 msgid "No such code exists."
 msgstr "そのようなコードは存在しません。"
 
-#: src/Inpaint.tsx:483
+#: src/Inpaint.tsx:496
 msgid "Notes"
 msgstr "メモ"
 
-#: src/sd/Controls.tsx:220
+#: src/sd/Controls.tsx:221
 msgid "Number of Inference Steps"
 msgstr "推論ステップ数"
 
-#: src/sd/Controls.tsx:227
+#: src/sd/Controls.tsx:228
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "ノイズ除去のステップ数 (画像をやり直して改善する回数)。 数値が大きいほどレンダリングに時間がかかりますが、より質が高い結果が得られる場合があります。"
 
-#: pages/credits.tsx:204
+#: pages/index.tsx:136
+msgid "Open Source, developer friendly."
+msgstr ""
+
+#: pages/credits.tsx:206
 #: pages/order/[_id].tsx:75
 msgid "Order History"
 msgstr "注文履歴"
@@ -265,53 +310,65 @@ msgstr "注文 {_id}"
 msgid "Orders"
 msgstr "注文"
 
-#: src/sd/Controls.tsx:560
+#: src/sd/Controls.tsx:672
 msgid "Original model, best for most cases."
 msgstr "元のモデル、ほとんどのケースに最適"
+
+#: pages/stats.tsx:242
+msgid "Our <0>event logs</0> are also available."
+msgstr ""
 
 #: src/CheckoutForm.tsx:58
 msgid "Pay"
 msgstr "支払う"
 
-#: src/sd/Controls.tsx:349
+#: src/sd/Controls.tsx:350
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "有効なシードを入力するか、「ランダム化」をもう一度有効にしてください。"
 
-#: pages/credits.tsx:180
+#: pages/credits.tsx:185
 #: src/CheckoutForm.tsx:58
 msgid "Please wait..."
 msgstr "お待ちください..."
+
+#: src/OutputImage.tsx:237
+msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
+msgstr ""
 
 #: pages/privacy.tsx:14
 #: src/Copyright.tsx:26
 msgid "Privacy Policy"
 msgstr "プライバシーポリシー"
 
-#: pages/credits.tsx:136
+#: pages/index.tsx:122
+msgid "Project Goals"
+msgstr ""
+
+#: pages/credits.tsx:138
 msgid "Purchase Successful!"
 msgstr "購入しました!"
 
-#: pages/credits.tsx:165
+#: pages/credits.tsx:171
 msgid "Purchased Credits"
 msgstr "購入したクレジット"
 
-#: pages/credits.tsx:167
+#: pages/credits.tsx:173
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr "購入したクレジットはその月の無料クレジットがなくなると使用され、有効期限はありません。"
 
-#: src/Inpaint.tsx:464
+#: src/Inpaint.tsx:477
 msgid "Quick Start"
 msgstr "クイックスタート"
 
-#: src/sd/Controls.tsx:422
+#: src/sd/Controls.tsx:423
 msgid "Randomize"
 msgstr "ランダム化"
 
-#: src/sd/Controls.tsx:430
+#: src/sd/Controls.tsx:431
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "すべての要求でシードをランダム化します。 つまり、新しい画像はそれぞれ完全に異なるものになります。 代わりに前回の作品を「調整」したい場合は、この機能をオフにしてください。"
 
-#: pages/index.tsx:156
+#: pages/index.tsx:179
 msgid "Read the full Terms of Service below."
 msgstr "下の完全なサービス規約をお読みください。"
 
@@ -319,15 +376,15 @@ msgstr "下の完全なサービス規約をお読みください。"
 msgid "Reason"
 msgstr "理由"
 
-#: pages/credits.tsx:81
+#: pages/credits.tsx:82
 msgid "Redeem"
 msgstr "利用する"
 
-#: pages/credits.tsx:72
+#: pages/credits.tsx:73
 msgid "Redeem Credit Code"
 msgstr "クレジットコードを利用する"
 
-#: pages/credits.tsx:208
+#: pages/credits.tsx:209
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr "ご注意: これは無料オープンソースソフトウェアです。 適切なグラフィックカードまたは安価な Banana.Dev アカウントを使用して、ご自身の PC でご自身のコピーを無料で実行できます。 詳しくは<0>ページについて</0>をご覧ください。"
 
@@ -335,13 +392,17 @@ msgstr "ご注意: これは無料オープンソースソフトウェアです�
 msgid "Rendering can be performed either 1) locally with a Banana.Dev docker image (recommended), 2) locally with an existing Stable Diffusion installation, or 3) remotely via a Banana.Dev account. Details in the <0>project README</0>."
 msgstr "レンダリングは、1) Banana.Dev Docker の画像を使用してローカルで (推奨) 実行、2) すでにインストールされた Stable Diffusion を使用してローカルで実行、または 3) Banana.Dev アカウントを介してリモートで実行できます。 詳細は<0>プロジェクトの README</0> でご確認ください。"
 
+#: pages/stats.tsx:65
+msgid "Requests"
+msgstr ""
+
 #: pages/resources.tsx:11
-#: src/MyAppBar.tsx:176
+#: src/MyAppBar.tsx:180
 #: src/sd/Footer.tsx:18
 msgid "Resources"
 msgstr "リソース"
 
-#: src/Inpaint.tsx:483
+#: src/Inpaint.tsx:496
 msgid "Roadmap"
 msgstr "ロードマップ"
 
@@ -349,12 +410,17 @@ msgstr "ロードマップ"
 msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
 msgstr "SD-MUI は、<0>Stability.AI</0> の <1>Stable Diffusion</1> web UI のフロントエンドです。 これは FOSS (無料オープンソースソフトウェアフロントエンド) であり、コミュニティによって開発されています。"
 
-#: src/sd/Controls.tsx:339
+#: src/sd/Controls.tsx:340
 msgid "Seed"
 msgstr "シード"
 
-#: src/sd/Controls.tsx:491
+#: src/sd/Controls.tsx:492
 msgid "Share Inputs"
+msgstr ""
+
+#: pages/stats.tsx:48
+#: src/MyAppBar.tsx:200
+msgid "Stats"
 msgstr ""
 
 #: pages/order/[_id].tsx:64
@@ -365,52 +431,72 @@ msgstr "ステータス"
 #~ msgid "Status: In Active Development"
 #~ msgstr "ステータス：開発中"
 
-#: pages/credits.tsx:63
-#: pages/credits.tsx:63
+#: pages/credits.tsx:64
+#: pages/credits.tsx:64
 msgid "Successfully redeemed {0} credits."
 msgstr "{0}クレジットを利用しました。"
 
-#: pages/index.tsx:138
+#: pages/index.tsx:127
+msgid "Super simple, easy to share."
+msgstr ""
+
+#: pages/index.tsx:161
 #: src/Copyright.tsx:22
 msgid "Terms of Service"
 msgstr "利用規約"
 
 #: pages/index.tsx:24
-#: pages/txt2img.tsx:109
-#: src/MyAppBar.tsx:122
+#: pages/txt2img.tsx:112
+#: src/MyAppBar.tsx:126
 msgid "Text to Image"
 msgstr "テキストから画像へ"
 
-#: pages/credits.tsx:188
+#: pages/credits.tsx:192
 #: src/CheckoutForm.tsx:62
 msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 msgstr "「Wastelands Networking」または「Wastelands* SD-MUI」から請求されます。"
 
-#: pages/index.tsx:129
+#: pages/index.tsx:152
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "このプロジェクトは、無料オープンソースソフトウェアに基づいています。 ご自身のコンピューターで無料で実行できます (適切な GPU がある場合、またはご自身の Banana サーバーレス GPU アカウントを使用している場合)。 参加したいですか? <0>概要</0>ページをご覧ください。"
 
-#: pages/credits.tsx:195
+#: pages/credits.tsx:198
 msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
 msgstr "このプロジェクトは、ボランティアが空き時間に運営するコミュニティです。 保証は一切ありません。 いつでも機能しなくなる可能性があり、返金はいたしません。 そのため、一度に購入できるのは 1 ドル相当のクレジットのみです。"
 
-#: pages/credits.tsx:140
+#: pages/credits.tsx:142
 msgid "Total Credits"
 msgstr "合計クレジット"
 
-#: pages/credits.tsx:142
+#: pages/stats.tsx:140
+msgid "Total Requests"
+msgstr ""
+
+#: pages/stats.tsx:228
+msgid "Total Users"
+msgstr ""
+
+#: pages/credits.tsx:144
 msgid "Total credits available for immediate use."
 msgstr "すぐに使用できる合計クレジット。"
 
-#: src/Inpaint.tsx:469
+#: pages/login.tsx:48
+msgid "Twitter"
+msgstr ""
+
+#: src/Inpaint.tsx:482
 msgid "Upload an image with button below"
 msgstr "下のボタンで画像をアップロードします"
 
-#: src/Inpaint.tsx:474
+#: src/Inpaint.tsx:487
 msgid "Use mouse / finger to draw mask over it"
 msgstr "マウスまたは指を使って、重ねてマスクを描きます"
 
-#: src/sd/Controls.tsx:360
+#: pages/stats.tsx:153
+msgid "Users"
+msgstr ""
+
+#: src/sd/Controls.tsx:361
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "同じシードとオプション (プロンプト、ガイダンススケールなど) を使うと、常に同じ画像が作成されます。 これは、以前の作品を調整したり、(「ランダム」な要素を取り除いて) 他のオプションがプロセスに与える影響を把握したり、作品を共有したりする際に便利です。 {0} から {MAX_SEED_VALUE} の間の数字。"
 
@@ -418,12 +504,12 @@ msgstr "同じシードとオプション (プロンプト、ガイダンスス�
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "<0>誰もが AI を使えるようにする</0>取り組みにご協力いただいた、次の研究者、団体、企業の皆様への感謝の気持ちは、言葉では表しきれません。"
 
-#: src/sd/Controls.tsx:260
+#: src/sd/Controls.tsx:261
 msgid "Width"
 msgstr "幅"
 
-#: src/sd/Controls.tsx:271
-#: src/sd/Controls.tsx:309
+#: src/sd/Controls.tsx:272
+#: src/sd/Controls.tsx:310
 msgid "Width of output image."
 msgstr "出力画像の幅。"
 
@@ -431,8 +517,8 @@ msgstr "出力画像の幅。"
 msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
 msgstr "ご自身のコンピューター (適切な GPU がある場合) で無料で実行するか、<0>Banana.Dev</0> のサーバーレス GPU クラウドからの実行も非常に安価です。 <1>GitHub プロジェクト</1>に参加して、素晴らしいものを一緒に作りましょう。"
 
-#: pages/credits.tsx:39
-#: pages/credits.tsx:39
+#: pages/credits.tsx:40
+#: pages/credits.tsx:40
 msgid "You have already redeemed this code before."
 msgstr "このコードは以前に利用したことがあります。"
 
@@ -440,11 +526,15 @@ msgstr "このコードは以前に利用したことがあります。"
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr "他の場所で共有するコンテンツについては、その画像がコンピューターで生成されたものであることを明確に示す必要があります。"
 
-#: pages/credits.tsx:147
-msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
-msgstr "無料クレジットは毎月チャージされます。 これらは、支払ったクレジットの前に使用されます。 未使用のクレジットは持ち越されません。"
+#: pages/credits.tsx:148
+msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+msgstr ""
 
-#: src/sd/Controls.tsx:692
+#: pages/credits.tsx:147
+#~ msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
+#~ msgstr "無料クレジットは毎月チャージされます。 これらは、支払ったクレジットの前に使用されます。 未使用のクレジットは持ち越されません。"
+
+#: src/sd/Controls.tsx:804
 msgid "{0, plural, one {# Credit} other {# Credits}}"
 msgstr "{0, plural, one {# クレジット} other {# クレジット}}"
 
@@ -452,7 +542,7 @@ msgstr "{0, plural, one {# クレジット} other {# クレジット}}"
 #~ msgid "{0} Credit"
 #~ msgstr ""
 
-#: src/sd/Controls.tsx:705
+#: src/sd/Controls.tsx:817
 msgid "{credits, plural, one {# credit remaining} other {# credits remaining}}"
 msgstr "{credits, plural, one {残り # クレジット} other {残り # クレジット}}j"
 
