@@ -104,7 +104,7 @@ export default function Credits() {
 
   if (!user) return <div>Loading...</div>;
 
-  const renewalDay = user.createdAt.getDate();
+  // const renewalDay = user.createdAt.getDate();
   // const nextCreditDate = addMonths(new Date(), 1);
   // nextCreditDate.setDate(renewalDay);
   const nextCreditDate = addDays(new Date(), 1);
