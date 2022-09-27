@@ -146,7 +146,7 @@ export default function Credits() {
           <Trans>Free Credits</Trans>: {user.credits.free}
         </Typography>
         <Trans>
-          Your <b>20</b>
+          Your <b>{20}</b>
           <sup>*</sup> free credits are topped up every <b>day</b>
           <sup>*</sup>. They are used before your paid credits. Unused credits
           don&apos;t carry over.
