@@ -25,7 +25,7 @@ msgstr "(ノイズ除去) 強度"
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(ドラッグ & ドロップ、共有が間もなく追加されます)"
 
-#: pages/index.tsx:164
+#: pages/index.tsx:169
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) 自己責任でご使用ください。このプロジェクトの使用（または誤用）の結果として生じる結果について、当社は一切の責任を負いません。2) このサイトまたはプロジェクトを使用することは、上記の「自己責任」の原則、Stable Diffusion の <0>CreativeML Open RAIL-M ライセンス</0>、およびこのプロジェクトの <1>MIT ライセンス</1>を含む、その条項および規則に同意することを意味します。"
 
@@ -288,7 +288,7 @@ msgstr "推論ステップ数"
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "ノイズ除去のステップ数 (画像をやり直して改善する回数)。 数値が大きいほどレンダリングに時間がかかりますが、より質が高い結果が得られる場合があります。"
 
-#: pages/index.tsx:136
+#: pages/index.tsx:138
 msgid "Open Source, developer friendly."
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr "ランダム化"
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "すべての要求でシードをランダム化します。 つまり、新しい画像はそれぞれ完全に異なるものになります。 代わりに前回の作品を「調整」したい場合は、この機能をオフにしてください。"
 
-#: pages/index.tsx:179
+#: pages/index.tsx:184
 msgid "Read the full Terms of Service below."
 msgstr "下の完全なサービス規約をお読みください。"
 
@@ -440,7 +440,7 @@ msgstr "{0}クレジットを利用しました。"
 msgid "Super simple, easy to share."
 msgstr ""
 
-#: pages/index.tsx:161
+#: pages/index.tsx:166
 #: src/Copyright.tsx:22
 msgid "Terms of Service"
 msgstr "利用規約"
@@ -456,7 +456,7 @@ msgstr "テキストから画像へ"
 msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 msgstr "「Wastelands Networking」または「Wastelands* SD-MUI」から請求されます。"
 
-#: pages/index.tsx:152
+#: pages/index.tsx:157
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "このプロジェクトは、無料オープンソースソフトウェアに基づいています。 ご自身のコンピューターで無料で実行できます (適切な GPU がある場合、またはご自身の Banana サーバーレス GPU アカウントを使用している場合)。 参加したいですか? <0>概要</0>ページをご覧ください。"
 
@@ -479,6 +479,10 @@ msgstr ""
 #: pages/credits.tsx:144
 msgid "Total credits available for immediate use."
 msgstr "すぐに使用できる合計クレジット。"
+
+#: pages/index.tsx:140
+msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
+msgstr ""
 
 #: pages/login.tsx:48
 msgid "Twitter"
@@ -533,6 +537,10 @@ msgstr ""
 #: pages/credits.tsx:147
 #~ msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr "無料クレジットは毎月チャージされます。 これらは、支払ったクレジットの前に使用されます。 未使用のクレジットは持ち越されません。"
+
+#: pages/index.tsx:129
+msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
+msgstr ""
 
 #: src/sd/Controls.tsx:804
 msgid "{0, plural, one {# Credit} other {# Credits}}"

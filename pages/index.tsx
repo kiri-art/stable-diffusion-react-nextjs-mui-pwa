@@ -126,17 +126,22 @@ const Home: NextPage = () => {
               <b>
                 <Trans>Super simple, easy to share.</Trans>
               </b>{" "}
-              Zero setup, mobile-first. Easy for anyone - no matter their tech
-              experience - to have access to this technology, and be able to
-              play around and get excited about it.
+              <Trans>
+                Zero setup, mobile-first. Easy for anyone - no matter their tech
+                experience - to have access to this technology, and be able to
+                play around and get excited about it.
+              </Trans>
             </li>
             <br />
             <li>
               <b>
                 <Trans>Open Source, developer friendly.</Trans>
               </b>{" "}
-              Transparent development and easy for developers to get involved.
-              Especially web devs with background in Machine Learning.
+              <Trans>
+                Transparent development and easy for developers to get involved.
+                Especially web devs without any prior background in Machine
+                Learning.
+              </Trans>
             </li>
           </ol>
         </Box>
