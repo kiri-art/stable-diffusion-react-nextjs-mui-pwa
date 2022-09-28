@@ -18,6 +18,9 @@ const apiKey = process.env.BANANA_API_KEY;
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
+// also in upsample.tsx; TODO
+const CREDIT_COST = 0.2;
+
 const gs = new GongoServer({
   dba: new Database(MONGO_URL, "sd-mui"),
 });
@@ -194,19 +197,19 @@ export default async function txt2imgFetch(
     const user = await gs.dba.collection("users").findOne({ _id: userId });
     if (!user) return res.status(500).send("Server error");
 
-    if (!(user.credits.free > 0 || user.credits.paid > 0))
+    if (!(user.credits.free > CREDIT_COST || user.credits.paid > CREDIT_COST))
       return res.status(403).send("Out of credits");
 
-    if (user.credits.free) {
-      user.credits.free--;
+    if (user.credits.free > CREDIT_COST) {
+      user.credits.free -= CREDIT_COST;
       await gs.dba
         .collection("users")
-        .updateOne({ _id: userId }, { $inc: { "credits.free": -1 } });
+        .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
     } else {
-      user.credits.paid--;
+      user.credits.paid -= CREDIT_COST;
       await gs.dba
         .collection("users")
-        .updateOne({ _id: userId }, { $inc: { "credits.paid": -1 } });
+        .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
     }
 
     credits = user.credits;

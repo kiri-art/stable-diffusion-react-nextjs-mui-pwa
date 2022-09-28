@@ -773,6 +773,7 @@ export default function SDControls({
           disabled={!!(requestStartTime && !requestEndTime)}
           dest={uiState.dest.value}
           setDest={uiState.dest.set}
+          credits={1}
         />
         <ModelSelect
           value={inputs.MODEL_ID.value}

@@ -31,7 +31,9 @@ import OutputImage from "../src/OutputImage";
 import GoButton from "../src/GoButton";
 import blobToBase64 from "../src/lib/blobToBase64";
 import { HelpOutline } from "@mui/icons-material";
-import { ModelState } from "../src/sd/useModelState";
+
+// Also in banana-upsaple.ts; TODO
+const CREDIT_COST = 0.2;
 
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
@@ -202,7 +204,7 @@ export default function Upsample() {
       if (!image) throw new Error("no inputImage.current");
       image.onload = function (_imageEvent) {
         console.log("inputImage loaded to image");
-        const aspectRatio = image.width / image.height;
+        // const aspectRatio = image.width / image.height;
         const parentNode = image.parentNode as HTMLDivElement;
         if (parentNode)
           parentNode.style["aspectRatio"] = `${image.width} / ${image.height}`;
@@ -230,7 +232,7 @@ export default function Upsample() {
     if (REQUIRE_REGISTRATION) {
       // TODO, record state in URL, e.g. #prompt=,etc
       if (!user) return router.push("/login?from=/txt2img");
-      if (!(user.credits.free > 0 || user.credits.paid > 0))
+      if (!(user.credits.free > CREDIT_COST || user.credits.paid > CREDIT_COST))
         return router.push("/credits");
     }
 
@@ -312,7 +314,12 @@ export default function Upsample() {
           />
         )}
         <form onSubmit={go}>
-          <GoButton disabled={false} dest={dest} setDest={setDest} />
+          <GoButton
+            disabled={false}
+            dest={dest}
+            setDest={setDest}
+            credits={CREDIT_COST}
+          />
           <ModelSelect
             value={modelId}
             setValue={setModelId}

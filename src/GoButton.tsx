@@ -17,17 +17,19 @@ export default function GoButton({
   disabled,
   dest,
   setDest,
+  credits,
 }: {
   disabled: boolean;
   dest: string;
   setDest: React.Dispatch<React.SetStateAction<string>>;
+  credits?: number;
 }) {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
 
-  const credits = user?.credits?.free + user?.credits?.paid;
+  const userCredits = user?.credits?.free + user?.credits?.paid;
 
   return (
     <>
@@ -43,8 +45,10 @@ export default function GoButton({
             {(function () {
               if (!REQUIRE_REGISTRATION) return <Trans>Go</Trans>;
               if (!user) return <Trans>Login</Trans>;
-              if (!credits) return <Trans>Get More Credits</Trans>;
-              return <Plural value={1} one="# Credit" other="# Credits" />;
+              if (!userCredits) return <Trans>Get More Credits</Trans>;
+              return (
+                <Plural value={credits} one="# Credit" other="# Credits" />
+              );
             })()}
           </Button>
           {REQUIRE_REGISTRATION && user && (
@@ -58,7 +62,7 @@ export default function GoButton({
               }}
             >
               <Plural
-                value={credits}
+                value={userCredits}
                 one="# credit remaining"
                 other="# credits remaining"
               />
