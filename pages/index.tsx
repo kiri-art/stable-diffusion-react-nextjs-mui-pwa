@@ -24,19 +24,25 @@ const Home: NextPage = () => {
       title: t`Text to Image`,
       href: "/txt2img",
       img: "/img/pages/txt2img.png",
-      alt: "txt2img",
+      alt: "txt2img example",
     },
     {
       title: t`Image to Image`,
       href: "/img2img",
       img: "/img/pages/img2img.png",
-      alt: "img2img",
+      alt: "img2img example",
     },
     {
       title: t`Inpainting`,
       href: "/inpaint",
       img: "/img/pages/inpaint.png",
-      alt: "inpaint",
+      alt: "inpaint example",
+    },
+    {
+      title: t`Upsampling`,
+      href: "/upsample",
+      img: "/img/pages/upsample.png",
+      alt: "upsample example",
     },
   ];
 

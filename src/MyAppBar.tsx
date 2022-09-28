@@ -157,8 +157,22 @@ export default function MyAppBar({ title }: { title: string }) {
               </ListItemText>
             </ListItemButton>
           </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} href="/inpaint">
+              <ListItemIcon>
+                <Image
+                  alt="upsample"
+                  src="/img/pages/upsample.png"
+                  width={25}
+                  height={25}
+                />
+              </ListItemIcon>
+              <ListItemText>
+                <Trans>Upsampling</Trans>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>{" "}
           <Divider />
-
           <ListItem disablePadding>
             <ListItemButton component={Link} href="/credits">
               <ListItemIcon>
@@ -170,7 +184,6 @@ export default function MyAppBar({ title }: { title: string }) {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-
           <ListItem disablePadding>
             <ListItemButton component={Link} href="/resources">
               <ListItemIcon>
