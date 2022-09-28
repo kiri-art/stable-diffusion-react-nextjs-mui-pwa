@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import FloodFill from "q-floodfill";
 // import { Trans } from "@lingui/macro";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
+import blobToBase64 from "./lib/blobToBase64";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
@@ -427,20 +428,6 @@ const inpaintState = [
   "shareInputs",
   "safety_checker",
 ];
-
-async function blobToBase64(blob: Blob) {
-  const data = await new Promise((resolve) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(blob);
-    fileReader.onloadend = function () {
-      resolve(fileReader.result);
-    };
-  });
-
-  // data:image/png;base64,....
-  // @ts-expect-error: TODO
-  return data.split(",")[1];
-}
 
 export default function Img2img() {
   const inputFile = React.useRef<HTMLInputElement>(null);
