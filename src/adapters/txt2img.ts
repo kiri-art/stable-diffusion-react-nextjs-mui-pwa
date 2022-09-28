@@ -1,36 +1,10 @@
-import { db } from "gongo-client-react";
-import { v4 as uuidv4 } from "uuid";
-
-import { REQUIRE_REGISTRATION } from "../lib/client-env";
 import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
 import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../schemas/bananaCallInputs";
 import blackImgBase64 from "../blackImgBase64";
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-async function updateFinishedStep(
-  callID: string,
-  timestampMs: number,
-  value: Record<string, unknown>
-) {
-  await fetch("/api/bananaUpdate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      callID,
-      step: {
-        name: "finished",
-        date: timestampMs,
-        value: value,
-      },
-    }),
-  });
-}
+import bananaFetch from "../bananaFetch";
 
 async function exec(
   opts: StableDiffusionInputs,
@@ -118,116 +92,13 @@ async function banana(
     MODEL_NAME?: string;
   }
 ) {
-  // This is quite distracting, need to rethink this ;)
-  // setLog(["[WebUI] Sending " + dest + " request..."]);
-  setLog([""]);
-  const response = await fetch("/api/sd-banana", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      modelInputs,
-      callInputs,
-      fetchOpts: { dest, auth, MODEL_NAME },
-    }),
+  return bananaFetch("/api/sd-banana", modelInputs, callInputs, {
+    setLog,
+    setImgSrc,
+    dest,
+    auth,
+    MODEL_NAME,
   });
-
-  let result;
-  try {
-    result = await response.json();
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    setLog(["FAILED: " + message]);
-    return { $error: { message } };
-  }
-
-  if (REQUIRE_REGISTRATION) {
-    // @ts-expect-error: TODO
-    const _id = db.auth.userId;
-    // TODO, _update should allow mongo modifier
-    const users = db.collection("users");
-    const user = users.findOne({ _id });
-    if (!(user && result.credits)) return;
-    user.credits = result.credits;
-    db.collection("users")._update(_id, user);
-  }
-
-  const callID = result.callID;
-  const initialResult = result;
-  console.log({ initialResult });
-
-  while (!(result.finished || result.modelOutputs)) {
-    await sleep(500);
-    console.log("Request");
-    /*
-    const response = await fetch(
-      "/api/bananaCheck?callID=" + callID
-    );
-    */
-
-    const payload = {
-      id: uuidv4(),
-      created: Math.floor(Date.now() / 1000),
-      longPoll: true,
-      callID: callID,
-    };
-
-    const response = await fetch("https://api.banana.dev/check/v4/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    try {
-      result = await response.json();
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      setLog(["FAILED: " + message]);
-      return { $error: { message } };
-    }
-
-    console.log(result);
-
-    if (result.message.match(/error/)) {
-      setLog(["FAILED: " + result.message]);
-      return { $error: result };
-    }
-  }
-
-  // It turns out sometimes we can still get { message: "" } and success.
-  // if (!result.message) {
-  if (
-    !(
-      result &&
-      result.modelOutputs &&
-      result.modelOutputs.length &&
-      result.modelOutputs[0].image_base64
-    )
-  ) {
-    if (callID)
-      updateFinishedStep(
-        callID,
-        (result.created && result.created * 1000) || Date.now(),
-        { $error: result }
-      );
-    setLog(JSON.stringify(result, null, 2).split("\n"));
-    return { $error: result };
-  }
-
-  if (callID)
-    updateFinishedStep(callID, result.created * 1000, { $success: true });
-  const imgBase64 = result.modelOutputs[0].image_base64;
-  const buffer = Buffer.from(imgBase64, "base64");
-  const blob = new Blob([buffer], { type: "image/png" });
-  const objectURL = URL.createObjectURL(blob);
-  setImgSrc(objectURL);
-  setLog([]);
-
-  // console.log(result);
-  return { $success: result };
 }
 
 const runners = { exec, banana };
