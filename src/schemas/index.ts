@@ -4,4 +4,6 @@ export * from "./creditCode";
 export * from "./csend";
 export * from "./order";
 export * from "./stableDiffusionInputs";
+export * from "./upsampleCallInputs";
+export * from "./upsampleModelInputs";
 export * from "./user";

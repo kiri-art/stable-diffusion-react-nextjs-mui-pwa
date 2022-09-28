@@ -1,8 +1,6 @@
 import { object, string, boolean, InferType } from "yup";
 
 const bananaCallInputsSchema = object({
-  // Dev only.  Not passed to model.
-  // This should probably go somewhere else.
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
