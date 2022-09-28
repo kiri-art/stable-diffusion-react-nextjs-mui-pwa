@@ -139,7 +139,8 @@ function FaceEnhance({
             title={
               <Box>
                 <Trans>
-                  Enhance faces. Good for photorealistic images, bad for anime.
+                  Face Restoration. Good for photorealistic images, bad for
+                  anime.
                 </Trans>
               </Box>
             }
@@ -293,6 +294,7 @@ export default function Upsample() {
           <img
             alt="input image"
             ref={inputImage}
+            src="/img/placeholder.png"
             style={{ width: "100%", position: "absolute" }}
           ></img>
         </Box>
