@@ -5,8 +5,6 @@ import { t } from "@lingui/macro";
 import { Box, Button, Tooltip } from "@mui/material";
 import { ContentCopy, Download, Share } from "@mui/icons-material";
 
-import { ModelState } from "./sd/useModelState";
-
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
   (!!navigator.share && !!navigator.canShare);
@@ -62,14 +60,14 @@ function Log({ log }: { log: string[] }) {
 }
 
 export default function OutputImage({
-  inputs,
+  text,
   imgSrc,
   nsfw,
   log,
   requestStartTime,
   requestEndTime,
 }: {
-  inputs: ModelState;
+  text: string;
   imgSrc: string;
   nsfw: boolean;
   log: string[];
@@ -79,13 +77,6 @@ export default function OutputImage({
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
-
-  const prompt = inputs.prompt.value;
-  const text =
-    prompt +
-    (inputs.shareInputs.value
-      ? `, CFG: ${inputs.guidance_scale.value}, Steps: ${inputs.num_inference_steps.value}, Seed: ${inputs.seed.value}`
-      : "");
 
   function onLoad(_event: React.SyntheticEvent<HTMLImageElement>) {
     const img = imgResult.current;

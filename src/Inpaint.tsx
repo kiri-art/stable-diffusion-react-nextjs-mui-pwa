@@ -13,6 +13,7 @@ import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 // import { Trans } from "@lingui/macro";
+import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import locales, { defaultLocale } from "../src/lib/locales";
 import { Trans } from "@lingui/macro";
 
@@ -267,6 +268,7 @@ export default function Inpainting() {
   const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(inpaintState);
+  const sharedInputs = sharedInputTextFromInputs(inputs);
 
   function fileChange(event: React.SyntheticEvent) {
     const target = event.target as HTMLInputElement;
@@ -538,7 +540,7 @@ export default function Inpainting() {
       </div>
       {imgSrc && (
         <OutputImage
-          inputs={inputs}
+          text={sharedInputs}
           imgSrc={imgSrc}
           nsfw={nsfw}
           log={log}

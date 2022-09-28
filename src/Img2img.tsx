@@ -14,6 +14,7 @@ import Footer from "../src/sd/Footer";
 import { toast } from "react-toastify";
 import FloodFill from "q-floodfill";
 // import { Trans } from "@lingui/macro";
+import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
@@ -465,6 +466,7 @@ export default function Img2img() {
   const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(inpaintState);
+  const sharedInputs = sharedInputTextFromInputs(inputs);
 
   function fileChange(event: React.SyntheticEvent) {
     const target = event.target as HTMLInputElement;
@@ -635,7 +637,7 @@ export default function Img2img() {
       </div>
       {imgSrc && (
         <OutputImage
-          inputs={inputs}
+          text={sharedInputs}
           imgSrc={imgSrc}
           nsfw={nsfw}
           log={log}

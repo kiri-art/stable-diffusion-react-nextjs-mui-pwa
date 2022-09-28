@@ -14,6 +14,7 @@ import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import useRandomPrompt from "../src/sd/useRandomPrompt";
 import Footer from "../src/sd/Footer";
+import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
 
 const txt2imgState = [
   "prompt",
@@ -52,6 +53,7 @@ export default function Txt2Img() {
   const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(txt2imgState);
+  const sharedInputs = sharedInputTextFromInputs(inputs);
   // console.log(inputs);
   const randomPrompt = useRandomPrompt(inputs.MODEL_ID.value);
 
@@ -112,7 +114,7 @@ export default function Txt2Img() {
       <MyAppBar title={t`Text to Image`} />
       <Container maxWidth="lg">
         <OutputImage
-          inputs={inputs}
+          text={sharedInputs}
           imgSrc={imgSrc}
           nsfw={nsfw}
           log={log}

@@ -27,6 +27,7 @@ import { Clear, Height, Help, HelpOutline, Scale } from "@mui/icons-material";
 import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
 import { differenceInYears } from "date-fns";
+import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -454,22 +455,14 @@ function ShareInputs({
   value,
   setValue,
   _defaultValue,
-  cfg,
-  steps,
-  seed,
+  sharedInputs,
 }: {
   value: ModelState["shareInputs"]["value"];
   setValue: ModelState["shareInputs"]["setValue"];
   _defaultValue: boolean;
-  cfg: string | number;
-  steps: string | number;
-  seed: string | number;
+  sharedInputs: string;
 }) {
   return React.useMemo(() => {
-    const sharedInputs = `CFG: ${cfg}, Steps: ${steps}, Seed: ${
-      seed || Math.floor(Math.random() * MAX_SEED_VALUE)
-    }`;
-
     return (
       <Grid item xs={6} sm={4} md={3} lg={2}>
         <Stack
@@ -515,7 +508,7 @@ function ShareInputs({
         </Stack>
       </Grid>
     );
-  }, [value, setValue, cfg, seed, steps]);
+  }, [value, setValue, sharedInputs]);
 }
 
 function SafetyChecker({
@@ -731,6 +724,8 @@ export default function SDControls({
     db.collection("users").find({ _id: userId })
   );
 
+  const sharedInputs = sharedInputTextFromInputs(inputs, true);
+
   function setWidthHeight(
     width: number | string,
     height: number | string,
@@ -899,9 +894,7 @@ export default function SDControls({
             value={inputs.shareInputs.value}
             setValue={inputs.shareInputs.setValue}
             _defaultValue={defaults.shareInputs}
-            cfg={inputs.guidance_scale.value}
-            steps={inputs.num_inference_steps.value}
-            seed={inputs.seed.value}
+            sharedInputs={sharedInputs}
           />
           <SafetyChecker
             value={inputs.safety_checker.value}
