@@ -1,13 +1,11 @@
 import React, { useMemo } from "react";
-import { t, Trans, Plural } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 
 import type { ModelState } from "./useModelState";
-import { isDev, REQUIRE_REGISTRATION } from "../lib/client-env";
 
 import {
   Box,
-  Button,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -28,6 +26,7 @@ import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
 import { differenceInYears } from "date-fns";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
+import GoButton from "../GoButton";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -719,11 +718,6 @@ export default function SDControls({
   requestStartTime: number | null;
   requestEndTime: number | null;
 }) {
-  const userId = useGongoUserId();
-  const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
-  );
-
   const sharedInputs = sharedInputTextFromInputs(inputs, true);
 
   function setWidthHeight(
@@ -767,8 +761,6 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
-  const credits = user?.credits?.free + user?.credits?.paid;
-
   return (
     <Box sx={{ my: 2 }}>
       <form onSubmit={go}>
@@ -777,72 +769,16 @@ export default function SDControls({
           setValue={inputs.prompt.setValue}
           placeholder={randomPrompt}
         />
-
-        <Grid container sx={{ my: 1 }}>
-          <Grid
-            item
-            xs={isDev ? 7 : 12}
-            sm={isDev ? 8 : 12}
-            md={isDev ? 9 : 12}
-          >
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ my: 1 }}
-              type="submit"
-              disabled={!!(requestStartTime && !requestEndTime)}
-            >
-              {(function () {
-                if (!REQUIRE_REGISTRATION) return <Trans>Go</Trans>;
-                if (!user) return <Trans>Login</Trans>;
-                if (!credits) return <Trans>Get More Credits</Trans>;
-                return <Plural value={1} one="# Credit" other="# Credits" />;
-              })()}
-            </Button>
-            {REQUIRE_REGISTRATION && user && (
-              <Box
-                sx={{
-                  fontSize: "70%",
-                  color: "#aaa",
-                  textAlign: "center",
-                  mt: -0.5,
-                  mb: 1,
-                }}
-              >
-                <Plural
-                  value={credits}
-                  one="# credit remaining"
-                  other="# credits remaining"
-                />
-              </Box>
-            )}
-          </Grid>
-          {isDev && (
-            <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
-              <FormControl fullWidth size="small">
-                <InputLabel id="dest-select-label">Dest</InputLabel>
-                <Select
-                  labelId="dest-select-label"
-                  id="dest-select"
-                  value={uiState.dest.value}
-                  label="Dest"
-                  onChange={(e) => uiState.dest.set(e.target.value as string)}
-                >
-                  <MenuItem value="exec">exec (local)</MenuItem>
-                  <MenuItem value="banana-local">banana (local)</MenuItem>
-                  <MenuItem value="banana-remote">banana (remote)</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          )}
-        </Grid>
-
+        <GoButton
+          disabled={!!(requestStartTime && !requestEndTime)}
+          dest={uiState.dest.value}
+          setDest={uiState.dest.set}
+        />
         <ModelSelect
           value={inputs.MODEL_ID.value}
           setValue={inputs.MODEL_ID.setValue}
           defaultValue={defaults.MODEL_ID}
         />
-
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (
             <Strength_Grid_Slider
