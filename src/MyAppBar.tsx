@@ -40,6 +40,7 @@ import {
 
 import Link from "../src/Link";
 import locales from "../src/lib/locales";
+import { creditsStrOrFalse } from "../pages/credits";
 
 const drawerWidth = 260;
 
@@ -65,6 +66,7 @@ export default function MyAppBar({ title }: { title: string }) {
     db.collection("users").find({ _id: userId })
   );
   const isAdmin = user && user.admin;
+  const userCredits = creditsStrOrFalse(user);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -179,8 +181,7 @@ export default function MyAppBar({ title }: { title: string }) {
                 <ConfirmationNumber />
               </ListItemIcon>
               <ListItemText>
-                <Trans>Credits:</Trans>{" "}
-                {user && user.credits.free + user.credits.paid}
+                <Trans>Credits:</Trans> {userCredits}
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -252,7 +253,7 @@ export default function MyAppBar({ title }: { title: string }) {
         </List>
       </Box>
     ),
-    [isAdmin, user, toggleDrawer]
+    [isAdmin, userCredits, toggleDrawer]
   );
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -381,8 +382,7 @@ export default function MyAppBar({ title }: { title: string }) {
                       onClose={handleCloseUserMenu}
                     >
                       <MenuItem component={Link} href="/credits">
-                        <Trans>Credits:</Trans>{" "}
-                        {user.credits.free + user.credits.paid}
+                        <Trans>Credits:</Trans> {userCredits}
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
@@ -460,6 +460,7 @@ export default function MyAppBar({ title }: { title: string }) {
       toggleDrawer,
       handleOpenUserMenu,
       handleCloseUserMenu,
+      userCredits,
     ]
   );
 }

@@ -13,6 +13,16 @@ import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
 import type { User } from "../src/schemas";
 
+function intOrFixedOneStr(num: number) {
+  if (num && !Number.isInteger(num)) return num.toFixed(1);
+  return num.toString();
+}
+
+export function creditsStrOrFalse(user: User) {
+  if (!(user && user.credits)) return false;
+  return intOrFixedOneStr(user.credits.free + user.credits.paid);
+}
+
 function RedeemCreditCode({ user }: { user: WithId<User> }) {
   const [creditCode, setCreditCode] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -108,6 +118,7 @@ export default function Credits() {
   // const nextCreditDate = addMonths(new Date(), 1);
   // nextCreditDate.setDate(renewalDay);
   const nextCreditDate = addDays(new Date(), 1);
+  const userCredits = creditsStrOrFalse(user);
 
   async function buy(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -139,11 +150,11 @@ export default function Credits() {
           </Box>
         )}
         <Typography variant="h6">
-          <Trans>Total Credits</Trans>: {user.credits.free + user.credits.paid}
+          <Trans>Total Credits</Trans>: {userCredits}
         </Typography>
         <Trans>Total credits available for immediate use.</Trans>
         <Typography variant="h6" sx={{ mt: 2 }}>
-          <Trans>Free Credits</Trans>: {user.credits.free}
+          <Trans>Free Credits</Trans>: {intOrFixedOneStr(user.credits.free)}
         </Typography>
         <Trans>
           Your <b>{20}</b>
@@ -168,7 +179,8 @@ export default function Credits() {
           </Trans>
         </p>
         <Typography variant="h6" sx={{ mt: 2 }}>
-          <Trans>Purchased Credits</Trans>: {user.credits.paid}
+          <Trans>Purchased Credits</Trans>:{" "}
+          {intOrFixedOneStr(user.credits.paid)}
         </Typography>
         <Trans>
           Purchased credits are used after you run out of free credits that
