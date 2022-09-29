@@ -158,7 +158,7 @@ export default function MyAppBar({ title }: { title: string }) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} href="/inpaint">
+            <ListItemButton component={Link} href="/upsample">
               <ListItemIcon>
                 <Image
                   alt="upsample"
