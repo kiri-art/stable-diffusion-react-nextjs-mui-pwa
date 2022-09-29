@@ -280,6 +280,7 @@ export default function Upsample() {
     <>
       <MyAppBar title={t`Upsampling`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
+        <p style={{ textAlign: "center" }}>UNDER ACTIVE DEVELOPMENT</p>
         <Box
           sx={{
             border: "1px solid black",
