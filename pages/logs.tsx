@@ -77,7 +77,7 @@ function Chip({ type: _type, children }: { type: string; children: string }) {
 
 function ByContainerRow({
   csends,
-  info,
+  info = {},
   marginBottom = 30,
   startRequestId,
 }: {
