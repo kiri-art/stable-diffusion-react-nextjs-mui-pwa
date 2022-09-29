@@ -524,11 +524,11 @@ msgstr ""
 
 #: src/GoButton.tsx:50
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
-msgstr "{credits, plural, one {残り # クレジット} other {残り # クレジット}}"
+msgstr "{credits, plural, one {# クレジット} other {# クレジット}}"
 
 #: src/GoButton.tsx:64
 msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
-msgstr "{userCredits, plural, one {# クレジット} other {# クレジット}}"
+msgstr "{userCredits, plural, one {残り # クレジット} other {残り # クレジット}}"
 
 #~ msgid "Status: In Active Development"
 #~ msgstr "ステータス：開発中"
