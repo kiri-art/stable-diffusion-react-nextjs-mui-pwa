@@ -22,7 +22,7 @@ export default function GoButton({
   disabled: boolean;
   dest: string;
   setDest: React.Dispatch<React.SetStateAction<string>>;
-  credits?: number;
+  credits: number;
 }) {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -45,7 +45,8 @@ export default function GoButton({
             {(function () {
               if (!REQUIRE_REGISTRATION) return <Trans>Go</Trans>;
               if (!user) return <Trans>Login</Trans>;
-              if (!userCredits) return <Trans>Get More Credits</Trans>;
+              if (!(userCredits && userCredits > credits))
+                return <Trans>Get More Credits</Trans>;
               return (
                 <Plural value={credits} one="# Credit" other="# Credits" />
               );
