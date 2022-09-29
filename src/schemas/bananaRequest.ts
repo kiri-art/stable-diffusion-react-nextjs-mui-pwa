@@ -1,7 +1,8 @@
 import { object, date, string, InferType, boolean, number, mixed } from "yup";
 import { bananaCallInputsSchema } from "./bananaCallInputs";
 import { stableDiffusionInputsSchema } from "./stableDiffusionInputs";
-import { upsampleModelInputsSchema, upsampleCallInputsSchema } from ".";
+import { upsampleModelInputsSchema } from "./upsampleModelInputs";
+import { upsampleCallInputsSchema } from "./upsampleCallInputs";
 
 const stepSchema = object({
   // name: string(),
