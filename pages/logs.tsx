@@ -82,16 +82,16 @@ function ByContainerRow({
   startRequestId,
 }: {
   csends: CSend[];
-  info: PayloadInitStart;
+  info: Partial<PayloadInitStart>;
   marginBottom?: number;
   startRequestId?: string;
 }) {
   return (
     <div style={{ marginBottom: marginBottom }}>
       <div style={{ marginBottom: 10, maxWidth: "100%" }}>
-        <Chip type="model_id">{info.model_id}</Chip>{" "}
-        <Chip type="device">{info.device}</Chip>{" "}
-        <Chip type="hostname">{info.hostname}</Chip>
+        <Chip type="model_id">{info.model_id || "(model))"}</Chip>{" "}
+        <Chip type="device">{info.device || "(device)"}</Chip>{" "}
+        <Chip type="hostname">{info.hostname || "(hostname)"}</Chip>
       </div>
       <div>
         <TableContainer component={Paper}>
