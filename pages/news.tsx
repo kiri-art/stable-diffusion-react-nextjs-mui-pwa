@@ -36,7 +36,25 @@ export default function News() {
 
         <Typography variant="h6">Updates</Typography>
 
+        <p>
+          <i>
+            For the full list of updates, see our{" "}
+            <a href="https://github.com/gadicc/stable-diffusion-react-nextjs-mui-pwa/commits/dev">
+              commit history
+            </a>{" "}
+            on GitHub.
+          </i>
+        </p>
+
         <ul>
+          <li>
+            <b>Thu Sep 30, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>Daily 20 credit topup until further notice! 🎉</li>
+            </ul>
+          </li>
+          <br />
+
           <li>
             <b>Mon Sep 26, 2022</b>
             <ul style={{ marginTop: "10px" }}>
