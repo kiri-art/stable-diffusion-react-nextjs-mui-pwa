@@ -153,7 +153,7 @@ export default async function txt2img(
     MODEL_NAME,
   });
 
-  console.log(result);
+  console.log({ result });
 
   if (result?.$success?.modelOutputs?.[0].image_base64 === blackImgBase64) {
     console.log("NSFW");

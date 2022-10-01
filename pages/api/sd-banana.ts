@@ -185,8 +185,19 @@ export default async function txt2imgFetch(
   if (typeof req.body !== "object") throw new Error("Body not decoded");
   if (!req.body.modelInputs) throw new Error("No modelInputs provided");
 
-  const modelInputs = stableDiffusionInputsSchema.cast(req.body.modelInputs);
-  const callInputs = bananaCallInputsSchema.cast(req.body.callInputs);
+  // On the client-side we use .cast(), here we use .validate()
+  let modelInputs, callInputs;
+  try {
+    modelInputs = await stableDiffusionInputsSchema.validate(
+      req.body.modelInputs
+    );
+    callInputs = await bananaCallInputsSchema.validate(req.body.callInputs);
+  } catch (error) {
+    let message = "Validation Failure";
+    if (error instanceof Error) message = error.message;
+    console.log(error);
+    return res.status(200).send({ $error: { message } });
+  }
   const fetchOpts = req.body.fetchOpts || {};
 
   if (callInputs.MODEL_ID === "rinna/japanese-stable-diffusion")

@@ -77,13 +77,19 @@ async function runner(
     return { $error: { message } };
   }
 
+  if (result.$error) {
+    setLog(["FAILED: " + result.$error.message]);
+    return result;
+  }
+
   if (REQUIRE_REGISTRATION) {
     // @ts-expect-error: TODO
     const _id = db.auth.userId;
     // TODO, _update should allow mongo modifier
     const users = db.collection("users");
     const user = users.findOne({ _id });
-    if (!(user && result.credits)) return;
+    if (!user) throw new Error("no user");
+    if (!result.credits) throw new Error("no result.credits");
     user.credits = result.credits;
     db.collection("users")._update(_id, user);
   }
