@@ -676,6 +676,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="hakurei/waifu-diffusion-v1-3"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="hakurei/waifu-diffusion-v1-3"
+              desc={t`New!  Epoch 5/10, Sep 30`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="rinna/japanese-stable-diffusion"
             sx={{ textAlign: "center", width: "100%" }}
           >
