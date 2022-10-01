@@ -337,6 +337,10 @@ function RequestRow({ request }: { request: BananaRequest }) {
               <Table>
                 <TableBody>
                   <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>{request.createdAt.toLocaleString()}</TableCell>
+                  </TableRow>
+                  <TableRow>
                     <TableCell>Model</TableCell>
                     <TableCell>{request.callInputs.MODEL_ID}</TableCell>
                   </TableRow>
