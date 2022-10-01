@@ -7,6 +7,7 @@ import UnstyledSlider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
 import HelpIcon from "@mui/icons-material/HelpOutline";
 import Tooltip from "@mui/material/Tooltip";
+import yup from "yup";
 
 import { SettingsBackupRestore } from "@mui/icons-material";
 
@@ -38,6 +39,7 @@ export default function InputSlider({
   marks,
   tooltip,
   icon,
+  schema,
 }: {
   value: number | string;
   setValue: React.Dispatch<React.SetStateAction<number | string>>;
@@ -49,7 +51,20 @@ export default function InputSlider({
   marks?: boolean;
   tooltip?: NonNullable<React.ReactNode>;
   icon?: React.ReactElement;
+  schema?: ReturnType<typeof yup.number>;
 }) {
+  if (schema) {
+    const description = schema.describe();
+
+    const maxTest = description.tests.find((t) => t.name === "max");
+    const maxValue = maxTest && maxTest.params ? maxTest.params.max : undefined;
+    if (!max && maxValue) max = maxValue as number;
+
+    const minTest = description.tests.find((t) => t.name === "min");
+    const minValue = minTest && minTest.params ? minTest.params.max : undefined;
+    if (!min && minValue) min = minValue as number;
+  }
+
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") setValue(newValue);
   };

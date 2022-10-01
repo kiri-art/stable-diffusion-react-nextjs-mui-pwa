@@ -27,6 +27,7 @@ import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
 import { differenceInYears } from "date-fns";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 import GoButton from "../GoButton";
+import stableDiffusionInputsSchema from "../schemas/stableDiffusionInputs";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -222,6 +223,8 @@ function Steps_Grid_Slider({
           value={value}
           setValue={setValue}
           defaultValue={defaultValue}
+          // @ts-expect-error: TODO
+          schema={stableDiffusionInputsSchema.fields.num_inference_steps}
           icon={<EmojiIcon>👣</EmojiIcon>}
           tooltip={
             <Box>
