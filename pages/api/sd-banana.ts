@@ -252,6 +252,10 @@ export default async function txt2imgFetch(
     delete modelInputs.shareInputs;
     console.log("! Removed modelInputs.shareInputs - TODO");
   }
+  if (modelInputs.sampler) {
+    delete modelInputs.sampler;
+    console.log("! Removed modelInputs.sampler - TODO");
+  }
 
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
