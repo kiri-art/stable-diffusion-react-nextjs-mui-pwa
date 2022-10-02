@@ -698,6 +698,18 @@ function ModelSelect({
             />
           </MenuItem>
         </Select>
+        {value === "hakurei/waifu-diffusion-v1-3" && (
+          <div style={{ color: "red", fontSize: "80%" }}>
+            Quality issues reported with waifu-diffusion-v1.3. We&apos;re
+            working on it, but we <i>strongly</i> suggest to rather use the
+            original model for now. Follow{" "}
+            <a href="https://github.com/huggingface/diffusers/issues/671">
+              diffusers#671
+            </a>{" "}
+            for details. Results are significantly worse than they should be /
+            will be soon.
+          </div>
+        )}
       </FormControl>
     ),
     [value, setValue, defaultValue]
