@@ -4,6 +4,7 @@ const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
+    "hakurei/waifu-diffusion-v1-3",
     "rinna/japanese-stable-diffusion",
   ]),
   // .default("CompVis/stable-diffusion-v1-4"),
@@ -11,6 +12,9 @@ const bananaCallInputsSchema = object({
     "StableDiffusionPipeline",
     "StableDiffusionImg2ImgPipeline",
     "StableDiffusionInpaintPipeline",
+    "JapaneseStableDiffusionPipeline",
+    "JapaneseStableDiffusionImg2ImgPipeline",
+    "JapaneseStableDiffusionInpaintPipeline",
   ]),
   // .default("StableDiffusionPipeline"),
   SCHEDULER: string().oneOf(["PNDM", "DDIM", "LMS"]), // .default("DDIM"),
