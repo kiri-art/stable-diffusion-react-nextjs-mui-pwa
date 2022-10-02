@@ -10,14 +10,14 @@ const stableDiffusionInputsSchema = object({
     .test(
       "divisible_by_64",
       "must be divisible by 64",
-      (value) => !!value && value % 64 === 0
+      (value) => !value || value % 64 === 0
     ),
   height: number()
     // .default(512)
     .test(
       "divisible_by_64",
       "must be divisible by 64",
-      (value) => !!value && value % 64 === 0
+      (value) => !value || value % 64 === 0
     ),
   num_inference_steps: number().default(15).min(0).max(100),
   guidance_scale: number().default(7.5),
