@@ -427,6 +427,7 @@ const inpaintState = [
   "randomizeSeed",
   "shareInputs",
   "safety_checker",
+  "sampler",
 ];
 
 export default function Img2img() {

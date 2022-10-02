@@ -704,6 +704,50 @@ function ModelSelect({
   );
 }
 
+function Sampler({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["sampler"]["value"];
+  setValue: ModelState["sampler"]["setValue"];
+  defaultValue: typeof defaults.MODEL_ID;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <FormControl fullWidth>
+          <InputLabel id="model-select-label">
+            <Trans>Sampler</Trans>
+          </InputLabel>
+          <Select
+            id="model-select"
+            label={t`Sampler`}
+            labelId="model-select-label"
+            value={value}
+            defaultValue={defaultValue}
+            onChange={(event) => setValue(event.target.value)}
+            size="small"
+          >
+            <MenuItem value="PNDM" sx={{ textAlign: "center", width: "100%" }}>
+              PNDM
+            </MenuItem>
+
+            <MenuItem value="DDIM" sx={{ textAlign: "center", width: "100%" }}>
+              DDIM
+            </MenuItem>
+
+            <MenuItem value="LMS" sx={{ textAlign: "center", width: "100%" }}>
+              LMS
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
 export function randomizeSeedIfChecked(inputs: ModelState) {
   if (inputs.randomizeSeed.value) {
     const seed = Math.floor(Math.random() * MAX_SEED_VALUE);
@@ -850,6 +894,11 @@ export default function SDControls({
             value={inputs.safety_checker.value}
             setValue={inputs.safety_checker.setValue}
             _defaultValue={defaults.safety_checker}
+          />
+          <Sampler
+            value={inputs.sampler.value}
+            setValue={inputs.sampler.setValue}
+            defaultValue={defaults.sampler}
           />
         </Grid>
       </form>

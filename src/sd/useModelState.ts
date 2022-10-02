@@ -35,6 +35,7 @@ export interface ModelState {
   randomizeSeed: ValueSetValue<boolean>;
   shareInputs: ValueSetValue<boolean>;
   safety_checker: ValueSetValue<boolean>;
+  sampler: ValueSetValue<string>;
 }
 
 export default function useModelState(inputs?: string[]): ModelState {
@@ -52,6 +53,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     randomizeSeed: useSdState<boolean>(defaults.randomizeSeed),
     shareInputs: useSdState<boolean>(defaults.shareInputs),
     safety_checker: useSdState<boolean>(defaults.safety_checker),
+    sampler: useSdState<string>(defaults.sampler),
   };
 
   // return allStates;

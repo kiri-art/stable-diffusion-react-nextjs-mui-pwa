@@ -27,6 +27,7 @@ const txt2imgState = [
   "randomizeSeed",
   "shareInputs",
   "safety_checker",
+  "sampler",
 ];
 
 export default function Txt2Img() {
@@ -78,7 +79,7 @@ export default function Txt2Img() {
     const seed = randomizeSeedIfChecked(inputs);
 
     const PIPELINE = "StableDiffusionPipeline";
-    const SCHEDULER = "LMS";
+    const SCHEDULER = modelInputs.sampler; // "LMS";
     /*
     if (modelInputs.MODEL_ID === "hakurei/waifu-diffusion") {
       SCHEDULER = "DDIM";

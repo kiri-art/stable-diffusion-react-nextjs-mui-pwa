@@ -35,6 +35,8 @@ const stableDiffusionInputsSchema = object({
     "hakurei/waifu-diffusion",
     "rinna/japanese-stable-diffusion",
   ]),
+  // temporary...
+  sampler: string().oneOf(["LMS", "DDIM", "PNDM"]),
 });
 
 type StableDiffusionInputs = InferType<typeof stableDiffusionInputsSchema>;

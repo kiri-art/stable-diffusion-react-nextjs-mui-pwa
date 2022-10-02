@@ -11,6 +11,7 @@ const defaults = {
   randomizeSeed: true,
   shareInputs: false,
   safety_checker: true,
+  sampler: "LMS",
 };
 
 export default defaults;
