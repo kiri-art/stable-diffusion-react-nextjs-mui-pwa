@@ -64,7 +64,7 @@ function Credits() {
                 <TableCell component="th" scope="row">
                   {user.displayName}
                   <br />
-                  {user.emails[0].value}
+                  {user.emails[0]?.value}
                 </TableCell>
                 <TableCell
                   align="right"
