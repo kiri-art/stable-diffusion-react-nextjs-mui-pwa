@@ -684,7 +684,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="hakurei/waifu-diffusion-v1-3"
-              desc={t`New!  Epoch 6 (will be 10), Oct 2`}
+              desc={t`New!  Epoch 7 (will be 10), Oct 3`}
             />
           </MenuItem>
 
@@ -698,7 +698,7 @@ function ModelSelect({
             />
           </MenuItem>
         </Select>
-        {value === "hakurei/waifu-diffusion-v1-3" && (
+        {false && value === "hakurei/waifu-diffusion-v1-3" && (
           <div style={{ color: "red", fontSize: "80%" }}>
             Quality issues reported with waifu-diffusion-v1.3. We&apos;re
             working on it, but we <i>strongly</i> suggest to rather use the
