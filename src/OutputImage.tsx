@@ -1,9 +1,10 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { t } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 
-import { Box, Button, Tooltip } from "@mui/material";
-import { ContentCopy, Download, Share } from "@mui/icons-material";
+import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { AutoFixHigh, ContentCopy, Download, Share } from "@mui/icons-material";
+import sendQueue from "./lib/sendQueue";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -77,6 +78,7 @@ export default function OutputImage({
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
+  const [autoFixEl, setAutoFixEl] = React.useState<null | HTMLElement>(null);
 
   function onLoad(_event: React.SyntheticEvent<HTMLImageElement>) {
     const img = imgResult.current;
@@ -127,110 +129,171 @@ export default function OutputImage({
     }
   }
 
+  async function sendTo(target: string) {
+    const blob = await fetch(imgSrc).then((r) => r.blob());
+    sendQueue
+      .add({
+        title: text,
+        text: text,
+        files: [
+          new File([blob], text + ".png", {
+            type: "image/png",
+            lastModified: new Date().getTime(),
+          }),
+        ],
+      })
+      .to(target);
+  }
+
   return (
-    <Box
-      onMouseOver={() => setMouseOver(true)}
-      onMouseOut={() => setMouseOver(false)}
-      sx={{
-        my: 2,
-        width: "100%",
-        maxWidth: 512,
-        marginLeft: "auto",
-        marginRight: "auto",
-        aspectRatio,
-        position: "relative",
-        border: "1px solid black",
-      }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        alt="model output"
-        ref={imgResult}
-        width="100%"
-        height="100%"
-        src={imgSrc || "/img/placeholder.png"}
-        onLoad={onLoad}
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          scrollMarginTop: "73px",
-        }}
-      />
+    <>
       <Box
+        onMouseOver={() => setMouseOver(true)}
+        onMouseOut={() => setMouseOver(false)}
         sx={{
-          py: 0.5,
-          px: 2,
+          my: 2,
           width: "100%",
-          height: "100%",
-          position: "absolute",
-          left: 0,
-          top: 0,
-          overflow: "auto",
+          maxWidth: 512,
+          marginLeft: "auto",
+          marginRight: "auto",
+          aspectRatio,
+          position: "relative",
+          border: "1px solid black",
         }}
       >
-        <div style={{ position: "absolute", right: 10, top: 10 }}>
-          <Timer
-            requestStartTime={requestStartTime}
-            requestEndTime={requestEndTime}
-            mouseOver={mouseOver}
-          />
-        </div>
-        <Log log={log} />
-      </Box>{" "}
-      {mouseOver && log.length === 0 && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 10,
-            right: 10,
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-            onClick={copy}
-          >
-            <ContentCopy />
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
-            onClick={download}
-          >
-            <Download />
-          </Button>
-          {canShare && (
-            <Button
-              variant="contained"
-              sx={{
-                px: 0.5,
-                mx: 0.5,
-                background: "rgba(170,170,170,0.7)",
-              }}
-              onClick={share}
-            >
-              <Share />
-            </Button>
-          )}
-        </Box>
-      )}
-      {imgSrc && !imgSrc.match(/placeholder/) && nsfw && (
-        <Box
-          sx={{
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="model output"
+          ref={imgResult}
+          width="100%"
+          height="100%"
+          src={imgSrc || "/img/placeholder.png"}
+          onLoad={onLoad}
+          style={{
             position: "absolute",
             left: 0,
             top: 0,
-            padding: 1,
+            scrollMarginTop: "73px",
+          }}
+        />
+        <Box
+          sx={{
+            py: 0.5,
+            px: 2,
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            left: 0,
+            top: 0,
+            overflow: "auto",
           }}
         >
-          <Tooltip
-            title={t`Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed.`}
+          <div style={{ position: "absolute", right: 10, top: 10 }}>
+            <Timer
+              requestStartTime={requestStartTime}
+              requestEndTime={requestEndTime}
+              mouseOver={mouseOver}
+            />
+          </div>
+          <Log log={log} />
+        </Box>{" "}
+        {mouseOver && log.length === 0 && (
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 10,
+              right: 10,
+            }}
           >
-            <span>🔞{imgSrc}</span>
-          </Tooltip>
+            <Button
+              variant="contained"
+              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                setAutoFixEl(event.currentTarget)
+              }
+            >
+              <AutoFixHigh />
+            </Button>
+            <Menu
+              anchorEl={autoFixEl}
+              open={!!autoFixEl}
+              onClose={() => setAutoFixEl(null)}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+            >
+              <MenuItem onClick={() => sendTo("/inpaint")}>
+                <Trans>Inpaint</Trans>
+              </MenuItem>
+              <MenuItem onClick={() => sendTo("/upsample")}>
+                <Trans>Upsample</Trans>
+              </MenuItem>
+            </Menu>
+            <Button
+              variant="contained"
+              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              onClick={copy}
+            >
+              <ContentCopy />
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              onClick={download}
+            >
+              <Download />
+            </Button>
+            {canShare && (
+              <Button
+                variant="contained"
+                sx={{
+                  px: 0.5,
+                  mx: 0.5,
+                  background: "rgba(170,170,170,0.7)",
+                }}
+                onClick={share}
+              >
+                <Share />
+              </Button>
+            )}
+          </Box>
+        )}
+        {imgSrc && !imgSrc.match(/placeholder/) && nsfw && (
+          <Box
+            sx={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              padding: 1,
+            }}
+          >
+            <Tooltip
+              title={t`Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed.`}
+            >
+              <span>🔞{imgSrc}</span>
+            </Tooltip>
+          </Box>
+        )}
+      </Box>
+      {false && imgSrc && !imgSrc.match(/placeholder/) && (
+        <Box style={{ textAlign: "center" }}>
+          <span style={{ fontSize: "90%" }}>
+            <Trans>SEND IMAGE TO</Trans>
+          </span>
+
+          <Button onClick={() => sendTo("/upsample")}>
+            <Trans>Upsample</Trans>
+          </Button>
+          <Button onClick={() => sendTo("/inpaint")}>
+            <Trans>Inpainting</Trans>
+          </Button>
         </Box>
       )}
-    </Box>
+    </>
   );
 }

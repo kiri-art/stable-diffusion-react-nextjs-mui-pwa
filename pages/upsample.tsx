@@ -22,6 +22,7 @@ import {
   Switch,
   Tooltip,
 } from "@mui/material";
+import { HelpOutline } from "@mui/icons-material";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import MyAppBar from "../src/MyAppBar";
@@ -30,7 +31,7 @@ import { toast } from "react-toastify";
 import OutputImage from "../src/OutputImage";
 import GoButton from "../src/GoButton";
 import blobToBase64 from "../src/lib/blobToBase64";
-import { HelpOutline } from "@mui/icons-material";
+import sendQueue from "../src/lib/sendQueue";
 
 // Also in banana-upsaple.ts; TODO
 const CREDIT_COST = 0.2;
@@ -183,19 +184,17 @@ export default function Upsample() {
   );
   const router = useRouter();
 
-  function fileChange(event: React.SyntheticEvent) {
-    const target = event.target as HTMLInputElement;
-    if (!(target instanceof HTMLInputElement))
-      throw new Error("Event target is not an HTMLInputElement");
+  React.useEffect(() => {
+    if (sendQueue.has()) {
+      const share = sendQueue.get();
+      console.log(share);
+      if (!share) return;
+      readFile(share.files[0]);
+      toast(t`Image Loaded`);
+    }
+  }, []);
 
-    // @ts-expect-error: I can't be any clearer, typescript
-    const file = target.files[0];
-
-    console.log(file);
-    if (!file.type.match(/^image\//)) return toast("Not an image");
-
-    setImgSrc("");
-
+  function readFile(file: File) {
     const fileReader = new FileReader();
     fileReader.onload = function (readerEvent) {
       console.log("inputImage loaded from disk");
@@ -224,6 +223,22 @@ export default function Upsample() {
       image.src = result;
     };
     fileReader.readAsDataURL(file);
+  }
+
+  function fileChange(event: React.SyntheticEvent) {
+    const target = event.target as HTMLInputElement;
+    if (!(target instanceof HTMLInputElement))
+      throw new Error("Event target is not an HTMLInputElement");
+
+    // @ts-expect-error: I can't be any clearer, typescript
+    const file = target.files[0];
+
+    console.log(file);
+    if (!file.type.match(/^image\//)) return toast("Not an image");
+
+    setImgSrc("");
+
+    readFile(file);
   }
 
   async function go(event: React.SyntheticEvent) {

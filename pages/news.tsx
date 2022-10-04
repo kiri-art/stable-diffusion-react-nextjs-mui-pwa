@@ -48,6 +48,27 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Tue Oct 04, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                Output Image tools now include a &quot;magic wand&quot; icon
+                that re-opens image in Upsampling / Inpainting views.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
+            <b>Sun Oct 01, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                New Waifu Diffusion 1.3, daily updates until full release.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Thu Sep 30, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>Daily 20 credit topup until further notice! 🎉</li>

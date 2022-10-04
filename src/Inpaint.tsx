@@ -1,7 +1,7 @@
 import React from "react";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
-import { Trans } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 
 import { IconButton } from "@mui/material";
 import { Clear, Redo, Undo } from "@mui/icons-material";
@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import locales, { defaultLocale } from "../src/lib/locales";
 import blobToBase64 from "../src/lib/blobToBase64";
+import sendQueue from "./lib/sendQueue";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -258,19 +259,7 @@ export default function Inpainting() {
   const inputs = useModelState(inpaintState);
   const sharedInputs = sharedInputTextFromInputs(inputs);
 
-  function fileChange(event: React.SyntheticEvent) {
-    const target = event.target as HTMLInputElement;
-    if (!(target instanceof HTMLInputElement))
-      throw new Error("Event target is not an HTMLInputElement");
-
-    // @ts-expect-error: I can't be any clearer, typescript
-    const file = target.files[0];
-
-    console.log(file);
-    if (!file.type.match(/^image\//)) return toast("Not an image");
-
-    setImgSrc("");
-
+  function readFile(file: File) {
     const fileReader = new FileReader();
     fileReader.onload = function (readerEvent) {
       //event.target.result
@@ -350,11 +339,36 @@ export default function Inpainting() {
     fileReader.readAsDataURL(file);
   }
 
+  function fileChange(event: React.SyntheticEvent) {
+    const target = event.target as HTMLInputElement;
+    if (!(target instanceof HTMLInputElement))
+      throw new Error("Event target is not an HTMLInputElement");
+
+    // @ts-expect-error: I can't be any clearer, typescript
+    const file = target.files[0];
+
+    console.log(file);
+    if (!file.type.match(/^image\//)) return toast("Not an image");
+
+    setImgSrc("");
+    readFile(file);
+  }
+
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
   const router = useRouter();
+
+  React.useEffect(() => {
+    if (sendQueue.has()) {
+      const share = sendQueue.get();
+      console.log(share);
+      if (!share) return;
+      readFile(share.files[0]);
+      toast(t`Image Loaded`);
+    }
+  }, []);
 
   async function go(event: React.SyntheticEvent) {
     event.preventDefault();
