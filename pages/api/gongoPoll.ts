@@ -28,11 +28,15 @@ gs.publish("csends", async (db) => {
   if (!user || !user.admin) return [];
   */
 
-  return db.collection("csends").find();
+  return db
+    .collection("csends")
+    .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } });
 });
 
 gs.publish("bananaRequests", async (db) => {
-  return db.collection("bananaRequests").find();
+  return db
+    .collection("bananaRequests")
+    .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } });
 });
 
 /*
