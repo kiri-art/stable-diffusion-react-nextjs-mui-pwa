@@ -684,7 +684,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="hakurei/waifu-diffusion-v1-3"
-              desc={t`New!  Epoch 8 (will be 10), Oct 4`}
+              desc={t`New!  Epoch 9 (will be 10), Oct 5`}
             />
           </MenuItem>
 
