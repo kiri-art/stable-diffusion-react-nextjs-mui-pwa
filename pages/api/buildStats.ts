@@ -26,7 +26,6 @@ export default async function buildStats(
   const statsDaily = await db.collection("statsDaily").getReal();
 
   const models = await requests.distinct("callInputs.MODEL_ID");
-  res.status(200).end("OK");
 
   for (const date of range) {
     const dayStart = startOfDay(date);
