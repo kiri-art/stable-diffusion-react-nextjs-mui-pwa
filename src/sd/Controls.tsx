@@ -669,22 +669,22 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
-            value="hakurei/waifu-diffusion"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="hakurei/waifu-diffusion"
-              desc={t`Best for Anime characters`}
-            />
-          </MenuItem>
-
-          <MenuItem
             value="hakurei/waifu-diffusion-v1-3"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
               value="hakurei/waifu-diffusion-v1-3"
-              desc={t`New!  Epoch 9 (will be 10), Oct 5`}
+              desc={t`Best for Anime.  Final Release.  Oct 6`}
+            />
+          </MenuItem>
+
+          <MenuItem
+            value="hakurei/waifu-diffusion"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="hakurei/waifu-diffusion"
+              desc={t`Anime.  Original, previous model (v1.2)`}
             />
           </MenuItem>
 
