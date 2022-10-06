@@ -61,7 +61,7 @@ export default function CheckoutForm({ orderId }: { orderId: string }) {
       <Box sx={{ fontSize: "80%" }}>
         <Trans>
           The charge will appear from &quot;Wastelands Networking&quot; or
-          &quot;Wastelands* SD-MUI&quot;.
+          &quot;KIRI.ART&quot;.
         </Trans>
       </Box>
     </form>
