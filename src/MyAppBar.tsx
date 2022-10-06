@@ -100,8 +100,9 @@ export default function MyAppBar({ title }: { title: string }) {
         onKeyDown={toggleDrawer(false)}
       >
         <Typography variant="h6" sx={{ my: 2, ml: 4 }}>
-          SD-MUI
+          KIRI.ART <span style={{ fontSize: "50%" }}>(SD-MUI)</span>
         </Typography>
+
         <Divider />
         <List>
           <ListItem disablePadding>
