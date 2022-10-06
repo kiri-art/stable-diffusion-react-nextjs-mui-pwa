@@ -62,8 +62,8 @@ export default async function craeateStripePaymentIntent(
     customer: user.stripeCustomerId,
     // Automatic based on https://dashboard.stripe.com/settings/emails
     // receipt_email: user.emails[0].value,
-    description: "50 credits on sd-mui.vercel.app",
-    statement_descriptor: "SD-MUI",
+    description: "50 credits on kiri.art",
+    statement_descriptor: "KIRI.ART",
   });
 
   order.stripePaymentIntentId = paymentIntent.id;
