@@ -4,27 +4,14 @@ import { t } from "@lingui/macro";
 import AppBar from "../src/MyAppBar";
 
 import { Container, Box, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function News() {
   return (
     <Box>
       <AppBar title={t`News`} />
-      <Container maxWidth="sm">
-        <Box
-          sx={{ my: 2, p: 1, border: "1px solid #bbb", textAlign: "justify" }}
-        >
-          Thanks to all our early supporters! You may have noticed that
-          we&apos;ve been topping up your credits if you&apos;ve been running
-          low. You&apos;ll also soon be topped up to 100 credits. Just our way
-          of saying thanks for your support and patience as we get started!
-        </Box>
-
+      <Container maxWidth="sm" sx={{ my: 2 }}>
         <Typography variant="h6">What&apos;s Next?</Typography>
-
-        <ul>
-          <li>Better updates while waiting</li>
-          <li>Faster inferences (generation time)</li>
-        </ul>
 
         <p>
           Problems? Suggestions? See our{" "}
@@ -48,11 +35,35 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Thu Oct 06, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                SD-MUI is now <b>KIRI.ART</b>. New name, new domain, see the{" "}
+                <Link href="/about">about</Link> page for more details. If you
+                previously installed the app, you may need to install it again.
+              </li>
+              <br />
+              <li>
+                Waifu Diffusion v1.3 final release landed today and is live for
+                your diffusion pleasure.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Tue Oct 04, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
-                Output Image tools now include a &quot;magic wand&quot; icon
-                that re-opens image in Upsampling / Inpainting views.
+                <b>Output Image tools</b> (tap the image to activate) now
+                include a <b>&quot;magic wand&quot;</b> icon to re-use the image
+                in Upsampling / Inpainting views.
+              </li>
+              <br />
+              <li>
+                <b>Faster generation times!</b> Requests should now complete
+                within 20s for a 512x512 x50step image, or within 5s a previous
+                request was made (by you or another user) in the 10s before.{" "}
               </li>
             </ul>
           </li>
