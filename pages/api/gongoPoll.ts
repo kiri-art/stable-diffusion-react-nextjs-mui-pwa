@@ -30,13 +30,17 @@ gs.publish("csends", async (db) => {
 
   return db
     .collection("csends")
-    .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } });
+    .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } })
+    .sort("__updatedAt", "asc")
+    .limit(50);
 });
 
 gs.publish("bananaRequests", async (db) => {
   return db
     .collection("bananaRequests")
-    .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } });
+    .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } })
+    .sort("__updatedAt", "asc")
+    .limit(50);
 });
 
 /*
