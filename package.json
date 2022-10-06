@@ -27,7 +27,7 @@
     "gongo-client": "2.5.0",
     "gongo-client-react": "0.2.0",
     "gongo-server": "3.1.0",
-    "gongo-server-db-mongo": "2.2.1",
+    "gongo-server-db-mongo": "2.3.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
     "micro": "^9.4.1",
