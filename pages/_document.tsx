@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (this.props as any).emotionStyleTags
           }
-          <meta name="application-name" content="SD MUI" />
+          <meta name="application-name" content="KIRI.ART" />
           <link rel="manifest" href="/manifest.webmanifest" />
 
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta name="apple-mobile-web-app-title" content="SD MUI" />
+          <meta name="apple-mobile-web-app-title" content="KIRI.ART" />
           <meta
             name="description"
             content="PWA frontend for Stable Diffusion"
