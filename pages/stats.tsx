@@ -26,6 +26,7 @@ const Stats: NextPage = () => {
       totalUsers: [],
       newRequests: [],
       totalRequests: [],
+      requestsByModel: {},
     };
     for (const day of statsDaily) {
       // @ts-expect-error: TODO
@@ -36,10 +37,22 @@ const Stats: NextPage = () => {
       series.newRequests.push([day.date.getTime(), day.newRequests]);
       // @ts-expect-error: TODO
       series.totalRequests.push([day.date.getTime(), day.totalRequests]);
+      // @ts-expect-error: TODO
+      for (const data of day.requestsByModel) {
+        const rbm =
+          // @ts-expect-error: TODO
+          series.requestsByModel[data.model] ||
+          // @ts-expect-error: TODO
+          (series.requestsByModel[data.model] = []);
+        // @ts-expect-error: TODO
+        rbm.push([day.date.getTime(), data.requests]);
+      }
     }
     // console.log(series);
     return series;
   }, [statsDaily]);
+
+  console.log(series);
 
   const defaults = Highcharts.getOptions();
 
@@ -113,10 +126,23 @@ const Stats: NextPage = () => {
                 gridLineWidth: 0,
                 opposite: true,
                 title: {
-                  text: null, // "New Users",
+                  text: null, // "New Requests",
                   style: {
                     // @ts-expect-error: blah
                     color: Highcharts.getOptions().colors[0],
+                  },
+                },
+                stackLabels: {
+                  enabled: true,
+                  style: {
+                    fontWeight: "bold",
+                    color:
+                      // @ts-expect-error: blah
+                      (Highcharts.getOptions().title.style &&
+                        // @ts-expect-error: blah
+                        Highcharts.getOptions().title.style.color) ||
+                      "gray",
+                    textOutline: "none",
                   },
                 },
                 labels: {
@@ -129,13 +155,29 @@ const Stats: NextPage = () => {
                 showFirstLabel: false,
               },
             ],
+            plotOptions: {
+              column: {
+                stacking: "normal",
+                dataLabels: {
+                  enabled: true,
+                },
+              },
+            },
             series: [
+              ...Object.entries(series.requestsByModel).map(([name, data]) => ({
+                name,
+                type: "column",
+                yAxis: 1,
+                data,
+              })),
+              /*
               {
                 name: t`New Requests`,
                 type: "column",
                 yAxis: 1,
                 data: series.newRequests,
               },
+              */
               {
                 name: t`Total Requests`,
                 type: "line",

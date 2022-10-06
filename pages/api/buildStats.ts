@@ -25,6 +25,9 @@ export default async function buildStats(
   const requests = await db.collection("bananaRequests").getReal();
   const statsDaily = await db.collection("statsDaily").getReal();
 
+  const models = await requests.distinct("callInputs.MODEL_ID");
+  res.status(200).end("OK");
+
   for (const date of range) {
     const dayStart = startOfDay(date);
     const dayEnd = endOfDay(date);
@@ -42,6 +45,15 @@ export default async function buildStats(
       totalRequests: await requests.countDocuments({
         createdAt: { $lt: dayEnd },
       }),
+      requestsByModel: await Promise.all(
+        models.map(async (model) => ({
+          model,
+          requests: await requests.countDocuments({
+            "callInputs.MODEL_ID": model,
+            createdAt: { $gt: dayStart, $lt: dayEnd },
+          }),
+        }))
+      ),
       __updatedAt: Date.now(),
     };
 
