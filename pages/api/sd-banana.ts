@@ -36,6 +36,9 @@ async function bananaSdkRun(
     case "hakurei/waifu-diffusion-v1-3":
       envName += "_WAIFU_v1_3";
       break;
+    case "hakurei/waifu-diffusion-v1-3-full":
+      envName += "_WAIFU_v1_3_full";
+      break;
     case "rinna/japanese-stable-diffusion":
       envName += "_JP";
       break;

@@ -774,6 +774,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="hakurei/waifu-diffusion-v1-3-full"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="hakurei/waifu-diffusion-v1-3-full"
+              desc={t`Full precision.  Takes longer, sometimes looks better.`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="rinna/japanese-stable-diffusion"
             sx={{ textAlign: "center", width: "100%" }}
           >
@@ -934,11 +944,13 @@ export default function SDControls({
           setValue={inputs.MODEL_ID.setValue}
           defaultValue={defaults.MODEL_ID}
         />
-        <NegativePrompt
-          value={inputs.negative_prompt.value}
-          setValue={inputs.negative_prompt.setValue}
-          defaultValue={defaults.negative_prompt}
-        />
+        {inputs.MODEL_ID.value !== "rinna/japanese-stable-diffusion" && (
+          <NegativePrompt
+            value={inputs.negative_prompt.value}
+            setValue={inputs.negative_prompt.setValue}
+            defaultValue={defaults.negative_prompt}
+          />
+        )}
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (
             <Strength_Grid_Slider
