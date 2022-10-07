@@ -2,6 +2,7 @@ import { object, string, number, InferType } from "yup";
 
 const stableDiffusionInputsSchema = object({
   prompt: string(),
+  negative_prompt: string(),
   // n_iter: number().default(1),
 
   // https://huggingface.co/blog/stable_diffusion

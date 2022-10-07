@@ -19,6 +19,7 @@ import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
 const txt2imgState = [
   "prompt",
   "MODEL_ID",
+  "negative_prompt",
   "num_inference_steps",
   "guidance_scale",
   "width",

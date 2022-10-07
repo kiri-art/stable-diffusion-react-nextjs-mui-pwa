@@ -5,10 +5,11 @@ export default function sharedInputTextFromInputs(
   always = false
 ) {
   const prompt = inputs.prompt.value;
-  const text =
-    prompt +
-    (always || inputs.shareInputs.value
-      ? `, CFG: ${inputs.guidance_scale.value}, steps: ${inputs.num_inference_steps.value}, seed: ${inputs.seed.value}`
-      : "");
-  return text;
+  if (!(always || inputs.shareInputs.value)) return prompt;
+
+  return (
+    `${prompt}, CFG: ${inputs.guidance_scale.value}, ` +
+    `steps: ${inputs.num_inference_steps.value}, ` +
+    `seed: ${inputs.seed.value}, negative_prompt: ${inputs.negative_prompt.value}"`
+  );
 }

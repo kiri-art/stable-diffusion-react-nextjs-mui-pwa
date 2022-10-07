@@ -12,6 +12,8 @@ const defaults = {
   shareInputs: false,
   safety_checker: true,
   sampler: "LMS",
+  negative_prompt:
+    "disfigured, deformed, poorly drawn, extra limbs, blurry, mutated hands, ugly, mutilated, extra fingers, bad anatomy, malformed, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck",
 };
 
 export default defaults;

@@ -20,7 +20,14 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { Clear, Height, Help, HelpOutline, Scale } from "@mui/icons-material";
+import {
+  Clear,
+  Height,
+  Help,
+  HelpOutline,
+  Scale,
+  SettingsBackupRestore,
+} from "@mui/icons-material";
 
 import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
@@ -71,9 +78,9 @@ function Prompt({
 
     return (
       <TextField
-        dir="ltr"
-        lang="en"
-        label="Prompt"
+        // dir="ltr"
+        // lang="en"
+        label={t`Prompt`}
         fullWidth
         multiline
         onKeyDown={promptKeyDown}
@@ -118,6 +125,84 @@ function Prompt({
       />
     );
   }, [value, setValue, placeholder]);
+}
+
+function NegativePrompt({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["negative_prompt"]["value"];
+  setValue: ModelState["negative_prompt"]["setValue"];
+  defaultValue: string;
+}) {
+  return useMemo(() => {
+    function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+      // Submit on "enter" but allow newline creation on shift-enter.
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+
+        // @ts-expect-error: TODO
+        event.target.form.dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true })
+        );
+      }
+    }
+
+    return (
+      <TextField
+        // dir="ltr"
+        // lang="en"
+        label={t`Negative Prompt`}
+        sx={{ my: 1 }}
+        fullWidth
+        multiline
+        onKeyDown={promptKeyDown}
+        value={value}
+        // placeholder={placeholder}
+        InputLabelProps={{ shrink: true }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value);
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setValue("")} edge="end">
+                <Clear />
+              </IconButton>
+              <IconButton onClick={() => setValue(defaultValue)}>
+                <SettingsBackupRestore />
+              </IconButton>
+              <Tooltip
+                title={
+                  <Box>
+                    <Trans>
+                      Description of all the things you <i>don&apos;t want</i>{" "}
+                      in the output image, e.g. prompt: &quot;bouquet of
+                      roses&quot;, negative prompt: &quot;red roses&quot;. You
+                      can also ask to exclude common diffusion artifacts like
+                      &quot;deformed hands&quot;.
+                    </Trans>{" "}
+                    <Trans>
+                      <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                        Learn more
+                      </a>
+                    </Trans>
+                  </Box>
+                }
+                enterDelay={0}
+                enterTouchDelay={0}
+                leaveDelay={0}
+                leaveTouchDelay={4000}
+              >
+                <Help />
+              </Tooltip>
+            </InputAdornment>
+          ),
+        }}
+      />
+    );
+  }, [value, setValue, defaultValue]);
 }
 
 function Strength_Grid_Slider({
@@ -644,7 +729,7 @@ function ModelSelect({
 }) {
   return useMemo(
     () => (
-      <FormControl fullWidth>
+      <FormControl fullWidth sx={{ my: 1 }}>
         <InputLabel id="model-select-label">
           <Trans>Model</Trans>
         </InputLabel>
@@ -848,6 +933,11 @@ export default function SDControls({
           value={inputs.MODEL_ID.value}
           setValue={inputs.MODEL_ID.setValue}
           defaultValue={defaults.MODEL_ID}
+        />
+        <NegativePrompt
+          value={inputs.negative_prompt.value}
+          setValue={inputs.negative_prompt.setValue}
+          defaultValue={defaults.negative_prompt}
         />
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (

@@ -25,6 +25,7 @@ type ValueSetValue<T> = {
 
 export interface ModelState {
   prompt: ValueSetValue<string>;
+  negative_prompt: ValueSetValue<string>;
   num_inference_steps: ValueSetValue<string | number>;
   guidance_scale: ValueSetValue<string | number>;
   width: ValueSetValue<string | number>;
@@ -41,6 +42,7 @@ export interface ModelState {
 export default function useModelState(inputs?: string[]): ModelState {
   const allStates = {
     prompt: useSdState(""),
+    negative_prompt: useSdState(defaults.negative_prompt),
     num_inference_steps: useSdState<number | string>(
       defaults.num_inference_steps
     ),
