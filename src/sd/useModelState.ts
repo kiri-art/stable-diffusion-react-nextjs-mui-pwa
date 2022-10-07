@@ -42,7 +42,7 @@ export interface ModelState {
 export default function useModelState(inputs?: string[]): ModelState {
   const allStates = {
     prompt: useSdState(""),
-    negative_prompt: useSdState(defaults.negative_prompt),
+    negative_prompt: useSdState(""), // defaults.negative_prompt),
     num_inference_steps: useSdState<number | string>(
       defaults.num_inference_steps
     ),

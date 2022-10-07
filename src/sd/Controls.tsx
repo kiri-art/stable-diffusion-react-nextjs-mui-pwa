@@ -181,10 +181,11 @@ function NegativePrompt({
                       in the output image, e.g. prompt: &quot;bouquet of
                       roses&quot;, negative prompt: &quot;red roses&quot;. You
                       can also ask to exclude common diffusion artifacts like
-                      &quot;deformed hands&quot;.
+                      &quot;deformed hands&quot;. Click the &quot;reset&quot;
+                      icon for some common defaults.
                     </Trans>{" "}
                     <Trans>
-                      <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                      <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt">
                         Learn more
                       </a>
                     </Trans>
