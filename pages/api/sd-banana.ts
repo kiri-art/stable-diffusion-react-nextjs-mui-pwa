@@ -38,6 +38,7 @@ async function bananaSdkRun(
       break;
     case "hakurei/waifu-diffusion-v1-3-full":
       envName += "_WAIFU_v1_3_full";
+      callInputs.MODEL_ID = "hakurei/waifu-diffusion-v1-3";
       break;
     case "rinna/japanese-stable-diffusion":
       envName += "_JP";

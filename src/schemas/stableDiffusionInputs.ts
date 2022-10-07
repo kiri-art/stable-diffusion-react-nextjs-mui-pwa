@@ -34,6 +34,8 @@ const stableDiffusionInputsSchema = object({
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
+    "hakurei/waifu-diffusion-v1-3",
+    "hakurei/waifu-diffusion-v1-3-full",
     "rinna/japanese-stable-diffusion",
   ]),
   // temporary...

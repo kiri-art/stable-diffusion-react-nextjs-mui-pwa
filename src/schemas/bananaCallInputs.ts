@@ -5,6 +5,7 @@ const bananaCallInputsSchema = object({
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
     "hakurei/waifu-diffusion-v1-3",
+    "hakurei/waifu-diffusion-v1-3-full",
     "rinna/japanese-stable-diffusion",
   ]),
   // .default("CompVis/stable-diffusion-v1-4"),
