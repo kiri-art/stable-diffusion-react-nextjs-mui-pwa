@@ -106,7 +106,11 @@ function Prompt({
                       hints.
                     </Trans>{" "}
                     <Trans>
-                      <a href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc">
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc"
+                      >
                         Learn more
                       </a>
                     </Trans>
@@ -185,7 +189,11 @@ function NegativePrompt({
                       icon for some common defaults.
                     </Trans>{" "}
                     <Trans>
-                      <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt">
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt"
+                      >
                         Learn more
                       </a>
                     </Trans>
@@ -227,7 +235,7 @@ function Strength_Grid_Slider({
                 Values of 5 - 15 tend to work best.
               </Trans>{" "}
               <Trans>
-                <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                <a target="_blank" rel="noreferrer" href="https://benanne.github.io/2022/05/26/guidance.html">
                   Learn more
                 </a>
               </Trans>
@@ -275,7 +283,11 @@ function CFS_Grid_Slider({
                 Values of 5 - 15 tend to work best.
               </Trans>{" "}
               <Trans>
-                <a href="https://benanne.github.io/2022/05/26/guidance.html">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://benanne.github.io/2022/05/26/guidance.html"
+                >
                   Learn more
                 </a>
               </Trans>
@@ -320,7 +332,11 @@ function Steps_Grid_Slider({
                 produce higher quality results.
               </Trans>{" "}
               <Trans>
-                <a href="https://huggingface.co/blog/stable_diffusion">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://huggingface.co/blog/stable_diffusion"
+                >
                   Learn more
                 </a>
               </Trans>
@@ -700,7 +716,7 @@ function SafetyChecker({
         )}
         {user && !user.dob && (
           <Grid item xs={6} sm={4} md={3} lg={2} sx={{ textAlign: "center" }}>
-            <a href="#" onClick={confirmDob}>
+            <a target="_blank" rel="noreferrer" href="#" onClick={confirmDob}>
               <Trans>Confirm Date of Birth</Trans>
             </a>
           </Grid>
@@ -799,7 +815,11 @@ function ModelSelect({
             Quality issues reported with waifu-diffusion-v1.3. We&apos;re
             working on it, but we <i>strongly</i> suggest to rather use the
             original model for now. Follow{" "}
-            <a href="https://github.com/huggingface/diffusers/issues/671">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/huggingface/diffusers/issues/671"
+            >
               diffusers#671
             </a>{" "}
             for details. Results are significantly worse than they should be /
