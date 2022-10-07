@@ -35,6 +35,27 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Fri Oct 07, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                Upgrade to <b>Diffusers 0.4.1</b>.
+              </li>
+              <li>
+                Add support for <b>negative prompts</b>.
+              </li>
+              <li>
+                Workaround diffusers bug in <b>img2img, inpainting</b> (which
+                weren&apos;t working for a few hours until we noticed).
+              </li>
+              <li>
+                <b>Waifu Diffusion 1.3 final</b> available as fp16 and full
+                precision.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Thu Oct 06, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
