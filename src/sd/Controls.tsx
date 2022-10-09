@@ -796,7 +796,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="hakurei/waifu-diffusion-v1-3-full"
-              desc={t`Full precision.  Takes longer, sometimes looks better.`}
+              desc={t`Full precision, slower, sometimes better.`}
             />
           </MenuItem>
 
@@ -810,6 +810,13 @@ function ModelSelect({
             />
           </MenuItem>
         </Select>
+        {value.startsWith("hakurei/waifu-diffusion-v1-3") && (
+          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
+            <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
+              WD 1.3 Release Notes and Prompt Hints
+            </a>
+          </Box>
+        )}
         {false && value === "hakurei/waifu-diffusion-v1-3" && (
           <div style={{ color: "red", fontSize: "80%" }}>
             Quality issues reported with waifu-diffusion-v1.3. We&apos;re

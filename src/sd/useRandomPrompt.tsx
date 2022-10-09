@@ -15,6 +15,8 @@ const randomPrompts = {
   ],
   "hakurei/waifu-diffusion-v1-3": [
     "1girl, witch, purple hair, facing the viewer, night sky, big moon, highly detailed",
+    "chen, arknights, 1girl, animal ears, brown hair, cat ears, cat tail, closed mouth, earrings, face, hat, jewelry, lips, multiple tails, nekomata, painterly, red eyes, short hair, simple background, solo, tail, white background",
+    "yakumo ran, arknights, 1girl, :d, animal ears, blonde hair, breasts, cowboy shot, extra ears, fox ears, fox shadow puppet, fox tail, head tilt, large breasts, looking at viewer, multiple tails, no headwear, short hair, simple background, smile, solo, tabard, tail, white background, yellow eyes",
   ],
   "hakurei/waifu-diffusion-v1-3-full": ["..."],
   "rinna/japanese-stable-diffusion": [
