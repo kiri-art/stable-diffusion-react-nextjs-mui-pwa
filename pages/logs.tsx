@@ -378,7 +378,12 @@ function Requests() {
   useGongoSub("bananaRequests");
 
   const requests = useGongoLive((db) =>
-    db.collection("bananaRequests").find().sort("createdAt", "desc")
+    db
+      .collection("bananaRequests")
+      .find({
+        createdAt: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
+      })
+      .sort("createdAt", "desc")
   );
 
   return (
@@ -415,7 +420,10 @@ const Logs: NextPage = () => {
   useGongoSub("csends");
 
   const csends = useGongoLive((db) =>
-    db.collection("csends").find().sort("date", "desc")
+    db
+      .collection("csends")
+      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) } })
+      .sort("date", "desc")
   );
 
   const [value, setValue] = React.useState(0);
