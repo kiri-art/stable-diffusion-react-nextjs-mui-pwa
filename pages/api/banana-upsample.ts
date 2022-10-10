@@ -27,7 +27,8 @@ const gs = new GongoServer({
 
 async function bananaSdkRun(
   modelInputs: UpsampleModelInputs,
-  callInputs: UpsampleCallInputs
+  callInputs: UpsampleCallInputs,
+  chargedCredits: { credits: number; paid: boolean }
 ) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
@@ -110,6 +111,7 @@ async function bananaSdkRun(
     modelInputs,
     callInputs,
     steps: {},
+    ...chargedCredits,
   };
 
   if (gs && gs.dba)
@@ -183,6 +185,7 @@ export default async function txt2imgFetch(
   log({ modelInputs, callInputs, fetchOpts });
 
   let credits;
+  const chargedCredits = { credits: 0, paid: false };
   if (REQUIRE_REGISTRATION) {
     if (!fetchOpts.auth) return res.status(400).end("Forbidden");
     if (!gs.dba) throw new Error("gs.dba not defined");
@@ -197,16 +200,19 @@ export default async function txt2imgFetch(
     const user = await gs.dba.collection("users").findOne({ _id: userId });
     if (!user) return res.status(500).send("Server error");
 
-    if (!(user.credits.free > CREDIT_COST || user.credits.paid > CREDIT_COST))
+    if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
       return res.status(403).send("Out of credits");
 
-    if (user.credits.free > CREDIT_COST) {
+    if (user.credits.free >= CREDIT_COST) {
       user.credits.free -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
       await gs.dba
         .collection("users")
         .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
     } else {
       user.credits.paid -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
+      chargedCredits.paid = true;
       await gs.dba
         .collection("users")
         .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
@@ -218,7 +224,7 @@ export default async function txt2imgFetch(
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 
-  const out = await runner(modelInputs, callInputs);
+  const out = await runner(modelInputs, callInputs, chargedCredits);
   if (REQUIRE_REGISTRATION) out.credits = credits;
 
   log(out);

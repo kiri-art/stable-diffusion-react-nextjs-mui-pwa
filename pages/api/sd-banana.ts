@@ -13,6 +13,8 @@ import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../../src/schemas/bananaCallInputs";
 
+const CREDIT_COST = 1;
+
 const apiKey = process.env.BANANA_API_KEY;
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
@@ -23,7 +25,8 @@ const gs = new GongoServer({
 
 async function bananaSdkRun(
   modelInputs: StableDiffusionInputs,
-  callInputs: BananaCallInputs
+  callInputs: BananaCallInputs,
+  chargedCredits: { credits: number; paid: boolean }
 ) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
@@ -123,6 +126,7 @@ async function bananaSdkRun(
     modelInputs,
     callInputs,
     steps: {},
+    ...chargedCredits,
   };
 
   if (gs && gs.dba)
@@ -181,7 +185,7 @@ function log(out: Record<string, unknown>) {
   );
 }
 
-export default async function txt2imgFetch(
+export default async function SDBanana(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -210,6 +214,7 @@ export default async function txt2imgFetch(
   log({ modelInputs, callInputs, fetchOpts });
 
   let credits;
+  const chargedCredits = { credits: 0, paid: false };
   if (REQUIRE_REGISTRATION) {
     if (!fetchOpts.auth) return res.status(400).end("Forbidden");
     if (!gs.dba) throw new Error("gs.dba not defined");
@@ -224,19 +229,22 @@ export default async function txt2imgFetch(
     const user = await gs.dba.collection("users").findOne({ _id: userId });
     if (!user) return res.status(500).send("Server error");
 
-    if (!(user.credits.free > 0 || user.credits.paid > 0))
+    if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
       return res.status(403).send("Out of credits");
 
-    if (user.credits.free) {
-      user.credits.free--;
+    if (user.credits.free >= CREDIT_COST) {
+      user.credits.free -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
       await gs.dba
         .collection("users")
-        .updateOne({ _id: userId }, { $inc: { "credits.free": -1 } });
+        .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
     } else {
-      user.credits.paid--;
+      user.credits.paid -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
+      chargedCredits.paid = true;
       await gs.dba
         .collection("users")
-        .updateOne({ _id: userId }, { $inc: { "credits.paid": -1 } });
+        .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
     }
 
     credits = user.credits;
@@ -264,7 +272,7 @@ export default async function txt2imgFetch(
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 
-  const out = await runner(modelInputs, callInputs);
+  const out = await runner(modelInputs, callInputs, chargedCredits);
   if (REQUIRE_REGISTRATION) out.credits = credits;
 
   log(out);

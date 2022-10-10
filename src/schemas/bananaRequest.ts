@@ -37,6 +37,8 @@ const bananaRequestSchema = object({
   }).optional(),
   finishedTime: date(),
   totalTime: number(),
+  credits: number(),
+  paid: boolean(),
 });
 
 type BananaRequest = InferType<typeof bananaRequestSchema>;
