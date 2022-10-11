@@ -14,6 +14,10 @@ import React from "react";
 
 import MyAppBar from "../src/MyAppBar";
 import type { HistoryItem } from "../src/schemas/history";
+import sendQueue, {
+  outputImageQueue,
+  maskImageQueue,
+} from "../src/lib/sendQueue";
 
 const MAX_HISTORY = 100;
 
@@ -50,7 +54,7 @@ function Item({ item }: { item: HistoryItem }) {
   const base64 = modelOutputs[0].image_base64;
   const prompt = item.modelInputs.prompt;
 
-  function click(_event: React.SyntheticEvent) {
+  async function click(_event: React.SyntheticEvent) {
     console.log(item);
 
     const params = new URLSearchParams({
@@ -63,6 +67,37 @@ function Item({ item }: { item: HistoryItem }) {
     else if (item.callInputs.PIPELINE.match(/Inpaint/)) page = "inpaint";
     params.delete("PIPELINE");
     params.delete("SCHEDULER");
+
+    const src = "data:image/png;base64," + base64;
+    const blob = await fetch(src).then((res) => res.blob());
+
+    outputImageQueue.add({
+      title: item.modelInputs.prompt,
+      text: item.modelInputs.prompt,
+      files: [new File([blob], item.modelInputs.prompt + ".png")],
+    });
+
+    if (params.has("init_image")) {
+      const src = "data:image/png;base64," + params.get("init_image");
+      const blob = await fetch(src).then((res) => res.blob());
+      sendQueue.add({
+        title: "init_image",
+        text: "init_image",
+        files: [new File([blob], "init_image.png")],
+      });
+      params.delete("init_image");
+    }
+
+    if (params.has("mask_image")) {
+      const src = "data:image/png;base64," + params.get("mask_image");
+      const blob = await fetch(src).then((res) => res.blob());
+      maskImageQueue.add({
+        title: "mask_image",
+        text: "mask_image",
+        files: [new File([blob], "mask_image.png")],
+      });
+      params.delete("mask_image");
+    }
 
     const url = page + "?" + params.toString();
 

@@ -41,4 +41,8 @@ const sendQueue = new SendQueue();
 
 // if (typeof window === "object") window.sendQueue = sendQueue;
 
+const outputImageQueue = new SendQueue();
+const maskImageQueue = new SendQueue();
+
+export { outputImageQueue, maskImageQueue };
 export default sendQueue;

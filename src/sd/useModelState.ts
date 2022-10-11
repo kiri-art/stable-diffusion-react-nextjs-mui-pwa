@@ -93,7 +93,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     () => {
       console.log("query", query);
       for (const [key, value] of Object.entries(query)) {
-        // console.log(key, value);
+        console.log(key, value);
         // @ts-expect-error: it's ok
         ref.current[key].setValue(value);
       }

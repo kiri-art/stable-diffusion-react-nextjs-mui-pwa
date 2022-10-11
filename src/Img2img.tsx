@@ -16,6 +16,7 @@ import FloodFill from "q-floodfill";
 // import { Trans } from "@lingui/macro";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import blobToBase64 from "./lib/blobToBase64";
+import sendQueue, { outputImageQueue } from "./lib/sendQueue";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
@@ -457,19 +458,7 @@ export default function Img2img() {
   const inputs = useModelState(inpaintState);
   const sharedInputs = sharedInputTextFromInputs(inputs);
 
-  function fileChange(event: React.SyntheticEvent) {
-    const target = event.target as HTMLInputElement;
-    if (!(target instanceof HTMLInputElement))
-      throw new Error("Event target is not an HTMLInputElement");
-
-    // @ts-expect-error: I can't be any clearer, typescript
-    const file = target.files[0];
-
-    console.log(file);
-    if (!file.type.match(/^image\//)) return toast("Not an image");
-
-    setImgSrc("");
-
+  function readFile(file: File) {
     const fileReader = new FileReader();
     // fileIsLoading.current = true;
     fileReader.onload = function (readerEvent) {
@@ -551,6 +540,22 @@ export default function Img2img() {
     fileReader.readAsDataURL(file);
   }
 
+  function fileChange(event: React.SyntheticEvent) {
+    const target = event.target as HTMLInputElement;
+    if (!(target instanceof HTMLInputElement))
+      throw new Error("Event target is not an HTMLInputElement");
+
+    // @ts-expect-error: I can't be any clearer, typescript
+    const file = target.files[0];
+
+    console.log(file);
+    if (!file.type.match(/^image\//)) return toast("Not an image");
+
+    setImgSrc("");
+
+    readFile(file);
+  }
+
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
@@ -617,6 +622,29 @@ export default function Img2img() {
 
     setRequestEndTime(Date.now());
   }
+
+  React.useEffect(() => {
+    if (sendQueue.has()) {
+      const share = sendQueue.get();
+      console.log(share);
+      if (!share) return;
+      readFile(share.files[0]);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (outputImageQueue.has()) {
+      const share = outputImageQueue.get();
+      console.log(share);
+      if (!share) return;
+
+      // share.files[0]
+      const reader = new FileReader();
+      reader.onload = () =>
+        reader.result && setImgSrc(reader.result.toString());
+      reader.readAsDataURL(share.files[0]);
+    }
+  }, []);
 
   return (
     <>

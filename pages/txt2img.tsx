@@ -15,6 +15,7 @@ import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import useRandomPrompt from "../src/sd/useRandomPrompt";
 import Footer from "../src/sd/Footer";
 import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
+import { outputImageQueue } from "../src/lib/sendQueue";
 
 const txt2imgState = [
   "prompt",
@@ -110,6 +111,20 @@ export default function Txt2Img() {
 
     setRequestEndTime(Date.now());
   }
+
+  React.useEffect(() => {
+    if (outputImageQueue.has()) {
+      const share = outputImageQueue.get();
+      console.log(share);
+      if (!share) return;
+
+      // share.files[0]
+      const reader = new FileReader();
+      reader.onload = () =>
+        reader.result && setImgSrc(reader.result.toString());
+      reader.readAsDataURL(share.files[0]);
+    }
+  }, []);
 
   return (
     <>

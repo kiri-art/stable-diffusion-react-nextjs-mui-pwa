@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import locales, { defaultLocale } from "../src/lib/locales";
 import blobToBase64 from "../src/lib/blobToBase64";
-import sendQueue from "./lib/sendQueue";
+import sendQueue, { outputImageQueue } from "./lib/sendQueue";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -368,6 +368,20 @@ export default function Inpainting() {
       if (!share) return;
       readFile(share.files[0]);
       toast(t`Image Loaded`);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (outputImageQueue.has()) {
+      const share = outputImageQueue.get();
+      console.log(share);
+      if (!share) return;
+
+      // share.files[0]
+      const reader = new FileReader();
+      reader.onload = () =>
+        reader.result && setImgSrc(reader.result.toString());
+      reader.readAsDataURL(share.files[0]);
     }
   }, []);
 
