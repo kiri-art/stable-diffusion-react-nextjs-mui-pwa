@@ -35,6 +35,16 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Tue Oct 11, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <Link href="/history">History</Link> page and functionality.
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Fri Oct 07, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
