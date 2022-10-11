@@ -5,6 +5,7 @@ import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
 import type { User, Order, CreditCode, CSend, BananaRequest } from "./schemas";
+import { HistoryItem } from "./schemas/history";
 
 // const out = { db };
 
@@ -35,6 +36,8 @@ db.collection("statsDaily").persist();
 db.collection("csends").persist();
 db.collection("bananaRequests").persist();
 
+db.collection("history", { isLocalCollection: true }).persist();
+
 declare module "gongo-client" {
   class Database {
     collection(name: "users"): Collection<User>;
@@ -42,6 +45,7 @@ declare module "gongo-client" {
     collection(name: "creditCodes"): Collection<CreditCode>;
     collection(name: "csends"): Collection<CSend>;
     collection(name: "bananaRequests"): Collection<BananaRequest>;
+    collection(name: "history"): Collection<HistoryItem>;
   }
 }
 

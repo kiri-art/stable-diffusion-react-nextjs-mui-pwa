@@ -5,6 +5,9 @@ import bananaCallInputsSchema, {
 } from "../schemas/bananaCallInputs";
 import blackImgBase64 from "../blackImgBase64";
 import bananaFetch from "../bananaFetch";
+import { db } from "gongo-client-react";
+
+const History = db.collection("history");
 
 async function exec(
   opts: StableDiffusionInputs,
@@ -162,6 +165,14 @@ export default async function txt2img(
   } else {
     setNsfw(false);
   }
+
+  if (result?.$success)
+    History.insert({
+      date: new Date(),
+      modelInputs,
+      callInputs,
+      result: result.$success,
+    });
 
   return result;
 }
