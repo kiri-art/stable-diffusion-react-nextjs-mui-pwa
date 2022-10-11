@@ -166,7 +166,7 @@ export default async function txt2img(
     setNsfw(false);
   }
 
-  if (result?.$success)
+  if (History && result?.$success)
     History.insert({
       date: new Date(),
       modelInputs,
