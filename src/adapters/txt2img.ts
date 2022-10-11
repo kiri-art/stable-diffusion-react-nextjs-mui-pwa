@@ -7,7 +7,7 @@ import blackImgBase64 from "../blackImgBase64";
 import bananaFetch from "../bananaFetch";
 import { db } from "gongo-client-react";
 
-const History = db.collection("history");
+const History = typeof window === "object" && db.collection("history");
 
 async function exec(
   opts: StableDiffusionInputs,

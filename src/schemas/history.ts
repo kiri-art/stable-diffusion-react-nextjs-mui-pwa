@@ -7,7 +7,7 @@ const historyItemSchema = object({
   callInputs: bananaRequestSchema.fields["callInputs"],
   modelInputs: bananaRequestSchema.fields["modelInputs"],
   result: mixed(),
-});
+}).concat(bananaRequestSchema.pick(["callInputs", "modelInputs"]));
 
 type HistoryItem = InferType<typeof historyItemSchema>;
 
