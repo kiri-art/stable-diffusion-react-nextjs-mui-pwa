@@ -21,6 +21,7 @@
     "@lingui/react": "^3.14.0",
     "@mui/icons-material": "5.10.3",
     "@mui/material": "5.10.5",
+    "@projectfunction/async-busboy": "^1.0.4",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
     "aws-sdk": "^2.1231.0",
