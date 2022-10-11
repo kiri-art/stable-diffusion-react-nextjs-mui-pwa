@@ -23,6 +23,7 @@
     "@mui/material": "5.10.5",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
+    "aws-sdk": "^2.1231.0",
     "date-fns": "^2.29.2",
     "gongo-client": "2.5.0",
     "gongo-client-react": "0.2.0",
