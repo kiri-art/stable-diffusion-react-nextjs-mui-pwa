@@ -18,6 +18,7 @@ import sendQueue, {
   outputImageQueue,
   maskImageQueue,
 } from "../src/lib/sendQueue";
+import { Delete, Edit } from "@mui/icons-material";
 
 const MAX_HISTORY = 100;
 
@@ -26,11 +27,13 @@ function ImgFromBase64({
   _size = undefined,
   alt = "image",
   onClick,
+  style,
 }: {
   base64: string;
   _size?: number;
   alt?: string;
-  onClick: (event: React.SyntheticEvent) => void;
+  onClick?: (event: React.SyntheticEvent) => void;
+  style?: React.CSSProperties;
 }) {
   const src = "data:image/png;base64," + base64;
   return (
@@ -38,7 +41,7 @@ function ImgFromBase64({
     <img
       alt={alt}
       src={src}
-      style={{ objectFit: "contain", cursor: "pointer" }}
+      style={{ objectFit: "contain", cursor: "pointer", ...style }}
       width="100%" // ={size}
       // height={size}
       onClick={onClick}
@@ -48,13 +51,14 @@ function ImgFromBase64({
 
 function Item({ item }: { item: HistoryItem }) {
   const router = useRouter();
+  const [mouseOver, setMouseOver] = React.useState(false);
 
   const modelOutputs = item?.result?.modelOutputs;
   if (!modelOutputs) return null;
   const base64 = modelOutputs[0].image_base64;
   const prompt = item.modelInputs.prompt;
 
-  async function click(_event: React.SyntheticEvent) {
+  async function editItem(_event: React.SyntheticEvent) {
     console.log(item);
 
     const params = new URLSearchParams({
@@ -105,9 +109,18 @@ function Item({ item }: { item: HistoryItem }) {
     router.push(url);
   }
 
+  function deleteItem(_event: React.MouseEvent<HTMLButtonElement>) {
+    if (confirm(t`Are you sure?  This cannot be undone.`))
+      db.collection("history").remove({ _id: item._id });
+  }
+
   return (
-    <ImageListItem>
-      <ImgFromBase64 base64={base64} alt={prompt} onClick={click} />
+    <ImageListItem
+      sx={{ position: "relative" }}
+      onMouseOver={() => setMouseOver(true)}
+      onMouseOut={() => setMouseOver(false)}
+    >
+      <ImgFromBase64 base64={base64} alt={prompt} />
       {/*
       <img
         src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
@@ -116,6 +129,43 @@ function Item({ item }: { item: HistoryItem }) {
         loading="lazy"
       />
       */}
+      {mouseOver && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              background: "rgba(170,170,170,0.7)",
+            }}
+            onClick={deleteItem}
+          >
+            <Delete />
+          </Button>
+
+          <Button
+            variant="contained"
+            sx={{
+              position: "absolute",
+              bottom: 10,
+              right: 10,
+              background: "rgba(170,170,170,0.7)",
+            }}
+            onClick={editItem}
+          >
+            <Edit />
+          </Button>
+        </Box>
+      )}
     </ImageListItem>
   );
 }
