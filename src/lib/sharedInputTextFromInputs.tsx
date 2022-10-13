@@ -1,7 +1,16 @@
 import { ModelState } from "../sd/useModelState";
 
+interface RequiredInputs {
+  prompt: { value: string };
+  shareInputs: { value: boolean };
+  guidance_scale: { value: number };
+  num_inference_steps: { value: number };
+  seed: { value: number };
+  negative_prompt: { value: string };
+}
+
 export default function sharedInputTextFromInputs(
-  inputs: ModelState,
+  inputs: ModelState | RequiredInputs,
   always = false
 ) {
   const prompt = inputs.prompt.value;

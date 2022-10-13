@@ -18,7 +18,7 @@ import sendQueue, {
   outputImageQueue,
   maskImageQueue,
 } from "../src/lib/sendQueue";
-import { Delete, Edit } from "@mui/icons-material";
+import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
 
 const MAX_HISTORY = 100;
 
@@ -52,6 +52,7 @@ function ImgFromBase64({
 function Item({ item }: { item: HistoryItem }) {
   const router = useRouter();
   const [mouseOver, setMouseOver] = React.useState(false);
+  const [starring, setStarring] = React.useState(false);
 
   const modelOutputs = item?.result?.modelOutputs;
   if (!modelOutputs) return null;
@@ -114,6 +115,26 @@ function Item({ item }: { item: HistoryItem }) {
       db.collection("history").remove({ _id: item._id });
   }
 
+  async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
+    setStarring(true);
+    console.log(item);
+    const response = await fetch("/api/starItem", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // @ts-expect-error: TODO
+        auth: db?.auth?.authInfoToSend(),
+        item,
+      }),
+    });
+    const result = await response.json();
+    setStarring(false);
+    console.log(result);
+    db.collection("stars")._insert(result);
+  }
+
   return (
     <ImageListItem
       sx={{ position: "relative" }}
@@ -139,6 +160,21 @@ function Item({ item }: { item: HistoryItem }) {
             height: "100%",
           }}
         >
+          <Button
+            variant="contained"
+            sx={{
+              position: "absolute",
+              top: 10,
+              left: 10,
+              background: "rgba(170,170,170,0.7)",
+              color: false ? "yellow" : undefined,
+            }}
+            disabled={starring}
+            onClick={starItem}
+          >
+            {starring ? <AccessTime /> : <Star />}
+          </Button>
+
           <Button
             variant="contained"
             sx={{

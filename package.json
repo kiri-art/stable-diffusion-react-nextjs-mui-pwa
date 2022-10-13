@@ -26,6 +26,7 @@
     "@stripe/stripe-js": "^1.35.0",
     "aws-sdk": "^2.1231.0",
     "date-fns": "^2.29.2",
+    "file-type": "^18.0.0",
     "gongo-client": "2.5.0",
     "gongo-client-react": "0.2.0",
     "gongo-server": "3.1.0",
