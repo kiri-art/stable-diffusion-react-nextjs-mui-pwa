@@ -19,6 +19,7 @@ import sendQueue, {
   maskImageQueue,
 } from "../src/lib/sendQueue";
 import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
+import Link from "../src/Link";
 
 const MAX_HISTORY = 100;
 
@@ -236,10 +237,11 @@ export default function History() {
       <Container sx={{ my: 2 }}>
         <Trans>
           History is kept on your <b>local device only</b>. It is not backed up
-          to the cloud nor visible to others (in contrast to &quot;starred&quot;
-          images). Only the last {MAX_HISTORY} items are kept.
+          to the cloud nor visible to others (in contrast to{" "}
+          <Link href="/starred">starred</Link> images). Only the last{" "}
+          {MAX_HISTORY} items are kept.
         </Trans>
-        <Button onClick={clear}>
+        <Button size="small" onClick={clear}>
           <Trans>Clear History</Trans>
         </Button>
 
