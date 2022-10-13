@@ -26,7 +26,7 @@ AWS.config.update({
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
 const gs = new GongoServer({
-  dba: new Database(MONGO_URL, "cannil"),
+  dba: new Database(MONGO_URL, "sd-mui"),
 });
 
 const db = gs.dba;
@@ -77,7 +77,7 @@ async function createFromBuffer(
   console.log(entry);
 
   const params = {
-    Bucket: "cannil",
+    Bucket: "kiri-art",
     Key: sha256,
     Body: buffer,
   };
@@ -209,7 +209,7 @@ async function fileRoute(req, res) {
     res.status(304).end();
   }
 
-  const params = { Bucket: "cannil", Key: file.sha256 };
+  const params = { Bucket: "kiri-art", Key: file.sha256 };
   const result = await new AWS.S3().getObject(params).promise();
   buffer = result.Body;
 
