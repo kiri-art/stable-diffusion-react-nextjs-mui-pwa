@@ -37,6 +37,8 @@ export default function StarredItem() {
           src={"/api/file?id=" + strObjectId(item.files.output)}
           style={{ maxWidth: "100%", border: "1px solid black" }}
         />
+        <p>By: {item.userId} (coming soon)</p>
+        <p>Starred by: X users (coming soon)</p>
 
         <p>
           <Trans>Prompt</Trans>: {item.modelInputs.prompt}
