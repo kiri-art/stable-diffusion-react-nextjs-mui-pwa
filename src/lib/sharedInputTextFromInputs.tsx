@@ -19,6 +19,6 @@ export default function sharedInputTextFromInputs(
   return (
     `${prompt}, CFG: ${inputs.guidance_scale.value}, ` +
     `steps: ${inputs.num_inference_steps.value}, ` +
-    `seed: ${inputs.seed.value}, negative_prompt: ${inputs.negative_prompt.value}"`
+    `seed: ${inputs.seed.value}, negative_prompt: ${inputs.negative_prompt.value}`
   );
 }
