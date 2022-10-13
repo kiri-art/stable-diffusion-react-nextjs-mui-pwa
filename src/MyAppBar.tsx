@@ -385,6 +385,9 @@ export default function MyAppBar({ title }: { title: string }) {
                       <MenuItem component={Link} href="/history">
                         <Trans>History</Trans>
                       </MenuItem>
+                      <MenuItem component={Link} href="/starred">
+                        <Trans>Starred</Trans>
+                      </MenuItem>
                       <MenuItem component={Link} href="/credits">
                         <Trans>Credits:</Trans> {userCredits}
                       </MenuItem>

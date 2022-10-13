@@ -43,6 +43,13 @@ gs.publish("bananaRequests", async (db) => {
     .limit(500);
 });
 
+gs.publish("my-stars", async (db, _, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  return db.collection("stars").find({ userId });
+});
+
 /*
 gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {
   const userId = await auth.userId();
