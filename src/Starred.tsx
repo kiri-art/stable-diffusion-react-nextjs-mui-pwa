@@ -72,7 +72,9 @@ function Item({ item }: { item: Star }) {
             position: "relative",
             top: "-3px",
             marginLeft: "3px",
-            textShadow: likedByUser && "0 0 2px rgba(255,255,255,0.8)",
+            textShadow: likedByUser
+              ? "0 0 2px rgba(255,255,255,0.8)"
+              : undefined,
           }}
         >
           {item.likes}

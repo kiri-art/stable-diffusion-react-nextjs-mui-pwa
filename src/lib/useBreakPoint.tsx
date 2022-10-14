@@ -1,4 +1,3 @@
-import React from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 interface BreakPointSwitchCase<T> {

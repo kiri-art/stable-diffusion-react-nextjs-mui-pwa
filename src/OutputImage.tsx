@@ -87,7 +87,7 @@ export default function OutputImage({
   log: string[];
   requestStartTime: number | null;
   requestEndTime: number | null;
-  historyId: string;
+  historyId?: string;
 }) {
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
@@ -166,7 +166,7 @@ export default function OutputImage({
 
   async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
     // Unique to OutputImage
-    const item = db.collection("history").findOne(historyId);
+    const item = historyId && db.collection("history").findOne(historyId);
     if (!item) return alert("internal error, sorry");
     // Duplicated in history.tsx
     if (starId) return alert("ability to de-star coming soon");
