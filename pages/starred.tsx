@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useGongoLive, useGongoSub } from "gongo-client-react";
+import { db, useGongoLive, useGongoSub } from "gongo-client-react";
 import React from "react";
 import Link from "../src/Link";
 
@@ -97,7 +97,8 @@ export default function Starred() {
     db.collection("stars").find().sort("date", "desc")
   );
 
-  useGongoSub("my-stars");
+  // @ts-expect-error: auth
+  useGongoSub("stars", { userId: db?.auth?.userId });
 
   /*
   function clear() {
