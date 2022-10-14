@@ -6,6 +6,8 @@ import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import { AutoFixHigh, ContentCopy, Download, Share } from "@mui/icons-material";
 import sendQueue from "./lib/sendQueue";
 
+const FORCE_MOUSEOVER = true; // Useful for dev.
+
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
   (!!navigator.share && !!navigator.canShare);
@@ -192,12 +194,12 @@ export default function OutputImage({
             <Timer
               requestStartTime={requestStartTime}
               requestEndTime={requestEndTime}
-              mouseOver={mouseOver}
+              mouseOver={FORCE_MOUSEOVER || mouseOver}
             />
           </div>
           <Log log={log} />
         </Box>{" "}
-        {mouseOver && log.length === 0 && (
+        {(FORCE_MOUSEOVER || mouseOver) && log.length === 0 && (
           <Box
             sx={{
               position: "absolute",
