@@ -9,7 +9,9 @@ export default function Copyright() {
   return (
     <div>
       <Typography variant="body2" color="text.secondary" align="center">
-        Copyright © Gadi Cohen &amp; Wastelands Networking Ltd, 2022.
+        Copyright © 2022 by Gadi Cohen (gadicc)
+        <br />
+        and Wastelands Networking Ltd.
         <br />
         <MuiLink
           color="inherit"
