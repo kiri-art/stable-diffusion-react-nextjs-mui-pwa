@@ -121,8 +121,11 @@ export default function OutputImage({
   }
 
   React.useEffect(() => {
-    if (requestStartTime && imgResult.current)
+    // I.e. at the start of each new request
+    if (requestStartTime && imgResult.current) {
+      setStarId("");
       imgResult.current.scrollIntoView();
+    }
   }, [requestStartTime, requestEndTime]);
 
   async function share() {
@@ -166,7 +169,7 @@ export default function OutputImage({
     const item = db.collection("history").findOne(historyId);
     if (!item) return alert("internal error, sorry");
     // Duplicated in history.tsx
-    if (starId) return alert("ability to de-start coming soon");
+    if (starId) return alert("ability to de-star coming soon");
     setStarring(true);
     console.log(item);
     const response = await fetch("/api/starItem", {
@@ -185,6 +188,8 @@ export default function OutputImage({
     console.log(result);
     db.collection("stars")._insert(result);
     setStarId(result._id);
+    // OutputImage specific
+    db.collection("history").update(item._id, { $set: { starId: result._id } });
   }
 
   return (

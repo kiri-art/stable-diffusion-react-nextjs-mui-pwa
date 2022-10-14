@@ -53,7 +53,7 @@ function Item({ item }: { item: HistoryItem }) {
   const router = useRouter();
   const [mouseOver, setMouseOver] = React.useState(false);
   const [starring, setStarring] = React.useState(false);
-  const [starId, setStarId] = React.useState("");
+  const [starId, setStarId] = React.useState(item.starId || "");
 
   const modelOutputs = item?.result?.modelOutputs;
   if (!modelOutputs) return null;
@@ -137,8 +137,11 @@ function Item({ item }: { item: HistoryItem }) {
     console.log(result);
     db.collection("stars")._insert(result);
     setStarId(result._id);
+    // history.tsx specific
     const historyId = item._id as string;
-    db.collection("history").update(historyId, { $set: { starId } });
+    db.collection("history").update(historyId, {
+      $set: { starId: result._id },
+    });
   }
 
   return (
