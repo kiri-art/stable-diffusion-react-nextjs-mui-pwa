@@ -27,7 +27,7 @@ export default function StarredItem() {
           By: <Link href={"/p/" + item.userId}>{item.userId}</Link> (coming
           soon)
         </p>
-        <p>Starred by: X users (coming soon)</p>
+        <p>Liked by: {item.likes} users</p>
 
         <p>
           <Trans>Prompt</Trans>: {item.modelInputs.prompt}
