@@ -15,7 +15,10 @@ import {
 import sendQueue from "./lib/sendQueue";
 
 // Useful for dev
-const FORCE_MOUSEOVER = false;
+const FORCE_MOUSEOVER = true;
+
+const BUTTON_MX = 0.5;
+const BUTTON_PX = 0.5;
 
 const canShare =
   FORCE_MOUSEOVER ||
@@ -248,16 +251,16 @@ export default function OutputImage({
           <Box
             sx={{
               position: "absolute",
-              bottom: 10,
-              right: 7,
+              top: 10,
+              left: 7,
             }}
           >
             <Button
               // Duplicated in history.tsx
               variant="contained"
               sx={{
-                px: 0.3,
-                mx: 0.3,
+                px: BUTTON_PX,
+                mx: BUTTON_MX,
                 background: "rgba(170,170,170,0.7)",
                 color: starId ? "yellow" : undefined,
               }}
@@ -266,6 +269,16 @@ export default function OutputImage({
             >
               {starring ? <AccessTime /> : <Star />}
             </Button>
+          </Box>
+        )}
+        {(FORCE_MOUSEOVER || mouseOver) && log.length === 0 && (
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 10,
+              right: 7,
+            }}
+          >
             <Button
               variant="contained"
               sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
@@ -297,14 +310,22 @@ export default function OutputImage({
             </Menu>
             <Button
               variant="contained"
-              sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
+              sx={{
+                px: BUTTON_PX,
+                mx: BUTTON_MX,
+                background: "rgba(170,170,170,0.7)",
+              }}
               onClick={copy}
             >
               <ContentCopy />
             </Button>
             <Button
               variant="contained"
-              sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
+              sx={{
+                px: BUTTON_PX,
+                mx: BUTTON_MX,
+                background: "rgba(170,170,170,0.7)",
+              }}
               onClick={download}
             >
               <Download />
@@ -313,8 +334,8 @@ export default function OutputImage({
               <Button
                 variant="contained"
                 sx={{
-                  px: 0.3,
-                  mx: 0.3,
+                  px: BUTTON_PX,
+                  mx: BUTTON_MX,
                   background: "rgba(170,170,170,0.7)",
                 }}
                 onClick={share}
