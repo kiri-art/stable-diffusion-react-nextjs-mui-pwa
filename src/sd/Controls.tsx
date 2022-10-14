@@ -2,8 +2,6 @@ import React, { useMemo } from "react";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 
-import type { ModelState } from "./useModelState";
-
 import {
   Box,
   FormControl,
@@ -35,6 +33,8 @@ import { differenceInYears } from "date-fns";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 import GoButton from "../GoButton";
 import stableDiffusionInputsSchema from "../schemas/stableDiffusionInputs";
+import type { ModelState } from "./useModelState";
+import { getRandomPrompt } from "./useRandomPrompt";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -58,10 +58,12 @@ function Prompt({
   value,
   setValue,
   placeholder,
+  getRandomPrompt,
 }: {
   value: ModelState["prompt"]["value"];
   setValue: ModelState["prompt"]["setValue"];
   placeholder?: string;
+  getRandomPrompt: () => string;
 }) {
   return useMemo(() => {
     function promptKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
@@ -93,8 +95,11 @@ function Prompt({
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={() => setValue("")}>
+              <IconButton onClick={() => setValue("")} edge="end">
                 <Clear />
+              </IconButton>
+              <IconButton onClick={() => setValue(getRandomPrompt())}>
+                <SettingsBackupRestore />
               </IconButton>
               <Tooltip
                 title={
@@ -128,7 +133,7 @@ function Prompt({
         }}
       />
     );
-  }, [value, setValue, placeholder]);
+  }, [value, setValue, placeholder, getRandomPrompt]);
 }
 
 function NegativePrompt({
@@ -911,6 +916,10 @@ export default function SDControls({
   requestEndTime: number | null;
 }) {
   const sharedInputs = sharedInputTextFromInputs(inputs, true);
+  const getRandomPromptForModel = getRandomPrompt.bind(
+    null,
+    inputs.MODEL_ID.value
+  );
 
   function setWidthHeight(
     width: number | string,
@@ -960,6 +969,7 @@ export default function SDControls({
           value={inputs.prompt.value}
           setValue={inputs.prompt.setValue}
           placeholder={randomPrompt}
+          getRandomPrompt={getRandomPromptForModel}
         />
         <GoButton
           disabled={!!(requestStartTime && !requestEndTime)}

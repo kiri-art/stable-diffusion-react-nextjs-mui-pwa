@@ -32,10 +32,15 @@ const randomPrompts = {
 randomPrompts["hakurei/waifu-diffusion-v1-3-full"] =
   randomPrompts["hakurei/waifu-diffusion-v1-3"];
 
-export default function useRandomPrompt(MODEL_ID: string) {
-  return useMemo(() => {
-    // @ts-expect-error: I don't have time for you, typescript
-    const prompts = randomPrompts[MODEL_ID];
-    return prompts[Math.floor(Math.random() * prompts.length)];
-  }, [MODEL_ID]);
+function getRandomPrompt(MODEL_ID: string) {
+  // @ts-expect-error: I don't have time for you, typescript
+  const prompts = randomPrompts[MODEL_ID];
+  return prompts[Math.floor(Math.random() * prompts.length)];
 }
+
+function useRandomPrompt(MODEL_ID: string) {
+  return useMemo(() => getRandomPrompt(MODEL_ID), [MODEL_ID]);
+}
+
+export { randomPrompts, getRandomPrompt };
+export default useRandomPrompt;
