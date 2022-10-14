@@ -82,6 +82,7 @@ export default async function starItem(
 
   const entry: Partial<Star> = {
     userId,
+    date: new Date(),
     callInputs,
     modelInputs,
     files,

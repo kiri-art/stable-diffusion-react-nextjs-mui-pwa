@@ -5,6 +5,7 @@ export default interface Star {
   [key: string]: unknown;
   _id: string; // or ObjectID todo
   userId: string; // or ObjectID todo
+  date: Date;
   callInputs: BananaCallInputs;
   modelInputs: StableDiffusionInputs;
   files: {
