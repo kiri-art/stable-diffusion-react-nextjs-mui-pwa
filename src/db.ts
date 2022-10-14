@@ -37,6 +37,7 @@ db.collection("statsDaily").persist();
 db.collection("csends").persist();
 db.collection("bananaRequests").persist();
 db.collection("stars").persist();
+db.collection("likes").persist();
 
 db.collection("history", { isLocalCollection: true }).persist();
 

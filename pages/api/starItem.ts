@@ -86,8 +86,9 @@ export default async function starItem(
     callInputs,
     modelInputs,
     files,
-    stars: 1,
-    starredBy: [userId],
+    // stars: 1,
+    // starredBy: [userId],
+    likes: 0,
   };
 
   console.log(entry);

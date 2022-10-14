@@ -1,21 +1,43 @@
-import { Box, ImageList, ImageListItem } from "@mui/material";
 import React from "react";
-import Link from "./Link";
+import { db, useGongoOne } from "gongo-client-react";
+import { Button, ImageList, ImageListItem } from "@mui/material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 
+import Link from "./Link";
 import Star from "./schemas/star";
 import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
 
 function Item({ item }: { item: Star }) {
-  const [mouseOver, setMouseOver] = React.useState(false);
-
   const alt = "TODO";
+  const userLike = useGongoOne((db) =>
+    db.collection("likes").find({ starId: item._id })
+  );
+  const likedByUser = !!userLike && !!userLike.liked;
+
+  // @ts-expect-error: todo in gongo
+  const userId = db.auth?.userId;
+
+  async function like(event: React.SyntheticEvent) {
+    event.preventDefault();
+    if (!userId) return alert("log in first");
+
+    if (userLike)
+      db.collection("likes").update(userLike._id, {
+        $set: { liked: !likedByUser },
+      });
+    else
+      db.collection("likes").insert({
+        userId,
+        starId: item._id,
+        liked: true,
+        __ObjectIDs: ["userId", "starId"],
+      });
+  }
 
   return (
     <ImageListItem
       sx={{ position: "relative" }}
-      onMouseOver={() => setMouseOver(true)}
-      onMouseOut={() => setMouseOver(false)}
       component={Link}
       href={"/s/" + item._id}
     >
@@ -24,39 +46,22 @@ function Item({ item }: { item: Star }) {
         alt={alt}
         src={"/api/file?id=" + strObjectId(item.files.output)}
         style={{ objectFit: "contain" }}
-        width="100%" // ={size}
-        // height={size}
-        // onClick={onClick}
+        width="100%"
       />
-
-      {mouseOver && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          {/*
-          <Button
-            variant="contained"
-            sx={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              background: "rgba(170,170,170,0.7)",
-              color: false ? "yellow" : undefined,
-            }}
-            disabled={starring}
-            onClick={starItem}
-          >
-            {starring ? <AccessTime /> : <Star />}
-          </Button>
-          */}
-        </Box>
-      )}
+      <Button
+        onClick={like}
+        sx={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          m: 0,
+          p: 1,
+          minWidth: 0,
+          color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
+        }}
+      >
+        {likedByUser ? <Favorite /> : <FavoriteBorder />}
+      </Button>
     </ImageListItem>
   );
 }

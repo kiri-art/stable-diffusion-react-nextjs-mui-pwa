@@ -2,6 +2,7 @@ import gs, { CreditCode, User } from "../../src/api-lib/db";
 import {
   CollectionEventProps,
   userIsAdmin,
+  userIdMatches,
 } from "gongo-server-db-mongo/lib/collection";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 
@@ -46,7 +47,7 @@ gs.publish("bananaRequests", async (db) => {
 gs.publish("stars", async (db, { userId } = {}) => {
   const query: Record<string, unknown> = {};
   if (userId) query.userId = userId;
-  return db.collection("stars").find(query);
+  return db.collection("stars").find(query).limit(200);
 });
 
 /*
@@ -207,6 +208,39 @@ if (gs.dba) {
   creditCodes.allow("insert", userIsAdmin);
   creditCodes.allow("update", userIsAdmin);
   creditCodes.allow("remove", userIsAdmin);
+
+  const likes = db.collection("likes");
+  likes.allow("insert", userIdMatches);
+  likes.allow("update", userIdMatches);
+
+  // @ts-expect-error: gongo
+  likes.on("postInsertMany", async (props, { entries }) => {
+    // TODO, remove "as Document[]" when we complete gongo typesafety
+    for (const doc of entries as Document[]) {
+      console.log(doc);
+      await db.collection("stars").updateOne(
+        // @ts-expect-error: TODO
+        { _id: doc.starId },
+        { $inc: { likes: 1 } }
+      );
+    }
+  });
+
+  // @ts-expect-error: gongo
+  likes.on("postUpdateMany", async (props, { entries }) => {
+    for (const update of entries as ChangeSetUpdate[]) {
+      console.log(update);
+      const likeId = update._id;
+      const like = await db.collection("likes").findOne({ _id: likeId });
+      if (!like) return;
+      await db
+        .collection("stars")
+        .updateOne(
+          { _id: like.starId },
+          { $inc: { likes: like.liked ? 1 : -1 } }
+        );
+    }
+  });
 }
 
 module.exports = gs.expressPost();

@@ -30,6 +30,10 @@ const Home: NextPage = () => {
 
         <Box sx={{ textAlign: "center" }}>
           <Trans>Recently Starred</Trans>
+          <br />
+          <Box sx={{ fontSize: "80%" }}>
+            <Trans>Star your images to have them appear here too!</Trans>
+          </Box>
         </Box>
 
         <Starred items={items} />

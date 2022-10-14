@@ -13,6 +13,7 @@ export default interface Star {
     init?: string;
     mask?: string;
   };
-  stars: number;
-  starredBy: string[];
+  // stars: number;
+  // starredBy: string[];
+  likes: number;
 }
