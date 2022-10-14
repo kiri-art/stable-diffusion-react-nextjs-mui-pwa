@@ -1,16 +1,15 @@
 import { t, Trans } from "@lingui/macro";
+import { db, useGongoLive } from "gongo-client-react";
+import { useRouter } from "next/router";
+import React from "react";
 import {
   Box,
   Button,
   Container,
   ImageList,
   ImageListItem,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import { db, useGongoLive } from "gongo-client-react";
-import { useRouter } from "next/router";
-import React from "react";
+import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
 
 import MyAppBar from "../src/MyAppBar";
 import type { HistoryItem } from "../src/schemas/history";
@@ -18,8 +17,8 @@ import sendQueue, {
   outputImageQueue,
   maskImageQueue,
 } from "../src/lib/sendQueue";
-import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
 import Link from "../src/Link";
+import useBreakPoint from "../src/lib/useBreakPoint";
 
 const MAX_HISTORY = 100;
 
@@ -208,12 +207,7 @@ function Item({ item }: { item: HistoryItem }) {
 }
 
 export default function History() {
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.only("xs"));
-  const sm = useMediaQuery(theme.breakpoints.only("sm"));
-  const md = useMediaQuery(theme.breakpoints.only("md"));
-  const lg = useMediaQuery(theme.breakpoints.only("lg"));
-  const xl = useMediaQuery(theme.breakpoints.only("xl"));
+  const cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   const items = useGongoLive((db) =>
     db.collection("history").find().sort("date", "desc")
@@ -223,13 +217,6 @@ export default function History() {
     if (confirm(t`Are you sure?  This action cannot be undone`))
       db.collection("history").remove({});
   }
-
-  let cols = 2;
-  if (xs) cols = 2;
-  else if (sm) cols = 3;
-  else if (md) cols = 4;
-  else if (lg) cols = 5;
-  else if (xl) cols = 6;
 
   return (
     <Box>
