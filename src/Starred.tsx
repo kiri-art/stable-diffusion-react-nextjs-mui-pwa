@@ -57,10 +57,26 @@ function Item({ item }: { item: Star }) {
           m: 0,
           p: 1,
           minWidth: 0,
-          color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
         }}
       >
-        {likedByUser ? <Favorite /> : <FavoriteBorder />}
+        <span
+          style={{
+            color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
+          }}
+        >
+          {likedByUser ? <Favorite /> : <FavoriteBorder />}
+        </span>
+        <span
+          style={{
+            color: likedByUser ? "#333" : "rgba(200,200,200,0.5)",
+            position: "relative",
+            top: "-3px",
+            marginLeft: "3px",
+            textShadow: likedByUser && "0 0 2px rgba(255,255,255,0.8)",
+          }}
+        >
+          {item.likes}
+        </span>
       </Button>
     </ImageListItem>
   );
