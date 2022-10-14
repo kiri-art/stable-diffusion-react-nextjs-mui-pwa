@@ -43,7 +43,7 @@ gs.publish("bananaRequests", async (db) => {
     .limit(500);
 });
 
-gs.publish("stars", async (db, { userId }) => {
+gs.publish("stars", async (db, { userId } = {}) => {
   const query: Record<string, unknown> = {};
   if (userId) query.userId = userId;
   return db.collection("stars").find(query);
