@@ -15,7 +15,7 @@ import {
 import sendQueue from "./lib/sendQueue";
 
 // Useful for dev
-const FORCE_MOUSEOVER = true;
+const FORCE_MOUSEOVER = false;
 
 const BUTTON_MX = 0.5;
 const BUTTON_PX = 0.5;
