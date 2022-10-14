@@ -452,6 +452,7 @@ export default function Img2img() {
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
     null
   );
+  const [historyId, setHistoryId] = React.useState("");
 
   const uiState = { dest: { value: dest, set: setDest } };
 
@@ -614,6 +615,7 @@ export default function Img2img() {
       setLog,
       setImgSrc,
       setNsfw,
+      setHistoryId,
       dest,
       // @ts-expect-error: TODO, db auth type
       auth: db.auth.authInfoToSend(),
@@ -660,6 +662,7 @@ export default function Img2img() {
           log={log}
           requestStartTime={requestStartTime}
           requestEndTime={requestEndTime}
+          historyId={historyId}
         />
       )}
 

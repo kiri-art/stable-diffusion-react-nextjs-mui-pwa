@@ -45,6 +45,7 @@ export default function Txt2Img() {
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
     null
   );
+  const [historyId, setHistoryId] = React.useState("");
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -102,6 +103,7 @@ export default function Txt2Img() {
         setLog,
         setImgSrc,
         setNsfw,
+        setHistoryId,
         dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
@@ -137,6 +139,7 @@ export default function Txt2Img() {
           log={log}
           requestStartTime={requestStartTime}
           requestEndTime={requestEndTime}
+          historyId={historyId}
         />
         <Controls
           go={go}

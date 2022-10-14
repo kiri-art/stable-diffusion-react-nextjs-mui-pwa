@@ -1,14 +1,24 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { t, Trans } from "@lingui/macro";
+import { db } from "gongo-client-react";
 
 import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
-import { AutoFixHigh, ContentCopy, Download, Share } from "@mui/icons-material";
+import {
+  AccessTime,
+  AutoFixHigh,
+  ContentCopy,
+  Download,
+  Share,
+  Star,
+} from "@mui/icons-material";
 import sendQueue from "./lib/sendQueue";
 
-const FORCE_MOUSEOVER = true; // Useful for dev.
+// Useful for dev
+const FORCE_MOUSEOVER = false;
 
 const canShare =
+  FORCE_MOUSEOVER ||
   typeof navigator === "undefined" || // draw on SSR
   (!!navigator.share && !!navigator.canShare);
 
@@ -69,6 +79,7 @@ export default function OutputImage({
   log,
   requestStartTime,
   requestEndTime,
+  historyId,
 }: {
   text: string;
   imgSrc: string;
@@ -76,11 +87,14 @@ export default function OutputImage({
   log: string[];
   requestStartTime: number | null;
   requestEndTime: number | null;
+  historyId: string;
 }) {
   const imgResult = React.useRef<HTMLImageElement>(null);
   const [mouseOver, setMouseOver] = React.useState(false);
   const [aspectRatio, setAspectRatio] = React.useState("1");
   const [autoFixEl, setAutoFixEl] = React.useState<null | HTMLElement>(null);
+  const [starring, setStarring] = React.useState(false);
+  const [starId, setStarId] = React.useState("");
 
   function onLoad(_event: React.SyntheticEvent<HTMLImageElement>) {
     const img = imgResult.current;
@@ -147,6 +161,32 @@ export default function OutputImage({
       .to(target);
   }
 
+  async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
+    // Unique to OutputImage
+    const item = db.collection("history").findOne(historyId);
+    if (!item) return alert("internal error, sorry");
+    // Duplicated in history.tsx
+    if (starId) return alert("ability to de-start coming soon");
+    setStarring(true);
+    console.log(item);
+    const response = await fetch("/api/starItem", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // @ts-expect-error: TODO
+        auth: db?.auth?.authInfoToSend(),
+        item,
+      }),
+    });
+    const result = await response.json();
+    setStarring(false);
+    console.log(result);
+    db.collection("stars")._insert(result);
+    setStarId(result._id);
+  }
+
   return (
     <>
       <Box
@@ -204,12 +244,26 @@ export default function OutputImage({
             sx={{
               position: "absolute",
               bottom: 10,
-              right: 10,
+              right: 7,
             }}
           >
             <Button
+              // Duplicated in history.tsx
               variant="contained"
-              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              sx={{
+                px: 0.3,
+                mx: 0.3,
+                background: "rgba(170,170,170,0.7)",
+                color: starId ? "yellow" : undefined,
+              }}
+              disabled={starring}
+              onClick={starItem}
+            >
+              {starring ? <AccessTime /> : <Star />}
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
               onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
                 setAutoFixEl(event.currentTarget)
               }
@@ -238,14 +292,14 @@ export default function OutputImage({
             </Menu>
             <Button
               variant="contained"
-              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
               onClick={copy}
             >
               <ContentCopy />
             </Button>
             <Button
               variant="contained"
-              sx={{ px: 0.5, mx: 0.5, background: "rgba(170,170,170,0.7)" }}
+              sx={{ px: 0.3, mx: 0.3, background: "rgba(170,170,170,0.7)" }}
               onClick={download}
             >
               <Download />
@@ -254,8 +308,8 @@ export default function OutputImage({
               <Button
                 variant="contained"
                 sx={{
-                  px: 0.5,
-                  mx: 0.5,
+                  px: 0.3,
+                  mx: 0.3,
                   background: "rgba(170,170,170,0.7)",
                 }}
                 onClick={share}

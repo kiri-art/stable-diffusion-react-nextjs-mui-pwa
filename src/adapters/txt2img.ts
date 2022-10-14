@@ -113,6 +113,7 @@ export default async function txt2img(
     setLog,
     setImgSrc,
     setNsfw,
+    setHistoryId,
     dest,
     auth,
     MODEL_NAME,
@@ -120,6 +121,7 @@ export default async function txt2img(
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     setNsfw: React.Dispatch<React.SetStateAction<boolean>>;
+    setHistoryId: React.Dispatch<React.SetStateAction<string>>;
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
@@ -166,13 +168,16 @@ export default async function txt2img(
     setNsfw(false);
   }
 
-  if (History && result?.$success)
-    History.insert({
+  if (History && result?.$success) {
+    const inserted = History.insert({
       date: new Date(),
       modelInputs,
       callInputs,
       result: result.$success,
     });
+    result.historyId = inserted._id;
+    setHistoryId(result.historyId);
+  }
 
   return result;
 }

@@ -53,6 +53,7 @@ function Item({ item }: { item: HistoryItem }) {
   const router = useRouter();
   const [mouseOver, setMouseOver] = React.useState(false);
   const [starring, setStarring] = React.useState(false);
+  const [starId, setStarId] = React.useState("");
 
   const modelOutputs = item?.result?.modelOutputs;
   if (!modelOutputs) return null;
@@ -116,6 +117,8 @@ function Item({ item }: { item: HistoryItem }) {
   }
 
   async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
+    // Duplicated in OutputImage
+    if (starId) return alert("ability to de-star coming soon");
     setStarring(true);
     console.log(item);
     const response = await fetch("/api/starItem", {
@@ -133,6 +136,9 @@ function Item({ item }: { item: HistoryItem }) {
     setStarring(false);
     console.log(result);
     db.collection("stars")._insert(result);
+    setStarId(result._id);
+    const historyId = item._id as string;
+    db.collection("history").update(historyId, { $set: { starId } });
   }
 
   return (
@@ -161,13 +167,14 @@ function Item({ item }: { item: HistoryItem }) {
           }}
         >
           <Button
+            // Duplicated in OutputImage.tsx
             variant="contained"
             sx={{
               position: "absolute",
               top: 10,
               left: 10,
               background: "rgba(170,170,170,0.7)",
-              color: false ? "yellow" : undefined,
+              color: starId ? "yellow" : undefined,
             }}
             disabled={starring}
             onClick={starItem}
