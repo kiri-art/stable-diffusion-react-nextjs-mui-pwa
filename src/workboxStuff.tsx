@@ -1,4 +1,5 @@
 import { t } from "@lingui/macro";
+import asyncConfirm from "./asyncConfirm";
 
 export default function workboxStuff() {
   if (
@@ -33,12 +34,12 @@ export default function workboxStuff() {
     // NOTE: MUST set skipWaiting to false in next.config.js pwa object
     // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users
     // @ts-expect-error: blah
-    const promptNewVersionAvailable = (_event) => {
+    const promptNewVersionAvailable = async (_event) => {
       // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
       // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
       // You may want to customize the UI prompt accordingly.
       if (
-        confirm(
+        await asyncConfirm(
           t`A newer version of this web app is available, reload to update?`
         )
       ) {
