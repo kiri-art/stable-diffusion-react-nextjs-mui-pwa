@@ -16,6 +16,7 @@ import createEmotionCache from "../src/createEmotionCache";
 import locales, { defaultLocale } from "../src/lib/locales";
 import { i18n, I18nProvider } from "../src/lib/i18n";
 import workboxStuff from "../src/workboxStuff";
+import { ConfirmDialog } from "../src/asyncConfirm";
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -81,6 +82,7 @@ export default function MyApp(props: MyAppProps) {
         draggable={false}
         pauseOnHover
       />
+      <ConfirmDialog />
     </CacheProvider>
   );
 }
