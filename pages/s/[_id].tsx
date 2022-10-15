@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { useGongoOne } from "gongo-client-react";
 import { Box, Container } from "@mui/material";
 import { Trans } from "@lingui/macro";
-import { GetServerSideProps } from "next";
+// import { GetServerSideProps } from "next";
 
 import MyAppBar from "../../src/MyAppBar";
 import Link from "../../src/Link";
 import strObjectId from "../../src/lib/strObjectId";
-import { db as serverDb, ObjectId } from "../../src/api-lib/db";
+// import { db as serverDb, ObjectId } from "../../src/api-lib/db";
 
+/*
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   res,
@@ -45,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   console.log({ item });
   return { props: { serverItem: item } };
 };
+*/
 
 export default function StarredItem({
   serverItem,
