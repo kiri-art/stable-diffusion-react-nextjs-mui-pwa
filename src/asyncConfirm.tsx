@@ -88,12 +88,14 @@ export default function asyncConfirm(arg: string | ConfirmOptions) {
     state.resolve = _resolve;
     if (typeof arg === "string") {
       const text = arg;
+      if (!state.setOpen) _resolve(confirm(text));
       state.setText && state.setText(text);
       state.setTitle && state.setTitle("");
       state.setOkText && state.setOkText("");
       state.setCancelText && state.setCancelText("");
     } else {
       const opts = arg;
+      if (!state.setOpen) _resolve(confirm(opts.title || opts.text));
       state.setTitle && state.setTitle(opts.title);
       state.setText && state.setText(opts.text);
       state.setOkText && state.setOkText(opts.ok || "");
