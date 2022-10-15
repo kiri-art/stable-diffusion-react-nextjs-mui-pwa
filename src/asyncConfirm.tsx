@@ -89,6 +89,9 @@ export default function asyncConfirm(arg: string | ConfirmOptions) {
     if (typeof arg === "string") {
       const text = arg;
       state.setText && state.setText(text);
+      state.setTitle && state.setTitle("");
+      state.setOkText && state.setOkText("");
+      state.setCancelText && state.setCancelText("");
     } else {
       const opts = arg;
       state.setTitle && state.setTitle(opts.title);
