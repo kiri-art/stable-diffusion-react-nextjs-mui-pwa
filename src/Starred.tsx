@@ -9,6 +9,7 @@ import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
 import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
+import Image from "next/image";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -55,16 +56,18 @@ function Item({ item }: { item: Star }) {
 
   return (
     <ImageListItem
-      sx={{ position: "relative" }}
+      sx={{ position: "relative", aspectRatio: "1" }}
       component={Link}
       href={"/s/" + item._id}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         alt={alt}
         src={"/api/file?id=" + strObjectId(item.files.output)}
-        style={{ objectFit: "contain" }}
-        width="100%"
+        layout="fill"
+        objectFit="contain"
+        sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
+        (max-width: 1536) 33vw, 16vw"
       />
       {ownedByUser && (
         <Button
