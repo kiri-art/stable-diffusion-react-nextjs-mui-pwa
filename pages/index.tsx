@@ -12,7 +12,11 @@ import Starred from "../src/Starred";
 
 const Home: NextPage = () => {
   const items = useGongoLive((db) =>
-    db.collection("stars").find().sort("date", "desc").limit(100)
+    db
+      .collection("stars")
+      .find({ deleted: { $ne: true } })
+      .sort("date", "desc")
+      .limit(100)
   );
   useGongoSub("stars");
 

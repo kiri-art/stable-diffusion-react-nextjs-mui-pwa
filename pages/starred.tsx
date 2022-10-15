@@ -11,7 +11,10 @@ export default function StarredPage() {
   const userId = db.auth?.userId;
 
   const items = useGongoLive((db) =>
-    db.collection("stars").find({ userId }).sort("date", "desc")
+    db
+      .collection("stars")
+      .find({ userId, deleted: { $ne: true } })
+      .sort("date", "desc")
   );
 
   useGongoSub("stars", { userId });

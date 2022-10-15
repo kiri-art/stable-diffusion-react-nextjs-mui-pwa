@@ -209,6 +209,9 @@ if (gs.dba) {
   creditCodes.allow("update", userIsAdmin);
   creditCodes.allow("remove", userIsAdmin);
 
+  const stars = db.collection("stars");
+  stars.allow("update", userIdMatches);
+
   const likes = db.collection("likes");
   likes.allow("insert", userIdMatches);
   likes.allow("update", userIdMatches);

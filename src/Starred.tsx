@@ -1,22 +1,24 @@
 import React from "react";
 import { db, useGongoOne } from "gongo-client-react";
 import { Button, ImageList, ImageListItem } from "@mui/material";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
 
 import Link from "./Link";
 import Star from "./schemas/star";
 import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
+import { t } from "@lingui/macro";
+import asyncConfirm from "./asyncConfirm";
 
 function Item({ item }: { item: Star }) {
   const alt = "TODO";
-  const userLike = useGongoOne((db) =>
-    db.collection("likes").find({ starId: item._id })
-  );
-  const likedByUser = !!userLike && !!userLike.liked;
-
   // @ts-expect-error: todo in gongo
   const userId = db.auth?.userId;
+  const userLike = useGongoOne((db) =>
+    db.collection("likes").find({ starId: item._id, userId })
+  );
+  const ownedByUser = item.userId === userId;
+  const likedByUser = !!userLike && !!userLike.liked;
 
   async function like(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -35,6 +37,17 @@ function Item({ item }: { item: Star }) {
       });
   }
 
+  async function destar(event: React.SyntheticEvent) {
+    event.preventDefault();
+    if (
+      await asyncConfirm({
+        title: t`Delete this star?`,
+        text: t`This cannot be undone.  All likes will be lost.`,
+      })
+    )
+      db.collection("stars").update(item._id, { $set: { deleted: true } });
+  }
+
   return (
     <ImageListItem
       sx={{ position: "relative" }}
@@ -48,6 +61,22 @@ function Item({ item }: { item: Star }) {
         style={{ objectFit: "contain" }}
         width="100%"
       />
+      {ownedByUser && (
+        <Button
+          onClick={destar}
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            m: 0,
+            p: 1,
+            minWidth: 0,
+            color: "rgba(200,200,200,0.45)",
+          }}
+        >
+          <Delete />
+        </Button>
+      )}
       <Button
         onClick={like}
         sx={{
