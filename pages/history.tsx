@@ -19,6 +19,7 @@ import sendQueue, {
 } from "../src/lib/sendQueue";
 import Link from "../src/Link";
 import useBreakPoint from "../src/lib/useBreakPoint";
+import { destar } from "../src/Starred";
 
 const MAX_HISTORY = 100;
 
@@ -118,7 +119,7 @@ function Item({ item }: { item: HistoryItem }) {
 
   async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
     // Duplicated in OutputImage
-    if (starId) return alert("ability to de-star coming soon");
+    if (starId) return (await destar(starId)) && setStarId("");
     setStarring(true);
     console.log(item);
     const response = await fetch("/api/starItem", {

@@ -10,6 +10,17 @@ import useBreakPoint from "./lib/useBreakPoint";
 import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
 
+export async function destar(starId: string) {
+  const res = await asyncConfirm({
+    title: t`Delete this star?`,
+    text: t`This cannot be undone.  All likes will be lost.`,
+  });
+
+  if (res) db.collection("stars").update(starId, { $set: { deleted: true } });
+
+  return res;
+}
+
 function Item({ item }: { item: Star }) {
   const alt = "TODO";
   // @ts-expect-error: todo in gongo
@@ -37,15 +48,9 @@ function Item({ item }: { item: Star }) {
       });
   }
 
-  async function destar(event: React.SyntheticEvent) {
+  async function itemDestar(event: React.SyntheticEvent) {
     event.preventDefault();
-    if (
-      await asyncConfirm({
-        title: t`Delete this star?`,
-        text: t`This cannot be undone.  All likes will be lost.`,
-      })
-    )
-      db.collection("stars").update(item._id, { $set: { deleted: true } });
+    destar(item._id);
   }
 
   return (
@@ -63,7 +68,7 @@ function Item({ item }: { item: Star }) {
       />
       {ownedByUser && (
         <Button
-          onClick={destar}
+          onClick={itemDestar}
           sx={{
             position: "absolute",
             right: 0,
@@ -72,6 +77,9 @@ function Item({ item }: { item: Star }) {
             p: 1,
             minWidth: 0,
             color: "rgba(200,200,200,0.45)",
+            "& :hover": {
+              color: "red",
+            },
           }}
         >
           <Delete />

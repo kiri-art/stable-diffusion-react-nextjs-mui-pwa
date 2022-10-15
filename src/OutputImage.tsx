@@ -13,6 +13,7 @@ import {
   Star,
 } from "@mui/icons-material";
 import sendQueue from "./lib/sendQueue";
+import { destar } from "./Starred";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -172,7 +173,7 @@ export default function OutputImage({
     const item = historyId && db.collection("history").findOne(historyId);
     if (!item) return alert("internal error, sorry");
     // Duplicated in history.tsx
-    if (starId) return alert("ability to de-star coming soon");
+    if (starId) return (await destar(starId)) && setStarId("");
     setStarring(true);
     console.log(item);
     const response = await fetch("/api/starItem", {
