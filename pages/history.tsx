@@ -20,6 +20,7 @@ import sendQueue, {
 import Link from "../src/Link";
 import useBreakPoint from "../src/lib/useBreakPoint";
 import { destar } from "../src/Starred";
+import asyncConfirm from "../src/asyncConfirm";
 
 const MAX_HISTORY = 100;
 
@@ -112,8 +113,8 @@ function Item({ item }: { item: HistoryItem }) {
     router.push(url);
   }
 
-  function deleteItem(_event: React.MouseEvent<HTMLButtonElement>) {
-    if (confirm(t`Are you sure?  This cannot be undone.`))
+  async function deleteItem(_event: React.MouseEvent<HTMLButtonElement>) {
+    if (await asyncConfirm(t`Are you sure?  This cannot be undone.`))
       db.collection("history").remove({ _id: item._id });
   }
 
@@ -224,8 +225,8 @@ export default function History() {
     db.collection("history").find().sort("date", "desc")
   );
 
-  function clear() {
-    if (confirm(t`Are you sure?  This action cannot be undone`))
+  async function clear() {
+    if (await asyncConfirm(t`Are you sure?  This action cannot be undone`))
       db.collection("history").remove({});
   }
 
