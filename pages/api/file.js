@@ -35,11 +35,11 @@ const db = gs.dba;
 const Files = db.collection("files");
 
 function resHeaders(res, entry) {
-  res
-    .setHeader("Content-Type", entry.mimeType)
-    .setHeader("Content-Disposition", `inline; filename="${entry.filename}"`)
-    .setHeader("Cache-Control", "public,max-age=31536000,immutable")
-    .setHeader("ETag", entry.sha256);
+  // next/image doesn't allow chaining on setHeader()
+  res.setHeader("Content-Type", entry.mimeType);
+  res.setHeader("Content-Disposition", `inline; filename="${entry.filename}"`);
+  res.setHeader("Cache-Control", "public,max-age=31536000,immutable");
+  res.setHeader("ETag", entry.sha256);
 }
 
 async function createFromBuffer(
