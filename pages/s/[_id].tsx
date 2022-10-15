@@ -2,16 +2,62 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useGongoOne } from "gongo-client-react";
 import { Box, Container } from "@mui/material";
-import MyAppBar from "../../src/MyAppBar";
 import { Trans } from "@lingui/macro";
+import { GetServerSideProps } from "next";
+
+import MyAppBar from "../../src/MyAppBar";
 import Link from "../../src/Link";
 import strObjectId from "../../src/lib/strObjectId";
+import { db as serverDb, ObjectId } from "../../src/api-lib/db";
 
-export default function StarredItem() {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  res,
+}) => {
+  if (!serverDb || !query._id) return { props: {} };
+  const itemRaw = await serverDb
+    .collection("stars")
+    .findOne({ _id: new ObjectId(query._id as string) });
+  if (!itemRaw) return { props: {} };
+
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
+
+  const item = {
+    ...itemRaw,
+    _id: itemRaw._id.toString(),
+    userId: itemRaw.userId.toString(),
+    date: itemRaw.date.toISOString(),
+    files: Object.fromEntries(
+      Object.entries(itemRaw.files as Record<string, ObjectId>).map(
+        ([key, value]) => [key, value.toString()]
+      )
+    ),
+  };
+
+  item._id = item._id.toString();
+  item.userId = item.userId.toString();
+  for (const key of Object.keys(item.files))
+    item.files[key] = item.files[key].toString();
+
+  console.log({ item });
+  return { props: { serverItem: item } };
+};
+
+export default function StarredItem({
+  serverItem,
+}: {
+  serverItem: Record<string, unknown>;
+}) {
   const router = useRouter();
   const { _id } = router.query;
 
-  const item = useGongoOne((db) => db.collection("stars").find({ _id }));
+  const clientItem = useGongoOne((db) => db.collection("stars").find({ _id }));
+  const item = (serverItem || clientItem) as typeof clientItem;
+  if (typeof item.date === "string") item.date = new Date(item.date);
+
   if (!item) return <div>Loading...</div>;
 
   const modelInputs = item.modelInputs;
