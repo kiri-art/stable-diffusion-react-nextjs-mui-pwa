@@ -35,7 +35,7 @@
     "highcharts-react-official": "^3.1.0",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
-    "next": "12.2.5",
+    "next": "12.3.1",
     "next-pwa": "^5.6.0",
     "passport": "0.6.0",
     "passport-github2": "^0.1.12",
