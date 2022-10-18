@@ -13,19 +13,19 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/sd/Controls.tsx:597
+#: src/sd/Controls.tsx:602
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 
-#: src/sd/Controls.tsx:246
+#: src/sd/Controls.tsx:251
 msgid "(Denoising) Strength"
 msgstr "(Denoising) Strength"
 
-#: src/Inpaint.tsx:503
+#: src/Inpaint.tsx:505
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(drag & drop, sharing coming soon)"
 
-#: pages/index.tsx:175
+#: pages/start.tsx:175
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr ""
 
@@ -49,10 +49,10 @@ msgstr "<0>KIRI.ART</0> (\"SD-MUI\") is a WEB UI frontend for <1>Stability.AI</1
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 
-#: src/sd/Controls.tsx:108
-#: src/sd/Controls.tsx:191
-#: src/sd/Controls.tsx:285
-#: src/sd/Controls.tsx:334
+#: src/sd/Controls.tsx:113
+#: src/sd/Controls.tsx:196
+#: src/sd/Controls.tsx:290
+#: src/sd/Controls.tsx:339
 msgid "<0>Learn more</0>"
 msgstr ""
 
@@ -60,11 +60,16 @@ msgstr ""
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 msgstr "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 
-#: src/sd/Controls.tsx:702
+#: pages/index.tsx:53
+msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
+msgstr "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
+
+#: src/sd/Controls.tsx:701
 msgid "A black image will be shown instead."
 msgstr "A black image will be shown instead."
 
-#: src/workboxStuff.tsx:42
+#: src/workboxStuff.tsx:43
+#: src/workboxStuff.tsx:43
 msgid "A newer version of this web app is available, reload to update?"
 msgstr ""
 
@@ -81,7 +86,7 @@ msgstr ""
 msgid "Acknowledements and Thanks"
 msgstr "Acknowledements and Thanks"
 
-#: src/Inpaint.tsx:509
+#: src/Inpaint.tsx:511
 msgid "Adjust prompt and GO"
 msgstr "Adjust prompt and GO"
 
@@ -94,13 +99,19 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: src/sd/Controls.tsx:789
+#: src/sd/Controls.tsx:788
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr "Anime.  Original, previous model (v1.2)"
 
-#: pages/history.tsx:136
+#: pages/history.tsx:232
+#: pages/history.tsx:232
 msgid "Are you sure?  This action cannot be undone"
 msgstr "Are you sure?  This action cannot be undone"
+
+#: pages/history.tsx:120
+#: pages/history.tsx:120
+msgid "Are you sure?  This cannot be undone."
+msgstr "Are you sure?  This cannot be undone."
 
 #: pages/stats.tsx:64
 msgid "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
@@ -110,7 +121,7 @@ msgstr "As a fully open source project, we're excited to have total transparancy
 msgid "Back to Credits"
 msgstr ""
 
-#: pages/index.tsx:104
+#: pages/start.tsx:104
 msgid "Be Responsible"
 msgstr ""
 
@@ -122,7 +133,7 @@ msgstr "Best for Anime"
 #~ msgid "Best for Anime characters"
 #~ msgstr "Best for Anime characters"
 
-#: src/sd/Controls.tsx:779
+#: src/sd/Controls.tsx:778
 msgid "Best for Anime.  Final Release.  Oct 6"
 msgstr "Best for Anime.  Final Release.  Oct 6"
 
@@ -130,16 +141,24 @@ msgstr "Best for Anime.  Final Release.  Oct 6"
 msgid "Buy 50 credits for $1"
 msgstr ""
 
+#: pages/s/[_id].tsx:97
+msgid "CFG"
+msgstr "CFG"
+
+#: src/asyncConfirm.tsx:67
+msgid "Cancel"
+msgstr "Cancel"
+
 #: pages/checkout.tsx:60
 #: pages/checkout.tsx:63
 msgid "Checkout"
 msgstr ""
 
-#: src/sd/Controls.tsx:274
+#: src/sd/Controls.tsx:279
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/history.tsx:157
+#: pages/history.tsx:247
 msgid "Clear History"
 msgstr "Clear History"
 
@@ -148,11 +167,15 @@ msgstr "Clear History"
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
-#: src/Inpaint.tsx:516
+#: src/Inpaint.tsx:518
 msgid "Coming Soon"
 msgstr ""
 
-#: src/sd/Controls.tsx:720
+#: pages/index.tsx:50
+msgid "Community"
+msgstr "Community"
+
+#: src/sd/Controls.tsx:719
 msgid "Confirm Date of Birth"
 msgstr "Confirm Date of Birth"
 
@@ -161,7 +184,7 @@ msgid "Connect with {0}"
 msgstr "Connect with {0}"
 
 #: src/MyAppBar.tsx:185
-#: src/MyAppBar.tsx:389
+#: src/MyAppBar.tsx:392
 msgid "Credits:"
 msgstr ""
 
@@ -173,15 +196,20 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/sd/Controls.tsx:102
+#: src/Starred.tsx:16
+#: src/Starred.tsx:16
+msgid "Delete this star?"
+msgstr "Delete this star?"
+
+#: src/sd/Controls.tsx:107
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr ""
 
-#: src/sd/Controls.tsx:183
+#: src/sd/Controls.tsx:188
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 
-#: pages/index.tsx:108
+#: pages/start.tsx:108
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
@@ -201,7 +229,7 @@ msgstr "Face Enhance"
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 
-#: src/sd/Controls.tsx:698
+#: src/sd/Controls.tsx:697
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 
@@ -209,7 +237,7 @@ msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropr
 msgid "Free Credits"
 msgstr ""
 
-#: src/sd/Controls.tsx:799
+#: src/sd/Controls.tsx:798
 msgid "Full precision, slower, sometimes better."
 msgstr "Full precision, slower, sometimes better."
 
@@ -234,25 +262,30 @@ msgstr ""
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:404
+#: src/sd/Controls.tsx:409
 msgid "Height"
 msgstr ""
 
-#: pages/history.tsx:149
+#: pages/history.tsx:238
 #: src/MyAppBar.tsx:386
 msgid "History"
 msgstr "History"
 
 #: pages/history.tsx:151
-msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to \"starred\" images). Only the last {MAX_HISTORY} items are kept."
-msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to \"starred\" images). Only the last {MAX_HISTORY} items are kept."
+#~ msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to \"starred\" images). Only the last {MAX_HISTORY} items are kept."
+#~ msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to \"starred\" images). Only the last {MAX_HISTORY} items are kept."
 
-#: pages/index.tsx:51
+#: pages/history.tsx:240
+msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+
+#: pages/index.tsx:40
+#: pages/start.tsx:51
 #: src/MyAppBar.tsx:114
 msgid "Home"
 msgstr ""
 
-#: src/sd/Controls.tsx:280
+#: src/sd/Controls.tsx:285
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr ""
 
@@ -261,28 +294,28 @@ msgstr ""
 #~ msgstr ""
 
 #: pages/upsample.tsx:193
-#: src/Inpaint.tsx:370
+#: src/Inpaint.tsx:371
 msgid "Image Loaded"
 msgstr "Image Loaded"
 
 #: pages/img2img.tsx:17
-#: pages/index.tsx:30
+#: pages/start.tsx:30
 #: src/MyAppBar.tsx:144
 msgid "Image to Image"
 msgstr ""
 
-#: src/Inpaint.tsx:521
+#: src/Inpaint.tsx:523
 msgid "Image will be scaled to max 512x512 (for now)"
 msgstr "Image will be scaled to max 512x512 (for now)"
 
-#: src/OutputImage.tsx:231
+#: src/OutputImage.tsx:307
 msgid "Inpaint"
 msgstr "Inpaint"
 
-#: pages/index.tsx:36
 #: pages/inpaint.tsx:17
+#: pages/start.tsx:36
 #: src/MyAppBar.tsx:159
-#: src/OutputImage.tsx:293
+#: src/OutputImage.tsx:377
 msgid "Inpainting"
 msgstr "Inpainting"
 
@@ -298,7 +331,7 @@ msgstr "It is Free and Open Source Software (\"FOSS\") developed by the communit
 msgid "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 msgstr "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 
-#: src/sd/Controls.tsx:809
+#: src/sd/Controls.tsx:808
 msgid "Japanese / Japanglish prompt input, style"
 msgstr "Japanese / Japanglish prompt input, style"
 
@@ -312,26 +345,34 @@ msgid "Loading..."
 msgstr ""
 
 #: src/GoButton.tsx:47
-#: src/MyAppBar.tsx:410
+#: src/MyAppBar.tsx:413
 msgid "Login"
 msgstr ""
 
-#: src/MyAppBar.tsx:399
+#: src/MyAppBar.tsx:402
 msgid "Logout"
 msgstr ""
 
-#: src/sd/Controls.tsx:416
+#: src/sd/Controls.tsx:421
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
 
 #: pages/upsample.tsx:61
 #: pages/upsample.tsx:65
-#: src/sd/Controls.tsx:751
-#: src/sd/Controls.tsx:755
+#: src/sd/Controls.tsx:750
+#: src/sd/Controls.tsx:754
 msgid "Model"
 msgstr "Model"
 
-#: src/sd/Controls.tsx:378
+#: pages/index.tsx:97
+msgid "Most Popular"
+msgstr "Most Popular"
+
+#: pages/index.tsx:94
+msgid "Most Recent"
+msgstr "Most Recent"
+
+#: src/sd/Controls.tsx:383
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 
@@ -339,11 +380,13 @@ msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 bec
 msgid "My Credits"
 msgstr ""
 
-#: src/sd/Controls.tsx:690
+#: pages/index.tsx:76
+#: src/sd/Controls.tsx:689
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
 
-#: src/sd/Controls.tsx:160
+#: pages/s/[_id].tsx:94
+#: src/sd/Controls.tsx:165
 msgid "Negative Prompt"
 msgstr "Negative Prompt"
 
@@ -365,7 +408,7 @@ msgstr "News"
 msgid "Next credits on:"
 msgstr ""
 
-#: pages/index.tsx:113
+#: pages/start.tsx:113
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr ""
 
@@ -374,15 +417,15 @@ msgstr ""
 msgid "No such code exists."
 msgstr ""
 
-#: src/Inpaint.tsx:515
+#: src/Inpaint.tsx:517
 msgid "Notes"
 msgstr "Notes"
 
-#: src/sd/Controls.tsx:320
+#: src/sd/Controls.tsx:325
 msgid "Number of Inference Steps"
 msgstr ""
 
-#: src/sd/Controls.tsx:329
+#: src/sd/Controls.tsx:334
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr ""
 
@@ -390,7 +433,11 @@ msgstr ""
 #~ msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results. <0>Learn more</0>"
 #~ msgstr ""
 
-#: pages/index.tsx:144
+#: src/asyncConfirm.tsx:70
+msgid "OK"
+msgstr "OK"
+
+#: pages/start.tsx:144
 msgid "Open Source, developer friendly."
 msgstr "Open Source, developer friendly."
 
@@ -413,7 +460,7 @@ msgid "Orders"
 msgstr ""
 
 #: pages/upsample.tsx:79
-#: src/sd/Controls.tsx:769
+#: src/sd/Controls.tsx:768
 msgid "Original model, best for most cases."
 msgstr "Original model, best for most cases."
 
@@ -425,7 +472,7 @@ msgstr "Our <0>event logs</0> are also available."
 msgid "Pay"
 msgstr ""
 
-#: src/sd/Controls.tsx:455
+#: src/sd/Controls.tsx:460
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "Please enter a valid seed or turn \"Randomize\" back on."
 
@@ -434,20 +481,25 @@ msgstr "Please enter a valid seed or turn \"Randomize\" back on."
 msgid "Please wait..."
 msgstr ""
 
-#: src/OutputImage.tsx:276
+#: src/OutputImage.tsx:360
 msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 msgstr "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 
 #: pages/privacy.tsx:14
-#: src/Copyright.tsx:26
+#: src/Copyright.tsx:28
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
-#: pages/index.tsx:128
+#: pages/p/[_id].tsx:22
+msgid "Profile"
+msgstr "Profile"
+
+#: pages/start.tsx:128
 msgid "Project Goals"
 msgstr "Project Goals"
 
-#: src/sd/Controls.tsx:83
+#: pages/s/[_id].tsx:91
+#: src/sd/Controls.tsx:85
 msgid "Prompt"
 msgstr "Prompt"
 
@@ -463,19 +515,19 @@ msgstr ""
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr ""
 
-#: src/Inpaint.tsx:496
+#: src/Inpaint.tsx:498
 msgid "Quick Start"
 msgstr "Quick Start"
 
-#: src/sd/Controls.tsx:528
+#: src/sd/Controls.tsx:533
 msgid "Randomize"
 msgstr "Randomize"
 
-#: src/sd/Controls.tsx:536
+#: src/sd/Controls.tsx:541
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 
-#: pages/index.tsx:190
+#: pages/start.tsx:190
 msgid "Read the full Terms of Service below."
 msgstr "Read the full Terms of Service below."
 
@@ -509,7 +561,7 @@ msgstr "Requests"
 msgid "Resources"
 msgstr "Resources"
 
-#: src/Inpaint.tsx:515
+#: src/Inpaint.tsx:517
 msgid "Roadmap"
 msgstr "Roadmap"
 
@@ -517,22 +569,35 @@ msgstr "Roadmap"
 #~ msgid "SD-MUI is a WEB UI frontend for <0>Stability.AI</0>'s <1>Stable Diffusion</1>. It is FOSS (Free and Open Source Software Frontend) and developed by the community."
 #~ msgstr ""
 
-#: src/OutputImage.tsx:286
+#: src/OutputImage.tsx:370
 msgid "SEND IMAGE TO"
 msgstr "SEND IMAGE TO"
 
-#: src/sd/Controls.tsx:856
-#: src/sd/Controls.tsx:860
+#: src/sd/Controls.tsx:855
+#: src/sd/Controls.tsx:859
 msgid "Sampler"
 msgstr "Sampler"
 
-#: src/sd/Controls.tsx:445
+#: src/sd/Controls.tsx:450
 msgid "Seed"
 msgstr "Seed"
 
-#: src/sd/Controls.tsx:589
+#: src/sd/Controls.tsx:594
 msgid "Share Inputs"
 msgstr "Share Inputs"
+
+#: pages/starred.tsx:28
+msgid "Share your Stars with the World"
+msgstr "Share your Stars with the World"
+
+#: pages/starred.tsx:24
+#: src/MyAppBar.tsx:389
+msgid "Starred"
+msgstr "Starred"
+
+#: pages/index.tsx:44
+msgid "Start Creating"
+msgstr "Start Creating"
 
 #: pages/stats.tsx:61
 #: src/MyAppBar.tsx:215
@@ -547,22 +612,26 @@ msgstr ""
 #~ msgid "Status: In Active Development"
 #~ msgstr "Status: In Active Development"
 
+#: pages/s/[_id].tsx:100
+msgid "Steps"
+msgstr "Steps"
+
 #: pages/credits.tsx:74
 #: pages/credits.tsx:74
 msgid "Successfully redeemed {0} credits."
 msgstr ""
 
-#: pages/index.tsx:133
+#: pages/start.tsx:133
 msgid "Super simple, easy to share."
 msgstr "Super simple, easy to share."
 
-#: pages/index.tsx:172
-#: src/Copyright.tsx:22
+#: pages/start.tsx:172
+#: src/Copyright.tsx:24
 msgid "Terms of Service"
 msgstr ""
 
-#: pages/index.tsx:24
-#: pages/txt2img.tsx:131
+#: pages/start.tsx:24
+#: pages/txt2img.tsx:133
 #: src/MyAppBar.tsx:129
 msgid "Text to Image"
 msgstr ""
@@ -577,7 +646,12 @@ msgstr "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 #~ msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 #~ msgstr ""
 
-#: pages/index.tsx:163
+#: src/Starred.tsx:17
+#: src/Starred.tsx:17
+msgid "This cannot be undone.  All likes will be lost."
+msgstr "This cannot be undone.  All likes will be lost."
+
+#: pages/start.tsx:163
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
@@ -601,7 +675,7 @@ msgstr "Total Users"
 msgid "Total credits available for immediate use."
 msgstr ""
 
-#: pages/index.tsx:146
+#: pages/start.tsx:146
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 
@@ -609,22 +683,22 @@ msgstr "Transparent development and easy for developers to get involved. Especia
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/Inpaint.tsx:501
+#: src/Inpaint.tsx:503
 msgid "Upload an image with button below"
 msgstr "Upload an image with button below"
 
-#: src/OutputImage.tsx:234
-#: src/OutputImage.tsx:290
+#: src/OutputImage.tsx:310
+#: src/OutputImage.tsx:374
 msgid "Upsample"
 msgstr "Upsample"
 
-#: pages/index.tsx:42
+#: pages/start.tsx:42
 #: pages/upsample.tsx:296
 #: src/MyAppBar.tsx:174
 msgid "Upsampling"
 msgstr "Upsampling"
 
-#: src/Inpaint.tsx:506
+#: src/Inpaint.tsx:508
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
@@ -632,7 +706,7 @@ msgstr "Use mouse / finger to draw mask over it"
 msgid "Users"
 msgstr "Users"
 
-#: src/sd/Controls.tsx:466
+#: src/sd/Controls.tsx:471
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 
@@ -640,12 +714,12 @@ msgstr "Using an identical seed with identical options (prompt, guidance scale, 
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 
-#: src/sd/Controls.tsx:366
+#: src/sd/Controls.tsx:371
 msgid "Width"
 msgstr ""
 
-#: src/sd/Controls.tsx:377
-#: src/sd/Controls.tsx:415
+#: src/sd/Controls.tsx:382
+#: src/sd/Controls.tsx:420
 msgid "Width of output image."
 msgstr "Width of output image."
 
@@ -658,13 +732,17 @@ msgstr "Width of output image."
 msgid "You have already redeemed this code before."
 msgstr ""
 
-#: pages/index.tsx:119
+#: pages/start.tsx:119
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr ""
 
 #: pages/credits.tsx:70
 #~ msgid "You receive free credits every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr ""
+
+#: pages/starred.tsx:32
+msgid "Your <0>starred</0> items are public and appear on your profile."
+msgstr "Your <0>starred</0> items are public and appear on your profile."
 
 #: pages/credits.tsx:159
 msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
@@ -674,7 +752,7 @@ msgstr "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*<
 #~ msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr ""
 
-#: pages/index.tsx:135
+#: pages/start.tsx:135
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 msgstr "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 
