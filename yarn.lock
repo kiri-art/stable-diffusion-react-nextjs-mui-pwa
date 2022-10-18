@@ -3343,10 +3343,10 @@ gongo-client-react@0.2.0:
   resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.0.tgz#8a2b557a3ec90069010aa8bdc85d88e53f0a2600"
   integrity sha512-00lHKNmqFU2DDV5D1CNM2eDPJiFWbyGFJ4q21PMB4UDBv5LUfw+xztEEh70iAmiRZ/j3CYQvI/aCHM6Z/+gQ7g==
 
-gongo-client@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.5.0.tgz#6587eedcedf61ad56cd5ffccde8b19284083d9be"
-  integrity sha512-WxLuyb81CbwQu0H8Q7zf2fpmG+JWoST0wjCSUYrPdyeIfTM1B27h///p/9jr5PvmL4AwoDz4YJM6gbpfV+bnoA==
+gongo-client@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.5.1.tgz#605c6f78e363ba274084e4c51f2ea060ba8fe4d4"
+  integrity sha512-VS0lL6xevsg1869glw6BdpcwUr9qgNjNFxFwPON+M9mOFqDx0XSGJymRn+jbeOZ+Y7Uvm4jPfahJsanupdOd+w==
   dependencies:
     arson "^0.2.6"
     bson-objectid "^2.0.3"
@@ -5084,6 +5084,13 @@ safe-regex-test@^1.0.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
+sanitize-filename@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/sanitize-filename/-/sanitize-filename-1.6.3.tgz#755ebd752045931977e30b2025d340d7c9090378"
+  integrity sha512-y/52Mcy7aw3gRm7IrcGDFx/bCk4AhRh2eI9luHOQM86nZsqwiRkkq2GekHXBBD+SmPidc8i2PqtYZl+pWJ8Oeg==
+  dependencies:
+    truncate-utf8-bytes "^1.0.0"
+
 saslprep@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/saslprep/-/saslprep-1.0.3.tgz#4c02f946b56cf54297e347ba1093e7acac4cf226"
@@ -5606,6 +5613,13 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
+truncate-utf8-bytes@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/truncate-utf8-bytes/-/truncate-utf8-bytes-1.0.2.tgz#405923909592d56f78a5818434b0b78489ca5f2b"
+  integrity sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==
+  dependencies:
+    utf8-byte-length "^1.0.1"
+
 ts-node@^9:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
@@ -5766,6 +5780,11 @@ use-sync-external-store@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+
+utf8-byte-length@^1.0.1:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz#f45f150c4c66eee968186505ab93fcbb8ad6bf61"
+  integrity sha512-4+wkEYLBbWxqTahEsWrhxepcoVOJ+1z5PGIjPZxRkytcdSUaNjIjBM7Xn8E+pdSuV7SzvWovBFA54FO0JSoqhA==
 
 utf8@^3.0.0:
   version "3.0.0"

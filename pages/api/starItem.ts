@@ -9,6 +9,7 @@ import {
 } from "../../src/schemas";
 import { createFileFromBuffer } from "./file2";
 import gs, { Auth } from "../../src/api-lib/db";
+import sanitizeFilename from "sanitize-filename";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -45,7 +46,7 @@ export default async function starItem(
     negative_prompt: { value: modelInputs.negative_prompt || "" },
   };
   const sharedInputs = sharedInputTextFromInputs(simulatedModelState);
-  const filename = sharedInputs + ".png";
+  const filename = sanitizeFilename(sharedInputs + ".png");
 
   const images = {
     output: BufferFromBase64(result?.modelOutputs?.[0]?.image_base64),

@@ -21,6 +21,7 @@ import Link from "../src/Link";
 import useBreakPoint from "../src/lib/useBreakPoint";
 import { destar } from "../src/Starred";
 import asyncConfirm from "../src/asyncConfirm";
+import sanitizeFilename from "sanitize-filename";
 
 const MAX_HISTORY = 100;
 
@@ -82,7 +83,9 @@ function Item({ item }: { item: HistoryItem }) {
     outputImageQueue.add({
       title: item.modelInputs.prompt,
       text: item.modelInputs.prompt,
-      files: [new File([blob], item.modelInputs.prompt + ".png")],
+      files: [
+        new File([blob], sanitizeFilename(item.modelInputs.prompt + ".png")),
+      ],
     });
 
     if (params.has("init_image")) {

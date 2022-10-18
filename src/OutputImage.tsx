@@ -14,6 +14,7 @@ import {
 } from "@mui/icons-material";
 import sendQueue from "./lib/sendQueue";
 import { destar } from "./Starred";
+import sanitizeFilename from "sanitize-filename";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -118,7 +119,7 @@ export default function OutputImage({
     if (!imgResult.current) return;
     //const blob = await fetch(imgResult.current.src).then(r => r.blob());
     const a = document.createElement("a");
-    a.setAttribute("download", text.replace(/:/g, " ") + ".png");
+    a.setAttribute("download", sanitizeFilename(text + ".png"));
     a.setAttribute("href-lang", "image/png");
     a.setAttribute("href", imgSrc);
     a.click();
