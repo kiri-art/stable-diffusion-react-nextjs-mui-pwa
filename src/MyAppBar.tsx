@@ -382,6 +382,12 @@ export default function MyAppBar({ title }: { title: string }) {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
+                      <MenuItem
+                        component={Link}
+                        href={"/" + (user.username || user._id)}
+                      >
+                        <Trans>Profile</Trans>
+                      </MenuItem>
                       <MenuItem component={Link} href="/history">
                         <Trans>History</Trans>
                       </MenuItem>
