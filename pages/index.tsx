@@ -33,8 +33,8 @@ const Home: NextPage = () => {
       <MyAppBar title={t`Home`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
         <Box sx={{ textAlign: "center" }}>
-          <Button component={Link} href="/start">
-            <Trans>Quick Start</Trans>
+          <Button variant="contained" component={Link} href="/start">
+            <Trans>Start Creating</Trans>
           </Button>
         </Box>
 
