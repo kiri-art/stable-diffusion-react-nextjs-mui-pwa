@@ -29,12 +29,12 @@ import {
 
 import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
-import { differenceInYears } from "date-fns";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 import GoButton from "../GoButton";
 import stableDiffusionInputsSchema from "../schemas/stableDiffusionInputs";
 import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
+import useOver18 from "../lib/useOver18";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -633,13 +633,7 @@ function SafetyChecker({
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
-  const over18 = React.useMemo(() => {
-    if (user?.dob instanceof Date) {
-      const age = differenceInYears(new Date(), user.dob);
-      return age >= 18;
-    }
-    return false;
-  }, [user]);
+  const over18 = useOver18();
 
   const confirmDob = React.useCallback(
     function confirmDob(event: React.SyntheticEvent) {
