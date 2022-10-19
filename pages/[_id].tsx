@@ -13,6 +13,7 @@ import { t, Trans } from "@lingui/macro";
 import MyAppBar from "../src/MyAppBar";
 import Starred from "../src/Starred";
 import { Edit } from "@mui/icons-material";
+import { useGongoIsPopulated } from "gongo-client-react";
 
 function Username({
   userId,
@@ -25,12 +26,18 @@ function Username({
 }) {
   const [editable, setEditable] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
-  const [newUsername, setNewUsername] = React.useState("");
+  const [newUsername, setNewUsername] = React.useState(username);
   const [notAvailable, setNotAvailable] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    if (editable) inputRef.current && inputRef.current.focus();
+  }, [editable]);
 
   async function submit(event: React.SyntheticEvent) {
     event.preventDefault();
-    if (newUsername == "") return setEditable(false);
+    if (newUsername == "" || newUsername === username)
+      return setEditable(false);
     setSaving(true);
     console.log({ username });
 
@@ -71,11 +78,16 @@ function Username({
         {editable ? (
           <form onSubmit={submit}>
             <input
+              ref={inputRef}
               type="text"
               value={newUsername}
               onChange={(event) => setNewUsername(event.target.value)}
             />
-            <input type="submit" disabled={saving} />
+            <input
+              type="submit"
+              disabled={saving}
+              value={newUsername ? t`Save` : t`Cancel`}
+            />
             {notAvailable && (
               <span style={{ color: "red", fontSize: "90%" }}>
                 <br />
@@ -85,7 +97,7 @@ function Username({
           </form>
         ) : (
           <>
-            <span>{username}</span>
+            <span>{username || t`Anonymous User`}</span>
             {isUser && (
               <IconButton onClick={() => setEditable(!editable)}>
                 <Edit sx={{ fontSize: "60%" }} />
@@ -95,7 +107,7 @@ function Username({
         )}
       </Typography>
       <div style={{ color: "#aaa", fontSize: "80%" }}>
-        kiri.art/{newUsername || username}
+        kiri.art/{newUsername || username || "p/" + userId}
       </div>
     </Box>
   );
@@ -105,15 +117,22 @@ export default function Profile() {
   const router = useRouter();
   const { _id } = router.query;
   const query =
-    _id?.length === 24 ? { $or: [{ _id }, { username: _id }] } : { _id };
+    _id?.length === 24
+      ? { $or: [{ _id }, { username: _id }] }
+      : { username: _id };
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) => db.collection("users").find(query));
-  const items = useGongoLive((db) =>
-    db.collection("stars").find({ userId: _id }).sort("date", "desc")
+  const items = useGongoLive(
+    (db) =>
+      user &&
+      db.collection("stars").find({ userId: user._id }).sort("date", "desc")
   );
+  const populated = useGongoIsPopulated();
 
-  const username = (user && (user.username as string)) || t`Anonymous User`;
+  const username = user
+    ? (user.username as string) || t`Anonymous User`
+    : t`User not found`;
 
   useGongoSub("stars", { userId: _id });
 
@@ -121,13 +140,19 @@ export default function Profile() {
     <Box>
       <MyAppBar title={username} />
       <Container sx={{ my: 2 }}>
-        <Username
-          userId={_id as string}
-          username={(user && (user.username as string)) || ""}
-          isUser={userId == _id}
-        />
-        <Starred items={items} />
-        <div style={{ height: "4px" }} />
+        {!populated && <div>{t`Loading...`}</div>}
+        {!user && <div>{t`User not found`}</div>}
+        {user && (
+          <>
+            <Username
+              userId={_id as string}
+              username={(user && (user.username as string)) || ""}
+              isUser={user && userId == user._id}
+            />
+            <Starred items={items} />
+            <div style={{ height: "4px" }} />
+          </>
+        )}
       </Container>
     </Box>
   );
