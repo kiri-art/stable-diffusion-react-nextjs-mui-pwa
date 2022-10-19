@@ -126,7 +126,10 @@ export default function Profile() {
   const items = useGongoLive(
     (db) =>
       user &&
-      db.collection("stars").find({ userId: user._id }).sort("date", "desc")
+      db
+        .collection("stars")
+        .find({ userId: user._id, deleted: { $ne: true } })
+        .sort("date", "desc")
   );
   const populated = useGongoIsPopulated();
 
