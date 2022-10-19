@@ -20,15 +20,23 @@ import Copyright from "../src/Copyright";
 import { useGongoLive, useGongoSub } from "gongo-client-react";
 import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const [nsfw, setNsfw] = React.useState(true);
+  const router = useRouter();
+
+  // const [nsfwFilter, setNsfwFilter] = React.useState(true);
+  const nsfwFilter =
+    !router.query.nsfwFilter || router.query.nsfwFilter === "true";
+  const setNsfw = (nsfwFilter: boolean) =>
+    router.replace({ pathname: "/", query: { nsfwFilter } });
+
   const [show, setShow] = React.useState("recent");
   const over18 = useOver18();
 
   const query: Record<string, unknown> = { deleted: { $ne: true } };
   const sortField = show === "recent" ? "date" : "likes";
-  if (nsfw) query["callInputs.safety_checker"] = true;
+  if (nsfwFilter) query["callInputs.safety_checker"] = true;
 
   const items = useGongoLive((db) =>
     db.collection("stars").find(query).sort(sortField, "desc").limit(100)
@@ -67,7 +75,7 @@ const Home: NextPage = () => {
               sx={{ mr: 0 }}
               control={
                 <Switch
-                  checked={nsfw}
+                  checked={nsfwFilter}
                   onChange={(event) => setNsfw(event.target.checked)}
                 />
               }
