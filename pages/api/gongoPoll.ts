@@ -96,6 +96,19 @@ gs.publish("user", async (db, _opts, { auth, updatedAt }) => {
   ];
 });
 
+gs.method("setUserName", async (db, { username }, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) throw new Error("Not logged in");
+
+  const existing = await db.collection("users").findOne({ username });
+  if (existing) return { status: "USERNAME_NOT_AVAILABLE" };
+
+  await db
+    .collection("users")
+    .updateOne({ _id: userId }, { $set: { username } });
+  return { status: "OK" };
+});
+
 gs.publish("allCreditCodes", async (db, _opts, { auth /*, updatedAt */ }) => {
   const userId = await auth.userId();
   if (!userId) return [];
