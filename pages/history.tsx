@@ -1,5 +1,5 @@
 import { t, Trans } from "@lingui/macro";
-import { db, useGongoLive } from "gongo-client-react";
+import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
 import { useRouter } from "next/router";
 import React from "react";
 import {
@@ -222,6 +222,7 @@ function Item({ item }: { item: HistoryItem }) {
 }
 
 export default function History() {
+  const userId = useGongoUserId();
   const cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   const items = useGongoLive((db) =>
@@ -239,8 +240,8 @@ export default function History() {
       <Container sx={{ my: 2 }}>
         <Trans>
           History is kept on your <b>local device only</b>. It is not backed up
-          to the cloud nor visible to others (in contrast to{" "}
-          <Link href="/starred">starred</Link> images). Only the last{" "}
+          to the cloud nor visible to others (in contrast to your{" "}
+          <Link href={"/" + userId}>starred</Link> images). Only the last{" "}
           {MAX_HISTORY} items are kept.
         </Trans>
         <Button size="small" onClick={clear}>
