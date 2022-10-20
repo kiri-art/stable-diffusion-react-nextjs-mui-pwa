@@ -21,6 +21,7 @@ import { useGongoLive, useGongoSub } from "gongo-client-react";
 import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
 import { useRouter } from "next/router";
+import { GridView, Splitscreen } from "@mui/icons-material";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -29,10 +30,15 @@ const Home: NextPage = () => {
   const nsfwFilter =
     !router.query.nsfwFilter || router.query.nsfwFilter === "true";
   const setNsfw = (nsfwFilter: boolean) =>
-    router.replace({ pathname: "/", query: { nsfwFilter } });
+    router.replace({ pathname: "/", query: { ...router.query, nsfwFilter } });
 
   const [show, setShow] = React.useState("recent");
   const over18 = useOver18();
+
+  // const [useGrid, setUseGrid] = React.useState(true);
+  const useGrid = !router.query.useGrid || router.query.useGrid === "true";
+  const setUseGrid = (useGrid: boolean) =>
+    router.replace({ pathname: "/", query: { ...router.query, useGrid } });
 
   const query: Record<string, unknown> = { deleted: { $ne: true } };
   const sortField = show === "recent" ? "date" : "likes";
@@ -104,9 +110,25 @@ const Home: NextPage = () => {
             <ToggleButton value="popular">
               <Trans>Most Popular</Trans>
             </ToggleButton>
+          </ToggleButtonGroup>{" "}
+          <ToggleButtonGroup
+            color="primary"
+            value={useGrid ? "grid" : "nogrid"}
+            exclusive
+            size="small"
+            onChange={(_event, newValue) => newValue && setUseGrid(!useGrid)}
+            aria-label="Platform"
+            sx={{ fontSize: "80%", position: "relative", top: 7 }}
+          >
+            <ToggleButton value="grid">
+              <GridView sx={{ fontSize: "170%" }} />
+            </ToggleButton>
+            <ToggleButton value="nogrid">
+              <Splitscreen sx={{ fontSize: "170%" }} />
+            </ToggleButton>
           </ToggleButtonGroup>
         </Box>
-        <Starred items={items} />
+        <Starred items={items} cols={useGrid ? undefined : 1} />
         <Copyright />
       </Container>
     </>

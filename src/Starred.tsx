@@ -124,11 +124,17 @@ function Item({ item }: { item: Star }) {
   );
 }
 
-export default function Starred({ items }: { items: Star[] }) {
-  const cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
+export default function Starred({
+  items,
+  cols,
+}: {
+  items: Star[];
+  cols?: number;
+}) {
+  const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   return (
-    <ImageList cols={cols}>
+    <ImageList cols={cols || cols}>
       {items.map((item) => (
         <Item key={item._id} item={item} />
       ))}
