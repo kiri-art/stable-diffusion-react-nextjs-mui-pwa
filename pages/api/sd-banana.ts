@@ -129,7 +129,7 @@ async function bananaSdkRun(
     ...chargedCredits,
   };
 
-  if (gs && gs.dba)
+  if (REQUIRE_REGISTRATION && gs && gs.dba)
     await gs.dba.collection("bananaRequests").insertOne(bananaRequest);
 
   return result;
