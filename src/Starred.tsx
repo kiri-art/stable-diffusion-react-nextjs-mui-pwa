@@ -134,7 +134,7 @@ export default function Starred({
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   return (
-    <ImageList cols={cols || cols}>
+    <ImageList cols={cols || _cols}>
       {items.map((item) => (
         <Item key={item._id} item={item} />
       ))}
