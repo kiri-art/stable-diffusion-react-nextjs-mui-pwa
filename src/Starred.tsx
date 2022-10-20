@@ -31,6 +31,9 @@ function Item({ item }: { item: Star }) {
   );
   const ownedByUser = item.userId === userId;
   const likedByUser = !!userLike && !!userLike.liked;
+  const aspectRatio = item.modelInputs.width
+    ? item.modelInputs.width + "/" + item.modelInputs.height
+    : "1";
 
   async function like(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -56,7 +59,7 @@ function Item({ item }: { item: Star }) {
 
   return (
     <ImageListItem
-      sx={{ position: "relative", aspectRatio: "1" }}
+      sx={{ position: "relative", aspectRatio }}
       component={Link}
       href={"/s/" + item._id}
     >
@@ -134,7 +137,7 @@ export default function Starred({
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   return (
-    <ImageList cols={cols || _cols}>
+    <ImageList variant="masonry" cols={cols || _cols}>
       {items.map((item) => (
         <Item key={item._id} item={item} />
       ))}
