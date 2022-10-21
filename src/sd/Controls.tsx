@@ -760,12 +760,12 @@ function ModelSelect({
         >
           {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
           <MenuItem
-            value="CompVis/stable-diffusion-v1-4"
+            value="runwayml/stable-diffusion-v1-5"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
-              value="CompVis/stable-diffusion-v1-4"
-              desc={t`Original model, best for most cases.`}
+              value="runwayml/stable-diffusion-v1-5"
+              desc={t`Latest Stable Diffusion, Oct 20th!`}
             />
           </MenuItem>
 
@@ -786,6 +786,16 @@ function ModelSelect({
             <ModelMenuItem
               value="hakurei/waifu-diffusion-v1-3"
               desc={t`Best for Anime.  Final Release.  Oct 6`}
+            />
+          </MenuItem>
+
+          <MenuItem
+            value="CompVis/stable-diffusion-v1-4"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="CompVis/stable-diffusion-v1-4"
+              desc={t`Original model, best for most cases.`}
             />
           </MenuItem>
 

@@ -3,6 +3,7 @@ import { object, string, boolean, InferType } from "yup";
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
     "CompVis/stable-diffusion-v1-4",
+    "runwayml/stable-diffusion-v1-5",
     "runwayml/stable-diffusion-inpainting",
     "hakurei/waifu-diffusion",
     "hakurei/waifu-diffusion-v1-3",

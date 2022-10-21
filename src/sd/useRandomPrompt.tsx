@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const randomPrompts = {
+const _randomPrompts = {
   "CompVis/stable-diffusion-v1-4": [
     "Super Dog",
     "A digital illustration of a medieval town, 4k, detailed, trending in artstation, fantasy",
@@ -29,8 +29,16 @@ const randomPrompts = {
     "かわいいわんこのイラスト",
   ],
 };
-randomPrompts["hakurei/waifu-diffusion-v1-3-full"] =
-  randomPrompts["hakurei/waifu-diffusion-v1-3"];
+
+const randomPrompts = {
+  ..._randomPrompts,
+  "hakurei/waifu-diffusion-v1-3-full":
+    _randomPrompts["hakurei/waifu-diffusion-v1-3"],
+  "runwayml/stable-diffusion-v1-5":
+    _randomPrompts["CompVis/stable-diffusion-v1-4"],
+  "runwayml/stable-diffusion-inpainting":
+    _randomPrompts["CompVis/stable-diffusion-v1-4"],
+};
 
 function getRandomPrompt(MODEL_ID: string) {
   // @ts-expect-error: I don't have time for you, typescript
