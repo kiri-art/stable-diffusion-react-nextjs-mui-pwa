@@ -1,5 +1,5 @@
 import React from "react";
-import { db, useGongoOne } from "gongo-client-react";
+import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import { Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
 import Masonry from "@mui/lab/Masonry";
@@ -25,8 +25,7 @@ export async function destar(starId: string) {
 
 function Item({ item }: { item: Star }) {
   const alt = "TODO";
-  // @ts-expect-error: todo in gongo
-  const userId = db.auth?.userId;
+  const userId = useGongoUserId();
   const userLike = useGongoOne((db) =>
     db.collection("likes").find({ starId: item._id, userId })
   );
