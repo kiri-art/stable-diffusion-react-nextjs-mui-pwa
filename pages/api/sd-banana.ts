@@ -33,6 +33,15 @@ async function bananaSdkRun(
 
   let envName = "BANANA_MODEL_KEY_SD";
   switch (callInputs.MODEL_ID) {
+    case "CompVis/stable-diffusion-v1-4":
+      envName += "_v1_4";
+      break;
+    case "runwayml/stable-diffusion-v1-5":
+      envName += "_v1_5";
+      break;
+    case "runwayml/stable-diffusion-inpainting":
+      envName += "_INPAINT";
+      break;
     case "hakurei/waifu-diffusion":
       envName += "_WAIFU";
       break;
@@ -269,10 +278,12 @@ export default async function SDBanana(
     console.log("! Removed modelInputs.sampler - TODO");
   }
 
-  // TODO.  For now this means sending the image twice!  We'll
-  // settle on something and then upgrade ALL the backend models.
-  if (callInputs.PIPELINE === "StableDiffusionInpaintPipeline") {
+  if (callInputs.MODEL_ID === "runwayml/stable-diffusion-inpainting") {
     modelInputs.image = modelInputs.init_image;
+    delete modelInputs.init_image;
+  } else {
+    if (callInputs.PIPELINE === "StableDiffusionInpaintPipeline")
+      callInputs.PIPELINE = "StableDiffusionInpaintPipelineLegacy";
   }
 
   // @ts-expect-error: TODO

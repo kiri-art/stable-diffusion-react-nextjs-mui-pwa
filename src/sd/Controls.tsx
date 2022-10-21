@@ -836,6 +836,11 @@ function ModelSelect({
             </a>
           </Box>
         )}
+        {value.startsWith("runwayml/stable-diffusion-inpainting") && (
+          <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
+            Warning! Currently breaks easily on non-standard image sizes.
+          </Box>
+        )}
         {false && value === "hakurei/waifu-diffusion-v1-3" && (
           <div style={{ color: "red", fontSize: "80%" }}>
             Quality issues reported with waifu-diffusion-v1.3. We&apos;re
