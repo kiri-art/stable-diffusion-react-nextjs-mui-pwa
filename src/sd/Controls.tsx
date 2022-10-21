@@ -809,6 +809,7 @@ function ModelSelect({
             />
           </MenuItem>
 
+          {/*
           <MenuItem
             value="hakurei/waifu-diffusion-v1-3-full"
             sx={{ textAlign: "center", width: "100%" }}
@@ -818,6 +819,7 @@ function ModelSelect({
               desc={t`Full precision, slower, sometimes better.`}
             />
           </MenuItem>
+          */}
 
           <MenuItem
             value="rinna/japanese-stable-diffusion"
