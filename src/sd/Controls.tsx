@@ -770,6 +770,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="runwayml/stable-diffusion-inpainting"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="runwayml/stable-diffusion-inpainting"
+              desc={t`Fine-tuned SD; Best for Inpainting`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="hakurei/waifu-diffusion-v1-3"
             sx={{ textAlign: "center", width: "100%" }}
           >

@@ -269,6 +269,12 @@ export default async function SDBanana(
     console.log("! Removed modelInputs.sampler - TODO");
   }
 
+  // TODO.  For now this means sending the image twice!  We'll
+  // settle on something and then upgrade ALL the backend models.
+  if (callInputs.PIPELINE === "StableDiffusionInpaintPipeline") {
+    modelInputs.image = modelInputs.init_image;
+  }
+
   // @ts-expect-error: TODO
   const runner = runners[fetchOpts.dest];
 

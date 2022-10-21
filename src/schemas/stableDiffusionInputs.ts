@@ -25,6 +25,7 @@ const stableDiffusionInputsSchema = object({
   // needs to be pre-processed
   seed: number().min(0).max(4294967295),
 
+  image: string(),
   init_image: string(),
   mask_image: string(),
   strength: number().min(0).max(1),
