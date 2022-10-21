@@ -6,7 +6,7 @@ const defaults = {
   width: 512,
   height: 512,
   strength: 0.75,
-  MODEL_ID: "CompVis/stable-diffusion-v1-4",
+  MODEL_ID: "runwayml/stable-diffusion-v1-5",
   seed: () => Math.floor(Math.random() * MAX_SEED_VALUE),
   randomizeSeed: true,
   shareInputs: false,
