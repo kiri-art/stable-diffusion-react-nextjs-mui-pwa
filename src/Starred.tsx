@@ -1,7 +1,8 @@
 import React from "react";
 import { db, useGongoOne } from "gongo-client-react";
-import { Button, ImageList, ImageListItem } from "@mui/material";
+import { Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
+import Masonry from "@mui/lab/Masonry";
 
 import Link from "./Link";
 import Star from "./schemas/star";
@@ -58,11 +59,7 @@ function Item({ item }: { item: Star }) {
   }
 
   return (
-    <ImageListItem
-      sx={{ position: "relative", aspectRatio }}
-      component={Link}
-      href={"/s/" + item._id}
-    >
+    <Link style={{ position: "relative", aspectRatio }} href={"/s/" + item._id}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <Image
         alt={alt}
@@ -123,7 +120,7 @@ function Item({ item }: { item: Star }) {
           {item.likes}
         </span>
       </Button>
-    </ImageListItem>
+    </Link>
   );
 }
 
@@ -137,10 +134,10 @@ export default function Starred({
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   return (
-    <ImageList variant="masonry" cols={cols || _cols}>
+    <Masonry columns={cols || _cols} sx={{ my: 2 }}>
       {items.map((item) => (
         <Item key={item._id} item={item} />
       ))}
-    </ImageList>
+    </Masonry>
   );
 }
