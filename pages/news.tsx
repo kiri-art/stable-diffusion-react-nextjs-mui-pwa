@@ -35,6 +35,33 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Fri Oct 21, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>Stable Diffusion 1.5</b>
+              </li>
+              <li>
+                SD <b>fine-tuned inpainting</b> model
+              </li>
+              <li>Diffusers v0.7.0.dev0</li>
+              <li>
+                <span style={{ color: "red" }}>
+                  txt2img and inpainting are a bit temperamental with all the
+                  above updates. Working on this!
+                </span>
+              </li>
+              <li>
+                Enabled <b>pinch-to-zoom</b> site-wide
+              </li>
+              <li>
+                Enabled <b>landscape orientation</b> (you made need to
+                re-install the PWA)
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Tue Oct 11, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
