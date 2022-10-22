@@ -7,7 +7,7 @@
   "scope": "./",
   "start_url": "./",
   "id": "/",
-  "orientation": "portrait",
+  "orientation": "any",
   "icons": [
     {
       "src": "icons/icon-48x48.png",

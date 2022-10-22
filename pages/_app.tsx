@@ -61,7 +61,7 @@ export default function MyApp(props: MyAppProps) {
       <Head>
         <meta
           name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=yes, viewport-fit=cover"
         />
       </Head>
       <I18nProvider i18n={i18n}>
