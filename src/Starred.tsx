@@ -11,6 +11,8 @@ import useBreakPoint from "./lib/useBreakPoint";
 import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
 import Image from "next/image";
+import { useInView } from "react-hook-inview";
+import { useRouter } from "next/router";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -23,7 +25,13 @@ export async function destar(starId: string) {
   return res;
 }
 
-function Item({ item }: { item: Star }) {
+function Item({
+  item,
+  scrolled,
+}: {
+  item: Star;
+  scrolled?: React.MutableRefObject<number>;
+}) {
   const alt = "TODO";
   const userId = useGongoUserId();
   const userLike = useGongoOne((db) =>
@@ -34,6 +42,25 @@ function Item({ item }: { item: Star }) {
   const aspectRatio = item.modelInputs.width
     ? item.modelInputs.width + "/" + item.modelInputs.height
     : "1";
+
+  const router = useRouter();
+
+  const [ref] = useInView({
+    threshold: 1,
+    onEnter: () => {
+      if (
+        !(scrolled && scrolled.current && Date.now() > scrolled.current + 1000)
+      )
+        return;
+      router
+        .replace({
+          hash: item._id,
+        })
+        .catch((e) => {
+          if (!e.cancelled) throw e;
+        });
+    },
+  });
 
   async function like(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -58,7 +85,12 @@ function Item({ item }: { item: Star }) {
   }
 
   return (
-    <Link style={{ position: "relative", aspectRatio }} href={"/s/" + item._id}>
+    <Link
+      ref={ref}
+      style={{ position: "relative", aspectRatio }}
+      href={"/s/" + item._id}
+    >
+      <div id={"item_" + item._id} style={{ scrollMarginTop: "8px" }} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <Image
         alt={alt}
@@ -131,11 +163,23 @@ export default function Starred({
   cols?: number;
 }) {
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
+  const router = useRouter();
+  const scrolled = React.useRef(Date.now());
+
+  React.useLayoutEffect(() => {
+    const match = router.asPath.match(/#(.*)$/);
+    if (match && match[1]) {
+      const div = document.getElementById("item_" + match[1]);
+      setTimeout(() => div && div.scrollIntoView(), 300);
+      scrolled.current = Date.now();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Masonry columns={cols || _cols} sx={{ my: 2 }}>
       {items.map((item) => (
-        <Item key={item._id} item={item} />
+        <Item key={item._id} item={item} scrolled={scrolled} />
       ))}
     </Masonry>
   );

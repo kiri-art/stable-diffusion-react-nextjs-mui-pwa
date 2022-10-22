@@ -4848,6 +4848,11 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-hook-inview@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/react-hook-inview/-/react-hook-inview-4.5.0.tgz#f4ac4117a46f1368599538c36dba96429db934ca"
+  integrity sha512-Hm61BK32/K2Cc3bjBe2bQkndHbQP6NhHvWVX7zYitaitB6T28uUV+wlgxbXU9twxUt7+17HyHq6aezpMUCijQQ==
+
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
