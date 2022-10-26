@@ -44,8 +44,8 @@ const Home: NextPage = () => {
   const sortField = show === "recent" ? "date" : "likes";
   if (nsfwFilter) query["callInputs.safety_checker"] = true;
 
-  const items = useGongoLive((db) =>
-    db.collection("stars").find(query).sort(sortField, "desc").limit(100)
+  const items = useGongoLive(
+    (db) => db.collection("stars").find(query).sort(sortField, "desc") //.limit(100)
   );
   useGongoSub("stars");
 
