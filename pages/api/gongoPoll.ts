@@ -45,6 +45,34 @@ gs.publish("bananaRequests", async (db) => {
     .limit(500);
 });
 
+gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
+  const query: Record<string, unknown> = {};
+  // if (!starId) throw new Error("no starId given");
+  if (!starId) return [];
+
+  if (starId) query._id = new ObjectId(starId);
+  if (updatedAt.stars) query.__updatedAt = { $gt: updatedAt.stars };
+
+  const star = await db.collection("stars").findOne(query);
+  if (!star) return [];
+
+  const upQuery: Record<string, unknown> = { _id: star.userId };
+  if (updatedAt.userProfiles)
+    upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+
+  const userProfiles = await (await db.collection("users").getReal())
+    .find(upQuery)
+    .project({ username: 1 })
+    .limit(1)
+    .toArray();
+  console.log(userProfiles);
+
+  return [
+    { coll: "stars", entries: [star] },
+    { coll: "userProfiles", entries: userProfiles },
+  ];
+});
+
 gs.publish("stars", async (db, { userId } = {}, { updatedAt }) => {
   const query: Record<string, unknown> = {};
   if (userId) query.userId = userId;

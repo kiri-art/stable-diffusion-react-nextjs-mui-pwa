@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useGongoOne } from "gongo-client-react";
+import { useGongoOne, useGongoSub } from "gongo-client-react";
 import { Box, Container } from "@mui/material";
 import { Trans } from "@lingui/macro";
 // import { GetServerSideProps } from "next";
@@ -62,6 +62,9 @@ export default function StarredItem({
   const userProfile = useGongoOne((db) =>
     db.collection("userProfiles").find({ _id: item && item.userId })
   );
+
+  // TODO, gongo should accept "false" args to ignore.
+  useGongoSub("star", { starId: _id });
 
   console.log(userProfile);
 
