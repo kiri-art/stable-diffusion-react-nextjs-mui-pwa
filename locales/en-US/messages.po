@@ -60,7 +60,7 @@ msgstr ""
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 msgstr "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 
-#: pages/index.tsx:53
+#: pages/index.tsx:74
 msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 msgstr "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 
@@ -99,12 +99,22 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: src/sd/Controls.tsx:788
+#: src/Starred.tsx:42
+#: src/Starred.tsx:42
+msgid "An error occured:"
+msgstr "An error occured:"
+
+#: src/sd/Controls.tsx:808
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr "Anime.  Original, previous model (v1.2)"
 
-#: pages/history.tsx:232
-#: pages/history.tsx:232
+#: pages/[_id].tsx:100
+#: pages/[_id].tsx:137
+msgid "Anonymous User"
+msgstr "Anonymous User"
+
+#: pages/history.tsx:233
+#: pages/history.tsx:233
 msgid "Are you sure?  This action cannot be undone"
 msgstr "Are you sure?  This action cannot be undone"
 
@@ -133,7 +143,7 @@ msgstr "Best for Anime"
 #~ msgid "Best for Anime characters"
 #~ msgstr "Best for Anime characters"
 
-#: src/sd/Controls.tsx:778
+#: src/sd/Controls.tsx:788
 msgid "Best for Anime.  Final Release.  Oct 6"
 msgstr "Best for Anime.  Final Release.  Oct 6"
 
@@ -145,6 +155,7 @@ msgstr ""
 msgid "CFG"
 msgstr "CFG"
 
+#: pages/[_id].tsx:89
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "Cancel"
@@ -158,7 +169,7 @@ msgstr ""
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/history.tsx:247
+#: pages/history.tsx:248
 msgid "Clear History"
 msgstr "Clear History"
 
@@ -171,7 +182,7 @@ msgstr ""
 msgid "Coming Soon"
 msgstr ""
 
-#: pages/index.tsx:50
+#: pages/index.tsx:71
 msgid "Community"
 msgstr "Community"
 
@@ -184,7 +195,7 @@ msgid "Connect with {0}"
 msgstr "Connect with {0}"
 
 #: src/MyAppBar.tsx:185
-#: src/MyAppBar.tsx:392
+#: src/MyAppBar.tsx:395
 msgid "Credits:"
 msgstr ""
 
@@ -196,8 +207,8 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/Starred.tsx:16
-#: src/Starred.tsx:16
+#: src/Starred.tsx:21
+#: src/Starred.tsx:21
 msgid "Delete this star?"
 msgstr "Delete this star?"
 
@@ -233,13 +244,17 @@ msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 
+#: src/sd/Controls.tsx:778
+msgid "Fine-tuned SD; Best for Inpainting"
+msgstr "Fine-tuned SD; Best for Inpainting"
+
 #: pages/credits.tsx:157
 msgid "Free Credits"
 msgstr ""
 
 #: src/sd/Controls.tsx:798
-msgid "Full precision, slower, sometimes better."
-msgstr "Full precision, slower, sometimes better."
+#~ msgid "Full precision, slower, sometimes better."
+#~ msgstr "Full precision, slower, sometimes better."
 
 #: pages/upsample.tsx:99
 msgid "General - v3"
@@ -266,8 +281,8 @@ msgstr "Google"
 msgid "Height"
 msgstr ""
 
-#: pages/history.tsx:238
-#: src/MyAppBar.tsx:386
+#: pages/history.tsx:239
+#: src/MyAppBar.tsx:392
 msgid "History"
 msgstr "History"
 
@@ -276,10 +291,14 @@ msgstr "History"
 #~ msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to \"starred\" images). Only the last {MAX_HISTORY} items are kept."
 
 #: pages/history.tsx:240
-msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
-msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+#~ msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+#~ msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 
-#: pages/index.tsx:40
+#: pages/history.tsx:241
+msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
+
+#: pages/index.tsx:61
 #: pages/start.tsx:51
 #: src/MyAppBar.tsx:114
 msgid "Home"
@@ -331,7 +350,22 @@ msgstr "It is Free and Open Source Software (\"FOSS\") developed by the communit
 msgid "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 msgstr "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 
-#: src/sd/Controls.tsx:808
+#: src/Starred.tsx:46
+#: src/Starred.tsx:46
+msgid "Item was reported {0} times has been removed.  Thank you!"
+msgstr "Item was reported {0} times has been removed.  Thank you!"
+
+#: src/Starred.tsx:50
+#: src/Starred.tsx:50
+msgid "Item was reported {0} times.  Thanks for reporting!"
+msgstr "Item was reported {0} times.  Thanks for reporting!"
+
+#: src/Starred.tsx:33
+#: src/Starred.tsx:33
+msgid "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
+msgstr "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
+
+#: src/sd/Controls.tsx:830
 msgid "Japanese / Japanglish prompt input, style"
 msgstr "Japanese / Japanglish prompt input, style"
 
@@ -340,16 +374,21 @@ msgstr "Japanese / Japanglish prompt input, style"
 msgid "Last 30 days"
 msgstr "Last 30 days"
 
+#: src/sd/Controls.tsx:768
+msgid "Latest Stable Diffusion, Oct 20th!"
+msgstr "Latest Stable Diffusion, Oct 20th!"
+
+#: pages/[_id].tsx:146
 #: pages/credits.tsx:92
 msgid "Loading..."
 msgstr ""
 
 #: src/GoButton.tsx:47
-#: src/MyAppBar.tsx:413
+#: src/MyAppBar.tsx:416
 msgid "Login"
 msgstr ""
 
-#: src/MyAppBar.tsx:402
+#: src/MyAppBar.tsx:405
 msgid "Logout"
 msgstr ""
 
@@ -364,11 +403,11 @@ msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgid "Model"
 msgstr "Model"
 
-#: pages/index.tsx:97
+#: pages/index.tsx:118
 msgid "Most Popular"
 msgstr "Most Popular"
 
-#: pages/index.tsx:94
+#: pages/index.tsx:115
 msgid "Most Recent"
 msgstr "Most Recent"
 
@@ -380,7 +419,7 @@ msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 bec
 msgid "My Credits"
 msgstr ""
 
-#: pages/index.tsx:76
+#: pages/index.tsx:97
 #: src/sd/Controls.tsx:689
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
@@ -460,7 +499,7 @@ msgid "Orders"
 msgstr ""
 
 #: pages/upsample.tsx:79
-#: src/sd/Controls.tsx:768
+#: src/sd/Controls.tsx:798
 msgid "Original model, best for most cases."
 msgstr "Original model, best for most cases."
 
@@ -491,6 +530,7 @@ msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
 #: pages/p/[_id].tsx:22
+#: src/MyAppBar.tsx:389
 msgid "Profile"
 msgstr "Profile"
 
@@ -551,6 +591,11 @@ msgstr ""
 #~ msgid "Rendering can be performed either 1) locally with a Banana.Dev docker image (recommended), 2) locally with an existing Stable Diffusion installation, or 3) remotely via a Banana.Dev account. Details in the <0>project README</0>."
 #~ msgstr ""
 
+#: src/Starred.tsx:32
+#: src/Starred.tsx:32
+msgid "Report this star?"
+msgstr "Report this star?"
+
 #: pages/stats.tsx:78
 msgid "Requests"
 msgstr "Requests"
@@ -573,10 +618,14 @@ msgstr "Roadmap"
 msgid "SEND IMAGE TO"
 msgstr "SEND IMAGE TO"
 
-#: src/sd/Controls.tsx:855
-#: src/sd/Controls.tsx:859
+#: src/sd/Controls.tsx:882
+#: src/sd/Controls.tsx:886
 msgid "Sampler"
 msgstr "Sampler"
+
+#: pages/[_id].tsx:89
+msgid "Save"
+msgstr "Save"
 
 #: src/sd/Controls.tsx:450
 msgid "Seed"
@@ -587,15 +636,15 @@ msgid "Share Inputs"
 msgstr "Share Inputs"
 
 #: pages/starred.tsx:28
-msgid "Share your Stars with the World"
-msgstr "Share your Stars with the World"
+#~ msgid "Share your Stars with the World"
+#~ msgstr "Share your Stars with the World"
 
 #: pages/starred.tsx:24
 #: src/MyAppBar.tsx:389
-msgid "Starred"
-msgstr "Starred"
+#~ msgid "Starred"
+#~ msgstr "Starred"
 
-#: pages/index.tsx:44
+#: pages/index.tsx:65
 msgid "Start Creating"
 msgstr "Start Creating"
 
@@ -646,8 +695,8 @@ msgstr "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 #~ msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 #~ msgstr ""
 
-#: src/Starred.tsx:17
-#: src/Starred.tsx:17
+#: src/Starred.tsx:22
+#: src/Starred.tsx:22
 msgid "This cannot be undone.  All likes will be lost."
 msgstr "This cannot be undone.  All likes will be lost."
 
@@ -702,6 +751,15 @@ msgstr "Upsampling"
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
+#: pages/[_id].tsx:138
+#: pages/[_id].tsx:147
+msgid "User not found"
+msgstr "User not found"
+
+#: pages/[_id].tsx:94
+msgid "Username not available."
+msgstr "Username not available."
+
 #: pages/stats.tsx:195
 msgid "Users"
 msgstr "Users"
@@ -741,8 +799,8 @@ msgstr ""
 #~ msgstr ""
 
 #: pages/starred.tsx:32
-msgid "Your <0>starred</0> items are public and appear on your profile."
-msgstr "Your <0>starred</0> items are public and appear on your profile."
+#~ msgid "Your <0>starred</0> items are public and appear on your profile."
+#~ msgstr "Your <0>starred</0> items are public and appear on your profile."
 
 #: pages/credits.tsx:159
 msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
