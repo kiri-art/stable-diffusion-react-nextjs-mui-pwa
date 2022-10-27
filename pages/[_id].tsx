@@ -137,7 +137,10 @@ export default function Profile() {
     ? (user.username as string) || t`Anonymous User`
     : t`User not found`;
 
-  useGongoSub("stars", { userId: _id });
+  useGongoSub(
+    "stars",
+    query.username ? { username: query.username } : { userId: _id }
+  );
 
   return (
     <Box>

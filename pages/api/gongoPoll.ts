@@ -73,9 +73,13 @@ gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
   ];
 });
 
-gs.publish("stars", async (db, { userId } = {}, { updatedAt }) => {
+gs.publish("stars", async (db, { userId, username } = {}, { updatedAt }) => {
   const query: Record<string, unknown> = {};
-  if (userId) query.userId = userId;
+  if (username && !userId) {
+    const user = await db.collection("users").findOne({ username });
+    if (!user) return [];
+    query.userId = user._id;
+  } else if (userId) query.userId = new ObjectId(userId);
   if (updatedAt.stars) query.__updatedAt = { $gt: updatedAt.stars };
 
   const stars = await db.collection("stars").find(query).limit(200).toArray();
@@ -86,18 +90,17 @@ gs.publish("stars", async (db, { userId } = {}, { updatedAt }) => {
   const uids = Array.from(new Set(stars.map((s) => s.userId)));
   upQuery._id = { $in: uids };
 
-  console.log(uids);
-
   const userProfiles = await (await db.collection("users").getReal())
     .find(upQuery)
     .project({ username: 1 })
     .toArray();
-  console.log(userProfiles);
 
-  return [
-    { coll: "stars", entries: stars },
-    { coll: "userProfiles", entries: userProfiles },
-  ];
+  if (stars.length || userProfiles.length)
+    return [
+      { coll: "stars", entries: stars },
+      { coll: "userProfiles", entries: userProfiles },
+    ];
+  else return [];
 });
 
 /*
