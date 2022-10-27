@@ -92,12 +92,14 @@ export default function StarredItem({
         />
         <p>
           By:{" "}
-          {userProfile ? (
+          {userProfile?.username ? (
             <Link href={"/" + userProfile.username}>
               {userProfile.username}
             </Link>
           ) : (
-            <Link href={"/p/" + item.userId}>{item.userId}</Link>
+            <Link href={"/p/" + item.userId}>
+              <Trans>Anonymous User</Trans>
+            </Link>
           )}
         </p>
         <p>Liked by: {item.likes} users</p>
