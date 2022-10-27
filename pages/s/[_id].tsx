@@ -58,9 +58,9 @@ export default function StarredItem({
 
   const clientItem = useGongoOne((db) => db.collection("stars").find({ _id }));
   const item = (serverItem || clientItem) as typeof clientItem;
-  if (typeof item.date === "string") item.date = new Date(item.date);
 
   if (!item) return <div>Loading...</div>;
+  if (typeof item.date === "string") item.date = new Date(item.date);
 
   const modelInputs = item.modelInputs;
 
