@@ -7,3 +7,4 @@ export * from "./stableDiffusionInputs";
 export * from "./upsampleCallInputs";
 export * from "./upsampleModelInputs";
 export * from "./user";
+export * from "./userProfile";

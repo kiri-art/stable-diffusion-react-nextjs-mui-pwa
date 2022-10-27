@@ -59,6 +59,12 @@ export default function StarredItem({
   const clientItem = useGongoOne((db) => db.collection("stars").find({ _id }));
   const item = (serverItem || clientItem) as typeof clientItem;
 
+  const userProfile = useGongoOne((db) =>
+    db.collection("userProfiles").find({ _id: item && item.userId })
+  );
+
+  console.log(userProfile);
+
   if (!item) return <div>Loading...</div>;
   if (typeof item.date === "string") item.date = new Date(item.date);
 
@@ -82,8 +88,14 @@ export default function StarredItem({
           width="100%"
         />
         <p>
-          By: <Link href={"/p/" + item.userId}>{item.userId}</Link> (coming
-          soon)
+          By:{" "}
+          {userProfile ? (
+            <Link href={"/" + userProfile.username}>
+              {userProfile.username}
+            </Link>
+          ) : (
+            <Link href={"/p/" + item.userId}>{item.userId}</Link>
+          )}
         </p>
         <p>Liked by: {item.likes} users</p>
 

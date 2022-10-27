@@ -4,7 +4,14 @@ import HTTPTransport from "gongo-client/lib/transports/http";
 import { Collection } from "gongo-client";
 import GongoAuth from "gongo-client/lib/auth";
 
-import type { User, Order, CreditCode, CSend, BananaRequest } from "./schemas";
+import type {
+  User,
+  Order,
+  CreditCode,
+  CSend,
+  BananaRequest,
+  UserProfile,
+} from "./schemas";
 import { HistoryItem } from "./schemas/history";
 import Star from "./schemas/star";
 
@@ -38,6 +45,7 @@ db.collection("csends").persist();
 db.collection("bananaRequests").persist();
 db.collection("stars").persist();
 db.collection("likes").persist();
+db.collection("userProfiles").persist();
 
 db.collection("history", { isLocalCollection: true }).persist();
 
@@ -50,6 +58,7 @@ declare module "gongo-client" {
     collection(name: "bananaRequests"): Collection<BananaRequest>;
     collection(name: "history"): Collection<HistoryItem>;
     collection(name: "stars"): Collection<Star>;
+    collection(name: "userProfiles"): Collection<UserProfile>;
   }
 }
 

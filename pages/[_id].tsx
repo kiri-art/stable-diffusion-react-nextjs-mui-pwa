@@ -122,7 +122,7 @@ export default function Profile() {
       : { username: _id };
 
   const userId = useGongoUserId();
-  const user = useGongoOne((db) => db.collection("users").find(query));
+  const user = useGongoOne((db) => db.collection("userProfiles").find(query));
   const items = useGongoLive(
     (db) =>
       user &&
