@@ -1,18 +1,20 @@
 import React from "react";
 import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import { Button } from "@mui/material";
-import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
 import Masonry from "@mui/lab/Masonry";
+import Image from "next/image";
+import { useInView } from "react-hook-inview";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { t } from "@lingui/macro";
 
 import Link from "./Link";
 import Star from "./schemas/star";
 import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
-import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
-import Image from "next/image";
-import { useInView } from "react-hook-inview";
-import { useRouter } from "next/router";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "./lib/constants";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -23,6 +25,30 @@ export async function destar(starId: string) {
   if (res) db.collection("stars").update(starId, { $set: { deleted: true } });
 
   return res;
+}
+
+export async function report(starId: string) {
+  const ok = await asyncConfirm({
+    title: t`Report this star?`,
+    text: t`Items reported by ${NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed.`,
+  });
+
+  if (!ok) return false;
+
+  const result = await db.call("reportStar", { starId });
+  console.log(result);
+
+  if (result.status !== "OK")
+    return toast(t`An error occured: ` + result.status + " " + result.message);
+
+  if ((result.NUM_REPORTS as number) >= NUM_REPORTS_UNTIL_REMOVAL)
+    return toast(
+      t`Item was reported ${result.NUM_REPORTS} times has been removed.  Thank you!`
+    );
+
+  return toast(
+    t`Item was reported ${result.NUM_REPORTS} times.  Thanks for reporting!`
+  );
 }
 
 function Item({
@@ -84,6 +110,11 @@ function Item({
     destar(item._id);
   }
 
+  async function itemReport(event: React.SyntheticEvent) {
+    event.preventDefault();
+    report(item._id);
+  }
+
   return (
     <Link
       ref={ref}
@@ -100,7 +131,7 @@ function Item({
         sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
         (max-width: 1536) 33vw, 16vw"
       />
-      {ownedByUser && (
+      {ownedByUser && false ? (
         <Button
           onClick={itemDestar}
           sx={{
@@ -117,6 +148,24 @@ function Item({
           }}
         >
           <Delete />
+        </Button>
+      ) : (
+        <Button
+          onClick={itemReport}
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            m: 0,
+            p: 1,
+            minWidth: 0,
+            color: "rgba(200,200,200,0.45)",
+            "& :hover": {
+              color: "red",
+            },
+          }}
+        >
+          <Report />
         </Button>
       )}
       <Button

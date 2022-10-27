@@ -22,6 +22,7 @@ import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
 import { useRouter } from "next/router";
 import { GridView, Splitscreen } from "@mui/icons-material";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "../src/lib/constants";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -40,7 +41,13 @@ const Home: NextPage = () => {
   const setUseGrid = (useGrid: boolean) =>
     router.replace({ pathname: "/", query: { ...router.query, useGrid } });
 
-  const query: Record<string, unknown> = { deleted: { $ne: true } };
+  const query: Record<string, unknown> = {
+    deleted: { $ne: true },
+    $or: [
+      { reports: { $exists: false } },
+      { reports: { $lt: NUM_REPORTS_UNTIL_REMOVAL } },
+    ],
+  };
   const sortField = show === "recent" ? "date" : "likes";
   if (nsfwFilter) query["callInputs.safety_checker"] = true;
 

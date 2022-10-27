@@ -1,10 +1,11 @@
-import gs, { CreditCode, User } from "../../src/api-lib/db";
+import gs, { CreditCode, ObjectId, User } from "../../src/api-lib/db";
 import {
   CollectionEventProps,
   userIsAdmin,
   userIdMatches,
 } from "gongo-server-db-mongo/lib/collection";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -190,6 +191,39 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
       ]
     : [];
 });
+
+gs.method(
+  "reportStar",
+  async (db, { starId: _starId }: { starId: string }, { auth }) => {
+    const userId = await auth.userId();
+    const starId = new ObjectId(_starId);
+
+    const Reports = db.collection("reportedStars");
+    const Stars = db.collection("stars");
+
+    const star = await Stars.findOne({ _id: starId });
+    if (!star) throw new Error("No such star");
+    console.log(star);
+
+    // const existingUserReport = await Reported.findOne({ userId, starId });
+
+    const entry = {
+      userId,
+      starId,
+      date: new Date(),
+    };
+    console.log(entry);
+    await Reports.insertOne(entry);
+    await Stars.updateOne({ _id: starId }, { $inc: { reports: 1 } });
+
+    if (star.reports >= NUM_REPORTS_UNTIL_REMOVAL - 1) {
+      // Maybe in the future we'll do something,
+      // for now we just rely on `reports` count.
+    }
+
+    return { status: "OK", NUM_REPORTS: star.reports ? star.reports + 1 : 1 };
+  }
+);
 
 if (gs.dba) {
   const db = gs.dba;
