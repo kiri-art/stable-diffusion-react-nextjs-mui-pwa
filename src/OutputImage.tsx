@@ -137,7 +137,7 @@ export default function OutputImage({
     if (!imgResult.current) return;
     const blob = await fetch(imgSrc).then((r) => r.blob());
     const shareData = {
-      title: text,
+      title: t`See my Kiri.Art creation!`,
       text: text,
       files: [
         new File([blob], text + ".png", {

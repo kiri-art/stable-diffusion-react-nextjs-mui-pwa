@@ -117,7 +117,12 @@ export default function StarredItem({
       seed: { value: modelInputs.seed as number },
       negative_prompt: { value: modelInputs.negative_prompt || "" },
     };
-    const text = sharedInputTextFromInputs(simulatedModelState);
+    const text = sharedInputTextFromInputs(
+      simulatedModelState,
+      true,
+      "\n\n",
+      true
+    );
 
     const blob = await fetch(imgRef.current.src).then((r) => r.blob());
 
@@ -125,8 +130,8 @@ export default function StarredItem({
     const preText = t`See all inputs and remix at ${url}`;
 
     const shareData = {
-      title: text,
-      text: preText + " " + text,
+      title: t`See my Kiri.Art creation!`,
+      text: preText + "\n\n" + text,
       url,
       files: [
         new File([blob], text + ".png", {
