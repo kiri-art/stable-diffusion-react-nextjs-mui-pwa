@@ -12,8 +12,13 @@ import { t, Trans } from "@lingui/macro";
 
 import MyAppBar from "../src/MyAppBar";
 import Starred from "../src/Starred";
-import { Edit } from "@mui/icons-material";
+import { Edit, Share, Link as LinkIcon } from "@mui/icons-material";
 import { useGongoIsPopulated } from "gongo-client-react";
+import { toast } from "react-toastify";
+
+const canShare =
+  typeof navigator === "undefined" || // draw on SSR
+  (!!navigator.share && !!navigator.canShare);
 
 function Username({
   userId,
@@ -29,6 +34,8 @@ function Username({
   const [newUsername, setNewUsername] = React.useState(username);
   const [notAvailable, setNotAvailable] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const url =
+    location.origin + "/" + (newUsername || username || "p/" + userId);
 
   React.useEffect(() => {
     if (editable) inputRef.current && inputRef.current.focus();
@@ -72,6 +79,27 @@ function Username({
     }
   }
 
+  async function share() {
+    const text = t`Check out my awesome work at ${url}`;
+    console.log({ url, text });
+    const shareData = {
+      title: text,
+      text: text,
+      url,
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      navigator.share(shareData);
+    } else {
+      toast("Sharing failed");
+    }
+  }
+
+  async function copyURL() {
+    if (!navigator.clipboard) return toast("Clipboard not supported");
+    await navigator.clipboard.writeText(url);
+    toast(t`Copied to clipboard`);
+  }
+
   return (
     <Box>
       <Typography variant="h6">
@@ -103,11 +131,19 @@ function Username({
                 <Edit sx={{ fontSize: "60%" }} />
               </IconButton>
             )}
+            {canShare && (
+              <IconButton onClick={share}>
+                <Share sx={{ fontSize: "60%" }} />
+              </IconButton>
+            )}
           </>
         )}
       </Typography>
       <div style={{ color: "#aaa", fontSize: "80%" }}>
-        kiri.art/{newUsername || username || "p/" + userId}
+        <span style={{ cursor: "pointer" }} onClick={copyURL}>
+          kiri.art/{newUsername || username || "p/" + userId}{" "}
+          <LinkIcon sx={{ verticalAlign: "middle", fontSize: "120%" }} />
+        </span>
       </div>
     </Box>
   );
