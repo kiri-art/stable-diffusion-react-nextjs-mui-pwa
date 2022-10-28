@@ -54,7 +54,7 @@ export async function report(starId: string) {
 export function useLike(item: Star) {
   const userId = useGongoUserId();
   const userLike = useGongoOne((db) =>
-    db.collection("likes").find({ starId: item._id, userId })
+    db.collection("likes").find({ starId: item?._id || "NONE", userId })
   );
   const likedByUser = !!userLike && !!userLike.liked;
 
