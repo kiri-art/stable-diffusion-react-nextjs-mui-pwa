@@ -11,6 +11,7 @@ import strObjectId from "../../src/lib/strObjectId";
 // import { db as serverDb, ObjectId } from "../../src/api-lib/db";
 import { FavoriteBorder, Share, Edit, Favorite } from "@mui/icons-material";
 import { useLike } from "../../src/Starred";
+import { editItem } from "../history";
 
 /*
 export const getServerSideProps: GetServerSideProps = async ({
@@ -55,6 +56,7 @@ export default function StarredItem({
 }: {
   serverItem: Record<string, unknown>;
 }) {
+  const imgRef = React.useRef<HTMLImageElement>(null);
   const router = useRouter();
   const { _id } = router.query;
 
@@ -67,8 +69,23 @@ export default function StarredItem({
 
   // TODO, gongo should accept "false" args to ignore.
   useGongoSub("star", { starId: _id });
+  console.log(item);
 
   const { like, likedByUser } = useLike(item);
+
+  async function editItemClick(_event: React.SyntheticEvent) {
+    if (!imgRef.current) return;
+    const res = await fetch(imgRef.current.src);
+    const blob = await res.blob();
+    const reader = new FileReader();
+    const result: FileReader["result"] = await new Promise((resolve) => {
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+    if (!result) return;
+    const base64 = result.toString().split(",")[1];
+    editItem(item, base64, router);
+  }
 
   if (!item) return <div>Loading...</div>;
   if (typeof item.date === "string") item.date = new Date(item.date);
@@ -93,6 +110,7 @@ export default function StarredItem({
           src={"/api/file?id=" + strObjectId(item.files.output)}
           style={{ maxWidth: "100%", border: "1px solid black", aspectRatio }}
           width="100%"
+          ref={imgRef}
         />
         <Box>
           <IconButton size="small" onClick={like}>
@@ -106,7 +124,7 @@ export default function StarredItem({
           <IconButton size="small">
             <Share style={styleVAM} />
           </IconButton>{" "}
-          <IconButton size="small">
+          <IconButton size="small" onClick={editItemClick}>
             <Edit style={styleVAM} />
           </IconButton>
         </Box>
