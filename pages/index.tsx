@@ -41,13 +41,13 @@ const Home: NextPage = () => {
   const setUseGrid = (useGrid: boolean) =>
     router.replace({ pathname: "/", query: { ...router.query, useGrid } });
 
-  const query: Record<string, unknown> = {
-    deleted: { $ne: true },
-    $or: [
+  const query: Record<string, unknown> = {};
+  if (!router.query.showDeleted) query.deleted = { $ne: true };
+  if (!router.query.showReported)
+    query.$or = [
       { reports: { $exists: false } },
       { reports: { $lt: NUM_REPORTS_UNTIL_REMOVAL } },
-    ],
-  };
+    ];
   const sortField = show === "recent" ? "date" : "likes";
   if (nsfwFilter) query["callInputs.safety_checker"] = true;
 

@@ -166,13 +166,20 @@ function Item({
             m: 0,
             p: 1,
             minWidth: 0,
-            color: "rgba(200,200,200,0.45)",
+            color:
+              router.query.showReported &&
+              (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
+                ? "red"
+                : "rgba(200,200,200,0.45)",
             "& :hover": {
               color: "red",
             },
           }}
         >
-          <Report />
+          <>
+            {router.query.showReported && item.reports}
+            <Report />
+          </>
         </Button>
       )}
       <Button
