@@ -51,6 +51,33 @@ export async function report(starId: string) {
   );
 }
 
+export function useLike(item: Star) {
+  const userId = useGongoUserId();
+  const userLike = useGongoOne((db) =>
+    db.collection("likes").find({ starId: item._id, userId })
+  );
+  const likedByUser = !!userLike && !!userLike.liked;
+
+  async function like(event: React.SyntheticEvent) {
+    event.preventDefault();
+    if (!userId) return alert("log in first");
+
+    if (userLike)
+      db.collection("likes").update(userLike._id, {
+        $set: { liked: !likedByUser },
+      });
+    else
+      db.collection("likes").insert({
+        userId,
+        starId: item._id,
+        liked: true,
+        __ObjectIDs: ["userId", "starId"],
+      });
+  }
+
+  return { userId, userLike, likedByUser, like };
+}
+
 function Item({
   item,
   scrolled,
@@ -60,11 +87,8 @@ function Item({
 }) {
   const alt = "TODO";
   const userId = useGongoUserId();
-  const userLike = useGongoOne((db) =>
-    db.collection("likes").find({ starId: item._id, userId })
-  );
+  const { likedByUser, like } = useLike(item);
   const ownedByUser = item.userId === userId;
-  const likedByUser = !!userLike && !!userLike.liked;
   const aspectRatio = item.modelInputs.width
     ? item.modelInputs.width + "/" + item.modelInputs.height
     : "1";
@@ -87,23 +111,6 @@ function Item({
         });
     },
   });
-
-  async function like(event: React.SyntheticEvent) {
-    event.preventDefault();
-    if (!userId) return alert("log in first");
-
-    if (userLike)
-      db.collection("likes").update(userLike._id, {
-        $set: { liked: !likedByUser },
-      });
-    else
-      db.collection("likes").insert({
-        userId,
-        starId: item._id,
-        liked: true,
-        __ObjectIDs: ["userId", "starId"],
-      });
-  }
 
   async function itemDestar(event: React.SyntheticEvent) {
     event.preventDefault();
