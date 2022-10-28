@@ -80,11 +80,12 @@ function Username({
   }
 
   async function share() {
-    const text = t`Check out my awesome work at ${url}`;
-    console.log({ url, text });
+    const text = username
+      ? t`Check out this user page on kiri.art`
+      : t`Check out {username}'s page on kiri.art`;
     const shareData = {
       title: text,
-      text: text,
+      text: text + "\n\n",
       url,
     };
     if (navigator.canShare && navigator.canShare(shareData)) {

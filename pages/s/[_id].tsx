@@ -131,7 +131,8 @@ export default function StarredItem({
 
     const shareData = {
       title: t`See my Kiri.Art creation!`,
-      text: preText + "\n\n" + text,
+      // end with "\n\n" since many apps place {url} just below.
+      text: preText + "\n\n" + text + "\n\n",
       url,
       files: [
         new File([blob], text + ".png", {
