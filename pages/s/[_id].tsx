@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useGongoOne, useGongoSub } from "gongo-client-react";
 import { Box, Container, IconButton } from "@mui/material";
-import { Trans } from "@lingui/macro";
+import { t, Trans } from "@lingui/macro";
 // import { GetServerSideProps } from "next";
 
 import MyAppBar from "../../src/MyAppBar";
@@ -12,6 +12,12 @@ import strObjectId from "../../src/lib/strObjectId";
 import { FavoriteBorder, Share, Edit, Favorite } from "@mui/icons-material";
 import { useLike } from "../../src/Starred";
 import { editItem } from "../history";
+import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
+import { toast } from "react-toastify";
+
+const canShare =
+  typeof navigator === "undefined" || // draw on SSR
+  (!!navigator.share && !!navigator.canShare);
 
 /*
 export const getServerSideProps: GetServerSideProps = async ({
@@ -100,6 +106,42 @@ export default function StarredItem({
 
   const styleVAM = { verticalAlign: "middle" };
 
+  async function share() {
+    if (!imgRef.current) return;
+
+    const simulatedModelState = {
+      prompt: { value: modelInputs.prompt || "" },
+      shareInputs: { value: true },
+      guidance_scale: { value: modelInputs.guidance_scale },
+      num_inference_steps: { value: modelInputs.num_inference_steps },
+      seed: { value: modelInputs.seed as number },
+      negative_prompt: { value: modelInputs.negative_prompt || "" },
+    };
+    const text = sharedInputTextFromInputs(simulatedModelState);
+
+    const blob = await fetch(imgRef.current.src).then((r) => r.blob());
+
+    const url = location.href;
+    const preText = t`See all inputs and remix at ${url}`;
+
+    const shareData = {
+      title: text,
+      text: preText + " " + text,
+      url,
+      files: [
+        new File([blob], text + ".png", {
+          type: "image/png",
+          lastModified: new Date().getTime(),
+        }),
+      ],
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      navigator.share(shareData);
+    } else {
+      toast("Sharing failed");
+    }
+  }
+
   return (
     <Box>
       <MyAppBar title="Starred Item" />
@@ -121,9 +163,11 @@ export default function StarredItem({
             )}{" "}
             <span style={styleVAM}>{item.likes}</span>
           </IconButton>{" "}
-          <IconButton size="small">
-            <Share style={styleVAM} />
-          </IconButton>{" "}
+          {canShare && (
+            <IconButton size="small" onClick={share}>
+              <Share style={styleVAM} />
+            </IconButton>
+          )}{" "}
           <IconButton size="small" onClick={editItemClick}>
             <Edit style={styleVAM} />
           </IconButton>
