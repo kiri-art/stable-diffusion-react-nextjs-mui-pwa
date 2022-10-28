@@ -108,9 +108,9 @@ msgstr ""
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr ""
 
-#: pages/[_id].tsx:128
-#: pages/[_id].tsx:173
-#: pages/s/[_id].tsx:183
+#: pages/[_id].tsx:141
+#: pages/[_id].tsx:186
+#: pages/s/[_id].tsx:189
 msgid "Anonymous User"
 msgstr ""
 
@@ -152,17 +152,25 @@ msgstr ""
 msgid "Buy 50 credits for $1"
 msgstr "$1 で 50 クレジットを購入"
 
-#: pages/s/[_id].tsx:196
+#: pages/s/[_id].tsx:202
 msgid "CFG"
 msgstr ""
 
-#: pages/[_id].tsx:117
+#: pages/[_id].tsx:125
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr ""
 
 #: pages/[_id].tsx:83
-msgid "Check out my awesome work at {url}"
+#~ msgid "Check out my awesome work at {url}"
+#~ msgstr ""
+
+#: pages/[_id].tsx:87
+msgid "Check out this user page on kiri.art"
+msgstr ""
+
+#: pages/[_id].tsx:88
+msgid "Check out {username}'s page on kiri.art"
 msgstr ""
 
 #: pages/checkout.tsx:60
@@ -199,7 +207,7 @@ msgstr ""
 msgid "Connect with {0}"
 msgstr "{0} とつなげる"
 
-#: pages/[_id].tsx:100
+#: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr ""
 
@@ -383,7 +391,7 @@ msgstr ""
 msgid "Latest Stable Diffusion, Oct 20th!"
 msgstr ""
 
-#: pages/[_id].tsx:185
+#: pages/[_id].tsx:198
 #: pages/credits.tsx:92
 msgid "Loading..."
 msgstr "読み込み中..."
@@ -429,7 +437,7 @@ msgstr "私のクレジット"
 msgid "NSFW Filter"
 msgstr ""
 
-#: pages/s/[_id].tsx:193
+#: pages/s/[_id].tsx:199
 #: src/sd/Controls.tsx:165
 msgid "Negative Prompt"
 msgstr ""
@@ -538,7 +546,7 @@ msgstr ""
 msgid "Project Goals"
 msgstr ""
 
-#: pages/s/[_id].tsx:190
+#: pages/s/[_id].tsx:196
 #: src/sd/Controls.tsx:85
 msgid "Prompt"
 msgstr ""
@@ -623,12 +631,17 @@ msgstr ""
 msgid "Sampler"
 msgstr ""
 
-#: pages/[_id].tsx:117
+#: pages/[_id].tsx:130
 msgid "Save"
 msgstr ""
 
-#: pages/s/[_id].tsx:125
+#: pages/s/[_id].tsx:130
 msgid "See all inputs and remix at {url}"
+msgstr ""
+
+#: pages/s/[_id].tsx:133
+#: src/OutputImage.tsx:140
+msgid "See my Kiri.Art creation!"
 msgstr ""
 
 #: src/sd/Controls.tsx:450
@@ -664,7 +677,7 @@ msgstr "ステータス"
 #~ msgid "Status: In Active Development"
 #~ msgstr "ステータス：開発中"
 
-#: pages/s/[_id].tsx:199
+#: pages/s/[_id].tsx:205
 msgid "Steps"
 msgstr ""
 
@@ -753,12 +766,12 @@ msgstr ""
 msgid "Use mouse / finger to draw mask over it"
 msgstr "マウスまたは指を使って、重ねてマスクを描きます"
 
-#: pages/[_id].tsx:174
-#: pages/[_id].tsx:186
+#: pages/[_id].tsx:187
+#: pages/[_id].tsx:199
 msgid "User not found"
 msgstr ""
 
-#: pages/[_id].tsx:122
+#: pages/[_id].tsx:135
 msgid "Username not available."
 msgstr ""
 

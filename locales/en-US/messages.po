@@ -108,9 +108,9 @@ msgstr "An error occured:"
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr "Anime.  Original, previous model (v1.2)"
 
-#: pages/[_id].tsx:128
-#: pages/[_id].tsx:173
-#: pages/s/[_id].tsx:183
+#: pages/[_id].tsx:141
+#: pages/[_id].tsx:186
+#: pages/s/[_id].tsx:189
 msgid "Anonymous User"
 msgstr "Anonymous User"
 
@@ -152,18 +152,26 @@ msgstr "Best for Anime.  Final Release.  Oct 6"
 msgid "Buy 50 credits for $1"
 msgstr ""
 
-#: pages/s/[_id].tsx:196
+#: pages/s/[_id].tsx:202
 msgid "CFG"
 msgstr "CFG"
 
-#: pages/[_id].tsx:117
+#: pages/[_id].tsx:125
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "Cancel"
 
 #: pages/[_id].tsx:83
-msgid "Check out my awesome work at {url}"
-msgstr "Check out my awesome work at {url}"
+#~ msgid "Check out my awesome work at {url}"
+#~ msgstr "Check out my awesome work at {url}"
+
+#: pages/[_id].tsx:87
+msgid "Check out this user page on kiri.art"
+msgstr "Check out this user page on kiri.art"
+
+#: pages/[_id].tsx:88
+msgid "Check out {username}'s page on kiri.art"
+msgstr "Check out {username}'s page on kiri.art"
 
 #: pages/checkout.tsx:60
 #: pages/checkout.tsx:63
@@ -199,7 +207,7 @@ msgstr "Confirm Date of Birth"
 msgid "Connect with {0}"
 msgstr "Connect with {0}"
 
-#: pages/[_id].tsx:100
+#: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr "Copied to clipboard"
 
@@ -387,7 +395,7 @@ msgstr "Last 30 days"
 msgid "Latest Stable Diffusion, Oct 20th!"
 msgstr "Latest Stable Diffusion, Oct 20th!"
 
-#: pages/[_id].tsx:185
+#: pages/[_id].tsx:198
 #: pages/credits.tsx:92
 msgid "Loading..."
 msgstr ""
@@ -433,7 +441,7 @@ msgstr ""
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
 
-#: pages/s/[_id].tsx:193
+#: pages/s/[_id].tsx:199
 #: src/sd/Controls.tsx:165
 msgid "Negative Prompt"
 msgstr "Negative Prompt"
@@ -546,7 +554,7 @@ msgstr "Profile"
 msgid "Project Goals"
 msgstr "Project Goals"
 
-#: pages/s/[_id].tsx:190
+#: pages/s/[_id].tsx:196
 #: src/sd/Controls.tsx:85
 msgid "Prompt"
 msgstr "Prompt"
@@ -631,13 +639,18 @@ msgstr "SEND IMAGE TO"
 msgid "Sampler"
 msgstr "Sampler"
 
-#: pages/[_id].tsx:117
+#: pages/[_id].tsx:130
 msgid "Save"
 msgstr "Save"
 
-#: pages/s/[_id].tsx:125
+#: pages/s/[_id].tsx:130
 msgid "See all inputs and remix at {url}"
 msgstr "See all inputs and remix at {url}"
+
+#: pages/s/[_id].tsx:133
+#: src/OutputImage.tsx:140
+msgid "See my Kiri.Art creation!"
+msgstr "See my Kiri.Art creation!"
 
 #: src/sd/Controls.tsx:450
 msgid "Seed"
@@ -673,7 +686,7 @@ msgstr ""
 #~ msgid "Status: In Active Development"
 #~ msgstr "Status: In Active Development"
 
-#: pages/s/[_id].tsx:199
+#: pages/s/[_id].tsx:205
 msgid "Steps"
 msgstr "Steps"
 
@@ -763,12 +776,12 @@ msgstr "Upsampling"
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
-#: pages/[_id].tsx:174
-#: pages/[_id].tsx:186
+#: pages/[_id].tsx:187
+#: pages/[_id].tsx:199
 msgid "User not found"
 msgstr "User not found"
 
-#: pages/[_id].tsx:122
+#: pages/[_id].tsx:135
 msgid "Username not available."
 msgstr "Username not available."
 
