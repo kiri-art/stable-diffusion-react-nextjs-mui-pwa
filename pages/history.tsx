@@ -1,6 +1,6 @@
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   ImageListItem,
 } from "@mui/material";
 import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
+import sanitizeFilename from "sanitize-filename";
 
 import MyAppBar from "../src/MyAppBar";
 import type { HistoryItem } from "../src/schemas/history";
@@ -21,7 +22,7 @@ import Link from "../src/Link";
 import useBreakPoint from "../src/lib/useBreakPoint";
 import { destar } from "../src/Starred";
 import asyncConfirm from "../src/asyncConfirm";
-import sanitizeFilename from "sanitize-filename";
+import StarType from "../src/schemas/star";
 
 const MAX_HISTORY = 100;
 
@@ -52,6 +53,63 @@ function ImgFromBase64({
   );
 }
 
+export async function editItem(
+  item: HistoryItem | StarType,
+  base64: string,
+  router: NextRouter
+) {
+  console.log(item);
+
+  const params = new URLSearchParams({
+    ...item.callInputs,
+    ...item.modelInputs,
+  });
+
+  let page = "txt2img";
+  if (item.callInputs.PIPELINE.match(/Img2Img/)) page = "img2img";
+  else if (item.callInputs.PIPELINE.match(/Inpaint/)) page = "inpaint";
+  params.delete("PIPELINE");
+  params.delete("SCHEDULER");
+
+  const src = "data:image/png;base64," + base64;
+  const blob = await fetch(src).then((res) => res.blob());
+
+  outputImageQueue.add({
+    title: item.modelInputs.prompt,
+    text: item.modelInputs.prompt,
+    files: [
+      new File([blob], sanitizeFilename(item.modelInputs.prompt + ".png")),
+    ],
+  });
+
+  if (params.has("init_image")) {
+    const src = "data:image/png;base64," + params.get("init_image");
+    const blob = await fetch(src).then((res) => res.blob());
+    sendQueue.add({
+      title: "init_image",
+      text: "init_image",
+      files: [new File([blob], "init_image.png")],
+    });
+    params.delete("init_image");
+  }
+
+  if (params.has("mask_image")) {
+    const src = "data:image/png;base64," + params.get("mask_image");
+    const blob = await fetch(src).then((res) => res.blob());
+    maskImageQueue.add({
+      title: "mask_image",
+      text: "mask_image",
+      files: [new File([blob], "mask_image.png")],
+    });
+    params.delete("mask_image");
+  }
+
+  const url = page + "?" + params.toString();
+
+  console.log(url);
+  router.push(url);
+}
+
 function Item({ item }: { item: HistoryItem }) {
   const router = useRouter();
   const [mouseOver, setMouseOver] = React.useState(false);
@@ -63,57 +121,8 @@ function Item({ item }: { item: HistoryItem }) {
   const base64 = modelOutputs[0].image_base64;
   const prompt = item.modelInputs.prompt;
 
-  async function editItem(_event: React.SyntheticEvent) {
-    console.log(item);
-
-    const params = new URLSearchParams({
-      ...item.callInputs,
-      ...item.modelInputs,
-    });
-
-    let page = "txt2img";
-    if (item.callInputs.PIPELINE.match(/Img2Img/)) page = "img2img";
-    else if (item.callInputs.PIPELINE.match(/Inpaint/)) page = "inpaint";
-    params.delete("PIPELINE");
-    params.delete("SCHEDULER");
-
-    const src = "data:image/png;base64," + base64;
-    const blob = await fetch(src).then((res) => res.blob());
-
-    outputImageQueue.add({
-      title: item.modelInputs.prompt,
-      text: item.modelInputs.prompt,
-      files: [
-        new File([blob], sanitizeFilename(item.modelInputs.prompt + ".png")),
-      ],
-    });
-
-    if (params.has("init_image")) {
-      const src = "data:image/png;base64," + params.get("init_image");
-      const blob = await fetch(src).then((res) => res.blob());
-      sendQueue.add({
-        title: "init_image",
-        text: "init_image",
-        files: [new File([blob], "init_image.png")],
-      });
-      params.delete("init_image");
-    }
-
-    if (params.has("mask_image")) {
-      const src = "data:image/png;base64," + params.get("mask_image");
-      const blob = await fetch(src).then((res) => res.blob());
-      maskImageQueue.add({
-        title: "mask_image",
-        text: "mask_image",
-        files: [new File([blob], "mask_image.png")],
-      });
-      params.delete("mask_image");
-    }
-
-    const url = page + "?" + params.toString();
-
-    console.log(url);
-    router.push(url);
+  async function editItemClick(_event: React.SyntheticEvent) {
+    editItem(item, base64, router);
   }
 
   async function deleteItem(_event: React.MouseEvent<HTMLButtonElement>) {
@@ -211,7 +220,7 @@ function Item({ item }: { item: HistoryItem }) {
               right: 10,
               background: "rgba(170,170,170,0.7)",
             }}
-            onClick={editItem}
+            onClick={editItemClick}
           >
             <Edit />
           </Button>
