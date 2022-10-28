@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useGongoOne, useGongoSub } from "gongo-client-react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, IconButton } from "@mui/material";
 import { Trans } from "@lingui/macro";
 // import { GetServerSideProps } from "next";
 
@@ -9,6 +9,8 @@ import MyAppBar from "../../src/MyAppBar";
 import Link from "../../src/Link";
 import strObjectId from "../../src/lib/strObjectId";
 // import { db as serverDb, ObjectId } from "../../src/api-lib/db";
+import { FavoriteBorder, Share, Edit, Favorite } from "@mui/icons-material";
+import { useLike } from "../../src/Starred";
 
 /*
 export const getServerSideProps: GetServerSideProps = async ({
@@ -66,7 +68,7 @@ export default function StarredItem({
   // TODO, gongo should accept "false" args to ignore.
   useGongoSub("star", { starId: _id });
 
-  console.log(userProfile);
+  const { like, likedByUser } = useLike(item);
 
   if (!item) return <div>Loading...</div>;
   if (typeof item.date === "string") item.date = new Date(item.date);
@@ -79,6 +81,8 @@ export default function StarredItem({
       ? modelInputs.width + "/" + modelInputs.height
       : undefined;
 
+  const styleVAM = { verticalAlign: "middle" };
+
   return (
     <Box>
       <MyAppBar title="Starred Item" />
@@ -90,6 +94,22 @@ export default function StarredItem({
           style={{ maxWidth: "100%", border: "1px solid black", aspectRatio }}
           width="100%"
         />
+        <Box>
+          <IconButton size="small" onClick={like}>
+            {likedByUser ? (
+              <Favorite style={{ ...styleVAM, color: "red" }} />
+            ) : (
+              <FavoriteBorder style={styleVAM} />
+            )}{" "}
+            <span style={styleVAM}>{item.likes}</span>
+          </IconButton>{" "}
+          <IconButton size="small">
+            <Share style={styleVAM} />
+          </IconButton>{" "}
+          <IconButton size="small">
+            <Edit style={styleVAM} />
+          </IconButton>
+        </Box>
         <p>
           By:{" "}
           {userProfile?.username ? (
