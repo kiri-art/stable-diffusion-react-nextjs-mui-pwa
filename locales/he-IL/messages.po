@@ -108,18 +108,19 @@ msgstr ""
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr ""
 
-#: pages/[_id].tsx:100
-#: pages/[_id].tsx:137
+#: pages/[_id].tsx:128
+#: pages/[_id].tsx:173
+#: pages/s/[_id].tsx:183
 msgid "Anonymous User"
 msgstr ""
 
-#: pages/history.tsx:233
-#: pages/history.tsx:233
+#: pages/history.tsx:242
+#: pages/history.tsx:242
 msgid "Are you sure?  This action cannot be undone"
 msgstr ""
 
-#: pages/history.tsx:120
-#: pages/history.tsx:120
+#: pages/history.tsx:129
+#: pages/history.tsx:129
 msgid "Are you sure?  This cannot be undone."
 msgstr ""
 
@@ -151,13 +152,17 @@ msgstr ""
 msgid "Buy 50 credits for $1"
 msgstr "רכישת 50 נקודות קרדיט ב-$1"
 
-#: pages/s/[_id].tsx:97
+#: pages/s/[_id].tsx:196
 msgid "CFG"
 msgstr ""
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:117
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
+msgstr ""
+
+#: pages/[_id].tsx:83
+msgid "Check out my awesome work at {url}"
 msgstr ""
 
 #: pages/checkout.tsx:60
@@ -169,7 +174,7 @@ msgstr "השלמת קנייה"
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "הנחייה ללא סיווג (סולם)"
 
-#: pages/history.tsx:248
+#: pages/history.tsx:257
 msgid "Clear History"
 msgstr ""
 
@@ -193,6 +198,10 @@ msgstr ""
 #: pages/login.tsx:93
 msgid "Connect with {0}"
 msgstr "להתחבר אל {0}"
+
+#: pages/[_id].tsx:100
+msgid "Copied to clipboard"
+msgstr ""
 
 #: src/MyAppBar.tsx:185
 #: src/MyAppBar.tsx:395
@@ -281,7 +290,7 @@ msgstr "Google"
 msgid "Height"
 msgstr "גובה"
 
-#: pages/history.tsx:239
+#: pages/history.tsx:248
 #: src/MyAppBar.tsx:392
 msgid "History"
 msgstr ""
@@ -294,7 +303,7 @@ msgstr ""
 #~ msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 #~ msgstr ""
 
-#: pages/history.tsx:241
+#: pages/history.tsx:250
 msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 msgstr ""
 
@@ -374,7 +383,7 @@ msgstr ""
 msgid "Latest Stable Diffusion, Oct 20th!"
 msgstr ""
 
-#: pages/[_id].tsx:146
+#: pages/[_id].tsx:185
 #: pages/credits.tsx:92
 msgid "Loading..."
 msgstr "טוען..."
@@ -420,7 +429,7 @@ msgstr "הקרדיט שלי"
 msgid "NSFW Filter"
 msgstr ""
 
-#: pages/s/[_id].tsx:94
+#: pages/s/[_id].tsx:193
 #: src/sd/Controls.tsx:165
 msgid "Negative Prompt"
 msgstr ""
@@ -521,7 +530,6 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: pages/p/[_id].tsx:22
 #: src/MyAppBar.tsx:389
 msgid "Profile"
 msgstr ""
@@ -530,7 +538,7 @@ msgstr ""
 msgid "Project Goals"
 msgstr ""
 
-#: pages/s/[_id].tsx:91
+#: pages/s/[_id].tsx:190
 #: src/sd/Controls.tsx:85
 msgid "Prompt"
 msgstr ""
@@ -615,8 +623,12 @@ msgstr ""
 msgid "Sampler"
 msgstr ""
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:117
 msgid "Save"
+msgstr ""
+
+#: pages/s/[_id].tsx:125
+msgid "See all inputs and remix at {url}"
 msgstr ""
 
 #: src/sd/Controls.tsx:450
@@ -653,7 +665,7 @@ msgstr "סטטוס"
 #~ msgid "Status: In Active Development"
 #~ msgstr "סטטוס: בפיתוח פעיל"
 
-#: pages/s/[_id].tsx:100
+#: pages/s/[_id].tsx:199
 msgid "Steps"
 msgstr ""
 
@@ -743,12 +755,12 @@ msgstr ""
 msgid "Use mouse / finger to draw mask over it"
 msgstr ""
 
-#: pages/[_id].tsx:138
-#: pages/[_id].tsx:147
+#: pages/[_id].tsx:174
+#: pages/[_id].tsx:186
 msgid "User not found"
 msgstr ""
 
-#: pages/[_id].tsx:94
+#: pages/[_id].tsx:122
 msgid "Username not available."
 msgstr ""
 

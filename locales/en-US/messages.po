@@ -108,18 +108,19 @@ msgstr "An error occured:"
 msgid "Anime.  Original, previous model (v1.2)"
 msgstr "Anime.  Original, previous model (v1.2)"
 
-#: pages/[_id].tsx:100
-#: pages/[_id].tsx:137
+#: pages/[_id].tsx:128
+#: pages/[_id].tsx:173
+#: pages/s/[_id].tsx:183
 msgid "Anonymous User"
 msgstr "Anonymous User"
 
-#: pages/history.tsx:233
-#: pages/history.tsx:233
+#: pages/history.tsx:242
+#: pages/history.tsx:242
 msgid "Are you sure?  This action cannot be undone"
 msgstr "Are you sure?  This action cannot be undone"
 
-#: pages/history.tsx:120
-#: pages/history.tsx:120
+#: pages/history.tsx:129
+#: pages/history.tsx:129
 msgid "Are you sure?  This cannot be undone."
 msgstr "Are you sure?  This cannot be undone."
 
@@ -151,14 +152,18 @@ msgstr "Best for Anime.  Final Release.  Oct 6"
 msgid "Buy 50 credits for $1"
 msgstr ""
 
-#: pages/s/[_id].tsx:97
+#: pages/s/[_id].tsx:196
 msgid "CFG"
 msgstr "CFG"
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:117
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "Cancel"
+
+#: pages/[_id].tsx:83
+msgid "Check out my awesome work at {url}"
+msgstr "Check out my awesome work at {url}"
 
 #: pages/checkout.tsx:60
 #: pages/checkout.tsx:63
@@ -169,7 +174,7 @@ msgstr ""
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/history.tsx:248
+#: pages/history.tsx:257
 msgid "Clear History"
 msgstr "Clear History"
 
@@ -193,6 +198,10 @@ msgstr "Confirm Date of Birth"
 #: pages/login.tsx:93
 msgid "Connect with {0}"
 msgstr "Connect with {0}"
+
+#: pages/[_id].tsx:100
+msgid "Copied to clipboard"
+msgstr "Copied to clipboard"
 
 #: src/MyAppBar.tsx:185
 #: src/MyAppBar.tsx:395
@@ -281,7 +290,7 @@ msgstr "Google"
 msgid "Height"
 msgstr ""
 
-#: pages/history.tsx:239
+#: pages/history.tsx:248
 #: src/MyAppBar.tsx:392
 msgid "History"
 msgstr "History"
@@ -294,7 +303,7 @@ msgstr "History"
 #~ msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 #~ msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 
-#: pages/history.tsx:241
+#: pages/history.tsx:250
 msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 
@@ -378,7 +387,7 @@ msgstr "Last 30 days"
 msgid "Latest Stable Diffusion, Oct 20th!"
 msgstr "Latest Stable Diffusion, Oct 20th!"
 
-#: pages/[_id].tsx:146
+#: pages/[_id].tsx:185
 #: pages/credits.tsx:92
 msgid "Loading..."
 msgstr ""
@@ -424,7 +433,7 @@ msgstr ""
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
 
-#: pages/s/[_id].tsx:94
+#: pages/s/[_id].tsx:193
 #: src/sd/Controls.tsx:165
 msgid "Negative Prompt"
 msgstr "Negative Prompt"
@@ -529,7 +538,6 @@ msgstr "Potential NSFW content detected. A black image was returned instead. Try
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
-#: pages/p/[_id].tsx:22
 #: src/MyAppBar.tsx:389
 msgid "Profile"
 msgstr "Profile"
@@ -538,7 +546,7 @@ msgstr "Profile"
 msgid "Project Goals"
 msgstr "Project Goals"
 
-#: pages/s/[_id].tsx:91
+#: pages/s/[_id].tsx:190
 #: src/sd/Controls.tsx:85
 msgid "Prompt"
 msgstr "Prompt"
@@ -623,9 +631,13 @@ msgstr "SEND IMAGE TO"
 msgid "Sampler"
 msgstr "Sampler"
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:117
 msgid "Save"
 msgstr "Save"
+
+#: pages/s/[_id].tsx:125
+msgid "See all inputs and remix at {url}"
+msgstr "See all inputs and remix at {url}"
 
 #: src/sd/Controls.tsx:450
 msgid "Seed"
@@ -661,7 +673,7 @@ msgstr ""
 #~ msgid "Status: In Active Development"
 #~ msgstr "Status: In Active Development"
 
-#: pages/s/[_id].tsx:100
+#: pages/s/[_id].tsx:199
 msgid "Steps"
 msgstr "Steps"
 
@@ -751,12 +763,12 @@ msgstr "Upsampling"
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
-#: pages/[_id].tsx:138
-#: pages/[_id].tsx:147
+#: pages/[_id].tsx:174
+#: pages/[_id].tsx:186
 msgid "User not found"
 msgstr "User not found"
 
-#: pages/[_id].tsx:94
+#: pages/[_id].tsx:122
 msgid "Username not available."
 msgstr "Username not available."
 
