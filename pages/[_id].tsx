@@ -29,6 +29,7 @@ function Username({
   username: string;
   isUser: boolean;
 }) {
+  const router = useRouter();
   const [editable, setEditable] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
   const [newUsername, setNewUsername] = React.useState(username);
@@ -69,11 +70,13 @@ function Username({
     } else if (result.status === "OK") {
       setNotAvailable(false);
       // setEditable(false);
-      const user = db.collection("users").findOne(userId);
+      const user = db.collection("userProfiles").findOne(userId);
       const updatedUser = { ...user, username: newUsername };
+      console.log({ userId, updatedUser });
       // @ts-expect-error: userID
-      db.collection("users")._update(userId, updatedUser);
+      db.collection("userProfiles")._update(userId, updatedUser);
       setEditable(false);
+      router.replace("/" + newUsername);
     } else {
       alert("unexpected result, sorry :/ " + JSON.stringify(result));
     }
@@ -112,10 +115,19 @@ function Username({
               value={newUsername}
               onChange={(event) => setNewUsername(event.target.value)}
             />
+            <button
+              onClick={() => {
+                setEditable(false);
+                setNewUsername(username);
+              }}
+              disabled={saving}
+            >
+              <Trans>Cancel</Trans>
+            </button>
             <input
               type="submit"
-              disabled={saving}
-              value={newUsername ? t`Save` : t`Cancel`}
+              disabled={saving || !newUsername || newUsername === username}
+              value={t`Save`}
             />
             {notAvailable && (
               <span style={{ color: "red", fontSize: "90%" }}>
@@ -188,7 +200,7 @@ export default function Profile() {
         {user && (
           <>
             <Username
-              userId={_id as string}
+              userId={user?._id || (_id as string)}
               username={(user && (user.username as string)) || ""}
               isUser={user && userId == user._id}
             />
