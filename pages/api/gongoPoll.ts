@@ -208,6 +208,13 @@ gs.method("redeemCreditCode", async (db, { creditCode }, { auth }) => {
   return { $success: true, credits: code.credits };
 });
 
+gs.publish("userLikes", async (db, _, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  return db.collection("likes").find({ userId });
+});
+
 gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
   const userId = await auth.userId();
   if (!userId) return [];

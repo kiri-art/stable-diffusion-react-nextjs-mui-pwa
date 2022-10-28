@@ -28,6 +28,7 @@ db.extend("transport", HTTPTransport, {
 db.subscribe("user");
 //db.subscribe("user", {}, { minInterval: 10_000, maxInterval: 60_000 });
 // db.subscribe("user", {}, { minInterval: 1000000, maxInterval: 300000000 });
+db.subscribe("userLikes");
 
 if (typeof window !== "undefined")
   setTimeout(() => {
