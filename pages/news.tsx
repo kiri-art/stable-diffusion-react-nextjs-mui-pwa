@@ -5,6 +5,7 @@ import AppBar from "../src/MyAppBar";
 
 import { Container, Box, Typography } from "@mui/material";
 import Link from "next/link";
+import Star from "../src/schemas/star";
 
 export default function News() {
   return (
@@ -35,21 +36,37 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Thu Oct 27, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>Ability to report / flag harmful images.</b> If the same
+                image is reported 3 times it will be removed.
+              </li>
+              <li>
+                <b>Edit / remix button for Stars:</b> click to load a starred
+                image back into the generation pages with all the original
+                inputs.
+              </li>
+              <li>
+                <b>User profile improvements:</b> more prominent usernames,
+                share button for profiles and starred items.
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul>
+          <li>
             <b>Fri Oct 21, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
                 <b>Stable Diffusion 1.5</b>
               </li>
               <li>
-                SD <b>fine-tuned inpainting</b> model
+                SD <b>fine-tuned inpainting</b> model (note: doesn&apos;t work
+                on all image sizes yet)
               </li>
               <li>Diffusers v0.7.0.dev0</li>
-              <li>
-                <span style={{ color: "red" }}>
-                  txt2img and inpainting are a bit temperamental with all the
-                  above updates. Working on this!
-                </span>
-              </li>
               <li>
                 Enabled <b>pinch-to-zoom</b> site-wide
               </li>
