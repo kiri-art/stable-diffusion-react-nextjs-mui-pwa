@@ -82,7 +82,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
 
   const { like, likedByUser } = useLike(item);
 
-  console.log({ _id, item, userProfile, like, likedByUser });
+  // console.log({ _id, item, userProfile, like, likedByUser });
 
   async function editItemClick(_event: React.SyntheticEvent) {
     if (!imgRef.current) return;
