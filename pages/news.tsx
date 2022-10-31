@@ -38,9 +38,9 @@ export default function News() {
             <b>Mon Oct 31, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
-                <b>Intermittant issues</b> due to unusually high demand. We've
-                upgraded to a bigger database plan and apologise for any
-                inconvience caused over the approx. 1hr period.
+                <b>Intermittant issues</b> due to unusually high demand.
+                We&apos;ve upgraded to a bigger database plan and apologise for
+                any inconvience caused over the approx. 1hr period.
               </li>
             </ul>
           </li>
