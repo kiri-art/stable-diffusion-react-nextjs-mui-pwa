@@ -5,7 +5,6 @@ import AppBar from "../src/MyAppBar";
 
 import { Container, Box, Typography } from "@mui/material";
 import Link from "next/link";
-import Star from "../src/schemas/star";
 
 export default function News() {
   return (
