@@ -60,6 +60,8 @@ export function useLike(item: Star) {
 
   async function like(event: React.SyntheticEvent) {
     event.preventDefault();
+    event.stopPropagation();
+
     if (!userId) return alert("log in first");
 
     if (userLike)
@@ -98,11 +100,14 @@ function Item({
   return React.useMemo(() => {
     async function itemDestar(event: React.SyntheticEvent) {
       event.preventDefault();
+      event.stopPropagation();
+      console.log(event.target);
       destar(item._id);
     }
 
     async function itemReport(event: React.SyntheticEvent) {
       event.preventDefault();
+      event.stopPropagation();
       report(item._id);
     }
 
