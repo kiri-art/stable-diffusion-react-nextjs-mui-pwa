@@ -65,8 +65,15 @@ export default function StarredItem({
   const imgRef = React.useRef<HTMLImageElement>(null);
   const router = useRouter();
   const { _id } = router.query;
+  console.log({ _id });
 
-  const clientItem = useGongoOne((db) => db.collection("stars").find({ _id }));
+  const clientItem = useGongoOne(
+    // @ts-expect-error: testing
+    (db) => _id && db.collection("stars").find({ _id })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) as any;
+  // TODO, just testing.
+
   const item = (serverItem || clientItem) as typeof clientItem;
 
   const userProfile = useGongoOne((db) =>
@@ -74,7 +81,8 @@ export default function StarredItem({
   );
 
   // TODO, gongo should accept "false" args to ignore.
-  useGongoSub("star", { starId: _id });
+  // @ts-expect-error: testing
+  useGongoSub(_id && "star", { starId: _id });
   console.log(item);
 
   const { like, likedByUser } = useLike(item);
