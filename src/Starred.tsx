@@ -78,7 +78,15 @@ export function useLike(item: Star) {
   return { userId, userLike, likedByUser, like };
 }
 
-function Item({ item }: { item: Star }) {
+function Item({
+  item,
+  itemOpen: _itemOpen,
+  showReported,
+}: {
+  item: Star;
+  showReported: boolean;
+  itemOpen: (event: React.SyntheticEvent, item: Star) => void;
+}) {
   const alt = "TODO";
   const userId = useGongoUserId();
   const { likedByUser, like } = useLike(item);
@@ -87,63 +95,22 @@ function Item({ item }: { item: Star }) {
     ? item.modelInputs.width + "/" + item.modelInputs.height
     : "1";
 
-  const router = useRouter();
+  return React.useMemo(() => {
+    async function itemDestar(event: React.SyntheticEvent) {
+      event.preventDefault();
+      destar(item._id);
+    }
 
-  async function itemDestar(event: React.SyntheticEvent) {
-    event.preventDefault();
-    destar(item._id);
-  }
+    async function itemReport(event: React.SyntheticEvent) {
+      event.preventDefault();
+      report(item._id);
+    }
 
-  async function itemReport(event: React.SyntheticEvent) {
-    event.preventDefault();
-    report(item._id);
-  }
+    async function itemOpen(event: React.SyntheticEvent) {
+      _itemOpen(event, item);
+    }
 
-  async function itemOpen(event: React.SyntheticEvent) {
-    event.preventDefault();
-    await router.replace({ hash: "scrollY=" + window.scrollY });
-    await router.push(
-      { hash: "showStar=1&scrollY=" + window.scrollY },
-      "/s/" + item._id
-    );
-  }
-
-  React.useEffect(() => {
-    router.beforePopState((state) => {
-      const match = state.url.match(/[#&]scrollY=([^#^&]+)/);
-      if (match) {
-        window.scrollTo({ top: parseFloat(match[1]) });
-        state.options.scroll = false;
-      }
-      return true;
-    });
-  }, [router]);
-
-  const popup = router.asPath.match(/^\/s\/(.*)$/);
-  React.useEffect(() => {
-    if (popup) window.scrollTo({ top: 0 });
-  }, [popup]);
-
-  return (
-    <>
-      {popup && (
-        <Box
-          sx={{
-            m: "0 !important",
-            p: 0,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100% !important",
-            height: document.body.clientHeight,
-            zIndex: 1100, // orig appmenu is 1000, menu popup is 1300
-            background: "white",
-          }}
-        >
-          <StarredItem serverItem={item} />
-        </Box>
-      )}
-
+    return (
       <Link
         style={{ position: "relative", aspectRatio }}
         href={"/s/" + item._id}
@@ -187,7 +154,7 @@ function Item({ item }: { item: Star }) {
               p: 1,
               minWidth: 0,
               color:
-                router.query.showReported &&
+                showReported &&
                 (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
                   ? "red"
                   : "rgba(200,200,200,0.45)",
@@ -197,7 +164,7 @@ function Item({ item }: { item: Star }) {
             }}
           >
             <>
-              {router.query.showReported && item.reports}
+              {showReported && item.reports}
               <Report />
             </>
           </Button>
@@ -235,8 +202,16 @@ function Item({ item }: { item: Star }) {
           </span>
         </Button>
       </Link>
-    </>
-  );
+    );
+  }, [
+    aspectRatio,
+    item,
+    like,
+    likedByUser,
+    ownedByUser,
+    _itemOpen,
+    showReported,
+  ]);
 }
 
 export default function Starred({
@@ -246,13 +221,65 @@ export default function Starred({
   items: Star[];
   cols?: number;
 }) {
+  const router = useRouter();
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
+  const itemRef = React.useRef<Star | undefined>();
+
+  React.useEffect(() => {
+    router.beforePopState((state) => {
+      const match = state.url.match(/[#&]scrollY=([^#^&]+)/);
+      if (match) {
+        window.scrollTo({ top: parseFloat(match[1]) });
+        state.options.scroll = false;
+      }
+      return true;
+    });
+  }, [router]);
+
+  const popup = router.asPath.match(/^\/s\/(.*)$/);
+  React.useEffect(() => {
+    if (popup) window.scrollTo({ top: 0 });
+  }, [popup]);
+
+  async function itemOpen(event: React.SyntheticEvent, item: Star) {
+    event.preventDefault();
+    itemRef.current = item;
+    await router.replace({ hash: "scrollY=" + window.scrollY });
+    await router.push(
+      { hash: "showStar=1&scrollY=" + window.scrollY },
+      "/s/" + item._id
+    );
+  }
 
   return (
-    <Masonry columns={cols || _cols} sx={{ my: 2 }}>
-      {items.map((item) => (
-        <Item key={item._id} item={item} />
-      ))}
-    </Masonry>
+    <>
+      {popup && (
+        <Box
+          sx={{
+            m: "0 !important",
+            p: 0,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100% !important",
+            height: document.body.clientHeight,
+            zIndex: 1100, // orig appmenu is 1000, menu popup is 1300
+            background: "white",
+          }}
+        >
+          <StarredItem serverItem={itemRef.current} />
+        </Box>
+      )}
+      <Masonry columns={cols || _cols} sx={{ my: 2 }}>
+        {items.map((item) => (
+          <Item
+            key={item._id}
+            item={item}
+            showReported={!!router.query.showReported}
+            itemOpen={itemOpen}
+          />
+        ))}
+      </Masonry>
+    </>
   );
 }

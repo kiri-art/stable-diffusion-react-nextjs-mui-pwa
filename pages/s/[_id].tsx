@@ -14,6 +14,7 @@ import { useLike } from "../../src/Starred";
 import { editItem } from "../history";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import { toast } from "react-toastify";
+import Star from "../../src/schemas/star";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -57,15 +58,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 };
 */
 
-export default function StarredItem({
-  serverItem,
-}: {
-  serverItem: Record<string, unknown>;
-}) {
+export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   const imgRef = React.useRef<HTMLImageElement>(null);
   const router = useRouter();
   const { _id } = router.query;
-  console.log({ _id });
 
   const clientItem = useGongoOne(
     // @ts-expect-error: testing
@@ -83,9 +79,10 @@ export default function StarredItem({
   // TODO, gongo should accept "false" args to ignore.
   // @ts-expect-error: testing
   useGongoSub(_id && "star", { starId: _id });
-  console.log(item);
 
   const { like, likedByUser } = useLike(item);
+
+  console.log({ _id, item, userProfile, like, likedByUser });
 
   async function editItemClick(_event: React.SyntheticEvent) {
     if (!imgRef.current) return;
