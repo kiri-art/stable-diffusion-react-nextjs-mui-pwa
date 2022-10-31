@@ -246,15 +246,18 @@ export default function Starred({
     if (popup) window.scrollTo({ top: 0 });
   }, [popup]);
 
-  async function itemOpen(event: React.SyntheticEvent, item: Star) {
-    event.preventDefault();
-    itemRef.current = item;
-    await router.replace({ hash: "scrollY=" + window.scrollY });
-    await router.push(
-      { hash: "showStar=1&scrollY=" + window.scrollY },
-      "/s/" + item._id
-    );
-  }
+  const itemOpen = React.useCallback(
+    async function itemOpen(event: React.SyntheticEvent, item: Star) {
+      event.preventDefault();
+      itemRef.current = item;
+      await router.replace({ hash: "scrollY=" + window.scrollY });
+      await router.push(
+        { hash: "showStar=1&scrollY=" + window.scrollY },
+        "/s/" + item._id
+      );
+    },
+    [router]
+  );
 
   return (
     <>
@@ -275,16 +278,21 @@ export default function Starred({
           <StarredItem serverItem={itemRef.current} />
         </Box>
       )}
-      <Masonry columns={cols || _cols} sx={{ my: 2 }}>
-        {items.map((item) => (
-          <Item
-            key={item._id}
-            item={item}
-            showReported={!!router.query.showReported}
-            itemOpen={itemOpen}
-          />
-        ))}
-      </Masonry>
+      {React.useMemo(
+        () => (
+          <Masonry columns={cols || _cols} sx={{ my: 2 }}>
+            {items.map((item) => (
+              <Item
+                key={item._id}
+                item={item}
+                showReported={!!router.query.showReported}
+                itemOpen={itemOpen}
+              />
+            ))}
+          </Masonry>
+        ),
+        [items, cols, _cols, itemOpen, router.query.showReported]
+      )}
     </>
   );
 }
