@@ -1,10 +1,9 @@
 import React from "react";
 import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
 import Masonry from "@mui/lab/Masonry";
 import Image from "next/image";
-import { useInView } from "react-hook-inview";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
@@ -15,6 +14,7 @@ import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
 import asyncConfirm from "./asyncConfirm";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "./lib/constants";
+import StarredItem from "../pages/s/[_id]";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -78,13 +78,7 @@ export function useLike(item: Star) {
   return { userId, userLike, likedByUser, like };
 }
 
-function Item({
-  item,
-  scrolled,
-}: {
-  item: Star;
-  scrolled?: React.MutableRefObject<number>;
-}) {
+function Item({ item }: { item: Star }) {
   const alt = "TODO";
   const userId = useGongoUserId();
   const { likedByUser, like } = useLike(item);
@@ -94,23 +88,6 @@ function Item({
     : "1";
 
   const router = useRouter();
-
-  const [ref] = useInView({
-    threshold: 1,
-    onEnter: () => {
-      if (
-        !(scrolled && scrolled.current && Date.now() > scrolled.current + 1000)
-      )
-        return;
-      router
-        .replace({
-          hash: item._id,
-        })
-        .catch((e) => {
-          if (!e.cancelled) throw e;
-        });
-    },
-  });
 
   async function itemDestar(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -122,99 +99,143 @@ function Item({
     report(item._id);
   }
 
+  async function itemOpen(event: React.SyntheticEvent) {
+    event.preventDefault();
+    await router.replace({ hash: "scrollY=" + window.scrollY });
+    await router.push(
+      { hash: "showStar=1&scrollY=" + window.scrollY },
+      "/s/" + item._id
+    );
+  }
+
+  React.useEffect(() => {
+    router.beforePopState((state) => {
+      const match = state.url.match(/[#&]scrollY=([^#^&]+)/);
+      if (match) {
+        window.scrollTo({ top: parseFloat(match[1]) });
+        state.options.scroll = false;
+      }
+      return true;
+    });
+  }, [router]);
+
+  const popup = router.asPath.match(/^\/s\/(.*)$/);
+  React.useEffect(() => {
+    if (popup) window.scrollTo({ top: 0 });
+  }, [popup]);
+
   return (
-    <Link
-      ref={ref}
-      style={{ position: "relative", aspectRatio }}
-      href={"/s/" + item._id}
-    >
-      <div id={"item_" + item._id} style={{ scrollMarginTop: "8px" }} />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <Image
-        alt={alt}
-        src={"/api/file?id=" + strObjectId(item.files.output)}
-        layout="fill"
-        objectFit="contain"
-        sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
-        (max-width: 1536) 33vw, 16vw"
-      />
-      {ownedByUser && false ? (
-        <Button
-          onClick={itemDestar}
+    <>
+      {popup && (
+        <Box
           sx={{
+            m: "0 !important",
+            p: 0,
             position: "absolute",
-            right: 0,
             top: 0,
-            m: 0,
-            p: 1,
-            minWidth: 0,
-            color: "rgba(200,200,200,0.45)",
-            "& :hover": {
-              color: "red",
-            },
+            left: 0,
+            width: "100% !important",
+            height: document.body.clientHeight,
+            zIndex: 1100, // orig appmenu is 1000, menu popup is 1300
+            background: "white",
           }}
         >
-          <Delete />
-        </Button>
-      ) : (
-        <Button
-          onClick={itemReport}
-          sx={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            m: 0,
-            p: 1,
-            minWidth: 0,
-            color:
-              router.query.showReported &&
-              (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
-                ? "red"
-                : "rgba(200,200,200,0.45)",
-            "& :hover": {
-              color: "red",
-            },
-          }}
-        >
-          <>
-            {router.query.showReported && item.reports}
-            <Report />
-          </>
-        </Button>
+          <StarredItem serverItem={item} />
+        </Box>
       )}
-      <Button
-        onClick={like}
-        sx={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          m: 0,
-          p: 1,
-          minWidth: 0,
-        }}
+
+      <Link
+        style={{ position: "relative", aspectRatio }}
+        href={"/s/" + item._id}
+        onClick={itemOpen}
       >
-        <span
-          style={{
-            color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <Image
+          alt={alt}
+          src={"/api/file?id=" + strObjectId(item.files.output)}
+          layout="fill"
+          objectFit="contain"
+          sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
+        (max-width: 1536) 33vw, 16vw"
+        />
+        {ownedByUser && false ? (
+          <Button
+            onClick={itemDestar}
+            sx={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              m: 0,
+              p: 1,
+              minWidth: 0,
+              color: "rgba(200,200,200,0.45)",
+              "& :hover": {
+                color: "red",
+              },
+            }}
+          >
+            <Delete />
+          </Button>
+        ) : (
+          <Button
+            onClick={itemReport}
+            sx={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              m: 0,
+              p: 1,
+              minWidth: 0,
+              color:
+                router.query.showReported &&
+                (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
+                  ? "red"
+                  : "rgba(200,200,200,0.45)",
+              "& :hover": {
+                color: "red",
+              },
+            }}
+          >
+            <>
+              {router.query.showReported && item.reports}
+              <Report />
+            </>
+          </Button>
+        )}
+        <Button
+          onClick={like}
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            m: 0,
+            p: 1,
+            minWidth: 0,
           }}
         >
-          {likedByUser ? <Favorite /> : <FavoriteBorder />}
-        </span>
-        <span
-          style={{
-            color: likedByUser ? "#333" : "rgba(200,200,200,0.5)",
-            position: "relative",
-            top: "-3px",
-            marginLeft: "3px",
-            textShadow: likedByUser
-              ? "0 0 2px rgba(255,255,255,0.8)"
-              : undefined,
-          }}
-        >
-          {item.likes}
-        </span>
-      </Button>
-    </Link>
+          <span
+            style={{
+              color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
+            }}
+          >
+            {likedByUser ? <Favorite /> : <FavoriteBorder />}
+          </span>
+          <span
+            style={{
+              color: likedByUser ? "#333" : "rgba(200,200,200,0.5)",
+              position: "relative",
+              top: "-3px",
+              marginLeft: "3px",
+              textShadow: likedByUser
+                ? "0 0 2px rgba(255,255,255,0.8)"
+                : undefined,
+            }}
+          >
+            {item.likes}
+          </span>
+        </Button>
+      </Link>
+    </>
   );
 }
 
@@ -226,23 +247,11 @@ export default function Starred({
   cols?: number;
 }) {
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
-  const router = useRouter();
-  const scrolled = React.useRef(Date.now());
-
-  React.useLayoutEffect(() => {
-    const match = router.asPath.match(/#(.*)$/);
-    if (match && match[1]) {
-      const div = document.getElementById("item_" + match[1]);
-      setTimeout(() => div && div.scrollIntoView(), 300);
-      scrolled.current = Date.now();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Masonry columns={cols || _cols} sx={{ my: 2 }}>
       {items.map((item) => (
-        <Item key={item._id} item={item} scrolled={scrolled} />
+        <Item key={item._id} item={item} />
       ))}
     </Masonry>
   );
