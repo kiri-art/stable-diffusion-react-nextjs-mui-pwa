@@ -33,7 +33,11 @@ const Home: NextPage = () => {
   const setNsfw = (nsfwFilter: boolean) =>
     router.replace({ pathname: "/", query: { ...router.query, nsfwFilter } });
 
-  const [show, setShow] = React.useState("recent");
+  // const [show, setShow] = React.useState("recent");
+  const show = router.query.show || "recent";
+  const setShow = (show: string) =>
+    router.replace({ pathname: "/", query: { ...router.query, show } });
+
   const over18 = useOver18();
 
   // const [useGrid, setUseGrid] = React.useState(true);
