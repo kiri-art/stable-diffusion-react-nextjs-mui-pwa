@@ -243,7 +243,7 @@ export default function Starred({
 
   const popup = router.asPath.match(/^\/s\/(.*)$/);
   React.useEffect(() => {
-    if (popup) window.scrollTo({ top: 0 });
+    if (popup) setTimeout(() => window.scrollTo({ top: 0 }), 0);
   }, [popup]);
 
   const itemOpen = React.useCallback(
@@ -261,23 +261,22 @@ export default function Starred({
 
   return (
     <>
-      {popup && (
-        <Box
-          sx={{
-            m: "0 !important",
-            p: 0,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100% !important",
-            height: document.body.clientHeight,
-            zIndex: 1100, // orig appmenu is 1000, menu popup is 1300
-            background: "white",
-          }}
-        >
-          <StarredItem serverItem={itemRef.current} />
-        </Box>
-      )}
+      <Box
+        sx={{
+          display: popup ? "block" : "none",
+          m: "0 !important",
+          p: 0,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100% !important",
+          height: document.body.clientHeight,
+          zIndex: 1100, // orig appmenu is 1000, menu popup is 1300
+          background: "white",
+        }}
+      >
+        {popup && <StarredItem serverItem={itemRef.current} />}
+      </Box>
       {React.useMemo(
         () => (
           <Masonry columns={cols || _cols} sx={{ my: 2 }}>
