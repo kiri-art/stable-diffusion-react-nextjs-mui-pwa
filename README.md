@@ -5,7 +5,7 @@ _PWA Web App front end for Stable Diffusion, on React/NextJS with Material UI_
 Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
 
 <span style="font-size: larger;">
-  <a href="https://sd-mui.vercel.app/">sd-mui.vercel.app</a>
+  <a href="https://kiri.art/">kiri.art</a>
 </span>
 
 ## New Project in Active Development (since Aug 31st, 2022)
@@ -18,7 +18,7 @@ Copyright (c) 2022 by Gadi Cohen <dragon@wastelands.net>. MIT Licensed.
   - Local banana.dev docker container (see [docs/banana-local.md](./docs/banana-local.md))
   - Others?
 
-Why? Make this fun stuff more accessible to web developers and friends :) See the [live demo](https://sd-mui.vercel.app/), run on your own PC for free, or deploy!
+Why? Make this fun stuff more accessible to web developers and friends :) See the [live demo](https://kiri.art/), run on your own PC for free, or deploy!
 
 If you have a background in web dev / dev ops, and have wanted to experiment a bit with machine learning / latent diffusion (AI image generation), this is a great project to get involved in :)
 
@@ -35,24 +35,27 @@ Note: you'll need at least one destination / target from the list below where St
 
 ## Destinations / Targets
 
+- **Local docker image (recommended)**
+
+  - Pretty easy if you have docker installed.
+  - See https://github.com/kiri-art/docker-diffusers-api.
+
 - **Local Exec**
 
   - If you already have Stable Diffusion installed locally,
     this will run the Python script via node spawn.
-    Set `STABLE_DIFFUSION_HOME` (to e.g. `/home/user/src/stable-diffusion`).
+  - Set `STABLE_DIFFUSION_HOME` (to e.g. `/home/user/src/stable-diffusion`).
+  - Works, but not as well maintained as the docker based solutions.
 
-- **Local BananaDev docker image**
-
-  - Pretty easy if you have docker installed.
-    See (see [docs/banana-local.md](./docs/banana-local.md)).
-
-- **Remote BananaDev container (serverless GPU)**
+- **Remote BananaDev docker container (serverless GPU)**
 
   - Great for local dev if you don't have a supported GPU
   - Default for deployments or when `NODE_ENV=="production"`
   - I'm paying roughly $1 = 200 requests with default params, YMMV.
-  - Follow instructions at https://github.com/bananaml/serverless-template-stable-diffusion.
-  - Set BANANA_API_KEY and BANANA_MODEL_KEY env variables.
+  - Follow instructions at https://github.com/kiri-art/docker-diffusers-api.
+  - Set `BANANA_API_KEY` and `BANANA_MODEL_KEY` env variables.
+  - Set the relevant keys for your deployed models,
+    `BANANA_MODEL_KEY_SD_v1_5` by default.
 
 ## REQUIRE_REGISTRATION
 
