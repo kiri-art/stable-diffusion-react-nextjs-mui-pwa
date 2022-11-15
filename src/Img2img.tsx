@@ -162,7 +162,11 @@ function Canvas({
       // if (!file) event.preventDefault();
       // console.log(1);
 
-      const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
+      const tEvent = window.TouchEvent
+        ? event instanceof TouchEvent
+          ? event.touches[0]
+          : event
+        : (event as MouseEvent);
 
       const mouse = {
         x:

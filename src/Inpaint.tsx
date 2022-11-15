@@ -107,7 +107,12 @@ function MaskCanvas({
 
       event.preventDefault();
 
-      const tEvent = event instanceof TouchEvent ? event.touches[0] : event;
+      const tEvent = window.TouchEvent
+        ? event instanceof TouchEvent
+          ? event.touches[0]
+          : event
+        : (event as MouseEvent);
+
       const parent = canvas.parentNode as HTMLDivElement;
 
       const mouse = {
