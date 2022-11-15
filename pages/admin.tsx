@@ -64,21 +64,29 @@ function Credits() {
                 <TableCell component="th" scope="row">
                   {user.displayName}
                   <br />
-                  {user.emails[0]?.value}
+                  {user.emails?.[0]?.value}
                 </TableCell>
                 <TableCell
                   align="right"
                   style={{ cursor: "pointer" }}
-                  onClick={onClick(user._id, "credits.free", user.credits.free)}
+                  onClick={onClick(
+                    user._id,
+                    "credits.free",
+                    user.credits?.free
+                  )}
                 >
-                  {user.credits.free}
+                  {user.credits?.free}
                 </TableCell>
                 <TableCell
                   align="right"
                   style={{ cursor: "pointer" }}
-                  onClick={onClick(user._id, "credits.paid", user.credits.paid)}
+                  onClick={onClick(
+                    user._id,
+                    "credits.paid",
+                    user.credits?.paid
+                  )}
                 >
-                  {user.credits.paid}
+                  {user.credits?.paid}
                 </TableCell>
               </TableRow>
             ))}
