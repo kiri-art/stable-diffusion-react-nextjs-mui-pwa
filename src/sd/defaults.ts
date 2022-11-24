@@ -6,12 +6,12 @@ const defaults = {
   width: 512,
   height: 512,
   strength: 0.75,
-  MODEL_ID: "runwayml/stable-diffusion-v1-5",
+  MODEL_ID: "stabilityai/stable-diffusion-2",
   seed: () => Math.floor(Math.random() * MAX_SEED_VALUE),
   randomizeSeed: true,
   shareInputs: false,
   safety_checker: true,
-  sampler: "LMS",
+  sampler: "LMSDiscreteScheduler",
   negative_prompt:
     "disfigured, deformed, poorly drawn, extra limbs, blurry, mutated hands, ugly, mutilated, extra fingers, bad anatomy, malformed, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck",
 };

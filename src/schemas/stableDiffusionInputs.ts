@@ -33,6 +33,7 @@ const stableDiffusionInputsSchema = object({
   // temporary, until we adjust Controls to have callInputs too.
   // note, in the adapter, we move this to callInputs
   MODEL_ID: string().oneOf([
+    "stabilityai/stable-diffusion-2",
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
     "hakurei/waifu-diffusion-v1-3",
@@ -40,7 +41,16 @@ const stableDiffusionInputsSchema = object({
     "rinna/japanese-stable-diffusion",
   ]),
   // temporary...
-  sampler: string().oneOf(["LMS", "DDIM", "PNDM"]),
+  sampler: string().oneOf([
+    "PNDM", // backcompat
+    "DDIM", // backcompat
+    "LMS", // backcompat
+    "LMSDiscreteScheduler",
+    "DDIMScheduler",
+    "PNDMScheduler",
+    "EulerAncestralDiscreteScheduler",
+    "EulerDiscreteScheduler",
+  ]),
 });
 
 type StableDiffusionInputs = InferType<typeof stableDiffusionInputsSchema>;

@@ -2,6 +2,7 @@ import { object, string, boolean, InferType } from "yup";
 
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
+    "stabilityai/stable-diffusion-2",
     "CompVis/stable-diffusion-v1-4",
     "runwayml/stable-diffusion-v1-5",
     "runwayml/stable-diffusion-inpainting",
@@ -21,7 +22,16 @@ const bananaCallInputsSchema = object({
     "JapaneseStableDiffusionInpaintPipeline",
   ]),
   // .default("StableDiffusionPipeline"),
-  SCHEDULER: string().oneOf(["PNDM", "DDIM", "LMS"]), // .default("DDIM"),
+  SCHEDULER: string().oneOf([
+    "PNDM", // backcompat
+    "DDIM", // backcompat
+    "LMS", // backcompat
+    "LMSDiscreteScheduler",
+    "DDIMScheduler",
+    "PNDMScheduler",
+    "EulerAncestralDiscreteScheduler",
+    "EulerDiscreteScheduler",
+  ]), // .default("DDIM"),
   startRequestId: string(),
   safety_checker: boolean(),
 });

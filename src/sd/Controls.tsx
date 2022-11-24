@@ -760,12 +760,22 @@ function ModelSelect({
         >
           {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
           <MenuItem
+            value="stabilityai/stable-diffusion-2"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="stabilityai/stable-diffusion-2"
+              desc={t`Latest Stable Diffusion, Nov 24th!`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="runwayml/stable-diffusion-v1-5"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
               value="runwayml/stable-diffusion-v1-5"
-              desc={t`Latest Stable Diffusion, Oct 20th!`}
+              desc={t`Stable Diffusion from Oct 20th`}
             />
           </MenuItem>
 
@@ -831,6 +841,13 @@ function ModelSelect({
             />
           </MenuItem>
         </Select>
+        {value.startsWith("stabilityai/stable-diffusion-2") && (
+          <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
+            Bleeding edge! Not everything works yet. Only DDIMScheduler and
+            EulerDiscreteScheduler samplers work. 768x768 works best. Non-NSFW
+            broken.
+          </Box>
+        )}
         {value.startsWith("hakurei/waifu-diffusion-v1-3") && (
           <Box sx={{ fontSize: "80%", textAlign: "center" }}>
             <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
@@ -890,16 +907,39 @@ function Sampler({
             onChange={(event) => setValue(event.target.value)}
             size="small"
           >
-            <MenuItem value="PNDM" sx={{ textAlign: "center", width: "100%" }}>
-              PNDM
+            <MenuItem
+              value="PNDMScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              PNDMScheduler
             </MenuItem>
 
-            <MenuItem value="DDIM" sx={{ textAlign: "center", width: "100%" }}>
-              DDIM
+            <MenuItem
+              value="DDIMScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              DDIMScheduler
             </MenuItem>
 
-            <MenuItem value="LMS" sx={{ textAlign: "center", width: "100%" }}>
-              LMS
+            <MenuItem
+              value="LMSDiscreteScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              LMSDiscreteScheduler
+            </MenuItem>
+
+            <MenuItem
+              value="EulerDiscreteScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              EulerDiscreteScheduler
+            </MenuItem>
+
+            <MenuItem
+              value="EulerAncestralDiscreteScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              EulerAncestralDiscreteScheduler
             </MenuItem>
           </Select>
         </FormControl>
@@ -982,6 +1022,21 @@ export default function SDControls({
     }, 1000);
     return () => clearTimeout(timeout);
   }, [inputs.height]);
+
+  React.useEffect(() => {
+    if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
+      inputs.sampler.setValue("DDIMScheduler");
+      inputs.width.setValue(768);
+      inputs.height.setValue(768);
+      inputs.safety_checker.setValue(true);
+    }
+  }, [
+    inputs.MODEL_ID.value,
+    inputs.sampler,
+    inputs.width,
+    inputs.height,
+    inputs.safety_checker,
+  ]);
 
   return (
     <Box sx={{ my: 2 }}>
