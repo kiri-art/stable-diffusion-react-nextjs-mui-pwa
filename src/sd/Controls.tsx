@@ -844,8 +844,7 @@ function ModelSelect({
         {value.startsWith("stabilityai/stable-diffusion-2") && (
           <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
             Bleeding edge! Not everything works yet. Only DDIMScheduler and
-            EulerDiscreteScheduler samplers work. 768x768 works best. Non-NSFW
-            broken.
+            EulerDiscreteScheduler samplers work. 768x768 works best.
           </Box>
         )}
         {value.startsWith("hakurei/waifu-diffusion-v1-3") && (
@@ -1023,20 +1022,26 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
-  React.useEffect(() => {
-    if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
-      inputs.sampler.setValue("DDIMScheduler");
-      inputs.width.setValue(768);
-      inputs.height.setValue(768);
-      inputs.safety_checker.setValue(true);
-    }
-  }, [
-    inputs.MODEL_ID.value,
-    inputs.sampler,
-    inputs.width,
-    inputs.height,
-    inputs.safety_checker,
-  ]);
+  React.useEffect(
+    () => {
+      if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
+        inputs.sampler.setValue("DDIMScheduler");
+        inputs.width.setValue(768);
+        inputs.height.setValue(768);
+        inputs.safety_checker.setValue(true);
+      }
+    },
+    /* eslint-disable */
+    [
+      inputs.MODEL_ID.value,
+      // The following lines really are exactly and intentionally what we
+      // want.  Maybe eslint doesn't check 3 levels deep?
+      inputs.sampler.setValue,
+      inputs.width.setValue,
+      inputs.height.setValue,
+      inputs.safety_checker.setValue,
+    ]
+  );
 
   return (
     <Box sx={{ my: 2 }}>
@@ -1118,11 +1123,13 @@ export default function SDControls({
             _defaultValue={defaults.shareInputs}
             sharedInputs={sharedInputs}
           />
-          <SafetyChecker
-            value={inputs.safety_checker.value}
-            setValue={inputs.safety_checker.setValue}
-            _defaultValue={defaults.safety_checker}
-          />
+          {inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2" ? null : (
+            <SafetyChecker
+              value={inputs.safety_checker.value}
+              setValue={inputs.safety_checker.setValue}
+              _defaultValue={defaults.safety_checker}
+            />
+          )}
           <Sampler
             value={inputs.sampler.value}
             setValue={inputs.sampler.setValue}
