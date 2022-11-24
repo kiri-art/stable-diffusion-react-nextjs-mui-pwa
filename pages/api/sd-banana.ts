@@ -33,6 +33,9 @@ async function bananaSdkRun(
 
   let envName = "BANANA_MODEL_KEY_SD";
   switch (callInputs.MODEL_ID) {
+    case "stabilityai/stable-diffusion-2":
+      envName += "_v2_0";
+      break;
     case "CompVis/stable-diffusion-v1-4":
       envName += "_v1_4";
       break;
