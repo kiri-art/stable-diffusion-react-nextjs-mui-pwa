@@ -34,6 +34,7 @@ const stableDiffusionInputsSchema = object({
   // note, in the adapter, we move this to callInputs
   MODEL_ID: string().oneOf([
     "stabilityai/stable-diffusion-2",
+    "stabilityai/stable-diffusion-2-base",
     "CompVis/stable-diffusion-v1-4",
     "hakurei/waifu-diffusion",
     "hakurei/waifu-diffusion-v1-3",

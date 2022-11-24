@@ -34,6 +34,8 @@ const randomPrompts = {
   ..._randomPrompts,
   "stabilityai/stable-diffusion-2":
     _randomPrompts["CompVis/stable-diffusion-v1-4"],
+  "stabilityai/stable-diffusion-2-base":
+    _randomPrompts["CompVis/stable-diffusion-v1-4"],
   "hakurei/waifu-diffusion-v1-3-full":
     _randomPrompts["hakurei/waifu-diffusion-v1-3"],
   "runwayml/stable-diffusion-v1-5":

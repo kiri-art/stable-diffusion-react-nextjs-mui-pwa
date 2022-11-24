@@ -760,12 +760,22 @@ function ModelSelect({
         >
           {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
           <MenuItem
+            value="stabilityai/stable-diffusion-2-base"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="stabilityai/stable-diffusion-2-base"
+              desc={t`Latest Stable Diffusion, Nov 24th! (512x512)`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="stabilityai/stable-diffusion-2"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
               value="stabilityai/stable-diffusion-2"
-              desc={t`Latest Stable Diffusion, Nov 24th!`}
+              desc={t`Latest Stable Diffusion, Nov 24th! (768x768)`}
             />
           </MenuItem>
 
@@ -844,7 +854,7 @@ function ModelSelect({
         {value.startsWith("stabilityai/stable-diffusion-2") && (
           <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
             Bleeding edge! Not everything works yet. Only DDIMScheduler and
-            EulerDiscreteScheduler samplers work. 768x768 works best.
+            EulerDiscreteScheduler samplers work.
           </Box>
         )}
         {value.startsWith("hakurei/waifu-diffusion-v1-3") && (
@@ -1030,6 +1040,12 @@ export default function SDControls({
         inputs.height.setValue(768);
         inputs.safety_checker.setValue(true);
       }
+      if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base") {
+        inputs.sampler.setValue("DDIMScheduler");
+        inputs.width.setValue(512);
+        inputs.height.setValue(512);
+        inputs.safety_checker.setValue(true);
+      }
     },
     /* eslint-disable */
     [
@@ -1123,7 +1139,9 @@ export default function SDControls({
             _defaultValue={defaults.shareInputs}
             sharedInputs={sharedInputs}
           />
-          {inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2" ? null : (
+          {inputs.MODEL_ID.value.startsWith(
+            "stabilityai/stable-diffusion-2"
+          ) ? null : (
             <SafetyChecker
               value={inputs.safety_checker.value}
               setValue={inputs.safety_checker.setValue}
