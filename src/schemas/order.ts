@@ -4,6 +4,7 @@ interface Order {
   [key: string]: unknown;
   amount: number;
   currency: string;
+  numCredits: number;
   stripePaymentIntentId?: string;
   stripePaymentIntentStatus?:
     | "requires_payment_method"

@@ -61,6 +61,9 @@ export default function OrderId() {
           <Trans>Currency</Trans>: {order.currency}
         </p>
         <p>
+          <Trans>Credits</Trans>: {order.numCredits || 50}
+        </p>
+        <p>
           <Trans>Status</Trans>: {order.stripePaymentIntentStatus}
         </p>
         {order.stripePaymentFailedReason && (

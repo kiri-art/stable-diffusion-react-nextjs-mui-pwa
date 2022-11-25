@@ -27,7 +27,9 @@ export default function Orders() {
   useGongoSub("orders", {});
   const isPopulated = useGongoIsPopulated();
   const userId = useGongoUserId();
-  const orders = useGongoLive((db) => db.collection("orders").find());
+  const orders = useGongoLive((db) =>
+    db.collection("orders").find().sort("createdAt", "desc")
+  );
   const router = useRouter();
 
   if (!isPopulated) return <div>Loading...</div>;
@@ -52,6 +54,7 @@ export default function Orders() {
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
+                <TableCell>Credits</TableCell>
                 <TableCell align="right">Amount</TableCell>
                 <TableCell>Status</TableCell>
               </TableRow>
@@ -64,6 +67,7 @@ export default function Orders() {
                       {order.createdAt.toLocaleDateString()}
                     </Link>
                   </TableCell>
+                  <TableCell align="right">{order.numCredits || 50}</TableCell>
                   <TableCell align="right">
                     $ {(order.amount / 100).toFixed(2)}
                   </TableCell>
