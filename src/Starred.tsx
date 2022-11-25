@@ -252,7 +252,7 @@ export default function Starred({
       itemRef.current = item;
       await router.replace({ hash: "scrollY=" + window.scrollY });
       await router.push(
-        { hash: "showStar=1&scrollY=" + window.scrollY },
+        { query: { ...router.query, showStarId: item._id } },
         "/s/" + item._id
       );
     },
