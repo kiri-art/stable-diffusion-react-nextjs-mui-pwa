@@ -16,9 +16,14 @@ export default async function buildStats(
   const range = [];
   const now = new Date();
 
-  for (let date = addDays(now, -1); date <= now; date = addDays(date, 1)) {
+  for (
+    let date = addDays(new Date().setHours(0, 0, 0, 0), -1);
+    date <= now;
+    date = addDays(date, 1)
+  ) {
     range.push(date);
   }
+  console.log(range);
 
   if (!db) return res.status(500).end();
   const users = await db.collection("users").getReal();
