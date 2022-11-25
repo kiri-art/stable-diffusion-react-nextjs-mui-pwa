@@ -160,6 +160,8 @@ const Stats: NextPage = () => {
             plotOptions: {
               column: {
                 stacking: "normal",
+                groupPadding: 0,
+                pointPadding: 0,
                 dataLabels: {
                   enabled: true,
                 },
