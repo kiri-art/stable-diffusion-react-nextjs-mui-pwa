@@ -1,7 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import {
+  db,
+  useGongoUserId,
+  useGongoOne,
+  useGongoIsPopulated,
+} from "gongo-client-react";
 import type { WithId } from "gongo-client/lib/browser/Collection";
 // import addMonths from "date-fns/addMonths";
 import addDays from "date-fns/addDays";
@@ -112,12 +117,15 @@ function RedeemCreditCode({ user }: { user: WithId<User> }) {
 export default function Credits() {
   const router = useRouter();
   const { redirect_status } = router.query;
+  const isPopulated = useGongoIsPopulated();
   const userId = useGongoUserId() as string | null;
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
   const [loading, setLoading] = React.useState(false);
   const [numCredits, setNumCredits] = React.useState("100");
+
+  if (!isPopulated) return <div>Loading...</div>;
 
   if (!userId) {
     router.push("/login?from=/credits");
