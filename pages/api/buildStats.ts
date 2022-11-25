@@ -16,7 +16,7 @@ export default async function buildStats(
   const range = [];
   const now = new Date();
 
-  for (let date = new Date("2022-09-01"); date < now; date = addDays(date, 1)) {
+  for (let date = addDays(now, -1); date <= now; date = addDays(date, 1)) {
     range.push(date);
   }
 
