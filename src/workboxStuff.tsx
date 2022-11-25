@@ -1,6 +1,17 @@
 import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
 
+if (typeof navigator === "object" && "serviceWorker" in navigator) {
+  navigator.serviceWorker.ready.then(function (registration) {
+    const updateInterval = 60_000;
+    console.log(`Will check for updates ever ${updateInterval / 1000} seconds`);
+    setInterval(() => {
+      console.log("Checking for updates...");
+      registration.update();
+    }, updateInterval);
+  });
+}
+
 export default function workboxStuff() {
   if (
     typeof window !== "undefined" &&
