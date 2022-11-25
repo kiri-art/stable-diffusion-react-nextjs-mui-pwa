@@ -89,7 +89,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             _id: order.userId,
           },
           {
-            $inc: { "credits.paid": 50 },
+            $inc: { "credits.paid": order.numCredits },
           }
         ));
     } else if (event.type === "payment_intent.payment_failed") {

@@ -21,6 +21,12 @@ export default async function craeateStripePaymentIntent(
 
   const auth = new Auth(gs.dba, req.body.auth);
   const userId = await auth.userId();
+  const numCredits = req.body.numCredits;
+
+  if (numCredits != 100 && numCredits != 500 && numCredits != 1000)
+    return res.status(400).send("Bad Request");
+
+  const costInUSD = numCredits === 100 ? 3 : numCredits === 500 ? 10 : 15;
 
   if (!userId) {
     return res.status(403).send("Forbidden");
@@ -48,9 +54,10 @@ export default async function craeateStripePaymentIntent(
 
   const order: Order = {
     userId: userId,
-    amount: 100,
+    amount: costInUSD * 100,
     currency: "usd",
     createdAt: new Date(),
+    numCredits,
   };
 
   const paymentIntent = await stripe.paymentIntents.create({
@@ -62,7 +69,7 @@ export default async function craeateStripePaymentIntent(
     customer: user.stripeCustomerId,
     // Automatic based on https://dashboard.stripe.com/settings/emails
     // receipt_email: user.emails[0].value,
-    description: "50 credits on kiri.art",
+    description: numCredits + " credits on kiri.art",
     statement_descriptor: "KIRI.ART",
   });
 
@@ -75,5 +82,7 @@ export default async function craeateStripePaymentIntent(
   res.send({
     orderId: id,
     clientSecret: paymentIntent.client_secret,
+    numCredits,
+    costInUSD,
   });
 }

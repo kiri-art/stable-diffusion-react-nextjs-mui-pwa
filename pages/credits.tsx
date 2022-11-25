@@ -7,7 +7,18 @@ import type { WithId } from "gongo-client/lib/browser/Collection";
 import addDays from "date-fns/addDays";
 //import RevolutCheckout from "@revolut/checkout";
 
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormControlLabel,
+  // FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
@@ -106,6 +117,7 @@ export default function Credits() {
     db.collection("users").find({ _id: userId })
   );
   const [loading, setLoading] = React.useState(false);
+  const [numCredits, setNumCredits] = React.useState("100");
 
   if (!userId) {
     router.push("/login?from=/credits");
@@ -131,7 +143,7 @@ export default function Credits() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ auth }),
+      body: JSON.stringify({ auth, numCredits: parseInt(numCredits) }),
     });
 
     // clientSecret, orderId
@@ -187,18 +199,46 @@ export default function Credits() {
           month, and don&apos;t expire.
         </Trans>
         <Box>
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            onClick={buy}
-            disabled={loading}
-          >
-            {loading ? (
-              <Trans>Please wait...</Trans>
-            ) : (
-              <Trans>Buy 50 credits for $1</Trans>
-            )}
-          </Button>
+          <form>
+            <FormControl>
+              {/* <FormLabel id="credit-amount-label">Gender</FormLabel> */}
+              <RadioGroup
+                aria-labelledby="credit-amount-label"
+                value={numCredits}
+                onChange={(event) => setNumCredits(event.target.value)}
+                name="credit-amount-group"
+              >
+                <FormControlLabel
+                  value="100"
+                  control={<Radio />}
+                  label="100 for USD 3.00 (3c / credit)"
+                />
+                <FormControlLabel
+                  value="500"
+                  control={<Radio />}
+                  label="500 for USD 10.00 (2c / credit) - save 33.3%"
+                />
+                <FormControlLabel
+                  value="1000"
+                  control={<Radio />}
+                  label="1000 for USD 15.00 (1.5c / credit) - save 50%"
+                />
+              </RadioGroup>
+            </FormControl>
+            <br />
+            <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              onClick={buy}
+              disabled={loading}
+            >
+              {loading ? (
+                <Trans>Please wait...</Trans>
+              ) : (
+                <Trans>Checkout</Trans>
+              )}
+            </Button>
+          </form>
         </Box>
         <Box sx={{ my: 2, fontSize: "80%" }}>
           <Trans>
@@ -209,9 +249,7 @@ export default function Credits() {
         <Box sx={{ my: 2 }}>
           <Trans>
             This project is community run by volunteers in our spare time. We
-            make no guarantees. It could stop working at any time, and no
-            refunds will be provided. To that end, it is only possible to buy $1
-            worth of credits at a time.
+            make no guarantees, and refunds are not possible at this time.
           </Trans>
         </Box>
         <Button component={Link} variant="outlined" href="/orders">

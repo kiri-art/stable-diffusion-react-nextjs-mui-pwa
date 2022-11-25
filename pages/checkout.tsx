@@ -22,7 +22,7 @@ const getStripe = () => {
 
 export default function Checkout() {
   const router = useRouter();
-  const { clientSecret, orderId } = router.query;
+  const { clientSecret, orderId, numCredits, costInUSD } = router.query;
   const userId = useGongoUserId();
   /*
   const user = useGongoOne((db) =>
@@ -63,10 +63,21 @@ export default function Checkout() {
           <Trans>Checkout</Trans>
         </Typography>
 
-        <p>50 credits</p>
+        <p>
+          <Trans>{numCredits} credits</Trans>
+        </p>
 
         <p>
-          <b>TOTAL: USD 1.00</b>
+          <b>
+            <Trans>TOTAL</Trans>: <Trans>USD</Trans> $
+            {typeof costInUSD === "string" && parseFloat(costInUSD).toFixed(2)}
+          </b>
+        </p>
+
+        <p>
+          <i>
+            <Trans>Secure Payment via Stripe.com and partners.</Trans>
+          </i>
         </p>
 
         <Elements stripe={getStripe()} options={options}>
