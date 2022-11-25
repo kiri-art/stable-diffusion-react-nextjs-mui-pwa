@@ -17,7 +17,7 @@ const Stats: NextPage = () => {
   const statsDaily = useGongoLive((db) =>
     db
       .collection("statsDaily")
-      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 31) } })
+      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14) } })
   );
 
   const series = React.useMemo(() => {
@@ -89,11 +89,13 @@ const Stats: NextPage = () => {
               shared: true,
             },
             legend: {
-              align: "left",
-              x: 40,
-              verticalAlign: "top",
-              y: 60,
-              floating: true,
+              enabled: false,
+              // align: "left",
+              // x: 40,
+              // y: 60,
+              verticalAlign: "bottom",
+              floating: false,
+              layout: "horizontal",
               backgroundColor:
                 // @ts-expect-error: blah
                 defaults.backgroundColor || // theme
@@ -192,7 +194,7 @@ const Stats: NextPage = () => {
           ref={chartComponentRef}
           options={{
             title: {
-              text: t`Users` + " (" + t`Last 30 days` + ")",
+              text: t`Users` + " (" + t`Last 2 weeks` + ")",
             },
             chart: {
               marginLeft: 25,
