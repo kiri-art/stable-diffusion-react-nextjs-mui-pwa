@@ -75,7 +75,7 @@ const Stats: NextPage = () => {
           ref={chartComponentRef}
           options={{
             title: {
-              text: t`Requests` + " (" + t`Last 30 days` + ")",
+              text: t`Requests` + " (" + t`Last 2 weeks` + ")",
             },
             chart: {
               marginLeft: 25,
