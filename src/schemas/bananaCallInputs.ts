@@ -32,6 +32,7 @@ const bananaCallInputsSchema = object({
     "PNDMScheduler",
     "EulerAncestralDiscreteScheduler",
     "EulerDiscreteScheduler",
+    "DPMSolverMultistepScheduler",
   ]), // .default("DDIM"),
   startRequestId: string(),
   safety_checker: boolean(),

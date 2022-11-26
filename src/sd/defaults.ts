@@ -11,7 +11,7 @@ const defaults = {
   randomizeSeed: true,
   shareInputs: false,
   safety_checker: true,
-  sampler: "LMSDiscreteScheduler",
+  sampler: "DPMSolverMultistepScheduler",
   negative_prompt:
     "disfigured, deformed, poorly drawn, extra limbs, blurry, mutated hands, ugly, mutilated, extra fingers, bad anatomy, malformed, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck",
 };

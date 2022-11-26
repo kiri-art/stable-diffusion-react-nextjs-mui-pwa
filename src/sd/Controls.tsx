@@ -313,10 +313,12 @@ function Steps_Grid_Slider({
   value,
   setValue,
   defaultValue,
+  sampler,
 }: {
   value: ModelState["guidance_scale"]["value"];
   setValue: ModelState["guidance_scale"]["setValue"];
   defaultValue: typeof defaults.guidance_scale;
+  sampler: ModelState["sampler"]["value"];
 }) {
   return useMemo(
     () => (
@@ -348,9 +350,16 @@ function Steps_Grid_Slider({
             </Box>
           }
         />
+        {sampler === "DPMSolverMultistepScheduler" && (
+          <>
+            <div style={{ fontSize: "80%", marginLeft: 42 }}>
+              New DPM sampler needs just 20 steps! 🎉
+            </div>
+          </>
+        )}
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue, sampler]
   );
 }
 
@@ -851,7 +860,7 @@ function ModelSelect({
             />
           </MenuItem>
         </Select>
-        {value.startsWith("stabilityai/stable-diffusion-2") && (
+        {false && value.startsWith("stabilityai/stable-diffusion-2") && (
           <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
             Bleeding edge! Not everything works yet. Only DDIMScheduler and
             EulerDiscreteScheduler samplers work.
@@ -916,6 +925,12 @@ function Sampler({
             onChange={(event) => setValue(event.target.value)}
             size="small"
           >
+            <MenuItem
+              value="DPMSolverMultistepScheduler"
+              sx={{ textAlign: "center", width: "100%" }}
+            >
+              DPMSolverMultistepScheduler
+            </MenuItem>
             <MenuItem
               value="PNDMScheduler"
               sx={{ textAlign: "center", width: "100%" }}
@@ -1035,21 +1050,23 @@ export default function SDControls({
   React.useEffect(
     () => {
       if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
-        inputs.sampler.setValue("DDIMScheduler");
         inputs.width.setValue(768);
         inputs.height.setValue(768);
         inputs.safety_checker.setValue(true);
       }
       if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base") {
-        inputs.sampler.setValue("DDIMScheduler");
         inputs.width.setValue(512);
         inputs.height.setValue(512);
         inputs.safety_checker.setValue(true);
+      }
+      if (inputs.sampler.value == "DPMSolverMultistepScheduler") {
+        inputs.num_inference_steps.setValue(20);
       }
     },
     /* eslint-disable */
     [
       inputs.MODEL_ID.value,
+      inputs.sampler.value,
       // The following lines really are exactly and intentionally what we
       // want.  Maybe eslint doesn't check 3 levels deep?
       inputs.sampler.setValue,
@@ -1103,6 +1120,7 @@ export default function SDControls({
             value={inputs.num_inference_steps.value}
             setValue={inputs.num_inference_steps.setValue}
             defaultValue={defaults.num_inference_steps}
+            sampler={inputs.sampler.value}
           />
           {inputs.width && (
             <Width_Grid_Slider

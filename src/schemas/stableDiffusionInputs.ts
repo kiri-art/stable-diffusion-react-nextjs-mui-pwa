@@ -51,6 +51,7 @@ const stableDiffusionInputsSchema = object({
     "PNDMScheduler",
     "EulerAncestralDiscreteScheduler",
     "EulerDiscreteScheduler",
+    "DPMSolverMultistepScheduler",
   ]),
 });
 
