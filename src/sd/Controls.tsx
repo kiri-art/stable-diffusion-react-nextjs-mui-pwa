@@ -1050,13 +1050,13 @@ export default function SDControls({
   React.useEffect(
     () => {
       if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
-        inputs.width.setValue(768);
-        inputs.height.setValue(768);
+        inputs.width && inputs.width.setValue(768);
+        inputs.height && inputs.height.setValue(768);
         inputs.safety_checker.setValue(true);
       }
       if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base") {
-        inputs.width.setValue(512);
-        inputs.height.setValue(512);
+        inputs.width && inputs.width.setValue(512);
+        inputs.height && inputs.height.setValue(512);
         inputs.safety_checker.setValue(true);
       }
       if (inputs.sampler.value == "DPMSolverMultistepScheduler") {
@@ -1070,8 +1070,8 @@ export default function SDControls({
       // The following lines really are exactly and intentionally what we
       // want.  Maybe eslint doesn't check 3 levels deep?
       inputs.sampler.setValue,
-      inputs.width.setValue,
-      inputs.height.setValue,
+      inputs.width?.setValue,
+      inputs.height?.setValue,
       inputs.safety_checker.setValue,
     ]
   );
