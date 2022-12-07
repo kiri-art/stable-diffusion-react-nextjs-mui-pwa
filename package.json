@@ -10,7 +10,8 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "//i18n:extract": "https://github.com/lingui/js-lingui/issues/952",
     "i18n:extract": "NODE_ENV=development lingui extract",
-    "i18n:compile": "lingui compile"
+    "i18n:compile": "lingui compile",
+    "docker": "docker run -it -p 8000:8000 --gpus all --rm diffusers-api"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
