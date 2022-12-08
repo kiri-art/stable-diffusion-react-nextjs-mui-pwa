@@ -17,7 +17,7 @@ export default async function buildStats(
 
   const entry = {
     date: new Date(),
-    percentCapacity: data.percentCapacity,
+    ...data,
   };
 
   console.log(entry);
