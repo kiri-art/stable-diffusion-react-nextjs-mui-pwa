@@ -444,15 +444,17 @@ export default function MyAppBar({ title }: { title: string }) {
             </SwipeableDrawer>
           </Box>
         </Box>
-        {/*
         <div style={{ padding: 20, paddingBottom: 0 }}>
           <span style={{ color: "red" }}>
-            Sorry, we got popular and our database got overloaded. About to
-            upgrade to a bigger plan, there will be about 10m downtime, sorry.
-            (If the site is working, we&apos;re all done!)
+            We are aware of the intermittent issues with our upstream provider
+            (occasional periods of exceptionally long requests or outright no
+            response back) and apologise profusely. We are exploring
+            alternatives, but these things take time. We greatly appreciate your
+            support and patience and will post when we have more news, with lots
+            of compensatory credits for everyone. Until then, please accept our
+            apology and just try again in an hour or two when this happens.
           </span>
         </div>
-        */}
       </>
     ),
     [
