@@ -3364,10 +3364,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gongo-client-react@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.0.tgz#8a2b557a3ec90069010aa8bdc85d88e53f0a2600"
-  integrity sha512-00lHKNmqFU2DDV5D1CNM2eDPJiFWbyGFJ4q21PMB4UDBv5LUfw+xztEEh70iAmiRZ/j3CYQvI/aCHM6Z/+gQ7g==
+gongo-client-react@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.1.tgz#d5160fa579a38ecc6c49c3a66902887f6323f0bc"
+  integrity sha512-1vdrM5oMEg0rM/aSnf446Xxfs32O45N1fEjaHXNAYBqpXzHu25pS/FourKi7TwmauC1sdhiUJSrPGx/4B1otbw==
 
 gongo-client@2.5.1:
   version "2.5.1"
