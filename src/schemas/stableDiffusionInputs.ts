@@ -42,6 +42,8 @@ const stableDiffusionInputsSchema = object({
     "rinna/japanese-stable-diffusion",
   ]),
   // temporary...
+  PROVIDER_ID: number().oneOf([1, 2]),
+  // temporary...
   sampler: string().oneOf([
     "PNDM", // backcompat
     "DDIM", // backcompat

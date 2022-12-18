@@ -425,6 +425,7 @@ function Paint({
 const inpaintState = [
   "prompt",
   "MODEL_ID",
+  "PROVIDER_ID",
   "negative_prompt",
   "strength",
   "num_inference_steps",

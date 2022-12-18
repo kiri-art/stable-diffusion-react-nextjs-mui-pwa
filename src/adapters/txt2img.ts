@@ -150,6 +150,11 @@ export default async function txt2img(
     delete modelInputs.MODEL_ID;
   }
 
+  if (modelInputs.PROVIDER_ID) {
+    callInputs.PROVIDER_ID = modelInputs.PROVIDER_ID;
+    delete modelInputs.PROVIDER_ID;
+  }
+
   const result = await runner(modelInputs, callInputs, {
     setLog,
     setImgSrc,

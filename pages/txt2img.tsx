@@ -20,6 +20,7 @@ import { outputImageQueue } from "../src/lib/sendQueue";
 const txt2imgState = [
   "prompt",
   "MODEL_ID",
+  "PROVIDER_ID",
   "negative_prompt",
   "num_inference_steps",
   "guidance_scale",

@@ -16,6 +16,8 @@ import {
   Stack,
   Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Tooltip,
 } from "@mui/material";
 import {
@@ -983,6 +985,73 @@ export function randomizeSeedIfChecked(inputs: ModelState) {
   }
 }
 
+function ProviderSelect({
+  value,
+  setValue,
+}: // defaultValue,
+{
+  value: ModelState["PROVIDER_ID"]["value"];
+  setValue: ModelState["PROVIDER_ID"]["setValue"];
+  // defaultValue: typeof defaults.PROVIDER_ID;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={6} sm={3} md={2} lg={1}>
+        Provider
+        <span
+          style={{
+            position: "relative",
+            top: "5px",
+            marginLeft: "2px",
+            verticalAlign: "top",
+            background: "#dada88",
+            borderRadius: "3px",
+            fontSize: "30%",
+            padding: "2px 5px 2px 5px",
+          }}
+        >
+          NEW
+        </span>{" "}
+        <ToggleButtonGroup
+          value={value}
+          exclusive
+          onChange={(_, provider_id) => setValue(provider_id)}
+          aria-label="provider"
+          size="small"
+        >
+          <ToggleButton value={1} aria-label="1">
+            1
+          </ToggleButton>
+          <ToggleButton value={2} aria-label="2">
+            2
+          </ToggleButton>
+        </ToggleButtonGroup>{" "}
+        <Trans>Speed, stability, cost</Trans>{" "}
+        <Tooltip
+          title={
+            <Box>
+              <Trans>
+                Provider 1 is our original, historic provider. Provider 2 is a
+                new, additional provider. Generations will temporarily be 0.25
+                credits while we continue to develop this.
+              </Trans>{" "}
+            </Box>
+          }
+          enterDelay={0}
+          enterTouchDelay={0}
+          leaveDelay={0}
+          leaveTouchDelay={4000}
+        >
+          <IconButton>
+            <Help />
+          </IconButton>
+        </Tooltip>
+      </Grid>
+    ),
+    [value, setValue /* , defaultValue */]
+  );
+}
+
 export default function SDControls({
   inputs,
   go,
@@ -1089,7 +1158,12 @@ export default function SDControls({
           disabled={!!(requestStartTime && !requestEndTime)}
           dest={uiState.dest.value}
           setDest={uiState.dest.set}
-          credits={1}
+          credits={inputs.PROVIDER_ID.value === 1 ? 1 : 0.25}
+        />
+        <ProviderSelect
+          value={inputs.PROVIDER_ID.value}
+          setValue={inputs.PROVIDER_ID.setValue}
+          // defaultValue={defaults.PROVIDER_ID}
         />
         <ModelSelect
           value={inputs.MODEL_ID.value}

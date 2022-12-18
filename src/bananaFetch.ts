@@ -8,6 +8,7 @@ import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "./schemas/bananaCallInputs";
 import { UpsampleCallInputs, UpsampleModelInputs } from "./schemas";
+import bananaUrl from "./lib/bananaUrl";
 
 type ModelInputs = StableDiffusionInputs | UpsampleModelInputs;
 type CallInputs = BananaCallInputs | UpsampleCallInputs;
@@ -114,7 +115,10 @@ async function runner(
       callID: callID,
     };
 
-    const response = await fetch("https://api.banana.dev/check/v4/", {
+    const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
+    console.log({ BANANA_API_URL });
+
+    const response = await fetch(BANANA_API_URL + "/check/v4", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

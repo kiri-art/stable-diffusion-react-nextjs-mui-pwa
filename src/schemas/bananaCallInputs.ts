@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from "yup";
+import { object, number, string, boolean, InferType } from "yup";
 
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
@@ -12,6 +12,8 @@ const bananaCallInputsSchema = object({
     "hakurei/waifu-diffusion-v1-3-full",
     "rinna/japanese-stable-diffusion",
   ]),
+  MODEL_URL: string(),
+  PROVIDER_ID: number().oneOf([1, 2]),
   // .default("CompVis/stable-diffusion-v1-4"),
   PIPELINE: string().oneOf([
     "StableDiffusionPipeline",

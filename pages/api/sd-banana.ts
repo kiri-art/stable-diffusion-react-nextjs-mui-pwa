@@ -12,8 +12,9 @@ import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../../src/schemas/bananaCallInputs";
+import bananaUrl from "../../src/lib/bananaUrl";
 
-const CREDIT_COST = 1;
+// const CREDIT_COST = 1;
 
 const apiKey = process.env.BANANA_API_KEY;
 
@@ -109,7 +110,10 @@ async function bananaSdkRun(
 
   callInputs.startRequestId = startRequestId;
 
-  const response = await fetch("https://api.banana.dev/start/v4/", {
+  const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
+  console.log({ BANANA_API_URL });
+
+  const response = await fetch(BANANA_API_URL + "/start/v4", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -243,6 +247,12 @@ export default async function SDBanana(
 
     const user = await gs.dba.collection("users").findOne({ _id: userId });
     if (!user) return res.status(500).send("Server error");
+
+    let CREDIT_COST = 1;
+    if (callInputs.PROVIDER_ID === 2) {
+      CREDIT_COST = 0.25;
+      callInputs.MODEL_URL = "s3://";
+    }
 
     if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
       return res.status(403).send("Out of credits");

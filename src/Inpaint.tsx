@@ -232,6 +232,7 @@ const inpaintState = [
   "num_inference_steps",
   "guidance_scale",
   "MODEL_ID",
+  "PROVIDER_ID",
   "negative_prompt",
   "seed",
   "randomizeSeed",
