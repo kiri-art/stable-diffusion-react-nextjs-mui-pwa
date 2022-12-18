@@ -54,6 +54,9 @@ async function bananaSdkRun(
       break;
     case "hakurei/waifu-diffusion-v1-3":
       envName += "_WAIFU_v1_3";
+      // @ts-expect-error: ok
+      callInputs.CHECKPOINT_URL =
+        "https://huggingface.co/hakurei/waifu-diffusion-v1-3/resolve/main/wd-v1-3-float16.ckpt";
       break;
     case "hakurei/waifu-diffusion-v1-3-full":
       envName += "_WAIFU_v1_3_full";
@@ -252,6 +255,8 @@ export default async function SDBanana(
     if (callInputs.PROVIDER_ID === 2) {
       CREDIT_COST = 0.25;
       callInputs.MODEL_URL = "s3://";
+      // @ts-expect-error: send, but don't ever validate (for now)
+      callInputs.MODEL_PRECISION = "fp16";
     }
 
     if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
