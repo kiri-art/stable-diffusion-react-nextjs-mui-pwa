@@ -303,10 +303,12 @@ export default async function SDBanana(
     console.log("! Removed modelInputs.sampler - TODO");
   }
 
-  if (callInputs.MODEL_ID === "runwayml/stable-diffusion-inpainting") {
+  if (modelInputs.init_image) {
     modelInputs.image = modelInputs.init_image;
     delete modelInputs.init_image;
-  } else if (callInputs.MODEL_ID !== "rinna/japanese-stable-diffusion") {
+  }
+
+  if (callInputs.MODEL_ID !== "rinna/japanese-stable-diffusion") {
     if (callInputs.PIPELINE === "StableDiffusionInpaintPipeline")
       callInputs.PIPELINE = "StableDiffusionInpaintPipelineLegacy";
   }
