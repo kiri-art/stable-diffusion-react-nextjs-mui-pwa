@@ -246,7 +246,7 @@ export default async function SDBanana(
     const userId = await auth.userId();
 
     if (!userId) {
-      return res.status(403).send("Forbidden");
+      return res.status(403).send("Forbidden, no userId");
     }
 
     const user = await gs.dba.collection("users").findOne({ _id: userId });
