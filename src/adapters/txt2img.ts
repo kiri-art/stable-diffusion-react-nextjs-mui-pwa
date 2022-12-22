@@ -155,6 +155,26 @@ export default async function txt2img(
     delete modelInputs.PROVIDER_ID;
   }
 
+  // Work around slow indexedDb on PWA launch, auth not ready
+  const authStart = Date.now();
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  // @ts-expect-error: ok
+  const dbAuth = db.auth;
+  while (!(auth && Object.keys(auth).length)) {
+    if (!dbAuth) {
+      console.log("no dbAuth");
+      setLog(["auth error, try again"]);
+      return {};
+    }
+    if (Date.now() - authStart > 2_000) {
+      setLog(["auth error, try again"]);
+      return {};
+    }
+    await sleep(200);
+    auth = dbAuth.authInfoToSend();
+  }
+
   const result = await runner(modelInputs, callInputs, {
     setLog,
     setImgSrc,
