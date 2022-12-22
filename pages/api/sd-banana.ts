@@ -116,7 +116,7 @@ async function bananaSdkRun(
   const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
   console.log({ BANANA_API_URL });
 
-  const response = await fetch(BANANA_API_URL + "/start/v4", {
+  const response = await fetch(BANANA_API_URL + "/start/v4/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

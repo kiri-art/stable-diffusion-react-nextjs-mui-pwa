@@ -69,16 +69,20 @@ async function runner(
     }),
   });
 
+  const text = await response.text();
   let result;
   try {
-    result = await response.json();
+    result = JSON.parse(text);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    console.error(error);
+    console.error(text);
     setLog(["FAILED: " + message]);
     return { $error: { message } };
   }
 
   if (result.$error) {
+    console.warn(result);
     setLog(["FAILED: " + result.$error.message]);
     return result;
   }
@@ -118,7 +122,7 @@ async function runner(
     const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
     console.log({ BANANA_API_URL });
 
-    const response = await fetch(BANANA_API_URL + "/check/v4", {
+    const response = await fetch(BANANA_API_URL + "/check/v4/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -126,9 +130,12 @@ async function runner(
       body: JSON.stringify(payload),
     });
 
+    const text = await response.text();
     try {
-      result = await response.json();
+      result = JSON.parse(text);
     } catch (error) {
+      console.error(error);
+      console.error(text);
       const message = error instanceof Error ? error.message : "Unknown error";
       setLog(["FAILED: " + message]);
       return { $error: { message } };
