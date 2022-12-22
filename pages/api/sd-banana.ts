@@ -238,7 +238,8 @@ export default async function SDBanana(
   let credits;
   const chargedCredits = { credits: 0, paid: false };
   if (REQUIRE_REGISTRATION) {
-    if (!fetchOpts.auth) return res.status(400).end("Forbidden");
+    if (!fetchOpts.auth)
+      return res.status(400).end("Forbidden, no fetchOpts.auth");
     if (!gs.dba) throw new Error("gs.dba not defined");
 
     const auth = new Auth(gs.dba, fetchOpts.auth);
