@@ -446,9 +446,9 @@ export default function MyAppBar({ title }: { title: string }) {
         </Box>
         <div style={{ padding: 20, paddingBottom: 0 }}>
           <span style={{ color: "red" }}>
-            We are aware of the intermittent stabilty issues and thank you for
-            your understanding and patience. When these do occur they tend to
-            resolve within an hour or two.
+            Thanks everyone for your patience. Provider 2 is now the default, at
+            0.25 credits per generation until we work out all the bugs. You can
+            still switch between them below, if one is not working.
           </span>
         </div>
       </>

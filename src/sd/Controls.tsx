@@ -1015,7 +1015,7 @@ function ProviderSelect({
         <ToggleButtonGroup
           value={value}
           exclusive
-          onChange={(_, provider_id) => setValue(provider_id)}
+          onChange={(_, provider_id) => provider_id && setValue(provider_id)}
           aria-label="provider"
           size="small"
         >
@@ -1032,8 +1032,8 @@ function ProviderSelect({
             <Box>
               <Trans>
                 Provider 1 is our original, historic provider. Provider 2 is a
-                new, additional provider. Generations will temporarily be 0.25
-                credits while we continue to develop this.
+                new, additional provider - with generations costing 0.25 credits
+                each - temporarily - while we&apos;re still working on this.
               </Trans>{" "}
             </Box>
           }
