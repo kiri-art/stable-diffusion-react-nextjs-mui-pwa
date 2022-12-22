@@ -243,7 +243,10 @@ export default async function SDBanana(
     if (!gs.dba) throw new Error("gs.dba not defined");
 
     const auth = new Auth(gs.dba, fetchOpts.auth);
+    console.log({ fetchOptsAuth: fetchOpts.auth });
+    console.log({ sessionData: await auth.getSessionData() });
     const userId = await auth.userId();
+    console.log({ userId });
 
     if (!userId) {
       return res.status(403).send("Forbidden, no userId");
