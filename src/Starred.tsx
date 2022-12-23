@@ -2,11 +2,12 @@ import React from "react";
 import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import { Box, Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
-import Masonry from "@mui/lab/Masonry";
+// import Masonry from "@mui/lab/Masonry";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
+import { Masonry } from "masonic";
 
 import Link from "./Link";
 import Star from "./schemas/star";
@@ -117,7 +118,11 @@ function Item({
 
     return (
       <Link
-        style={{ position: "relative", aspectRatio }}
+        style={{
+          position: "relative",
+          aspectRatio,
+          display: "block",
+        }}
         href={"/s/" + item._id}
         onClick={itemOpen}
       >
@@ -259,6 +264,19 @@ export default function Starred({
     [router]
   );
 
+  const MasonryItem = React.useMemo(() => {
+    // @ts-expect-error: ok
+    return function MasonryItem({ data }) {
+      return (
+        <Item
+          item={data}
+          showReported={!!router.query.showReported}
+          itemOpen={itemOpen}
+        />
+      );
+    };
+  }, [itemOpen, router.query.showReported]);
+
   return (
     <>
       <Box
@@ -277,6 +295,7 @@ export default function Starred({
       >
         {popup && <StarredItem serverItem={itemRef.current} />}
       </Box>
+      {/*
       {React.useMemo(
         () => (
           <Masonry columns={cols || _cols} sx={{ my: 2 }}>
@@ -292,6 +311,15 @@ export default function Starred({
         ),
         [items, cols, _cols, itemOpen, router.query.showReported]
       )}
+      */}
+      <div style={{ height: "10px" }} />
+      <Masonry
+        items={items}
+        render={MasonryItem}
+        columnCount={cols || _cols}
+        columnGutter={10}
+        rowGutter={10}
+      />
     </>
   );
 }
