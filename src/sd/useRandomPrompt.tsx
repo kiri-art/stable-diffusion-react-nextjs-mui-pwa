@@ -32,6 +32,10 @@ const _randomPrompts = {
 
 const randomPrompts = {
   ..._randomPrompts,
+  "stabilityai/stable-diffusion-2-1":
+    _randomPrompts["CompVis/stable-diffusion-v1-4"],
+  "stabilityai/stable-diffusion-2-1-base":
+    _randomPrompts["CompVis/stable-diffusion-v1-4"],
   "stabilityai/stable-diffusion-2":
     _randomPrompts["CompVis/stable-diffusion-v1-4"],
   "stabilityai/stable-diffusion-2-base":

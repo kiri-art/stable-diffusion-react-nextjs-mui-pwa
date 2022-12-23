@@ -771,12 +771,32 @@ function ModelSelect({
         >
           {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
           <MenuItem
+            value="stabilityai/stable-diffusion-2-1-base"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="stabilityai/stable-diffusion-2-1-base"
+              desc={t`Latest Stable Diffusion, Dec 6th. (512x512)`}
+            />
+          </MenuItem>
+
+          <MenuItem
+            value="stabilityai/stable-diffusion-2-1"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="stabilityai/stable-diffusion-2-1"
+              desc={t`Latest Stable Diffusion, Dec 6th. (768x768)`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="stabilityai/stable-diffusion-2-base"
             sx={{ textAlign: "center", width: "100%" }}
           >
             <ModelMenuItem
               value="stabilityai/stable-diffusion-2-base"
-              desc={t`Latest Stable Diffusion, Nov 24th! (512x512)`}
+              desc={t`Stable Diffusion from Nov 24th. (512x512)`}
             />
           </MenuItem>
 
@@ -786,7 +806,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="stabilityai/stable-diffusion-2"
-              desc={t`Latest Stable Diffusion, Nov 24th! (768x768)`}
+              desc={t`Stable Diffusion from Nov 24th. (768x768)`}
             />
           </MenuItem>
 
@@ -796,7 +816,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="runwayml/stable-diffusion-v1-5"
-              desc={t`Stable Diffusion from Oct 20th`}
+              desc={t`Stable Diffusion from Oct 20th.`}
             />
           </MenuItem>
 
@@ -806,7 +826,7 @@ function ModelSelect({
           >
             <ModelMenuItem
               value="runwayml/stable-diffusion-inpainting"
-              desc={t`Fine-tuned SD; Best for Inpainting`}
+              desc={t`Fine-tuned SD; Best for Inpainting.`}
             />
           </MenuItem>
 
@@ -1118,12 +1138,18 @@ export default function SDControls({
 
   React.useEffect(
     () => {
-      if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2") {
+      if (
+        inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2" ||
+        inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-1"
+      ) {
         inputs.width && inputs.width.setValue(768);
         inputs.height && inputs.height.setValue(768);
         inputs.safety_checker.setValue(true);
       }
-      if (inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base") {
+      if (
+        inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base" ||
+        inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-1-base"
+      ) {
         inputs.width && inputs.width.setValue(512);
         inputs.height && inputs.height.setValue(512);
         inputs.safety_checker.setValue(true);

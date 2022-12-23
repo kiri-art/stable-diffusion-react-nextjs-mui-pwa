@@ -2,6 +2,8 @@ import { object, number, string, boolean, InferType } from "yup";
 
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
+    "stabilityai/stable-diffusion-2-1",
+    "stabilityai/stable-diffusion-2-1-base",
     "stabilityai/stable-diffusion-2",
     "stabilityai/stable-diffusion-2-base",
     "CompVis/stable-diffusion-v1-4",

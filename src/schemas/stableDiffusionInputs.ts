@@ -33,6 +33,8 @@ const stableDiffusionInputsSchema = object({
   // temporary, until we adjust Controls to have callInputs too.
   // note, in the adapter, we move this to callInputs
   MODEL_ID: string().oneOf([
+    "stabilityai/stable-diffusion-2-1",
+    "stabilityai/stable-diffusion-2-1-base",
     "stabilityai/stable-diffusion-2",
     "stabilityai/stable-diffusion-2-base",
     "CompVis/stable-diffusion-v1-4",
