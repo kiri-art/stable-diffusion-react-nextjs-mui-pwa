@@ -269,6 +269,19 @@ export default async function SDBanana(
       callInputs.MODEL_PRECISION = "fp16";
     }
 
+    if (fetchOpts.dest === "banana-local" || callInputs.PROVIDER_ID === 2) {
+      if (callInputs.PIPELINE === "StableDiffusionPipeline") {
+        callInputs.PIPELINE = "lpw_stable_diffusion";
+        callInputs.custom_pipeline_method = "text2img";
+      } else if (callInputs.PIPELINE === "StableDiffusionImg2ImgPipeline") {
+        callInputs.PIPELINE = "lpw_stable_diffusion";
+        callInputs.custom_pipeline_method = "img2img";
+      } else if (callInputs.PIPELINE === "StableDiffusionInpaintPipeline") {
+        callInputs.PIPELINE = "lpw_stable_diffusion";
+        callInputs.custom_pipeline_method = "inpaint";
+      }
+    }
+
     if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
       return res.status(403).send("Out of credits");
 

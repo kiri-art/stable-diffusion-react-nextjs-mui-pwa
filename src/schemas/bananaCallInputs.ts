@@ -27,6 +27,7 @@ const bananaCallInputsSchema = object({
     "JapaneseStableDiffusionInpaintPipeline",
   ]),
   // .default("StableDiffusionPipeline"),
+  custom_pipeline_method: string(),
   SCHEDULER: string().oneOf([
     "PNDM", // backcompat
     "DDIM", // backcompat
