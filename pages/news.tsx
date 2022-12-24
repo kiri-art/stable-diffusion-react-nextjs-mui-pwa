@@ -35,6 +35,51 @@ export default function News() {
 
         <ul>
           <li>
+            <b>Sat Dec 24, 2022</b>
+            <ul style={{ marginTop: "10px" }}>
+              <li>
+                <b>Speed & Stability</b>: Thanks everyone for your patience.
+                We&apos;ve added an additional provider that seems faster and
+                more reliable. We&apos;re still working on this so in the
+                meantime, generations will go for 0.25 credits each.
+              </li>
+              <br />
+
+              <li>
+                <b>Long Prompts + Weights</b>: We noticed in Stars that some of
+                you were (trying to) use prompt weights e.g. &quot;girl with
+                ((big eyes))&quot;. We&apos;ve added support for this format now
+                too, enjoy! More info{" "}
+                <a href="https://forums.kiri.art/t/lpw-stable-diffusion-pipeline-longer-prompts-prompt-weights/82">
+                  here
+                </a>
+                .
+              </li>
+              <br />
+
+              <li>
+                <b>Misc fixes and improvements</b> over the last month: No more
+                lag in the front page Starred view. No more
+                &quot;Forbidden&quot; error when (sometimes) first loading the
+                app. Stable Diffusion v2.0 and v2.1 models. Super fast DPM
+                sampler (same quality in 20 steps), Eular schedulers. Better app
+                update detection. Volume discounts when buying credits. Firefox
+                drawing fix.
+              </li>
+              <br />
+
+              <li>
+                <b>Container improvements</b>. I know the site front-end
+                isn&apos;t updated that often, but for lack of doubt, the
+                container that handles the image generation sees hours of daily
+                work, with more fun things coming soon. Thanks for your loyal
+                support!
+              </li>
+            </ul>
+          </li>
+          <br />
+
+          <li>
             <b>Mon Oct 31, 2022</b>
             <ul style={{ marginTop: "10px" }}>
               <li>
