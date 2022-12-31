@@ -34,7 +34,7 @@ gs.publish("csends", async (db) => {
     .collection("csends")
     .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } })
     .sort("__updatedAt", "asc")
-    .limit(500);
+    .limit(400);
 });
 
 gs.publish("bananaRequests", async (db) => {
@@ -42,7 +42,7 @@ gs.publish("bananaRequests", async (db) => {
     .collection("bananaRequests")
     .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } })
     .sort("__updatedAt", "asc")
-    .limit(500);
+    .limit(400);
 });
 
 gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
