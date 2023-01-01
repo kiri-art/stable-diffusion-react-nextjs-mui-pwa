@@ -831,6 +831,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="wd-1-4-anime_e1"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="wd-1-4-anime_e1"
+              desc={t`Waifu Diffusion v1.4, Epoch 1, Dec 31`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="hakurei/waifu-diffusion-v1-3"
             sx={{ textAlign: "center", width: "100%" }}
           >
@@ -892,6 +902,13 @@ function ModelSelect({
           <Box sx={{ fontSize: "80%", textAlign: "center" }}>
             <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
               WD 1.3 Release Notes and Prompt Hints
+            </a>
+          </Box>
+        )}
+        {value.startsWith("wd-1-4-anime") && (
+          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
+            <a href="https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b">
+              WD 1.4 Release Notes and Prompt Hints
             </a>
           </Box>
         )}
