@@ -1162,15 +1162,23 @@ export default function SDControls({
         inputs.width && inputs.width.setValue(768);
         inputs.height && inputs.height.setValue(768);
         inputs.safety_checker.setValue(true);
-      }
-      if (
+      } else if (
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-base" ||
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-1-base"
       ) {
         inputs.width && inputs.width.setValue(512);
         inputs.height && inputs.height.setValue(512);
         inputs.safety_checker.setValue(true);
+      } else if (inputs.MODEL_ID.value.startsWith("wd-1-4-anime")) {
+        if (inputs.prompt.value === "")
+          inputs.prompt.setValue(
+            "masterpiece, best quality, high quality, absurdres "
+          );
+        inputs.negative_prompt.setValue(
+          "worst quality, low quality, medium quality, deleted, lowres, comic, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry"
+        );
       }
+
       if (inputs.sampler.value == "DPMSolverMultistepScheduler") {
         inputs.num_inference_steps.setValue(20);
       }
