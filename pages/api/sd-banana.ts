@@ -68,6 +68,10 @@ async function bananaSdkRun(
       envName += "_WAIFU_v1_3_full";
       callInputs.MODEL_ID = "hakurei/waifu-diffusion-v1-3";
       break;
+    // Until we deploy on banana, same with WDv1.4
+    // case "Linaqruf/anything-v3.0":
+    //   envName += "_ANYTHING_v3_0";
+    //   break;
     case "rinna/japanese-stable-diffusion":
       envName += "_JP";
       break;

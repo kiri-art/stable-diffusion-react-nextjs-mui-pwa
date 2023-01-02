@@ -851,6 +851,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="Linaqruf/anything-v3.0"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="Linaqruf/anything-v3.0"
+              desc={t`Anime Anything V3 (added Jan 2nd)`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="CompVis/stable-diffusion-v1-4"
             sx={{ textAlign: "center", width: "100%" }}
           >
@@ -912,6 +922,13 @@ function ModelSelect({
             </a>
             <br />
             Apologies, first 12 hours accidentally used WD 1.3 :/
+          </Box>
+        )}
+        {value === "Linaqruf/anything-v3.0" && (
+          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
+            <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
+              WD 1.3 Release Notes and Prompt Hints
+            </a>
           </Box>
         )}
         {value.startsWith("runwayml/stable-diffusion-inpainting") && (

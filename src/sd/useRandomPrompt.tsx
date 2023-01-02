@@ -35,6 +35,11 @@ const _randomPrompts = {
     "宇宙の月でバイクで走るライダー",
     "かわいいわんこのイラスト",
   ],
+  "Linaqruf/anything-v3.0": [
+    "1girl, brown hair, green eyes, colorful, autumn, cumulonimbus clouds, lighting, blue sky, falling leaves, garden",
+    "1boy, medium hair, blonde hair, blue eyes, bishounen, colorful, autumn, cumulonimbus clouds, lighting, blue sky, falling leaves, garden",
+    "scenery, shibuya tokyo, post-apocalypse, ruins, rust, sky, skyscraper, abandoned, blue sky, broken window, building, cloud, crane machine, outdoors, overgrown, pillar, sunset",
+  ],
 };
 
 const randomPrompts = {
