@@ -910,6 +910,8 @@ function ModelSelect({
             <a href="https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b">
               WD 1.4 Release Notes and Prompt Hints
             </a>
+            <br />
+            Apologies, first 12 hours accidentally used WD 1.3 :/
           </Box>
         )}
         {value.startsWith("runwayml/stable-diffusion-inpainting") && (

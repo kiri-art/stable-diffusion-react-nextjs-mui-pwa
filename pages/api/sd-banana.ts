@@ -268,8 +268,12 @@ export default async function SDBanana(
       // @ts-expect-error: send, but don't ever validate (for now)
       callInputs.MODEL_PRECISION = "fp16";
 
-      if (callInputs.MODEL_ID === "wd-1-4-anime_e1")
-        callInputs.MODEL_URL = "s3:///diffusers/wd-1-4-anime_e1";
+      if (callInputs.MODEL_ID === "wd-1-4-anime_e1") {
+        callInputs.MODEL_URL =
+          "s3:///diffusers/models--wd-1-4-anime_e1.tar.zst";
+        // @ts-expect-error: send, but don't ever validate (for now)
+        callInputs.MODEL_PRECISION = "";
+      }
     }
 
     if (fetchOpts.dest === "banana-local" || callInputs.PROVIDER_ID === 2) {
