@@ -831,6 +831,16 @@ function ModelSelect({
           </MenuItem>
 
           <MenuItem
+            value="prompthero/openjourney-v2"
+            sx={{ textAlign: "center", width: "100%" }}
+          >
+            <ModelMenuItem
+              value="prompthero/openjourney-v2"
+              desc={t`SDv1.5 finetuned on Midjourney`}
+            />
+          </MenuItem>
+
+          <MenuItem
             value="wd-1-4-anime_e1"
             sx={{ textAlign: "center", width: "100%" }}
           >
@@ -924,6 +934,14 @@ function ModelSelect({
             Apologies, first 12 hours accidentally used WD 1.3 :/
           </Box>
         )}
+        {value === "prompthero/openjourney-v2" && (
+          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
+            <a href="https://huggingface.co/prompthero/openjourney-v2">
+              Openjourney by PromptHero, Model Card
+            </a>
+          </Box>
+        )}
+
         {value === "Linaqruf/anything-v3.0" && (
           <Box sx={{ fontSize: "80%", textAlign: "center" }}>
             <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">

@@ -3,6 +3,7 @@ import { object, number, string, boolean, InferType } from "yup";
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf([
     "wd-1-4-anime_e1",
+    "prompthero/openjourney-v2",
     "Linaqruf/anything-v3.0",
     "stabilityai/stable-diffusion-2-1",
     "stabilityai/stable-diffusion-2-1-base",

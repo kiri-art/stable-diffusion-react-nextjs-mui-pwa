@@ -34,6 +34,7 @@ const stableDiffusionInputsSchema = object({
   // note, in the adapter, we move this to callInputs
   MODEL_ID: string().oneOf([
     "wd-1-4-anime_e1",
+    "prompthero/openjourney-v2",
     "Linaqruf/anything-v3.0",
     "stabilityai/stable-diffusion-2-1",
     "stabilityai/stable-diffusion-2-1-base",

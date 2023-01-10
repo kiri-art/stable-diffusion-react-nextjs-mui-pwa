@@ -40,6 +40,9 @@ const _randomPrompts = {
     "1boy, medium hair, blonde hair, blue eyes, bishounen, colorful, autumn, cumulonimbus clouds, lighting, blue sky, falling leaves, garden",
     "scenery, shibuya tokyo, post-apocalypse, ruins, rust, sky, skyscraper, abandoned, blue sky, broken window, building, cloud, crane machine, outdoors, overgrown, pillar, sunset",
   ],
+  "prompthero/openjourney-v2": [
+    "retro serie of different cars with different colors and shapes",
+  ],
 };
 
 const randomPrompts = {
