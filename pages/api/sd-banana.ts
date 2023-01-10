@@ -273,12 +273,21 @@ export default async function SDBanana(
       callInputs.MODEL_URL = "s3://";
       // @ts-expect-error: send, but don't ever validate (for now)
       callInputs.MODEL_PRECISION = "fp16";
+      // @ts-expect-error: ok
+      callInputs.MODEL_REVISION = "fp16";
 
       if (callInputs.MODEL_ID === "wd-1-4-anime_e1") {
         callInputs.MODEL_URL =
           "s3:///diffusers/models--wd-1-4-anime_e1.tar.zst";
         // @ts-expect-error: send, but don't ever validate (for now)
         callInputs.MODEL_PRECISION = "";
+        // @ts-expect-error: ok
+        callInputs.MODEL_REVISION = "";
+      } else if (callInputs.MODEL_ID === "prompthero/openjourney-v2") {
+        // @ts-expect-error: send, but don't ever validate (for now)
+        callInputs.MODEL_PRECISION = "";
+        // @ts-expect-error: ok
+        callInputs.MODEL_REVISION = "";
       }
     }
 
