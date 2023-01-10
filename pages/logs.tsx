@@ -268,7 +268,13 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
   );
 }
 
-function RequestRow({ request }: { request: BananaRequest }) {
+function RequestRow({
+  request,
+  isAdmin,
+}: {
+  request: BananaRequest;
+  isAdmin: boolean;
+}) {
   const [open, setOpen] = React.useState(false);
   const times = request.times;
 
@@ -349,6 +355,14 @@ function RequestRow({ request }: { request: BananaRequest }) {
                     <TableCell>Pipeline</TableCell>
                     <TableCell>{request.callInputs.PIPELINE}</TableCell>
                   </TableRow>
+                  {request.callInputs.custom_pipeline_method && (
+                    <TableRow>
+                      <TableCell>Method</TableCell>
+                      <TableCell>
+                        {request.callInputs.custom_pipeline_method}
+                      </TableCell>
+                    </TableRow>
+                  )}
                   <TableRow>
                     <TableCell>Scheduler</TableCell>
                     <TableCell>{request.callInputs.SCHEDULER}</TableCell>
@@ -364,6 +378,12 @@ function RequestRow({ request }: { request: BananaRequest }) {
                       {request.modelInputs.num_inference_steps}x
                     </TableCell>
                   </TableRow>
+                  {isAdmin && (
+                    <TableRow>
+                      <TableCell>Prompt</TableCell>
+                      <TableCell>{request.modelInputs.prompt}</TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -377,6 +397,9 @@ function RequestRow({ request }: { request: BananaRequest }) {
 
 function Requests() {
   useGongoSub("bananaRequests");
+  // @ts-expect-error: ok
+  const user = db.collection("users").findOne({ _id: db.auth.userId });
+  const isAdmin = !!user?.admin;
 
   const requests = useGongoLive((db) =>
     db
@@ -408,7 +431,11 @@ function Requests() {
           </TableHead>
           <TableBody>
             {requests.map((request) => (
-              <RequestRow key={request._id} request={request} />
+              <RequestRow
+                key={request._id}
+                request={request}
+                isAdmin={isAdmin}
+              />
             ))}
           </TableBody>
         </Table>
