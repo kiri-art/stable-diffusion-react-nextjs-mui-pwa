@@ -66,7 +66,10 @@ const Stats: NextPage = () => {
         for (const data of day.requestsByUser) {
           const strUserId = data.userId.id
             .split("")
-            .map((c: string) => c.charCodeAt(0).toString(16))
+            .map((c: string) => {
+              const s = c.charCodeAt(0).toString(16);
+              return s.length == 1 ? "0" + s : s;
+            })
             .join("");
           const rbu =
             // @ts-expect-error: TODO
