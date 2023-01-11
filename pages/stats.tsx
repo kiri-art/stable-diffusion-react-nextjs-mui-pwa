@@ -1,7 +1,13 @@
 import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
-import { useGongoSub, useGongoLive } from "gongo-client-react";
+import {
+  db,
+  useGongoSub,
+  useGongoLive,
+  useGongoUserId,
+  useGongoOne,
+} from "gongo-client-react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Box from "@mui/material/Box";
@@ -9,6 +15,7 @@ import { t, Trans } from "@lingui/macro";
 
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
+import { useRouter } from "next/router";
 
 const Stats: NextPage = () => {
   useGongoSub("statsDaily");
@@ -19,6 +26,12 @@ const Stats: NextPage = () => {
       .collection("statsDaily")
       .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14) } })
   );
+  const router = useRouter();
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const isAdmin = user?.admin;
 
   const series = React.useMemo(() => {
     const series = {
@@ -27,6 +40,7 @@ const Stats: NextPage = () => {
       newRequests: [],
       totalRequests: [],
       requestsByModel: {},
+      requestsByUser: {},
     };
     for (const day of statsDaily) {
       // @ts-expect-error: TODO
@@ -46,6 +60,20 @@ const Stats: NextPage = () => {
           (series.requestsByModel[data.model] = []);
         // @ts-expect-error: TODO
         rbm.push([day.date.getTime(), data.requests]);
+      }
+      // @ts-expect-error: TODO
+      for (const data of day.requestsByUser) {
+        const strUserId = data.userId.id
+          .split("")
+          .map((c: string) => c.charCodeAt(0).toString(16))
+          .join("");
+        const rbu =
+          // @ts-expect-error: TODO
+          series.requestsByUser[strUserId] ||
+          // @ts-expect-error: TODO
+          (series.requestsByUser[strUserId] = []);
+        // @ts-expect-error: TODO
+        rbu.push([day.date.getTime(), data.requests]);
       }
     }
     // console.log(series);
@@ -190,6 +218,148 @@ const Stats: NextPage = () => {
             ],
           }}
         />
+        {isAdmin ? (
+          <>
+            <br />
+
+            <HighchartsReact
+              highcharts={Highcharts}
+              ref={chartComponentRef}
+              options={{
+                title: {
+                  text: t`Requests` + " (" + t`Last 2 weeks` + ")",
+                },
+                chart: {
+                  marginLeft: 25,
+                  marginRight: 25,
+                  alignTicks: false,
+                },
+                credits: {
+                  enabled: false,
+                },
+                tooltip: {
+                  shared: true,
+                },
+                legend: {
+                  enabled: false,
+                  // align: "left",
+                  // x: 40,
+                  // y: 60,
+                  verticalAlign: "bottom",
+                  floating: false,
+                  layout: "horizontal",
+                  backgroundColor:
+                    // @ts-expect-error: blah
+                    defaults.backgroundColor || // theme
+                    "rgba(255,255,255,0.25)",
+                },
+                xAxis: {
+                  type: "datetime",
+                },
+                yAxis: [
+                  {
+                    // left y axis
+                    title: {
+                      text: null, // "Total Users",
+                      style: {
+                        // @ts-expect-error: blah
+                        color: Highcharts.getOptions().colors[1],
+                      },
+                    },
+                    labels: {
+                      align: "left",
+                      style: {
+                        // @ts-expect-error: blah
+                        color: Highcharts.getOptions().colors[1],
+                      },
+                    },
+                    showFirstLabel: false,
+                  },
+                  {
+                    // right y axis
+                    gridLineWidth: 0,
+                    opposite: true,
+                    title: {
+                      text: null, // "New Requests",
+                      style: {
+                        // @ts-expect-error: blah
+                        color: Highcharts.getOptions().colors[0],
+                      },
+                    },
+                    stackLabels: {
+                      enabled: true,
+                      style: {
+                        fontWeight: "bold",
+                        color:
+                          // @ts-expect-error: blah
+                          (Highcharts.getOptions().title.style &&
+                            // @ts-expect-error: blah
+                            Highcharts.getOptions().title.style.color) ||
+                          "gray",
+                        textOutline: "none",
+                      },
+                    },
+                    labels: {
+                      align: "right",
+                      style: {
+                        // @ts-expect-error: blah
+                        color: Highcharts.getOptions().colors[0],
+                      },
+                    },
+                    showFirstLabel: false,
+                  },
+                ],
+                plotOptions: {
+                  column: {
+                    stacking: "normal",
+                    groupPadding: 0,
+                    pointPadding: 0,
+                    dataLabels: {
+                      enabled: true,
+                    },
+                  },
+                },
+                series: [
+                  ...Object.entries(series.requestsByUser).map(
+                    ([name, data]) => {
+                      const user = db
+                        .collection("users")
+                        .findOne({ _id: name });
+                      return {
+                        name: user ? user.username || user._id : name,
+                        type: "column",
+                        yAxis: 1,
+                        data,
+                        events: {
+                          click: function (_event: PointerEvent) {
+                            console.log(this);
+                            // @ts-expect-error: it does
+                            const userId = this.name;
+                            if (userId === "other") return;
+                            router.push("/p/" + userId);
+                          },
+                        },
+                      };
+                    }
+                  ),
+                  /*
+              {
+                name: t`New Requests`,
+                type: "column",
+                yAxis: 1,
+                data: series.newRequests,
+              },
+              */
+                  {
+                    name: t`Total Requests`,
+                    type: "line",
+                    data: series.totalRequests,
+                  },
+                ],
+              }}
+            />
+          </>
+        ) : null}
         <br />
         <HighchartsReact
           highcharts={Highcharts}

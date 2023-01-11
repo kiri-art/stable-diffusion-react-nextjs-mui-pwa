@@ -323,6 +323,23 @@ export default async function SDBanana(
     }
 
     credits = user.credits;
+
+    const userRequest = {
+      userId,
+      date: new Date(),
+      ...chargedCredits,
+      callInputs,
+      modelInputs: {
+        ...modelInputs,
+      },
+      ...chargedCredits,
+    };
+    delete userRequest.modelInputs.prompt;
+    delete userRequest.modelInputs.negative_prompt;
+    delete userRequest.modelInputs.image;
+    delete userRequest.modelInputs.mask_image;
+    delete userRequest.modelInputs.init_image;
+    await gs.dba.collection("userRequests").insertOne(userRequest);
   }
 
   // Let's just be sure until we sort this properly

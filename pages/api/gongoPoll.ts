@@ -215,6 +215,18 @@ gs.publish("userLikes", async (db, _, { auth }) => {
   return db.collection("likes").find({ userId });
 });
 
+/*
+gs.publish("userRequests", async (db, _opts, { auth, updatedAt }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const user = await db.collection("users").findOne({ _id: userId });
+  if (!user || !user.admin) return [];
+
+  return db.collection("userRequests").find();
+});
+*/
+
 gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
   const userId = await auth.userId();
   if (!userId) return [];

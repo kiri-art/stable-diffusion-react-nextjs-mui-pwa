@@ -36,6 +36,31 @@ export default async function buildStats(
     const dayStart = startOfDay(date);
     const dayEnd = endOfDay(date);
 
+    const realUserRequests = await db.collection("userRequests").getReal();
+    let requestsByUser = (
+      await realUserRequests
+        .aggregate([
+          { $match: { date: { $gt: dayStart, $lt: dayEnd } } },
+          { $group: { _id: "$userId", requests: { $sum: 1 } } },
+          { $project: { userId: "$_id", _id: 0, requests: 1 } },
+        ])
+        .toArray()
+    ).sort((a, b) => b.requests - a.requests);
+
+    const CUTOFF = 10;
+    if (requestsByUser.length > CUTOFF) {
+      const requestByUserCutoff = new Array(CUTOFF + 1);
+      const other = (requestByUserCutoff[CUTOFF] = {
+        requests: 0,
+        userId: "other",
+      });
+      for (let i = 0; i < requestsByUser.length; i++) {
+        if (i < CUTOFF) requestByUserCutoff[i] = requestsByUser[i];
+        else other.requests += requestsByUser[i].requests;
+      }
+      requestsByUser = requestByUserCutoff;
+    }
+
     // TODO, aggregation pipeline, accumulate previous days totals
     const dayStats = {
       date,
@@ -58,6 +83,7 @@ export default async function buildStats(
           }),
         }))
       ),
+      requestsByUser,
       __updatedAt: Date.now(),
     };
 
