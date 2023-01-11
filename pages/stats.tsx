@@ -61,20 +61,21 @@ const Stats: NextPage = () => {
         // @ts-expect-error: TODO
         rbm.push([day.date.getTime(), data.requests]);
       }
-      // @ts-expect-error: TODO
-      for (const data of day.requestsByUser) {
-        const strUserId = data.userId.id
-          .split("")
-          .map((c: string) => c.charCodeAt(0).toString(16))
-          .join("");
-        const rbu =
-          // @ts-expect-error: TODO
-          series.requestsByUser[strUserId] ||
-          // @ts-expect-error: TODO
-          (series.requestsByUser[strUserId] = []);
+      if (day.requestsByUser)
         // @ts-expect-error: TODO
-        rbu.push([day.date.getTime(), data.requests]);
-      }
+        for (const data of day.requestsByUser) {
+          const strUserId = data.userId.id
+            .split("")
+            .map((c: string) => c.charCodeAt(0).toString(16))
+            .join("");
+          const rbu =
+            // @ts-expect-error: TODO
+            series.requestsByUser[strUserId] ||
+            // @ts-expect-error: TODO
+            (series.requestsByUser[strUserId] = []);
+          // @ts-expect-error: TODO
+          rbu.push([day.date.getTime(), data.requests]);
+        }
     }
     // console.log(series);
     return series;
