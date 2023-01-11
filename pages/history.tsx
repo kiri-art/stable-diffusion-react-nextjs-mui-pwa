@@ -2,15 +2,10 @@ import { t, Trans } from "@lingui/macro";
 import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  ImageList,
-  ImageListItem,
-} from "@mui/material";
+import { Box, Button, Container, ImageListItem } from "@mui/material";
 import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
 import sanitizeFilename from "sanitize-filename";
+import { Masonry } from "masonic";
 
 import MyAppBar from "../src/MyAppBar";
 import type { HistoryItem } from "../src/schemas/history";
@@ -24,7 +19,7 @@ import { destar } from "../src/Starred";
 import asyncConfirm from "../src/asyncConfirm";
 import StarType from "../src/schemas/star";
 
-const MAX_HISTORY = 100;
+const MAX_HISTORY = 250;
 
 function ImgFromBase64({
   base64,
@@ -235,13 +230,15 @@ export default function History() {
   const cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
 
   const items = useGongoLive((db) =>
-    db.collection("history").find().sort("date", "desc")
+    db.collection("history").find().sort("date", "desc").limit(MAX_HISTORY)
   );
 
   async function clear() {
     if (await asyncConfirm(t`Are you sure?  This action cannot be undone`))
       db.collection("history").remove({});
   }
+
+  const MasonryItem = ({ data }: { data: HistoryItem }) => <Item item={data} />;
 
   return (
     <Box>
@@ -257,11 +254,13 @@ export default function History() {
           <Trans>Clear History</Trans>
         </Button>
 
-        <ImageList cols={cols}>
-          {items.map((item) => (
-            <Item key={item._id} item={item} />
-          ))}
-        </ImageList>
+        <Masonry
+          items={items}
+          render={MasonryItem}
+          columnCount={cols}
+          columnGutter={10}
+          rowGutter={10}
+        />
       </Container>
     </Box>
   );
