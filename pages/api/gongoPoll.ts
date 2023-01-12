@@ -87,7 +87,10 @@ gs.publish("stars", async (db, { userId, username } = {}, { updatedAt }) => {
   const upQuery: Record<string, unknown> = {};
   if (updatedAt.userProfiles)
     upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+
   const uids = Array.from(new Set(stars.map((s) => s.userId)));
+  // if (profile with no stars), still return userProfile
+  if (query.userId && uids.length === 0) uids.push(query.userId);
   upQuery._id = { $in: uids };
 
   const userProfiles = await (await db.collection("users").getReal())
