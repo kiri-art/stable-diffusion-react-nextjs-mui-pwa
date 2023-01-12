@@ -64,13 +64,16 @@ const Stats: NextPage = () => {
       if (day.requestsByUser)
         // @ts-expect-error: TODO
         for (const data of day.requestsByUser) {
-          const strUserId = data.userId.id
-            .split("")
-            .map((c: string) => {
-              const s = c.charCodeAt(0).toString(16);
-              return s.length == 1 ? "0" + s : s;
-            })
-            .join("");
+          const strUserId =
+            typeof data.userId === "object"
+              ? data.userId.id
+                  .split("")
+                  .map((c: string) => {
+                    const s = c.charCodeAt(0).toString(16);
+                    return s.length == 1 ? "0" + s : s;
+                  })
+                  .join("")
+              : data.userId;
           const rbu =
             // @ts-expect-error: TODO
             series.requestsByUser[strUserId] ||
