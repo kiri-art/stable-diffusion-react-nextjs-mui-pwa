@@ -333,7 +333,9 @@ const Stats: NextPage = () => {
                         .collection("users")
                         .findOne({ _id: name });
                       return {
-                        name: user ? user.username || user._id : name,
+                        name: user
+                          ? user.username || user.emails[0].value || name
+                          : name,
                         type: "column",
                         yAxis: 1,
                         data,
