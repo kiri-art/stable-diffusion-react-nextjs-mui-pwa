@@ -1,4 +1,5 @@
 import { object, string, number, InferType } from "yup";
+import bananaCallInputsSchema from "./bananaCallInputs";
 
 const stableDiffusionInputsSchema = object({
   prompt: string(),
@@ -32,34 +33,9 @@ const stableDiffusionInputsSchema = object({
 
   // temporary, until we adjust Controls to have callInputs too.
   // note, in the adapter, we move this to callInputs
-  MODEL_ID: string().oneOf([
-    "wd-1-4-anime_e1",
-    "prompthero/openjourney-v2",
-    "Linaqruf/anything-v3.0",
-    "stabilityai/stable-diffusion-2-1",
-    "stabilityai/stable-diffusion-2-1-base",
-    "stabilityai/stable-diffusion-2",
-    "stabilityai/stable-diffusion-2-base",
-    "CompVis/stable-diffusion-v1-4",
-    "hakurei/waifu-diffusion",
-    "hakurei/waifu-diffusion-v1-3",
-    "hakurei/waifu-diffusion-v1-3-full",
-    "rinna/japanese-stable-diffusion",
-  ]),
-  // temporary...
-  PROVIDER_ID: number().oneOf([1, 2]),
-  // temporary...
-  sampler: string().oneOf([
-    "PNDM", // backcompat
-    "DDIM", // backcompat
-    "LMS", // backcompat
-    "LMSDiscreteScheduler",
-    "DDIMScheduler",
-    "PNDMScheduler",
-    "EulerAncestralDiscreteScheduler",
-    "EulerDiscreteScheduler",
-    "DPMSolverMultistepScheduler",
-  ]),
+  MODEL_ID: bananaCallInputsSchema.fields.MODEL_ID,
+  PROVIDER_ID: bananaCallInputsSchema.fields.PROVIDER_ID,
+  sampler: bananaCallInputsSchema.fields.SCHEDULER,
 });
 
 type StableDiffusionInputs = InferType<typeof stableDiffusionInputsSchema>;
