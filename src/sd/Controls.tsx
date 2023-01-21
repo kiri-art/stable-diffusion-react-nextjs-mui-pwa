@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import models from "../config/models";
 
 import {
   Box,
@@ -769,206 +770,21 @@ function ModelSelect({
           onChange={(event) => setValue(event.target.value)}
           size="small"
         >
-          {/* Unfortunately <Select /> relies on having direct <MenuItem /> children */}
-          <MenuItem
-            value="stabilityai/stable-diffusion-2-1-base"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="stabilityai/stable-diffusion-2-1-base"
-              desc={t`Latest Stable Diffusion, Dec 6th. (512x512)`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="stabilityai/stable-diffusion-2-1"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="stabilityai/stable-diffusion-2-1"
-              desc={t`Latest Stable Diffusion, Dec 6th. (768x768)`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="stabilityai/stable-diffusion-2-base"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="stabilityai/stable-diffusion-2-base"
-              desc={t`Stable Diffusion from Nov 24th. (512x512)`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="stabilityai/stable-diffusion-2"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="stabilityai/stable-diffusion-2"
-              desc={t`Stable Diffusion from Nov 24th. (768x768)`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="runwayml/stable-diffusion-v1-5"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="runwayml/stable-diffusion-v1-5"
-              desc={t`Stable Diffusion from Oct 20th.`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="runwayml/stable-diffusion-inpainting"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="runwayml/stable-diffusion-inpainting"
-              desc={t`Fine-tuned SD; Best for Inpainting.`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="prompthero/openjourney-v2"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="prompthero/openjourney-v2"
-              desc={t`SDv1.5 finetuned on Midjourney`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="wd-1-4-anime_e1"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="wd-1-4-anime_e1"
-              desc={t`Waifu Diffusion v1.4, Epoch 1, Dec 31`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="hakurei/waifu-diffusion-v1-3"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="hakurei/waifu-diffusion-v1-3"
-              desc={t`Best for Anime.  Final Release.  Oct 6`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="Linaqruf/anything-v3.0"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="Linaqruf/anything-v3.0"
-              desc={t`Anime Anything V3 (added Jan 2nd)`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="CompVis/stable-diffusion-v1-4"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="CompVis/stable-diffusion-v1-4"
-              desc={t`Original model, best for most cases.`}
-            />
-          </MenuItem>
-
-          <MenuItem
-            value="hakurei/waifu-diffusion"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="hakurei/waifu-diffusion"
-              desc={t`Anime.  Original, previous model (v1.2)`}
-            />
-          </MenuItem>
-
-          {/*
-          <MenuItem
-            value="hakurei/waifu-diffusion-v1-3-full"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="hakurei/waifu-diffusion-v1-3-full"
-              desc={t`Full precision, slower, sometimes better.`}
-            />
-          </MenuItem>
-          */}
-
-          <MenuItem
-            value="rinna/japanese-stable-diffusion"
-            sx={{ textAlign: "center", width: "100%" }}
-          >
-            <ModelMenuItem
-              value="rinna/japanese-stable-diffusion"
-              desc={t`Japanese / Japanglish prompt input, style`}
-            />
-          </MenuItem>
-        </Select>
-        {false && value.startsWith("stabilityai/stable-diffusion-2") && (
-          <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
-            Bleeding edge! Not everything works yet. Only DDIMScheduler and
-            EulerDiscreteScheduler samplers work.
-          </Box>
-        )}
-        {value.startsWith("hakurei/waifu-diffusion-v1-3") && (
-          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
-            <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
-              WD 1.3 Release Notes and Prompt Hints
-            </a>
-          </Box>
-        )}
-        {value.startsWith("wd-1-4-anime") && (
-          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
-            <a href="https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b">
-              WD 1.4 Release Notes and Prompt Hints
-            </a>
-            <br />
-            Apologies, first 12 hours accidentally used WD 1.3 :/
-          </Box>
-        )}
-        {value === "prompthero/openjourney-v2" && (
-          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
-            <a href="https://huggingface.co/prompthero/openjourney-v2">
-              Openjourney by PromptHero, Model Card
-            </a>
-          </Box>
-        )}
-
-        {value === "Linaqruf/anything-v3.0" && (
-          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
-            <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
-              WD 1.3 Release Notes and Prompt Hints
-            </a>
-          </Box>
-        )}
-        {value.startsWith("runwayml/stable-diffusion-inpainting") && (
-          <Box sx={{ color: "red", fontSize: "80%", textAlign: "center" }}>
-            Warning! Currently breaks easily on non-standard image sizes.
-          </Box>
-        )}
-        {false && value === "hakurei/waifu-diffusion-v1-3" && (
-          <div style={{ color: "red", fontSize: "80%" }}>
-            Quality issues reported with waifu-diffusion-v1.3. We&apos;re
-            working on it, but we <i>strongly</i> suggest to rather use the
-            original model for now. Follow{" "}
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://github.com/huggingface/diffusers/issues/671"
+          {Object.values(models).map((model) => (
+            <MenuItem
+              // Unfortunately <Select /> relies on having direct <MenuItem /> children
+              key={model.MODEL_ID}
+              value={model.MODEL_ID}
+              sx={{ textAlign: "center", width: "100%" }}
             >
-              diffusers#671
-            </a>{" "}
-            for details. Results are significantly worse than they should be /
-            will be soon.
-          </div>
+              <ModelMenuItem value={model.MODEL_ID} desc={model.description} />
+            </MenuItem>
+          ))}
+        </Select>
+        {models[value].notes && (
+          <Box sx={{ fontSize: "80%", textAlign: "center" }}>
+            {models[value].notes}
+          </Box>
         )}
       </FormControl>
     ),
