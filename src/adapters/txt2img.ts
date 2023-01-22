@@ -145,7 +145,7 @@ export default async function txt2img(
   // @ts-expect-error: doesn't exist, need to fix as above
   delete modelInputs.safety_checker;
 
-  if (modelInputs.MODEL_ID) {
+  if (typeof modelInputs.MODEL_ID === "string") {
     callInputs.MODEL_ID = modelInputs.MODEL_ID;
     delete modelInputs.MODEL_ID;
   }

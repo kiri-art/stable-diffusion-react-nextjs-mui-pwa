@@ -205,7 +205,7 @@ export default async function bananaFetch(
   const modelInputs = stableDiffusionInputsSchema.cast(model_inputs);
   const callInputs = bananaCallInputsSchema.cast(call_inputs);
 
-  if (modelInputs.MODEL_ID) {
+  if (typeof modelInputs.MODEL_ID === "string") {
     callInputs.MODEL_ID = modelInputs.MODEL_ID;
     delete modelInputs.MODEL_ID;
   }
