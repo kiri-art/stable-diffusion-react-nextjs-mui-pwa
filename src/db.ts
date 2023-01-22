@@ -42,6 +42,7 @@ db.collection("users").persist();
 db.collection("orders").persist();
 db.collection("creditCodes").persist();
 db.collection("statsDaily").persist();
+db.collection("statsHourly").persist();
 db.collection("csends").persist();
 db.collection("bananaRequests").persist();
 db.collection("stars").persist();
