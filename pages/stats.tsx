@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 
 const Stats: NextPage = () => {
   useGongoSub("statsDaily");
+  useGongoSub("statsHourly");
 
   const chartComponentRef = React.useRef<HighchartsReact.RefObject>(null);
   const statsDaily = useGongoLive((db) =>
@@ -32,6 +33,12 @@ const Stats: NextPage = () => {
     db.collection("users").find({ _id: userId })
   );
   const isAdmin = user?.admin;
+
+  const hourlyStats = useGongoLive((db) =>
+    db
+      .collection("statsHourly")
+      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24) } })
+  );
 
   const series = React.useMemo(() => {
     const series = {
@@ -88,6 +95,7 @@ const Stats: NextPage = () => {
   }, [statsDaily]);
 
   console.log(series);
+  console.log(hourlyStats.map((doc) => [doc.date, doc.total]));
 
   const defaults = Highcharts.getOptions();
 
@@ -105,6 +113,147 @@ const Stats: NextPage = () => {
           </Trans>
         </Box>
         <br />
+
+        {/* Hourly Requests (Last 24 Hours) */}
+        <HighchartsReact
+          highcharts={Highcharts}
+          ref={chartComponentRef}
+          options={{
+            title: {
+              text: t`Requests` + " (" + t`Last 24 hours` + ")",
+            },
+            chart: {
+              marginLeft: 25,
+              marginRight: 25,
+              alignTicks: false,
+            },
+            credits: {
+              enabled: false,
+            },
+            tooltip: {
+              shared: true,
+            },
+            legend: {
+              enabled: false,
+              // align: "left",
+              // x: 40,
+              // y: 60,
+              verticalAlign: "bottom",
+              floating: false,
+              layout: "horizontal",
+              backgroundColor:
+                // @ts-expect-error: blah
+                defaults.backgroundColor || // theme
+                "rgba(255,255,255,0.25)",
+            },
+            xAxis: {
+              type: "datetime",
+            },
+            yAxis: [
+              /*
+              {
+                // left y axis
+                title: {
+                  text: null, // "Total Users",
+                  style: {
+                    // @ts-expect-error: blah
+                    color: Highcharts.getOptions().colors[1],
+                  },
+                },
+                labels: {
+                  align: "left",
+                  style: {
+                    // @ts-expect-error: blah
+                    color: Highcharts.getOptions().colors[1],
+                  },
+                },
+                showFirstLabel: false,
+              },
+              */
+              {
+                // right y axis
+                gridLineWidth: 0,
+                opposite: true,
+                title: {
+                  text: null, // "New Requests",
+                  style: {
+                    // @ts-expect-error: blah
+                    color: Highcharts.getOptions().colors[0],
+                  },
+                },
+                stackLabels: {
+                  enabled: true,
+                  style: {
+                    fontWeight: "bold",
+                    color:
+                      // @ts-expect-error: blah
+                      (Highcharts.getOptions().title.style &&
+                        // @ts-expect-error: blah
+                        Highcharts.getOptions().title.style.color) ||
+                      "gray",
+                    textOutline: "none",
+                  },
+                },
+                labels: {
+                  align: "right",
+                  style: {
+                    // @ts-expect-error: blah
+                    color: Highcharts.getOptions().colors[0],
+                  },
+                },
+                showFirstLabel: false,
+              },
+            ],
+            plotOptions: {
+              column: {
+                stacking: "normal",
+                groupPadding: 0,
+                pointPadding: 0,
+                dataLabels: {
+                  enabled: true,
+                },
+              },
+            },
+            series: [
+              {
+                name: "Requests",
+                type: "column",
+                // yAxis: 1,
+                data: hourlyStats.map((doc) => [
+                  // @ts-expect-error: ok
+                  doc.date.getTime(),
+                  doc.total,
+                ]),
+              },
+              /*
+              models by hour?
+              ...Object.entries(series.requestsByModel).map(([name, data]) => ({
+                name,
+                type: "column",
+                yAxis: 1,
+                data,
+              })),
+              */
+              /*
+              {
+                name: t`New Requests`,
+                type: "column",
+                yAxis: 1,
+                data: series.newRequests,
+              },
+              */
+              /*
+              {
+                name: t`Total Requests`,
+                type: "line",
+                data: series.totalRequests,
+              },
+              */
+            ],
+          }}
+        />
+
+        {/* Daily Requests (Last 2 Weeks) */}
         <HighchartsReact
           highcharts={Highcharts}
           ref={chartComponentRef}

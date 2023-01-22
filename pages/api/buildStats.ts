@@ -6,6 +6,54 @@ import gs from "../../src/api-lib/db";
 
 const db = gs.dba;
 
+async function computeHourlyStats({
+  dayStart,
+  dayEnd,
+}: {
+  dayStart: Date;
+  dayEnd: Date;
+}) {
+  if (!db) return;
+  const requests = await db.collection("bananaRequests").getReal();
+  const statsHourly = await db.collection("statsHourly").getReal();
+
+  const agg = (
+    await requests
+      .aggregate([
+        { $match: { createdAt: { $gt: dayStart, $lt: dayEnd } } },
+        {
+          $project: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" },
+            hour: { $hour: "$createdAt" },
+          },
+        },
+        {
+          $group: {
+            _id: { year: "$year", month: "$month", day: "$day", hour: "$hour" },
+            total: { $sum: 1 },
+          },
+        },
+      ])
+      .toArray()
+  ).map((doc) => {
+    // Possible to do this as part of aggregration query but a bit laborious
+    const { year, month, day, hour } = doc._id;
+    return {
+      date: new Date(`${year}-${month}-${day} ${hour}:00:00Z`),
+      total: doc.total,
+    };
+  });
+
+  console.log(agg);
+
+  for (const hourlyStats of agg)
+    await statsHourly.replaceOne({ date: hourlyStats.date }, hourlyStats, {
+      upsert: true,
+    });
+}
+
 export default async function buildStats(
   req: NextApiRequest,
   res: NextApiResponse
@@ -88,6 +136,7 @@ export default async function buildStats(
     };
 
     await statsDaily.replaceOne({ date }, dayStats, { upsert: true });
+    await computeHourlyStats({ dayStart, dayEnd });
   }
 
   res.status(200).end("OK");

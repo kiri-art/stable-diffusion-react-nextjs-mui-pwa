@@ -21,6 +21,10 @@ gs.publish("statsDaily", async (db) => {
   return db.collection("statsDaily").find();
 });
 
+gs.publish("statsHourly", async (db) => {
+  return db.collection("statsHourly").find();
+});
+
 gs.publish("csends", async (db) => {
   /*
   const userId = await auth.userId();
