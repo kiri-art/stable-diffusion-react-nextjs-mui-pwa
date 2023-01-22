@@ -43,6 +43,7 @@ async function computeHourlyStats({
     return {
       date: new Date(`${year}-${month}-${day} ${hour}:00:00Z`),
       total: doc.total,
+      __updatedAt: Date.now(),
     };
   });
 
