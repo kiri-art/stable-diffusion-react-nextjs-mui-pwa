@@ -58,7 +58,8 @@ function TextFieldDebounced({
       <TextField
         placeholder={t`Filter`}
         size="small"
-        sx={{ mt: 1, width: 400 }}
+        fullWidth
+        sx={{ mt: 1 }}
         value={value}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setValue(event.target.value)
