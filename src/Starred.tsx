@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
-import { Masonry } from "masonic";
+import MyMasonry from "./MyMasonry";
 
 import Link from "./Link";
 import Star from "./schemas/star";
@@ -313,7 +313,7 @@ export default function Starred({
       )}
       */}
       <div style={{ height: "10px" }} />
-      <Masonry
+      <MyMasonry
         items={items}
         render={MasonryItem}
         columnCount={cols || _cols}
