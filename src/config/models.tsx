@@ -1,5 +1,7 @@
 interface Model {
   MODEL_ID: string;
+  MODEL_PRECISION?: "" | "fp16";
+  MODEL_REVISION?: string;
   description: string;
   notes?: JSX.Element;
   defaults?: Record<string, unknown>;
@@ -134,6 +136,57 @@ const models: Record<string, Model> = {
       "宇宙の月でバイクで走るライダー",
       "かわいいわんこのイラスト",
     ],
+  },
+  "OrangeMix/AbyssOrangeMix2": {
+    MODEL_ID: "OrangeMix/AbyssOrangeMix2",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    description: "Anime.  Highly detailed, realistic illustrations.",
+    randomPrompts: [
+      "(masterpiece:1,2), best quality, masterpiece, highres, original, extremely detailed wallpaper, looking at viewer, (sitting:1.4), (A robotic girl stands in the center holding a bouquet of orange flowers.:1.4).,(1humanoid cyborg girl:1.0), (happy, closed eye smile:1.6), (mechanical hand:1.05), [[cyborg]], metallic mixture, drawing, paintbrush, beret, (glowing_eyes:0.95), (separate sleeves), silver long_hair, hair_between_eyes, sigma 135mm lens, (Lots of oldman male researchers in white coats standing aside:1.2), 👨‍💻👨‍🔬,(cowboy shot:1.2), upper body,perfect lighting,(extremely detailed CG:1.2),(8k:1.1},(happy:1.3), :d, group of male researchers surrounding a female-shaped AI cyborg, smiling and laughing. cyborg cute girl sitting in the center of the group of male human researchers.The human male researchers are all smiling and laughing, (Group photo, commemorative photo, :1.4)",
+    ],
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#abyssorangemix2-aom2">
+        AbyssOrangeMix2 (AOM2) notes
+      </a>
+    ),
+  },
+  "OrangeMix/ElyOrangeMix": {
+    MODEL_ID: "OrangeMix/ElyOrangeMix",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    description: "Improves Elysium_AnimeV2; 3d thick paint style.",
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#elyorangemix-elom">
+        ElyOrangeMix (ELOM) notes
+      </a>
+    ),
+  },
+  "OrangeMix/EerieOrangeMix": {
+    MODEL_ID: "OrangeMix/EerieOrangeMix",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    description: "Improves Elysium_AnimeV2",
+    randomPrompts: [
+      "((masterpiece)), best quality, perfect anatomy, (1girl, solo focus:1.4), pov, looking at viewer, flower trim,(perspective, sideway, From directly above ,lying on water, open hand, palm, :1.3),(Accurate five-fingered hands, Reach out, hand focus, foot focus, Sole, heel, ball of the thumb:1.2), (outdoor, sunlight:1.2),(shiny skin:1.3),,(masterpiece, white border, outside border, frame:1.3), (motherhood, aged up, mature female, medium breasts:1.2), (curvy:1.1), (single side braid:1.2), (long hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), (light Ivory hair:1.2), looking at viewer, Calm, Slight smile, (anemic, dark, lake, river,puddle, Meadow, rock, stone, moss, cliff, white flower, stalactite, Godray, ruins, ancient, eternal, deep ,mystic background,sunlight,plant,lily,white flowers, Abyss, :1.2), (orange fruits, citrus fruit, citrus fruit bearing tree:1.4), volumetric lighting,good lighting,, masterpiece, best quality, highly detailed,extremely detailed cg unity 8k wallpaper,illustration,((beautiful detailed face)), best quality, (((hyper-detailed ))), high resolution illustration ,high quality, highres, sidelighting, ((illustrationbest)),highres,illustration, absurdres, hyper-detailed, intricate detail, perfect, high detailed eyes,perfect lighting, (extremely detailed CG:1.2)",
+      "street, 130mm f1.4 lens, ,(shiny skin:1.3),, (teen age, school uniform:1.2), (glasses, black hair, medium hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), looking at viewer,, Calm, Slight smile",
+    ],
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#eerieorangemix-eom">
+        EerieOrangeMix (EOM) notes
+      </a>
+    ),
+  },
+  "OrangeMix/BloodOrangeMix": {
+    MODEL_ID: "OrangeMix/BloodOrangeMix",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    description: "Improves AnythingV3, paint style, popular in JP.",
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#bloodorangemix-bom">
+        BloodOrangeMix (BOM)
+      </a>
+    ),
   },
 };
 
