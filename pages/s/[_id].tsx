@@ -102,6 +102,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   if (typeof item.date === "string") item.date = new Date(item.date);
 
   const modelInputs = item.modelInputs;
+  const callInputs = item.callInputs;
 
   // TODO, need to store w/h in result for other pipelines that don't specify.
   const aspectRatio =
@@ -198,17 +199,38 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
         <p>Liked by: {item.likes} users</p>
 
         <p>
+          <Trans>Model</Trans>: {callInputs.MODEL_ID}
+        </p>
+
+        <p>
           <Trans>Prompt</Trans>: {modelInputs.prompt}
         </p>
+
         <p>
           <Trans>Negative Prompt</Trans>: {modelInputs.negative_prompt}
         </p>
         <p>
           <Trans>CFG</Trans>: {modelInputs.guidance_scale}
         </p>
+
+        <p>
+          <Trans>Sheduler</Trans>: {callInputs.SCHEDULER}
+        </p>
+
         <p>
           <Trans>Steps</Trans>: {modelInputs.num_inference_steps}
         </p>
+        <p>
+          <Trans>Seed</Trans>: {modelInputs.seed}
+        </p>
+
+        {/* not correctly stored yet
+        <p>
+          <Trans>Pipeline</Trans>: {callInputs.PIPELINE}
+          {callInputs.custom_pipeline_method &&
+            " (" + callInputs.custom_pipeline_method + ")"}
+        </p>
+          */}
       </Container>
     </Box>
   );
