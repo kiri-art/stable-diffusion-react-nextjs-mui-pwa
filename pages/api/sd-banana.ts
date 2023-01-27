@@ -13,6 +13,7 @@ import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../../src/schemas/bananaCallInputs";
 import bananaUrl from "../../src/lib/bananaUrl";
+import models from "../../src/config/models";
 
 // const CREDIT_COST = 1;
 
@@ -242,6 +243,8 @@ export default async function SDBanana(
   }
   const fetchOpts = req.body.fetchOpts || {};
 
+  const model = callInputs.MODEL_ID && models[callInputs.MODEL_ID];
+
   if (callInputs.MODEL_ID === "rinna/japanese-stable-diffusion")
     callInputs.PIPELINE = "Japanese" + callInputs.PIPELINE;
 
@@ -272,9 +275,9 @@ export default async function SDBanana(
       CREDIT_COST = 0.25;
       callInputs.MODEL_URL = "s3://";
       // @ts-expect-error: send, but don't ever validate (for now)
-      callInputs.MODEL_PRECISION = "fp16";
+      callInputs.MODEL_PRECISION = model.MODEL_PRECISION ?? "fp16";
       // @ts-expect-error: ok
-      callInputs.MODEL_REVISION = "fp16";
+      callInputs.MODEL_REVISION = model.MODEL_REVISION ?? "fp16";
 
       if (callInputs.MODEL_ID === "wd-1-4-anime_e1") {
         callInputs.MODEL_URL =
