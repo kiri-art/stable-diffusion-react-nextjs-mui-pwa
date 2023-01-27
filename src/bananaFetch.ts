@@ -122,13 +122,21 @@ async function runner(
     const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
     console.log({ BANANA_API_URL });
 
-    const response = await fetch(BANANA_API_URL + "/check/v4/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    let response;
+    try {
+      response = await fetch(BANANA_API_URL + "/check/v4/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error(error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      setLog(["FAILED: " + message]);
+      return { $error: { message } };
+    }
 
     const text = await response.text();
     try {
