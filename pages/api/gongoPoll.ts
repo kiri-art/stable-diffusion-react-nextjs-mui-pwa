@@ -6,6 +6,7 @@ import {
 } from "gongo-server-db-mongo/lib/collection";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
+import { addDays } from "date-fns";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -18,11 +19,13 @@ gs.publish("orders", async (db, {}, { auth }) => {
 });
 
 gs.publish("statsDaily", async (db) => {
-  return db.collection("statsDaily").find();
+  const date = addDays(new Date().setHours(0, 0, 0, 0), -14);
+  return db.collection("statsDaily").find({ date: { $gt: date } });
 });
 
 gs.publish("statsHourly", async (db) => {
-  return db.collection("statsHourly").find();
+  const date = addDays(new Date(), -1);
+  return db.collection("statsHourly").find({ date: { $gt: date } });
 });
 
 gs.publish("csends", async (db) => {
