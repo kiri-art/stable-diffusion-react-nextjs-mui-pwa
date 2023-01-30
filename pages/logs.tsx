@@ -7,6 +7,7 @@ import { db, useGongoSub, useGongoLive } from "gongo-client-react";
 
 import {
   Box,
+  Button,
   IconButton,
   Paper,
   Tab,
@@ -268,6 +269,13 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
   );
 }
 
+function removeAll() {
+  const Requests = db.collection("bananaRequests");
+  const docs = Requests.find().toArraySync();
+  for (const { _id } of docs) Requests._remove(_id);
+  alert("done");
+}
+
 function RequestRow({
   request,
   isAdmin,
@@ -486,6 +494,7 @@ const Logs: NextPage = () => {
           <ContainerEvents csends={csends} />
         </TabPanel>
         */}
+        <Button onClick={removeAll}>Clear Log Database and Archive</Button>
       </Container>
     </>
   );
