@@ -33,6 +33,11 @@ async function bananaSdkRun(
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
 
+  const PROVIDER_ID = callInputs.PROVIDER_ID;
+
+  const BANANA_API_URL = bananaUrl(PROVIDER_ID);
+  console.log({ BANANA_API_URL });
+
   let envName = "BANANA_MODEL_KEY_SD";
   switch (callInputs.MODEL_ID) {
     case "stabilityai/stable-diffusion-2-1-base":
@@ -80,7 +85,7 @@ async function bananaSdkRun(
       break;
   }
 
-  const modelKey = process.env[envName];
+  const modelKey = PROVIDER_ID === 2 ? "dda" : process.env[envName];
 
   console.log({
     var: envName,
@@ -125,9 +130,6 @@ async function bananaSdkRun(
   };
 
   callInputs.startRequestId = startRequestId;
-
-  const BANANA_API_URL = bananaUrl(callInputs.PROVIDER_ID);
-  console.log({ BANANA_API_URL });
 
   const response = await fetch(BANANA_API_URL + "/start/v4/", {
     method: "POST",
