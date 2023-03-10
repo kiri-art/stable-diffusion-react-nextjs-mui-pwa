@@ -14,6 +14,14 @@ import {
   UpsampleModelInputs,
 } from "../../src/schemas";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb",
+    },
+  },
+};
+
 const apiKey = process.env.BANANA_API_KEY;
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
