@@ -1,4 +1,4 @@
-interface Model {
+export interface Model {
   MODEL_ID: string;
   MODEL_PRECISION?: "" | "fp16";
   MODEL_REVISION?: string;

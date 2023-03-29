@@ -16,6 +16,7 @@ import useRandomPrompt from "../src/sd/useRandomPrompt";
 import Footer from "../src/sd/Footer";
 import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
 import { outputImageQueue } from "../src/lib/sendQueue";
+import fetchToOutput from "../src/lib/fetchToOutput";
 
 const txt2imgState = [
   "prompt",
@@ -90,7 +91,8 @@ export default function Txt2Img() {
     }
     */
 
-    await txt2img(
+    // await txt2img(
+    await fetchToOutput(
       {
         ...modelInputs,
         prompt: inputs.prompt.value || randomPrompt,
