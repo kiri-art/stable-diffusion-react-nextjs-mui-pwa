@@ -19,6 +19,28 @@ import providers, {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// TODO, make this all internal to providerFetch
+async function updateFinishedStep(
+  callID: string,
+  timestampMs: number,
+  value: Record<string, unknown>
+) {
+  await fetch("/api/bananaUpdate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      callID,
+      step: {
+        name: "finished",
+        date: timestampMs,
+        value: value,
+      },
+    }),
+  });
+}
+
 export interface ProviderFetchRequestObject {
   providerId: string;
   modelId: string;
@@ -139,38 +161,14 @@ export class ProviderFetchRequestBase {
     this.finished = result.finished;
     this.modelOutputs = result.modelOutputs;
 
-    /*
-  // It turns out sometimes we can still get { message: "" } and success.
-  // if (!result.message) {
-  if (
-    !(
-      result &&
-      result.modelOutputs &&
-      result.modelOutputs.length &&
-      result.modelOutputs[0].image_base64
-    )
-  ) {
-    if (callID)
-      updateFinishedStep(
-        callID,
-        (result.created && result.created * 1000) || Date.now(),
-        { $error: result }
-      );
-    setLog(JSON.stringify(result, null, 2).split("\n"));
-    return { $error: result };
-  }
-
-  if (callID)
-    updateFinishedStep(callID, result.created * 1000, { $success: true });
-  */
-
     return result;
   }
 
   async checkUntilResult() {
     while (!this.finished) {
       await this.check();
-      await sleep(1000);
+      // TODO, different sleep time for longPoll or not.
+      await sleep(333);
     }
     return this;
   }
@@ -338,10 +336,27 @@ export default async function providerFetch(
 
     const result = await request.checkUntilResult();
     console.log("providerFetch result", result);
+
+    if (!request.apiInfo().checkViaServer) {
+      const callID = result.callID;
+      const now = Date.now(); // result.created * 1000
+      if (result.modelOutputs?.length) {
+        updateFinishedStep(callID, now, { $success: true });
+      } else {
+        updateFinishedStep(callID, now, {
+          $error: {
+            message: result.message,
+            modelOutputs: result.modelOutputs,
+          },
+        });
+      }
+    }
+
     return result;
   } else {
     // untested
-    const start = await request.fetchStart();
-    console.log(start);
+    // const start = await request.fetchStart();
+    // console.log(start);
+    throw new Error("calling providerFetch from server not implemented yet");
   }
 }
