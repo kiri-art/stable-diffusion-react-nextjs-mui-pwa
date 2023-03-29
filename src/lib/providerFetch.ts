@@ -139,6 +139,31 @@ export class ProviderFetchRequestBase {
     this.finished = result.finished;
     this.modelOutputs = result.modelOutputs;
 
+    /*
+  // It turns out sometimes we can still get { message: "" } and success.
+  // if (!result.message) {
+  if (
+    !(
+      result &&
+      result.modelOutputs &&
+      result.modelOutputs.length &&
+      result.modelOutputs[0].image_base64
+    )
+  ) {
+    if (callID)
+      updateFinishedStep(
+        callID,
+        (result.created && result.created * 1000) || Date.now(),
+        { $error: result }
+      );
+    setLog(JSON.stringify(result, null, 2).split("\n"));
+    return { $error: result };
+  }
+
+  if (callID)
+    updateFinishedStep(callID, result.created * 1000, { $success: true });
+  */
+
     return result;
   }
 

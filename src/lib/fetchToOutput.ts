@@ -14,6 +14,7 @@ import bananaCallInputsSchema, {
 } from "../schemas/bananaCallInputs";
 import blackImgBase64 from "../blackImgBase64";
 import { db } from "gongo-client-react";
+import isBlackImgBase64 from "./isBlackImgBase64";
 
 const History = typeof window === "object" && db.collection("history");
 
@@ -131,6 +132,12 @@ export default async function fetchToOutput(
       return;
     }
 
+    if (result.message.match(/error/)) {
+      setLog(["FAILED: " + result.message]);
+      console.error(result);
+      // return { $error: result };
+    }
+
     if (!result.modelOutputs) {
       // do something
       console.error("no modelOutputs");
@@ -169,6 +176,52 @@ export default async function fetchToOutput(
     const objectURL = URL.createObjectURL(blob);
     setImgSrc(objectURL);
     setLog([]);
+
+    /*
+    if (REQUIRE_REGISTRATION) {
+      // @ts-expect-error: TODO
+      const _id = db.auth.userId;
+      // TODO, _update should allow mongo modifier
+      const users = db.collection("users");
+      const user = users.findOne({ _id });
+      if (!user) throw new Error("no user");
+      if (!result.credits) throw new Error("no result.credits");
+      user.credits = result.credits;
+      db.collection("users")._update(_id, user);
+    }
+    */
+
+    if (isBlackImgBase64(imgBase64)) {
+      console.log("NSFW");
+      // result.$success._NSFW = true;
+      setNsfw(true);
+    } else {
+      setNsfw(false);
+    }
+
+    if (History /* && result?.$success */) {
+      //console.log({
+      const inserted = History.insert({
+        date: new Date(),
+        modelInputs,
+        callInputs,
+        // result: result.$success,
+        result: {
+          // _id: "63494bddfbd5a250ee242b1e"
+          // apiVersion: "local dev",
+          // created: 1665747926,
+          // credits: {free: 959.8, paid: 50},
+          // id: "UID todo",
+          // message: "success"
+          // modelOutputs: [{…}]
+          modelOutputs: [output1],
+        },
+      });
+
+      // result.historyId = inserted._id;
+      // setHistoryId(result.historyId);
+      setHistoryId(inserted._id as string);
+    }
   } catch (error) {
     console.error(error);
 
