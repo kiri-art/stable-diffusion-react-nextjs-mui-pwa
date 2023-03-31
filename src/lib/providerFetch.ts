@@ -17,6 +17,11 @@ import providers, {
   apiInfo,
 } from "../config/providers";
 
+import hooks from "./hooks";
+import "../../src/hooks/providerFetch";
+
+export type hookName = "providerFetch.server.preStart";
+
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // TODO, make this all internal to providerFetch
@@ -95,7 +100,7 @@ export class ProviderFetchRequestBase {
   async fetchStart() {
     const { url, payload } = this.prepareStart();
 
-    console.log("fetchStart", url, payload);
+    // console.log("fetchStart", url, payload);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -105,7 +110,7 @@ export class ProviderFetchRequestBase {
     });
 
     const result = await response.json();
-    console.log("fetchStart result", result);
+    // console.log("fetchStart result", result);
 
     this.callID = result.callID;
     this.finished = result.finished;
@@ -117,6 +122,10 @@ export class ProviderFetchRequestBase {
 
   async browserStart() {
     if (this.apiInfo().startViaServer) {
+      const extraInfo = await hooks.exec(
+        "providerFetch.browser.extraInfoToSend"
+      );
+
       const response = await fetch("/api/providerFetch", {
         method: "POST",
         headers: {
@@ -125,11 +134,12 @@ export class ProviderFetchRequestBase {
         body: JSON.stringify({
           type: "start",
           requestObject: this.toObject(),
+          extraInfo,
         }),
       });
 
       const result = await response.json();
-      console.log("browserStart result", result);
+      // console.log("browserStart result", result);
 
       this.callID = result.callID;
       this.modelOutputs = result.modelOutputs;
@@ -144,7 +154,7 @@ export class ProviderFetchRequestBase {
   async check() {
     const { url, payload } = this.prepareCheck();
 
-    console.log("check", url, payload);
+    // console.log("check", url, payload);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -154,7 +164,7 @@ export class ProviderFetchRequestBase {
     });
 
     const result = await response.json();
-    console.log("check result", result);
+    // console.log("check result", result);
 
     this.callID = result.callID;
     this.message = result.message;
@@ -187,7 +197,7 @@ export class ProviderFetchRequestBase {
       });
 
       const result = await response.json();
-      console.log("browserStart result", result);
+      // console.log("browserStart result", result);
 
       this.callID = result.callID;
       this.modelOutputs = result.modelOutputs;
@@ -286,7 +296,7 @@ export const ProviderFetchRequestByApi = {
 };
 
 export class ProviderFetchServerless {
-  express() {
+  express(deps?: Record<string, unknown>) {
     return async function serverless(
       req: NextApiRequest,
       res: NextApiResponse
@@ -307,11 +317,41 @@ export class ProviderFetchServerless {
       const request = ProviderFetchRequestBase.fromObject(
         req.body.requestObject
       );
-      console.log("req.body", req.body);
-      console.log("request", request);
+      const extraInfo = req.body.extraInfo;
+      // console.log("req.body", req.body);
+      // console.log("request", request);
 
       if (type === "start") {
-        await request.fetchStart();
+        const preStartResult: Record<string, unknown> = await hooks.exec(
+          "providerFetch.server.preStart",
+          {
+            request,
+            extraInfo,
+            deps,
+          }
+        );
+
+        const $response = preStartResult.$response as
+          | undefined
+          | Record<string, unknown>;
+        if ($response)
+          return res.status($response.status as number).end($response.body);
+
+        const $error = preStartResult.$error as
+          | undefined
+          | Record<string, unknown>;
+        if ($error) return res.status(200).end({ $error });
+
+        const startResult = await request.fetchStart();
+
+        await hooks.exec("providerFetch.server.postStart", {
+          request,
+          extraInfo,
+          deps,
+          preStartResult,
+          startResult,
+        });
+
         return res.status(200).end(JSON.stringify(request.toObject()));
       } else {
         return res.status(400).end("Bad Request: CHECK not implemented yet");
@@ -327,15 +367,15 @@ export default async function providerFetch(
 ) {
   const obj = { providerId, modelId, inputs };
   const request = ProviderFetchRequestBase.fromObject(obj);
-  console.log(obj);
-  console.log(request);
+  // console.log(obj);
+  // console.log(request);
 
   if (typeof window === "object") {
     await request.browserStart();
-    console.log(request);
+    // console.log(request);
 
     const result = await request.checkUntilResult();
-    console.log("providerFetch result", result);
+    // console.log("providerFetch result", result);
 
     if (!request.apiInfo().checkViaServer) {
       const callID = result.callID;
