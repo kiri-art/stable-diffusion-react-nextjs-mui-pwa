@@ -370,6 +370,10 @@ export default async function providerFetch(
   // console.log(obj);
   // console.log(request);
 
+  // TODO, dda specific... need to refactor
+  // @ts-expect-error: TODO
+  if (inputs.callInputs) inputs.callInputs.startRequestId = request.id;
+
   if (typeof window === "object") {
     await request.browserStart();
     // console.log(request);
