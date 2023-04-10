@@ -47,6 +47,7 @@ async function updateFinishedStep(
 }
 
 export interface ProviderFetchRequestObject {
+  id?: string;
   providerId: string;
   modelId: string;
   inputs: Record<string, unknown>;
@@ -70,12 +71,13 @@ export class ProviderFetchRequestBase {
   constructor(
     provider: Provider,
     model: Model,
-    inputs: Record<string, unknown>
+    inputs: Record<string, unknown>,
+    id?: string
   ) {
     this.provider = provider;
     this.model = model;
     this.inputs = inputs;
-    this.id = uuidv4();
+    this.id = id || uuidv4();
   }
 
   apiInfo() {
@@ -211,6 +213,7 @@ export class ProviderFetchRequestBase {
 
   toObject() {
     return {
+      id: this.id,
       providerId: this.provider.id,
       modelId: this.model.MODEL_ID,
       inputs: this.inputs,
@@ -222,7 +225,11 @@ export class ProviderFetchRequestBase {
     } as ProviderFetchRequestObject;
   }
 
-  static fromObject(object: ProviderFetchRequestObject) {
+  static fromObject(object: ProviderFetchRequestObject, createId = false) {
+    const id = createId ? undefined : object.id;
+    if (!(id || createId))
+      throw new Error("fromObject(obj) but `obj` has no `id` field");
+
     const provider = providers.find((p) => p.id === object.providerId);
     if (!provider) throw new Error("Invalid providerId: " + object.providerId);
 
@@ -235,7 +242,8 @@ export class ProviderFetchRequestBase {
     const providerFetchRequest = new ProviderFetchRequest(
       provider,
       model,
-      object.inputs
+      object.inputs,
+      id
     );
 
     providerFetchRequest.callID = object.callID || "";
@@ -366,7 +374,7 @@ export default async function providerFetch(
   inputs: Record<string, unknown>
 ) {
   const obj = { providerId, modelId, inputs };
-  const request = ProviderFetchRequestBase.fromObject(obj);
+  const request = ProviderFetchRequestBase.fromObject(obj, true);
   // console.log(obj);
   // console.log(request);
 
