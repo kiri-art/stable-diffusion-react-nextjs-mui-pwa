@@ -7,7 +7,7 @@ const defaults = {
   height: 512,
   strength: 0.75,
   MODEL_ID: "stabilityai/stable-diffusion-2-1-base",
-  PROVIDER_ID: 2,
+  PROVIDER_ID: "kiri",
   seed: () => Math.floor(Math.random() * MAX_SEED_VALUE),
   randomizeSeed: true,
   shareInputs: false,

@@ -1,10 +1,11 @@
-import { object, number, string, boolean, InferType } from "yup";
+import { object, string, boolean, InferType } from "yup";
 import models from "../config/models";
+import Providers from "../config/providers";
 
 const bananaCallInputsSchema = object({
   MODEL_ID: string().oneOf(Object.keys(models)),
   MODEL_URL: string(),
-  PROVIDER_ID: number().oneOf([1, 2]),
+  PROVIDER_ID: string().oneOf(Providers.map((p) => p.id)),
   // .default("CompVis/stable-diffusion-v1-4"),
   PIPELINE: string().oneOf([
     "StableDiffusionPipeline",

@@ -3,6 +3,7 @@ interface ProviderGeneral {
    * id: the unique ID over this provider
    */
   id: string;
+  label: string;
   api: "direct" | "banana" | "runpod";
   apiKey: string;
   /**
@@ -34,24 +35,36 @@ export type Provider = ProviderDirect | ProviderServerless;
 const Providers: Provider[] = [
   {
     id: "0",
+    label: "local",
     api: "direct",
     apiUrl: "http://localhost:8000/",
   },
   {
-    id: "1",
+    id: "banana",
+    label: "1",
     api: "banana",
     apiKey: process.env.BANANA_API_KEY as string, // TODO
     apiUrl: "https://api.banana.dev/",
   },
   {
-    id: "2",
+    id: "kiri",
+    label: "2",
     api: "banana",
     apiKey: process.env.KIRI_API_KEY as string, // TODO
     // apiUrl: "https://api-ams.kiri.art/",
     apiUrl: "http://localhost:5000",
   },
   {
-    id: "3",
+    id: "kiri-local",
+    label: "kiri-local",
+    api: "banana",
+    apiKey: process.env.KIRI_API_KEY as string, // TODO
+    // apiUrl: "https://api-ams.kiri.art/",
+    apiUrl: "http://localhost:5000",
+  },
+  {
+    id: "runpod",
+    label: "3",
     api: "runpod",
     apiKey: process.env.RUNPOD_API_KEY as string, // TODO
     apiUrl: "https://api.runpod.ai/v1/",

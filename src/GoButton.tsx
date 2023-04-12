@@ -34,7 +34,12 @@ export default function GoButton({
   return (
     <>
       <Grid container sx={{ my: 1 }}>
-        <Grid item xs={isDev ? 7 : 12} sm={isDev ? 8 : 12} md={isDev ? 9 : 12}>
+        <Grid
+          item
+          xs={/*isDev ? 7 : */ 12}
+          sm={/*isDev ? 8 : */ 12}
+          md={/*isDev ? 9 : */ 12}
+        >
           <Button
             variant="contained"
             fullWidth
@@ -70,6 +75,7 @@ export default function GoButton({
             </Box>
           )}
         </Grid>
+        {/* 
         {isDev && (
           <Grid item xs={5} sm={4} md={3} sx={{ pl: 1, pt: 1 }}>
             <FormControl fullWidth size="small">
@@ -88,6 +94,7 @@ export default function GoButton({
             </FormControl>
           </Grid>
         )}
+        */}
       </Grid>
     </>
   );

@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import models from "../config/models";
+import Providers from "../config/providers";
 
 import {
   Box,
@@ -38,6 +39,7 @@ import stableDiffusionInputsSchema from "../schemas/stableDiffusionInputs";
 import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
 import useOver18 from "../lib/useOver18";
+import { isDev } from "../lib/client-env";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -888,6 +890,7 @@ function ProviderSelect({
     () => (
       <Grid item xs={6} sm={3} md={2} lg={1}>
         Provider
+        {/*
         <span
           style={{
             position: "relative",
@@ -901,7 +904,7 @@ function ProviderSelect({
           }}
         >
           NEW
-        </span>{" "}
+        </span>*/}{" "}
         <ToggleButtonGroup
           value={value}
           exclusive
@@ -909,12 +912,15 @@ function ProviderSelect({
           aria-label="provider"
           size="small"
         >
-          <ToggleButton value={1} aria-label="1">
-            1
-          </ToggleButton>
-          <ToggleButton value={2} aria-label="2">
-            2
-          </ToggleButton>
+          {Providers.map((provider) => (
+            <ToggleButton
+              key={provider.id}
+              value={provider.id}
+              aria-label={provider.id}
+            >
+              {provider.label}
+            </ToggleButton>
+          ))}
         </ToggleButtonGroup>{" "}
         <Trans>Speed, stability, cost</Trans>{" "}
         <Tooltip
