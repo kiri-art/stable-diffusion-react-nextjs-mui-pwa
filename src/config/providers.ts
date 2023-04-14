@@ -75,17 +75,17 @@ export default Providers;
 
 export const apiInfo = {
   direct: {
-    serverless: false,
+    oneshot: true,
     startViaServer: false,
     checkViaServer: false,
   },
   banana: {
-    serverless: true,
+    oneshot: false,
     startViaServer: true,
     checkViaServer: false,
   },
   runpod: {
-    serverless: true,
+    oneshot: false,
     startViaServer: true,
     checkViaServer: true,
   },

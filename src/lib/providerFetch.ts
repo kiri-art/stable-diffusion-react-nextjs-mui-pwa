@@ -99,6 +99,20 @@ export class ProviderFetchRequestBase {
     throw new Error("prepareCheck() was called without being overriden");
   }
 
+  async fetchSingle() {
+    const { url, payload } = this.prepareStart();
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    return await response.json();
+  }
+
   async fetchStart() {
     const { url, payload } = this.prepareStart();
 
@@ -383,28 +397,55 @@ export default async function providerFetch(
   if (inputs.callInputs) inputs.callInputs.startRequestId = request.id;
 
   if (typeof window === "object") {
-    await request.browserStart();
-    // console.log(request);
-
-    const result = await request.checkUntilResult();
-    // console.log("providerFetch result", result);
-
-    if (!request.apiInfo().checkViaServer) {
-      const callID = result.callID;
-      const now = Date.now(); // result.created * 1000
-      if (result.modelOutputs?.length) {
-        updateFinishedStep(callID, now, { $success: true });
-      } else {
-        updateFinishedStep(callID, now, {
-          $error: {
-            message: result.message,
-            modelOutputs: result.modelOutputs,
-          },
-        });
+    if (request.apiInfo().oneshot) {
+      let result;
+      try {
+        result = await request.fetchSingle();
+      } catch (error) {
+        if (error instanceof Error) {
+          return {
+            message: "error",
+            error: {
+              name: error.name,
+              message: error.message,
+              stack: error.stack,
+            },
+          };
+        } else {
+          return {
+            message: "error",
+            error: JSON.stringify(error),
+          };
+        }
       }
-    }
+      return {
+        message: "success",
+        modelOutputs: [result],
+      };
+    } else {
+      await request.browserStart();
+      // console.log(request);
 
-    return result;
+      const result = await request.checkUntilResult();
+      // console.log("providerFetch result", result);
+
+      if (!request.apiInfo().checkViaServer) {
+        const callID = result.callID;
+        const now = Date.now(); // result.created * 1000
+        if (result.modelOutputs?.length) {
+          updateFinishedStep(callID, now, { $success: true });
+        } else {
+          updateFinishedStep(callID, now, {
+            $error: {
+              message: result.message,
+              modelOutputs: result.modelOutputs,
+            },
+          });
+        }
+      }
+
+      return result;
+    }
   } else {
     // untested
     // const start = await request.fetchStart();
