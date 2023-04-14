@@ -19,10 +19,72 @@ import providers, {
 
 import hooks from "./hooks";
 import "../../src/hooks/providerFetch";
+import { BananaCallInputs } from "../schemas";
 
 export type hookName = "providerFetch.server.preStart";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function oldBananaKeys(request: ProviderFetchRequestBase) {
+  const callInputs = request.inputs?.callInputs as BananaCallInputs;
+  if (!callInputs) return;
+  if (request.provider.id !== "banana") return;
+
+  console.log("oldBananaKeys", callInputs);
+  let envName = "BANANA_MODEL_KEY_SD";
+  switch (callInputs.MODEL_ID) {
+    case "stabilityai/stable-diffusion-2-1-base":
+      envName += "_v2_1_512";
+      break;
+    case "stabilityai/stable-diffusion-2-1":
+      envName += "_v2_1_768";
+      break;
+    case "stabilityai/stable-diffusion-2-base":
+      envName += "_v2_0_512";
+      break;
+    case "stabilityai/stable-diffusion-2":
+      envName += "_v2_0_768";
+      break;
+    case "CompVis/stable-diffusion-v1-4":
+      envName += "_v1_4";
+      break;
+    case "runwayml/stable-diffusion-v1-5":
+      envName += "_v1_5";
+      break;
+    case "runwayml/stable-diffusion-inpainting":
+      envName += "_INPAINT";
+      break;
+    case "hakurei/waifu-diffusion":
+      envName += "_WAIFU";
+      break;
+    case "hakurei/waifu-diffusion-v1-3":
+      envName += "_WAIFU_v1_3";
+      // @ts-expect-error: ok
+      callInputs.CHECKPOINT_URL =
+        "https://huggingface.co/hakurei/waifu-diffusion-v1-3/resolve/main/wd-v1-3-float16.ckpt";
+      break;
+    case "hakurei/waifu-diffusion-v1-3-full":
+      envName += "_WAIFU_v1_3_full";
+      callInputs.MODEL_ID = "hakurei/waifu-diffusion-v1-3";
+      break;
+    case "wd-1-4-anime_e1":
+      envName += "_WAIFU_v1_3_e1";
+      break;
+    case "Linaqruf/anything-v3.0":
+      envName += "_ANYTHING_v3_0";
+      break;
+    case "rinna/japanese-stable-diffusion":
+      envName += "_JP";
+      break;
+    default:
+      return;
+  }
+  const value = process.env[envName];
+  if (value) {
+    console.warn("WARNING: Still using old banana model keys");
+    return value;
+  }
+}
 
 // TODO, make this all internal to providerFetch
 async function updateFinishedStep(
@@ -116,7 +178,7 @@ export class ProviderFetchRequestBase {
   async fetchStart() {
     const { url, payload } = this.prepareStart();
 
-    // console.log("fetchStart", url, payload);
+    console.log("fetchStart", url, payload);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -126,7 +188,7 @@ export class ProviderFetchRequestBase {
     });
 
     const result = await response.json();
-    // console.log("fetchStart result", result);
+    console.log("fetchStart result", result);
 
     this.callID = result.callID;
     this.finished = result.finished;
@@ -184,10 +246,11 @@ export class ProviderFetchRequestBase {
 
     this.callID = result.callID;
     this.message = result.message;
-    this.finished = result.finished;
+    if (result.finished !== undefined) this.finished = result.finished;
+    else this.finished = result.message !== "";
     this.modelOutputs = result.modelOutputs;
 
-    return result;
+    if (this.message) return result;
   }
 
   async checkUntilResult() {
@@ -283,6 +346,7 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
         "BANANA_MODEL_KEY_" +
           this.model.MODEL_ID.toUpperCase().replace(/\//, "_")
       ] ||
+      oldBananaKeys(this) ||
       "dda";
 
     const payload = {
@@ -303,7 +367,8 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
     const payload = {
       id: uuidv4(),
       created: Math.floor(Date.now() / 1000),
-      longPoll: false, // <-- main reason we can't use banana-node-sdk
+      // longPoll: false, // <-- main reason we can't use banana-node-sdk
+      longPoll: true,
       callID: this.callID,
     };
 
@@ -423,7 +488,12 @@ export default async function providerFetch(
         modelOutputs: [result],
       };
     } else {
-      await request.browserStart();
+      const startResult = await request.browserStart();
+      if (!startResult.callID || startResult.message) {
+        return {
+          message: startResult.message,
+        };
+      }
       // console.log(request);
 
       const result = await request.checkUntilResult();

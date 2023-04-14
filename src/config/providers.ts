@@ -44,7 +44,7 @@ const Providers: Provider[] = [
     label: "1",
     api: "banana",
     apiKey: process.env.BANANA_API_KEY as string, // TODO
-    apiUrl: "https://api.banana.dev/",
+    apiUrl: "https://api.banana.dev",
   },
   {
     id: "kiri",
