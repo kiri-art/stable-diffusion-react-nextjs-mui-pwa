@@ -76,15 +76,18 @@ export const apiInfo = {
     oneshot: true,
     startViaServer: false,
     checkViaServer: false,
+    streamable: true,
   },
   banana: {
     oneshot: false,
     startViaServer: true,
     checkViaServer: false,
+    streamable: false,
   },
   runpod: {
     oneshot: false,
     startViaServer: true,
     checkViaServer: true,
+    streamable: false,
   },
 };

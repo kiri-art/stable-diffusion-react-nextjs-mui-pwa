@@ -119,10 +119,32 @@ export default async function fetchToOutput(
 
     setLog([]);
 
-    const result = await providerFetch(PROVIDER_ID, MODEL_ID, {
-      modelInputs,
-      callInputs,
-    });
+    const result = await providerFetch(
+      PROVIDER_ID,
+      MODEL_ID,
+      {
+        modelInputs,
+        callInputs,
+      },
+      function (data) {
+        // console.log("data", data);
+        if (!(data.$error || data.$timings)) {
+          // console.log("status");
+          if (data.status === "start")
+            setLog(["Starting " + data.type + "..."]);
+          else if (data.progress) {
+            setLog([
+              "Starting " +
+                data.type +
+                "... " +
+                (data?.progress &&
+                  Math.round((data.progress as number) * 100)) +
+                "%",
+            ]);
+          }
+        }
+      }
+    );
 
     console.log(result);
 

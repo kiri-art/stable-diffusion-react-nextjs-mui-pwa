@@ -147,6 +147,13 @@ export class ProviderFetchRequestBase {
   }
 
   prepareStart() {
+    if (this.apiInfo().streamable) {
+      if (this.inputs.callInputs) {
+        // @ts-expect-error: ok
+        this.inputs.callInputs.streamEvents = true;
+      }
+    }
+
     return {
       url: this.provider.apiUrl || "NO_PROVIDER_URL_DEFINED",
       payload: this.inputs,
@@ -161,7 +168,7 @@ export class ProviderFetchRequestBase {
     throw new Error("prepareCheck() was called without being overriden");
   }
 
-  async fetchSingle() {
+  async fetchSingle(callback: (result: Record<string, unknown>) => void) {
     const { url, payload } = this.prepareStart();
 
     const response = await fetch(url, {
@@ -172,7 +179,46 @@ export class ProviderFetchRequestBase {
       body: JSON.stringify(payload),
     });
 
-    return await response.json();
+    if (response.headers.get("content-type") === "application/x-ndjson") {
+      return await new Promise((resolve, reject) => {
+        if (!response.body) return reject("no response.body");
+        const textDecoder = new TextDecoder();
+        const reader = response.body.getReader();
+        let lastResult = null;
+        let buffer = "";
+        reader.read().then(function processValue({ done, value }) {
+          if (done) return resolve(lastResult);
+
+          const str = textDecoder.decode(value);
+          const parts = str.split("\n");
+          for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            if (i === parts.length - 1 && part === "") {
+              continue;
+            } else if (i === parts.length - 1 && parts[i + 1] !== "") {
+              buffer += part;
+              continue;
+            }
+            const fullString = buffer + part;
+            buffer = "";
+            let result;
+            try {
+              result = JSON.parse(fullString);
+            } catch (error) {
+              reject(error);
+              return console.warn(error);
+            }
+            lastResult = result;
+            // console.log("result", result);
+            if (callback) callback(result);
+          }
+
+          return reader.read().then(processValue);
+        });
+      });
+    } else {
+      return await response.json();
+    }
   }
 
   async fetchStart() {
@@ -450,7 +496,8 @@ export class ProviderFetchServerless {
 export default async function providerFetch(
   providerId: string,
   modelId: string,
-  inputs: Record<string, unknown>
+  inputs: Record<string, unknown>,
+  callback?: (result: Record<string, unknown>) => void
 ) {
   const obj = { providerId, modelId, inputs };
   const request = ProviderFetchRequestBase.fromObject(obj, true);
@@ -465,7 +512,7 @@ export default async function providerFetch(
     if (request.apiInfo().oneshot) {
       let result;
       try {
-        result = await request.fetchSingle();
+        result = await request.fetchSingle(callback);
       } catch (error) {
         if (error instanceof Error) {
           return {
