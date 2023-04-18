@@ -2,6 +2,8 @@ import React from "react";
 import { toast } from "react-toastify";
 import { t, Trans } from "@lingui/macro";
 import { db } from "gongo-client-react";
+import sanitizeFilename from "sanitize-filename";
+import { Line } from "rc-progress";
 
 import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import {
@@ -12,9 +14,9 @@ import {
   Share,
   Star,
 } from "@mui/icons-material";
+
 import sendQueue from "./lib/sendQueue";
 import { destar } from "./Starred";
-import sanitizeFilename from "sanitize-filename";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -197,6 +199,13 @@ export default function OutputImage({
     db.collection("history").update(item._id, { $set: { starId: result._id } });
   }
 
+  // Super hacky :)  Just for now, proof-of-concept.
+  let progress = null;
+  if (log.length === 1) {
+    const match = log[0].match(/^Starting inference... (\d+)%$/);
+    if (match) progress = parseFloat(match[1]);
+  }
+
   return (
     <>
       <Box
@@ -213,6 +222,15 @@ export default function OutputImage({
           border: "1px solid black",
         }}
       >
+        {progress && (
+          <Line
+            percent={progress}
+            strokeWidth={1}
+            strokeColor="#cfc"
+            strokeLinecap="butt"
+            style={{ position: "absolute" }}
+          />
+        )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="model output"
