@@ -1,5 +1,5 @@
 import React from "react";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 import { t, Trans } from "@lingui/macro";
 
@@ -439,17 +439,17 @@ export default function Inpainting() {
     const modelInputs = {
       ...modelStateValues(inputs),
       prompt: inputs.prompt.value,
-      init_image: await blobToBase64(init_image_blob),
+      image: await blobToBase64(init_image_blob),
       mask_image: await blobToBase64(mask_image_blob),
       strength: inputs.strength.value,
       seed: randomizeSeedIfChecked(inputs),
     };
 
     const callInputs = {
-      // K-LMS scheduler for in-paint #341 (not available in 0.3.0)
-      // https://github.com/huggingface/diffusers/issues/341
-      PIPELINE: "StableDiffusionInpaintPipeline",
-      SCHEDULER: "DDIM",
+      PIPELINE: "lpw_stable_diffusion",
+      custom_pipeline_method: "inpaint",
+      // @ts-expect-error: TODO
+      SCHEDULER: modelInputs.sampler,
     };
 
     // return;
@@ -462,10 +462,6 @@ export default function Inpainting() {
       setImgSrc,
       setNsfw,
       setHistoryId,
-      dest,
-      // @ts-expect-error: TODO, db auth type
-      auth: db.auth.authInfoToSend(),
-      MODEL_NAME: "INPAINT",
     });
 
     setRequestEndTime(Date.now());

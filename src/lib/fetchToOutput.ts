@@ -32,17 +32,11 @@ export default async function fetchToOutput(
     setImgSrc,
     setNsfw,
     setHistoryId,
-    dest,
-    auth,
-    MODEL_NAME,
   }: {
     setLog: (log: string[]) => void;
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     setNsfw: React.Dispatch<React.SetStateAction<boolean>>;
     setHistoryId: React.Dispatch<React.SetStateAction<string>>;
-    dest: string; // "exec" | "banana-local" | "banana-remote";
-    auth?: Record<string, unknown>;
-    MODEL_NAME?: string;
   }
 ) {
   try {

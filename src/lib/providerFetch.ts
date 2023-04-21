@@ -168,7 +168,7 @@ export class ProviderFetchRequestBase {
     throw new Error("prepareCheck() was called without being overriden");
   }
 
-  async fetchSingle(callback: (result: Record<string, unknown>) => void) {
+  async fetchSingle(callback?: (result: Record<string, unknown>) => void) {
     const { url, payload } = this.prepareStart();
 
     const response = await fetch(url, {
@@ -184,10 +184,13 @@ export class ProviderFetchRequestBase {
         if (!response.body) return reject("no response.body");
         const textDecoder = new TextDecoder();
         const reader = response.body.getReader();
-        let lastResult = null;
+        let lastResult: Record<string, unknown> | null = null;
         let buffer = "";
-        reader.read().then(function processValue({ done, value }) {
-          if (done) return resolve(lastResult);
+        reader.read().then(function processValue({ done, value }): void {
+          if (done) {
+            resolve(lastResult);
+            return;
+          }
 
           const str = textDecoder.decode(value);
           const parts = str.split("\n");
@@ -213,7 +216,8 @@ export class ProviderFetchRequestBase {
             if (callback) callback(result);
           }
 
-          return reader.read().then(processValue);
+          reader.read().then(processValue);
+          return;
         });
       });
     } else {

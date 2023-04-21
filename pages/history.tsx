@@ -77,15 +77,15 @@ export async function editItem(
     ],
   });
 
-  if (params.has("init_image")) {
-    const src = "data:image/png;base64," + params.get("init_image");
+  if (params.has("image")) {
+    const src = "data:image/png;base64," + params.get("image");
     const blob = await fetch(src).then((res) => res.blob());
     sendQueue.add({
       title: "init_image",
       text: "init_image",
       files: [new File([blob], "init_image.png")],
     });
-    params.delete("init_image");
+    params.delete("image");
   }
 
   if (params.has("mask_image")) {

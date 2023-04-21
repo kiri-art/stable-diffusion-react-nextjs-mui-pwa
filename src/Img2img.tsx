@@ -1,5 +1,5 @@
 import React from "react";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import { IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
@@ -601,14 +601,16 @@ export default function Img2img() {
     const modelInputs = {
       ...modelStateValues(inputs),
       // prompt: inputs.prompt.value || randomPrompt,
-      init_image: await blobToBase64(init_image_blob),
+      image: await blobToBase64(init_image_blob),
       strength: inputs.strength.value,
       seed: randomizeSeedIfChecked(inputs),
     };
 
     const callInputs = {
-      PIPELINE: "StableDiffusionImg2ImgPipeline",
-      SCHEDULER: "LMS",
+      PIPELINE: "lpw_stable_diffusion",
+      custom_pipeline_method: "img2img",
+      // @ts-expect-error: TODO
+      SCHEDULER: modelInputs.sampler,
     };
 
     // return console.log(data);
@@ -621,10 +623,6 @@ export default function Img2img() {
       setImgSrc,
       setNsfw,
       setHistoryId,
-      dest,
-      // @ts-expect-error: TODO, db auth type
-      auth: db.auth.authInfoToSend(),
-      MODEL_NAME: "IMG2IMG",
     });
 
     setRequestEndTime(Date.now());

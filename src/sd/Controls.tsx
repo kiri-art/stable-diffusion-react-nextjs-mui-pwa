@@ -976,9 +976,11 @@ export default function SDControls({
     which: string
   ) {
     if (width > height) {
-      if (height > 768) height = 768;
+      if ((typeof height === "string" ? parseInt(height) : height) > 768)
+        height = 768;
     } else {
-      if (width > 768) width = 768;
+      if ((typeof width === "string" ? parseInt(width) : width) > 768)
+        width = 768;
     }
 
     if (width !== inputs.width.value) inputs.width.setValue(width);

@@ -3,8 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type Star from "../../src/schemas/star";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import {
-  bananaCallInputsSchema,
-  stableDiffusionInputsSchema,
+  ddaCallInputsSchema,
+  ddaModelInputsSchema,
   // bananaRequestSchema,
 } from "../../src/schemas";
 import { createFileFromBuffer } from "./file2";
@@ -31,10 +31,8 @@ export default async function starItem(
 
   if (!userId) return res.status(401).end("Unauthorized");
 
-  const modelInputs = await stableDiffusionInputsSchema.validate(
-    item.modelInputs
-  );
-  const callInputs = await bananaCallInputsSchema.validate(item.callInputs);
+  const modelInputs = await ddaModelInputsSchema.validate(item.modelInputs);
+  const callInputs = await ddaCallInputsSchema.validate(item.callInputs);
   const result = item.result;
 
   const simulatedModelState = {
@@ -50,13 +48,13 @@ export default async function starItem(
 
   const images = {
     output: BufferFromBase64(result?.modelOutputs?.[0]?.image_base64),
-    init: BufferFromBase64(modelInputs?.init_image),
+    init: BufferFromBase64(modelInputs?.image),
     mask: BufferFromBase64(modelInputs?.mask_image),
   };
   if (!images.output)
     return res.status(400).end("Bad Request - no output file");
   delete result?.modelOutputs?.[0]?.image_base64;
-  delete modelInputs?.init_image;
+  delete modelInputs?.image;
   delete modelInputs?.mask_image;
 
   const files: Star["files"] = {

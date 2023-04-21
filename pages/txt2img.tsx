@@ -1,5 +1,5 @@
 import { t } from "@lingui/macro";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
@@ -82,15 +82,6 @@ export default function Txt2Img() {
     const modelInputs = modelStateValues(inputs);
     const seed = randomizeSeedIfChecked(inputs);
 
-    const PIPELINE = "StableDiffusionPipeline";
-    const SCHEDULER = modelInputs.sampler; // "LMS";
-    /*
-    if (modelInputs.MODEL_ID === "hakurei/waifu-diffusion") {
-      SCHEDULER = "DDIM";
-    }
-    */
-
-    // await txt2img(
     await fetchToOutput(
       "dda",
       {
@@ -99,18 +90,15 @@ export default function Txt2Img() {
         seed,
       },
       {
-        PIPELINE,
-        SCHEDULER,
+        PIPELINE: "lpw_stable_diffusion",
+        custom_pipeline_method: "text2img",
+        SCHEDULER: modelInputs.sampler,
       },
       {
         setLog,
         setImgSrc,
         setNsfw,
         setHistoryId,
-        dest,
-        // @ts-expect-error: TODO, db auth type
-        auth: db.auth.authInfoToSend(),
-        MODEL_NAME: "TXT2IMG",
       }
     );
 
