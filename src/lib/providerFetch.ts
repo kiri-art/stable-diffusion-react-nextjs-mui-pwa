@@ -18,28 +18,15 @@ import providers, {
 
 import hooks from "./hooks";
 import "../../src/hooks/providerFetch";
-import { BananaCallInputs } from "../schemas";
-
-// import models, { Model } from "../config/models";
-interface Model {
-  id: string;
-}
-
-const models: Record<string, Model> = {
-  dda: {
-    id: "dda",
-  },
-  upsample: {
-    id: "upsample",
-  },
-};
+import { ddaCallInputs } from "../schemas";
+import { Model, getModel } from "./models";
 
 export type hookName = "providerFetch.server.preStart";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function oldBananaKeys(request: ProviderFetchRequestBase) {
-  const callInputs = request.inputs?.callInputs as BananaCallInputs;
+  const callInputs = request.inputs?.callInputs as ddaCallInputs;
   if (!callInputs) return;
   if (request.provider.id !== "banana") return;
 
@@ -369,8 +356,7 @@ export class ProviderFetchRequestBase {
     const provider = providers.find((p) => p.id === object.providerId);
     if (!provider) throw new Error("Invalid providerId: " + object.providerId);
 
-    const model = models[object.modelId];
-    if (!model) throw new Error("Invalid model: " + object.modelId);
+    const model = getModel(object.modelId);
 
     const ProviderFetchRequest = ProviderFetchRequestByApi[provider.api];
     if (!ProviderFetchRequest) throw new Error("Invalid API: " + provider.api);

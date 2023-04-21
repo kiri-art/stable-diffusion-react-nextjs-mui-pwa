@@ -1,7 +1,7 @@
 import { object, string, number, InferType } from "yup";
-import bananaCallInputsSchema from "./bananaCallInputs";
+import ddaCallInputsSchema from "./ddaCallInputs";
 
-const stableDiffusionInputsSchema = object({
+const ddaModelInputsSchema = object({
   prompt: string(),
   negative_prompt: string(),
   // n_iter: number().default(1),
@@ -33,13 +33,13 @@ const stableDiffusionInputsSchema = object({
 
   // temporary, until we adjust Controls to have callInputs too.
   // note, in the adapter, we move this to callInputs
-  MODEL_ID: bananaCallInputsSchema.fields.MODEL_ID,
-  PROVIDER_ID: bananaCallInputsSchema.fields.PROVIDER_ID,
-  sampler: bananaCallInputsSchema.fields.SCHEDULER,
+  MODEL_ID: ddaCallInputsSchema.fields.MODEL_ID,
+  PROVIDER_ID: ddaCallInputsSchema.fields.PROVIDER_ID,
+  sampler: ddaCallInputsSchema.fields.SCHEDULER,
 });
 
-type StableDiffusionInputs = InferType<typeof stableDiffusionInputsSchema>;
+type ddaModelInputs = InferType<typeof ddaModelInputsSchema>;
 
-export type { StableDiffusionInputs };
-export { stableDiffusionInputsSchema };
-export default stableDiffusionInputsSchema;
+export type { ddaModelInputs };
+export { ddaModelInputsSchema };
+export default ddaModelInputsSchema;

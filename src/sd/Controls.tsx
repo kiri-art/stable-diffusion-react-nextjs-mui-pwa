@@ -35,11 +35,10 @@ import InputSlider from "../InputSlider";
 import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 import GoButton from "../GoButton";
-import stableDiffusionInputsSchema from "../schemas/stableDiffusionInputs";
+import ddaModelInputsSchema from "../schemas/ddaModelInputs";
 import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
 import useOver18 from "../lib/useOver18";
-import { isDev } from "../lib/client-env";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -334,7 +333,7 @@ function Steps_Grid_Slider({
           setValue={setValue}
           defaultValue={defaultValue}
           // @ts-expect-error: TODO
-          schema={stableDiffusionInputsSchema.fields.num_inference_steps}
+          schema={ddaModelInputsSchema.fields.num_inference_steps}
           icon={<EmojiIcon>👣</EmojiIcon>}
           tooltip={
             <Box>

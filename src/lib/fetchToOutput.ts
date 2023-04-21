@@ -7,14 +7,9 @@
  */
 
 import providerFetch from "./providerFetch";
-import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
-import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
-import bananaCallInputsSchema, {
-  BananaCallInputs,
-} from "../schemas/bananaCallInputs";
-import blackImgBase64 from "../blackImgBase64";
 import { db } from "gongo-client-react";
 import isBlackImgBase64 from "./isBlackImgBase64";
+import { getModel } from "./models";
 
 const History = typeof window === "object" && db.collection("history");
 
@@ -52,32 +47,17 @@ export default async function fetchToOutput(
 ) {
   try {
     console.log({ model_inputs, call_inputs });
-    const modelInputs = stableDiffusionInputsSchema.cast(model_inputs);
-    const callInputs = bananaCallInputsSchema.cast(call_inputs);
 
-    // TODO need to fix this in Controlers
-    // @ts-expect-error: doesn't exist, need to fix as above
-    delete modelInputs.randomizeSeed;
-    // @ts-expect-error: doesn't exist, need to fix as above
-    delete modelInputs.shareInputs;
+    const model = getModel(MODEL_ID);
+    const modelInputs = model.modelInputsSchema
+      ? model.modelInputsSchema.cast(model_inputs)
+      : model_inputs;
+    const callInputs = model.callInputsSchema
+      ? model.callInputsSchema.cast(call_inputs)
+      : call_inputs;
 
-    // @ts-expect-error: doesn't exist, need to fix as above
-    callInputs.safety_checker = modelInputs.safety_checker;
-    // @ts-expect-error: doesn't exist, need to fix as above
-    delete modelInputs.safety_checker;
-
-    if (typeof modelInputs.MODEL_ID === "string") {
-      callInputs.MODEL_ID = modelInputs.MODEL_ID;
-      delete modelInputs.MODEL_ID;
-    }
-
-    if (modelInputs.PROVIDER_ID) {
-      callInputs.PROVIDER_ID = modelInputs.PROVIDER_ID;
-      delete modelInputs.PROVIDER_ID;
-    }
-
-    delete modelInputs.sampler;
-
+    // @ts-expect-error: TODO
+    if (model.prepareInputs) model.prepareInputs(callInputs, modelInputs);
     /*
   const modelInputs = { ...model_inputs };
   const callInputs = { ...call_inputs };

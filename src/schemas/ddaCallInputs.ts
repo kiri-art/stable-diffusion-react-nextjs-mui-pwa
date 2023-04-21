@@ -2,7 +2,7 @@ import { object, string, boolean, InferType } from "yup";
 import models from "../config/models";
 import Providers from "../config/providers";
 
-const bananaCallInputsSchema = object({
+const ddaCallInputsSchema = object({
   MODEL_ID: string().oneOf(Object.keys(models)),
   MODEL_URL: string(),
   PROVIDER_ID: string().oneOf(Providers.map((p) => p.id)),
@@ -33,8 +33,8 @@ const bananaCallInputsSchema = object({
   safety_checker: boolean(),
 });
 
-type BananaCallInputs = InferType<typeof bananaCallInputsSchema>;
+type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;
 
-export type { BananaCallInputs };
-export { bananaCallInputsSchema };
-export default bananaCallInputsSchema;
+export type { ddaCallInputs };
+export { ddaCallInputsSchema };
+export default ddaCallInputsSchema;
