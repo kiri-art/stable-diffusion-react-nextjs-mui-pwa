@@ -1,6 +1,6 @@
 import { object, date, string, InferType, boolean, number, mixed } from "yup";
-import { bananaCallInputsSchema } from "./bananaCallInputs";
-import { stableDiffusionInputsSchema } from "./stableDiffusionInputs";
+import { ddaCallInputsSchema } from "./ddaCallInputs";
+import { ddaModelInputsSchema } from "./ddaModelInputs";
 import { upsampleModelInputsSchema } from "./upsampleModelInputs";
 import { upsampleCallInputsSchema } from "./upsampleCallInputs";
 
@@ -20,11 +20,8 @@ const bananaRequestSchema = object({
   startRequestId: string(),
   callID: string(),
   finished: boolean(),
-  modelInputs: mixed().oneOf([
-    stableDiffusionInputsSchema,
-    upsampleModelInputsSchema,
-  ]),
-  callInputs: mixed().oneOf([bananaCallInputsSchema, upsampleCallInputsSchema]),
+  modelInputs: mixed().oneOf([ddaModelInputsSchema, upsampleModelInputsSchema]),
+  callInputs: mixed().oneOf([ddaCallInputsSchema, upsampleCallInputsSchema]),
   steps: object({
     started: stepSchema.optional(),
     inference: stepSchema.optional(),

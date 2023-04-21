@@ -15,6 +15,7 @@ const ddaCallInputsSchema = object({
     "JapaneseStableDiffusionPipeline",
     "JapaneseStableDiffusionImg2ImgPipeline",
     "JapaneseStableDiffusionInpaintPipeline",
+    "lpw_stable_diffusion",
   ]),
   // .default("StableDiffusionPipeline"),
   custom_pipeline_method: string(),

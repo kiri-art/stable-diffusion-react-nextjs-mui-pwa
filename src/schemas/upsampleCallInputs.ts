@@ -1,4 +1,5 @@
-import { object, number, string, InferType } from "yup";
+import { object, string, InferType } from "yup";
+import Providers from "../config/providers";
 
 const upsampleCallInputsSchema = object({
   MODEL_ID: string().oneOf([
@@ -7,7 +8,7 @@ const upsampleCallInputsSchema = object({
     "realesr-general-x4v3",
   ]),
   // .default("RealESRGAN_x4plus),
-  PROVIDER_ID: number().oneOf([1, 2]),
+  PROVIDER_ID: string().oneOf(Providers.map((p) => p.id)),
   startRequestId: string(),
 });
 
