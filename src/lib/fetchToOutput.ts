@@ -29,6 +29,7 @@ interface ErrorJSON {
 // as a first step, let's have it work with only small changes needed to
 // existing pages.  So use our existing "txt2img" API.
 export default async function fetchToOutput(
+  MODEL_ID: string,
   model_inputs: Record<string, unknown>,
   call_inputs: Record<string, unknown>,
   {
@@ -115,7 +116,7 @@ export default async function fetchToOutput(
     }
 
     const PROVIDER_ID = callInputs.PROVIDER_ID.toString();
-    const MODEL_ID = callInputs.MODEL_ID as string;
+    // const MODEL_ID = "dda"; // TODO callInputs.MODEL_ID as string;
 
     setLog([]);
 

@@ -61,6 +61,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   let CREDIT_COST = 1;
   if (request.inputs.callInputs.PROVIDER_ID === 2) CREDIT_COST = 0.25;
+  if (request.model.id === "upsample") CREDIT_COST = 0.2;
 
   if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
     return res.status(403).send("Out of credits");

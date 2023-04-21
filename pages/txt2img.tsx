@@ -9,7 +9,6 @@ import { Container } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";
 import React from "react";
-import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import useRandomPrompt from "../src/sd/useRandomPrompt";
@@ -93,6 +92,7 @@ export default function Txt2Img() {
 
     // await txt2img(
     await fetchToOutput(
+      "dda",
       {
         ...modelInputs,
         prompt: inputs.prompt.value || randomPrompt,

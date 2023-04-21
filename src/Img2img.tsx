@@ -7,7 +7,6 @@ import { Clear, Redo, Undo, Circle, FormatPaint } from "@mui/icons-material";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
-import txt2img from "../src/adapters/txt2img";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
@@ -17,6 +16,7 @@ import FloodFill from "q-floodfill";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import blobToBase64 from "./lib/blobToBase64";
 import sendQueue, { outputImageQueue } from "./lib/sendQueue";
+import fetchToOutput from "./lib/fetchToOutput";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
@@ -616,7 +616,7 @@ export default function Img2img() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    await txt2img(modelInputs, callInputs, {
+    await fetchToOutput("dda", modelInputs, callInputs, {
       setLog,
       setImgSrc,
       setNsfw,

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { t, Trans } from "@lingui/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
-import bananaFetch from "../src/bananaFetch";
+// import bananaFetch from "../src/bananaFetch";
 import {
   upsampleCallInputsSchema,
   upsampleModelInputsSchema,
@@ -32,6 +32,7 @@ import OutputImage from "../src/OutputImage";
 import GoButton from "../src/GoButton";
 import blobToBase64 from "../src/lib/blobToBase64";
 import sendQueue from "../src/lib/sendQueue";
+import fetchToOutput from "../src/lib/fetchToOutput";
 
 // Also in banana-upsaple.ts; TODO
 const CREDIT_COST = 0.2;
@@ -273,20 +274,28 @@ export default function Upsample() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    const result = await bananaFetch(
-      "/api/banana-upsample",
+    await fetchToOutput(
+      "upsample",
       modelInputs,
-      callInputs,
+      {
+        PROVIDER_ID: "banana",
+        ...callInputs,
+      },
       {
         setLog,
         setImgSrc,
         dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
+        MODEL_NAME: "UPSAMPLE",
+        setNsfw: () => {
+          /* */
+        },
+        setHistoryId: () => {
+          /* */
+        },
       }
     );
-
-    console.log(result);
 
     setRequestEndTime(Date.now());
   }

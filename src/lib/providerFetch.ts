@@ -10,7 +10,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import models, { Model } from "../config/models";
 import providers, {
   Provider,
   ProviderServerless,
@@ -20,6 +19,20 @@ import providers, {
 import hooks from "./hooks";
 import "../../src/hooks/providerFetch";
 import { BananaCallInputs } from "../schemas";
+
+// import models, { Model } from "../config/models";
+interface Model {
+  id: string;
+}
+
+const models: Record<string, Model> = {
+  dda: {
+    id: "dda",
+  },
+  upsample: {
+    id: "upsample",
+  },
+};
 
 export type hookName = "providerFetch.server.preStart";
 
@@ -278,7 +291,7 @@ export class ProviderFetchRequestBase {
   async check() {
     const { url, payload } = this.prepareCheck();
 
-    // console.log("check", url, payload);
+    console.log("check", url, payload);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -288,12 +301,12 @@ export class ProviderFetchRequestBase {
     });
 
     const result = await response.json();
-    // console.log("check result", result);
+    console.log("check result", result);
 
-    this.callID = result.callID;
+    // this.callID = result.callID;  don't reset
     this.message = result.message;
     if (result.finished !== undefined) this.finished = result.finished;
-    else this.finished = result.message !== "";
+    else this.finished = result.message !== "" && result.message !== "running";
     this.modelOutputs = result.modelOutputs;
 
     if (this.message) return result;
@@ -338,7 +351,7 @@ export class ProviderFetchRequestBase {
     return {
       id: this.id,
       providerId: this.provider.id,
-      modelId: this.model.MODEL_ID,
+      modelId: this.model.id,
       inputs: this.inputs,
 
       callID: this.callID,
@@ -357,7 +370,7 @@ export class ProviderFetchRequestBase {
     if (!provider) throw new Error("Invalid providerId: " + object.providerId);
 
     const model = models[object.modelId];
-    if (!provider) throw new Error("Invalid model: " + object.modelId);
+    if (!model) throw new Error("Invalid model: " + object.modelId);
 
     const ProviderFetchRequest = ProviderFetchRequestByApi[provider.api];
     if (!ProviderFetchRequest) throw new Error("Invalid API: " + provider.api);
@@ -386,14 +399,17 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
     const apiKey = provider.apiKey || process.env["BANANA_API_KEY"];
     if (!apiKey) throw new Error("BANANA_API_KEY is not set");
 
-    const modelKey =
+    const modelKey = (() => {
+      const key = "BANANA_MODEL_KEY_" + this.model.id.toUpperCase();
+      /*
       this.model.modelKeys?.["banana"] ||
       process.env[
         "BANANA_MODEL_KEY_" +
-          this.model.MODEL_ID.toUpperCase().replace(/\//, "_")
+          this.MODEL_ID.toUpperCase().replace(/\//, "_")
       ] ||
-      oldBananaKeys(this) ||
-      "dda";
+      */
+      return process.env[key] || oldBananaKeys(this) || this.model.id;
+    })();
 
     const payload = {
       id: this.id,
@@ -544,7 +560,7 @@ export default async function providerFetch(
       // console.log(request);
 
       const result = await request.checkUntilResult();
-      // console.log("providerFetch result", result);
+      console.log("providerFetch result", result);
 
       if (!request.apiInfo().checkViaServer) {
         const callID = result.callID;

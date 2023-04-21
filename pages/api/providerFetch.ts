@@ -4,6 +4,14 @@ import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
 import Database /* ObjectID */ from "gongo-server-db-mongo";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb",
+    },
+  },
+};
+
 const serverless = new ProviderFetchServerless();
 
 const express = serverless.express({ gs, Auth, GongoServer, Database });
