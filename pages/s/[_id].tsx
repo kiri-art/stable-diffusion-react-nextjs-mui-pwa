@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   const imgRef = React.useRef<HTMLImageElement>(null);
   const router = useRouter();
-  const _id = router.query._id || router.query.showStarId;
+  const _id = router.query.showStarId || router.query._id;
 
   const clientItem = useGongoOne(
     // @ts-expect-error: testing
