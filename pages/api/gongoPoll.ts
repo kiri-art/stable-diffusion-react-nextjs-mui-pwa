@@ -1,5 +1,6 @@
 import gs, { CreditCode, ObjectId, User } from "../../src/api-lib/db";
 import {
+  GongoDocument,
   CollectionEventProps,
   userIsAdmin,
   userIdMatches,
@@ -313,7 +314,7 @@ if (gs.dba) {
   users.allow(
     "update",
     async (
-      doc: Document | ChangeSetUpdate | string,
+      doc: GongoDocument | ChangeSetUpdate | string,
       eventProps: CollectionEventProps
     ) => {
       const isAdmin = await userIsAdmin(doc, eventProps);
