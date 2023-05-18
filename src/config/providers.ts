@@ -4,7 +4,7 @@ interface ProviderGeneral {
    */
   id: string;
   label: string;
-  api: "direct" | "banana" | "runpod";
+  api: "direct" | "banana" | "banana+kiri" | "runpod";
   apiKey: string;
   /**
    * apiUrl: override default API_URL for this api type
@@ -27,7 +27,7 @@ export interface ProviderDirect extends Omit<ProviderGeneral, "apiKey"> {
 }
 
 export interface ProviderServerless extends ProviderGeneral {
-  api: "banana" | "runpod";
+  api: "banana" | "runpod" | "banana+kiri";
 }
 
 export type Provider = ProviderDirect | ProviderServerless;
@@ -49,14 +49,14 @@ const Providers: Provider[] = [
   {
     id: "kiri",
     label: "2",
-    api: "banana",
+    api: "banana+kiri",
     apiKey: process.env.KIRI_API_KEY as string, // TODO
     apiUrl: "https://api-ams.kiri.art",
   },
   {
     id: "kiri-local",
     label: "kiri-local",
-    api: "banana",
+    api: "banana+kiri",
     apiKey: process.env.KIRI_API_KEY as string, // TODO
     apiUrl: "http://localhost:5000",
   },
@@ -83,6 +83,12 @@ export const apiInfo = {
     startViaServer: true,
     checkViaServer: false,
     streamable: false,
+  },
+  "banana+kiri": {
+    oneshot: false,
+    startViaServer: true,
+    checkViaServer: false,
+    streamable: true,
   },
   runpod: {
     oneshot: false,

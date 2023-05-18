@@ -168,17 +168,10 @@ export class ProviderFetchRequestBase {
     throw new Error("prepareCheck() was called without being overriden");
   }
 
-  async fetchSingle(callback?: (result: Record<string, unknown>) => void) {
-    const { url, payload } = this.prepareStart();
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
+  async handleResponse(
+    response: Response,
+    callback?: (result: Record<string, unknown>) => void
+  ) {
     if (response.headers.get("content-type") === "application/x-ndjson") {
       return await new Promise((resolve, reject) => {
         if (!response.body) return reject("no response.body");
@@ -208,11 +201,13 @@ export class ProviderFetchRequestBase {
             try {
               result = JSON.parse(fullString);
             } catch (error) {
+              console.warn(error);
+              console.log(fullString);
               reject(error);
-              return console.warn(error);
+              return;
             }
             lastResult = result;
-            // console.log("result", result);
+            // console.log("result", result, callback);
             if (callback) callback(result);
           }
 
@@ -223,6 +218,20 @@ export class ProviderFetchRequestBase {
     } else {
       return await response.json();
     }
+  }
+
+  async fetchSingle(callback?: (result: Record<string, unknown>) => void) {
+    const { url, payload } = this.prepareStart();
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    return await this.handleResponse(response, callback);
   }
 
   async fetchStart() {
@@ -279,7 +288,7 @@ export class ProviderFetchRequestBase {
     }
   }
 
-  async check() {
+  async check(callback?: (result: Record<string, unknown>) => void) {
     const { url, payload } = this.prepareCheck();
 
     console.log("check", url, payload);
@@ -291,7 +300,8 @@ export class ProviderFetchRequestBase {
       body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
+    // const result = await response.json();
+    const result = await this.handleResponse(response, callback);
     console.log("check result", result);
 
     // this.callID = result.callID;  don't reset
@@ -303,9 +313,9 @@ export class ProviderFetchRequestBase {
     if (this.message) return result;
   }
 
-  async checkUntilResult() {
+  async checkUntilResult(callback?: (result: Record<string, unknown>) => void) {
     while (!this.finished) {
-      await this.check();
+      await this.check(callback);
       // TODO, different sleep time for longPoll or not.
       await sleep(333);
     }
@@ -384,6 +394,14 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
   prepareStart() {
     const provider = this.provider as ProviderServerless;
 
+    // Present on "banana+kiri" API.
+    if (this.apiInfo().streamable) {
+      if (this.inputs.callInputs) {
+        // @ts-expect-error: ok
+        this.inputs.callInputs.streamEvents = true;
+      }
+    }
+
     const url = provider.apiUrl + "/start/v4/";
 
     const apiKey = provider.apiKey || process.env["BANANA_API_KEY"];
@@ -432,6 +450,7 @@ export const ProviderFetchRequestByApi = {
   direct: ProviderFetchRequestBase,
   banana: ProviderFetchRequestBanana,
   runpod: ProviderFetchRequestBase, // TODO
+  "banana+kiri": ProviderFetchRequestBanana,
 };
 
 export class ProviderFetchServerless {
@@ -549,7 +568,7 @@ export default async function providerFetch(
       }
       // console.log(request);
 
-      const result = await request.checkUntilResult();
+      const result = await request.checkUntilResult(callback);
       console.log("providerFetch result", result);
 
       if (!request.apiInfo().checkViaServer) {

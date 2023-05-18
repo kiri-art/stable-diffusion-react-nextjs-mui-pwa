@@ -89,7 +89,7 @@ export default async function fetchToOutput(
       return;
     }
 
-    const PROVIDER_ID = callInputs.PROVIDER_ID.toString();
+    const PROVIDER_ID = callInputs.PROVIDER_ID?.toString() || "2";
     // const MODEL_ID = "dda"; // TODO callInputs.MODEL_ID as string;
 
     setLog([]);
@@ -104,16 +104,15 @@ export default async function fetchToOutput(
       function (data) {
         // console.log("data", data);
         if (!(data.$error || data.$timings)) {
-          // console.log("status");
+          console.log(data);
           if (data.status === "start")
             setLog(["Starting " + data.type + "..."]);
-          else if (data.progress) {
+          else if (typeof data.progress === "number") {
             setLog([
               "Starting " +
                 data.type +
                 "... " +
-                (data?.progress &&
-                  Math.round((data.progress as number) * 100)) +
+                Math.round(data.progress * 100) +
                 "%",
             ]);
           }
