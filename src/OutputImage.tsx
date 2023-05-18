@@ -185,7 +185,6 @@ export default function OutputImage({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // @ts-expect-error: TODO
         auth: db?.auth?.authInfoToSend(),
         item,
       }),

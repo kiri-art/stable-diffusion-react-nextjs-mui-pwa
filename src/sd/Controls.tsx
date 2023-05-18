@@ -959,11 +959,12 @@ export default function SDControls({
   go: (event: React.SyntheticEvent) => void;
   randomPrompt?: string;
   uiState: {
-    dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
+    // dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
   };
   requestStartTime: number | null;
   requestEndTime: number | null;
 }) {
+  console.log({ uiState });
   const sharedInputs = sharedInputTextFromInputs(inputs, true);
   const getRandomPromptForModel = getRandomPrompt.bind(
     null,
@@ -1067,9 +1068,9 @@ export default function SDControls({
         />
         <GoButton
           disabled={!!(requestStartTime && !requestEndTime)}
-          dest={uiState.dest.value}
-          setDest={uiState.dest.set}
-          credits={inputs.PROVIDER_ID.value === 1 ? 1 : 0.25}
+          // dest={uiState.dest.value}
+          // setDest={uiState.dest.set}
+          credits={inputs.PROVIDER_ID.value === "banana" ? 1 : 0.25}
         />
         <ProviderSelect
           value={inputs.PROVIDER_ID.value}

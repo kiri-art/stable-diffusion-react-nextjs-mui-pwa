@@ -25,7 +25,8 @@ const Files = gs.dba.collection("files");
 
 interface FileEntry {
   [key: string]: unknown;
-  _id: string | ObjectId;
+  // _id: string | ObjectId;
+  _id: ObjectId;
   filename?: string;
   sha256: string;
   size: number;
@@ -70,7 +71,8 @@ async function createFileFromBuffer(
   }
 
   const entry: FileEntry = {
-    _id: existingId || new ObjectId(),
+    // _id: existingId || new ObjectId(),
+    _id: new ObjectId(existingId),
     filename,
     sha256,
     size: size,

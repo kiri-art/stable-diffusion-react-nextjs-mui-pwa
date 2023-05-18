@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import sanitizeFilename from "sanitize-filename";
 
+import type NodeCol from "../../src/schemas/lib/NodeCol";
 import type Star from "../../src/schemas/star";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import {
@@ -9,7 +11,6 @@ import {
 } from "../../src/schemas";
 import { createFileFromBuffer } from "./file2";
 import gs, { Auth } from "../../src/api-lib/db";
-import sanitizeFilename from "sanitize-filename";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -79,7 +80,7 @@ export default async function starItem(
   console.log(images);
   console.log(files);
 
-  const entry: Partial<Star> = {
+  const entry: Partial<NodeCol<Star>> = {
     userId,
     date: new Date(),
     callInputs,
@@ -94,7 +95,6 @@ export default async function starItem(
   const insertResult = await Stars.insertOne(entry);
   const { insertedId } = insertResult;
 
-  // @ts-expect-error: TODO, objectid types
   entry._id = insertedId;
 
   res.status(200).json(entry);

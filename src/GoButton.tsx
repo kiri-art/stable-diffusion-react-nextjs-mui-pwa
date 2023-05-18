@@ -1,27 +1,19 @@
 import { Trans, Plural } from "@lingui/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 
-import { isDev, REQUIRE_REGISTRATION } from "./lib/client-env";
+import { /* isDev, */ REQUIRE_REGISTRATION } from "./lib/client-env";
 
 export default function GoButton({
   disabled,
-  dest,
-  setDest,
+  // _dest,
+  // _setDest,
   credits,
 }: {
   disabled: boolean;
-  dest: string;
-  setDest: React.Dispatch<React.SetStateAction<string>>;
+  // _dest: string;
+  // _setDest: React.Dispatch<React.SetStateAction<string>>;
   credits: number;
 }) {
   const userId = useGongoUserId();

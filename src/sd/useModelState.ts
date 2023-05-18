@@ -33,7 +33,7 @@ export interface ModelState {
   height: ValueSetValue<string | number>;
   strength: ValueSetValue<string | number>;
   MODEL_ID: ValueSetValue<string>;
-  PROVIDER_ID: ValueSetValue<number>;
+  PROVIDER_ID: ValueSetValue<string>;
   seed: ValueSetValue<string | number>;
   randomizeSeed: ValueSetValue<boolean>;
   shareInputs: ValueSetValue<boolean>;
@@ -52,7 +52,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     height?: string;
     strength?: string;
     MODEL_ID?: string;
-    PROVIDER_ID?: number;
+    PROVIDER_ID?: string;
     seed?: string;
     randomizeSeed?: string | boolean;
     shareInputs?: string | boolean;
@@ -75,7 +75,7 @@ export default function useModelState(inputs?: string[]): ModelState {
     height: useSdState<number | string>(query.height ?? defaults.height),
     strength: useSdState<number | string>(query.strength ?? defaults.strength),
     MODEL_ID: useSdState<string>(query.MODEL_ID ?? defaults.MODEL_ID),
-    PROVIDER_ID: useSdState<number>(query.PROVIDER_ID ?? defaults.PROVIDER_ID),
+    PROVIDER_ID: useSdState<string>(query.PROVIDER_ID ?? defaults.PROVIDER_ID),
     seed: useSdState<number | string>(query.seed ?? defaults.seed()),
     randomizeSeed: useSdState<boolean>(
       (query.randomizeSeed as boolean) ?? defaults.randomizeSeed

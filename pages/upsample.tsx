@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import { HelpOutline } from "@mui/icons-material";
 
-import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
+import { /* isDev, */ REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import MyAppBar from "../src/MyAppBar";
 import defaults from "../src/sd/defaults";
 import { toast } from "react-toastify";
@@ -170,9 +170,11 @@ export default function Upsample() {
 
   const [imgSrc, setImgSrc] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
+  /*
   const [dest, setDest] = React.useState(
     isDev ? "banana-local" : "banana-remote"
   );
+  */
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
     null
   );
@@ -284,7 +286,7 @@ export default function Upsample() {
       {
         setLog,
         setImgSrc,
-        dest,
+        // dest,
         // @ts-expect-error: TODO, db auth type
         auth: db.auth.authInfoToSend(),
         MODEL_NAME: "UPSAMPLE",
@@ -341,8 +343,8 @@ export default function Upsample() {
         <form onSubmit={go}>
           <GoButton
             disabled={false}
-            dest={dest}
-            setDest={setDest}
+            // dest={dest}
+            // setDest={setDest}
             credits={CREDIT_COST}
           />
           <ModelSelect
