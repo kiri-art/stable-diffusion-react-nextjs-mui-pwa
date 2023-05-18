@@ -69,6 +69,11 @@ const Providers: Provider[] = [
   },
 ];
 
+if (process.env.NODE_ENV === "production") {
+  Providers.splice(0, 1); // direct
+  Providers.splice(2, 2); // kiri-local + runpod
+}
+
 export default Providers;
 
 export const apiInfo = {
