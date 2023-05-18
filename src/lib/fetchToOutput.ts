@@ -107,7 +107,7 @@ export default async function fetchToOutput(
           console.log(data);
           if (data.status === "start")
             setLog(["Starting " + data.type + "..."]);
-          else if (typeof data.progress === "number") {
+          else if (typeof data.progress === "number")
             setLog([
               "Starting " +
                 data.type +
@@ -115,7 +115,8 @@ export default async function fetchToOutput(
                 Math.round(data.progress * 100) +
                 "%",
             ]);
-          }
+          else if (typeof data.queuePosition === "number")
+            setLog(["Position in queue: " + data.queuePosition]);
         }
       }
     );
