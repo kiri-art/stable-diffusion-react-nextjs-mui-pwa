@@ -296,7 +296,10 @@ function RequestRow({
         onClick={() => setOpen(!open)}
       >
         <TableCell align="left" style={{ whiteSpace: "nowrap" }}>
-          {request.callInputs.PROVIDER_ID === 2 ? "2️⃣" : "1️⃣"}
+          {request.callInputs.PROVIDER_ID === 2 ||
+          request.callInputs.PROVIDER_ID === "kiri"
+            ? "2️⃣"
+            : "1️⃣"}
           {request.createdAt.toLocaleTimeString()}
           <IconButton sx={{ padding: 0, opacity: open ? 1 : 0.3 }}>
             {open ? <ExpandLess /> : <ExpandMore />}
