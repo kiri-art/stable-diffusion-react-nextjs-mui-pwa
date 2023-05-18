@@ -48,6 +48,8 @@ const models: Record<string, Model> = {
       }
 
       delete modelInputs.sampler;
+
+      callInputs.MODEL_URL = "s3://";
     },
   },
   upsample: {
