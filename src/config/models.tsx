@@ -2,6 +2,7 @@ export interface Model {
   MODEL_ID: string;
   MODEL_PRECISION?: "" | "fp16";
   MODEL_REVISION?: string;
+  MODEL_URL?: string;
   description: string;
   notes?: JSX.Element;
   defaults?: Record<string, unknown>;
@@ -50,6 +51,8 @@ const models: Record<string, Model> = {
   },
   "prompthero/openjourney-v2": {
     MODEL_ID: "prompthero/openjourney-v2",
+    MODEL_PRECISION: "",
+    MODEL_REVISION: "",
     description: "SDv1.5 finetuned on Midjourney",
     randomPrompts: [
       "retro serie of different cars with different colors and shapes",
@@ -62,6 +65,9 @@ const models: Record<string, Model> = {
   },
   "wd-1-4-anime_e1": {
     MODEL_ID: "wd-1-4-anime_e1",
+    MODEL_URL: "s3:///diffusers/models--wd-1-4-anime_e1.tar.zst",
+    MODEL_PRECISION: "",
+    MODEL_REVISION: "",
     description: "Waifu Diffusion v1.4, Epoch 1, Dec 31",
     randomPrompts: [
       "masterpiece, best quality, 1girl, black eyes, black hair, black sweater, blue background, bob cut, closed mouth, glasses, medium hair, red-framed eyewear, simple background, solo, sweater, upper body, wide-eyed",
