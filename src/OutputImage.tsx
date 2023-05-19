@@ -221,7 +221,7 @@ export default function OutputImage({
           border: "1px solid black",
         }}
       >
-        {progress && (
+        {progress != null && (
           <Line
             percent={progress}
             strokeWidth={1}
