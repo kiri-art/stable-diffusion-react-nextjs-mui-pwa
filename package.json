@@ -32,7 +32,7 @@
     "gongo-client": "2.5.4",
     "gongo-client-react": "0.2.1",
     "gongo-server": "3.1.0",
-    "gongo-server-db-mongo": "2.5.0",
+    "gongo-server-db-mongo": "2.6.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
     "masonic": "^3.7.0",

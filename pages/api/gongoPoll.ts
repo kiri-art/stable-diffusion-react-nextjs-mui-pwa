@@ -50,6 +50,11 @@ gs.publish("bananaRequests", async (db) => {
     .collection("bananaRequests")
     .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } })
     .sort("__updatedAt", "asc")
+    .project({
+      "modelInputs.image": 0,
+      "modelInputs.init_image": 0,
+      "modelInputs.mask_image": 0,
+    })
     .limit(200);
 });
 
