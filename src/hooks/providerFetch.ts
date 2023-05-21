@@ -83,21 +83,27 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   // --- SAVE REQUESTS --- //
 
+  const userModelInputs = { ...modelInputs };
+
+  for (const key of [
+    "prompt",
+    "negative_prompt",
+    "image",
+    "init_image",
+    "input_image",
+    "mask_image",
+  ])
+    if (userModelInputs[key]) userModelInputs[key] = "[redacted]";
+
   const userRequest = {
     userId,
     date: new Date(),
     ...chargedCredits,
     callInputs,
-    modelInputs: {
-      ...modelInputs,
-    },
+    modelInputs: userModelInputs,
     ...chargedCredits,
   };
-  delete userRequest.modelInputs.prompt;
-  delete userRequest.modelInputs.negative_prompt;
-  delete userRequest.modelInputs.image;
-  delete userRequest.modelInputs.mask_image;
-  delete userRequest.modelInputs.init_image;
+
   await gs.dba.collection("userRequests").insertOne(userRequest);
 
   hookResult.credits = user.credits;
@@ -111,6 +117,17 @@ hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
   const { request, /* extraInfo, */ deps, preStartResult, startResult } = data;
   const { gs } = deps;
 
+  const requestModelInputs = { ...request.inputs.modelInputs };
+  for (const key of [
+    // UserRequests don't contain "prompt" or "negative_prompt", but BananaRequests do.
+    // BananaRequests don't store userId, UserRequests do.
+    "image",
+    "init_image",
+    "input_image",
+    "mask_image",
+  ])
+    if (requestModelInputs[key]) requestModelInputs[key] = "[truncated]";
+
   const bananaRequest: BananaRequest = {
     // bananaId: result.id,
     modelKey: "TODO modelKey",
@@ -120,7 +137,7 @@ hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
     apiVersion: startResult.apiVersion,
     message: startResult.message,
     finished: startResult.finished,
-    modelInputs: request.inputs.modelInputs,
+    modelInputs: requestModelInputs,
     callInputs: request.inputs.callInputs,
     steps: {},
     ...preStartResult.chargedCredits,
