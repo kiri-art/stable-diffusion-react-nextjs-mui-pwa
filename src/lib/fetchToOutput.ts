@@ -107,7 +107,7 @@ export default async function fetchToOutput(
           console.log(data);
           if (data.status === "start")
             setLog(["Starting " + data.type + "..."]);
-          else if (typeof data.progress === "number")
+          else if (typeof data.progress === "number" && data.progress > 0)
             setLog([
               "Starting " +
                 data.type +
