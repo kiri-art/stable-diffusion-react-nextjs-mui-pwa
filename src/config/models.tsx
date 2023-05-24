@@ -7,6 +7,7 @@ export interface Model {
   notes?: JSX.Element;
   defaults?: Record<string, unknown>;
   randomPrompts?: string[] | { $from: string };
+  safety_checker?: boolean;
   modelKeys?: {
     [key: string]: Record<string, unknown>;
   };
@@ -17,21 +18,33 @@ const models: Record<string, Model> = {
     MODEL_ID: "stabilityai/stable-diffusion-2-1-base",
     description: "Latest Stable Diffusion, Dec 6th. (512x512)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
   },
   "stabilityai/stable-diffusion-2-1": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1",
     description: "Latest Stable Diffusion, Dec 6th. (768x768)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
+    defaults: {
+      width: 768,
+      height: 768,
+    },
   },
   "stabilityai/stable-diffusion-2-base": {
     MODEL_ID: "stabilityai/stable-diffusion-2-base",
     description: "Stable Diffusion from Nov 24th. (512x512)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
   },
   "stabilityai/stable-diffusion-2": {
     MODEL_ID: "stabilityai/stable-diffusion-2",
     description: "Stable Diffusion from Nov 24th. (768x768)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
+    defaults: {
+      width: 768,
+      height: 768,
+    },
   },
   "runwayml/stable-diffusion-v1-5": {
     MODEL_ID: "runwayml/stable-diffusion-v1-5",
@@ -63,6 +76,83 @@ const models: Record<string, Model> = {
       </a>
     ),
   },
+  "hakurei/wd-1-5-illusion-beta3": {
+    MODEL_ID: "hakurei/wd-1-5-illusion-beta3",
+    MODEL_PRECISION: "fp16",
+    description: "Waifu Diffusion v1.4, Beta 3, Illusion",
+    randomPrompts: [
+      "arknights, click (arknights), 1girl, baseball cap, black headwear, black jacket, blue eyes, grey hair, hand on headwear, hand up, hat, jacket, long sleeves, looking at viewer, open clothes, open jacket, shirt, short hair, simple background, smile, solo, upper body, white background, yellow shirt (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2)",
+    ],
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+    defaults: {
+      width: 768,
+      height: 768,
+      negative_prompt:
+        "lowres, ((bad anatomy)), ((bad hands)), text, missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
+    },
+  },
+  "hakurei/wd-1-5-ink-beta3": {
+    MODEL_ID: "hakurei/wd-1-5-ink-beta3",
+    MODEL_PRECISION: "fp16",
+    description: "Waifu Diffusion v1.4, Beta 3, Ink",
+    randomPrompts: [
+      "genshin impact, 1girl, aqua dress, blue hair, blunt bangs, blunt tresses, brown headwear, bug, butterfly, butterfly hair ornament, closed eyes, closed mouth, cowboy shot, dress, english text, flower, hair ornament, light blue hair, long sleeves, multicolored clothes, multicolored dress, neck tassel, official alternate costume, official alternate hairstyle, skirt basket, skirt hold, smile, solo, white dress, white flower (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
+    ],
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+    defaults: {
+      width: 768,
+      height: 768,
+      negative_prompt:
+        "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
+    },
+  },
+  "hakurei/wd-1-5-mofu-beta3": {
+    MODEL_ID: "hakurei/wd-1-5-mofu-beta3",
+    MODEL_PRECISION: "fp16",
+    description: "Waifu Diffusion v1.4, Beta 3, Mofu",
+    randomPrompts: [
+      "1girl, black shirt, black sleeves, school uniform, sailor uniform, serafuku, red neckerchief, sailor collar, collarbone, black hair, short hair, grey eyes, closed mouth, fox ears, fox girl, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
+    ],
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+    defaults: {
+      width: 768,
+      height: 768,
+      negative_prompt:
+        "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
+    },
+  },
+  "hakurei/wd-1-5-radiance-beta3": {
+    MODEL_ID: "hakurei/wd-1-5-radiance-beta3",
+    MODEL_PRECISION: "fp16",
+    description: "Waifu Diffusion v1.4, Beta 3, Radiance",
+    randomPrompts: [
+      "1girl, arms at sides, black hair, black sailor collar, black skirt, black sleeves, city, closed eyes, closed mouth, collarbone, neckerchief, outdoors, pleated skirt, red neckerchief, sailor collar, scenery, school uniform, serafuku, short hair, short sleeves, skirt, sky, solo, split mouth, upper body, cat ears, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime:1.2)",
+    ],
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+    defaults: {
+      width: 768,
+      height: 768,
+      negative_prompt:
+        "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
+    },
+  },
+
   "wd-1-4-anime_e1": {
     MODEL_ID: "wd-1-4-anime_e1",
     MODEL_URL: "s3:///diffusers/models--wd-1-4-anime_e1.tar.zst",

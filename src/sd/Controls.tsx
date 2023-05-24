@@ -32,7 +32,7 @@ import {
 } from "@mui/icons-material";
 
 import InputSlider from "../InputSlider";
-import defaults, { MAX_SEED_VALUE } from "../sd/defaults";
+import globalDefaults, { MAX_SEED_VALUE } from "../sd/defaults";
 import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
 import GoButton from "../GoButton";
 import ddaModelInputsSchema from "../schemas/ddaModelInputs";
@@ -230,7 +230,7 @@ function Strength_Grid_Slider({
 }: {
   value: ModelState["strength"]["value"];
   setValue: ModelState["strength"]["setValue"];
-  defaultValue: typeof defaults.strength;
+  defaultValue: typeof globalDefaults.strength;
 }) {
   return useMemo(
     () => (
@@ -274,7 +274,7 @@ function CFS_Grid_Slider({
 }: {
   value: ModelState["guidance_scale"]["value"];
   setValue: ModelState["guidance_scale"]["setValue"];
-  defaultValue: typeof defaults.guidance_scale;
+  defaultValue: typeof globalDefaults.guidance_scale;
 }) {
   return useMemo(
     () => (
@@ -321,7 +321,7 @@ function Steps_Grid_Slider({
 }: {
   value: ModelState["guidance_scale"]["value"];
   setValue: ModelState["guidance_scale"]["setValue"];
-  defaultValue: typeof defaults.guidance_scale;
+  defaultValue: typeof globalDefaults.guidance_scale;
   sampler: ModelState["sampler"]["value"];
 }) {
   return useMemo(
@@ -374,7 +374,7 @@ function Width_Grid_Slider({
 }: {
   value: ModelState["guidance_scale"]["value"];
   setValue: ModelState["guidance_scale"]["setValue"];
-  defaultValue: typeof defaults.guidance_scale;
+  defaultValue: typeof globalDefaults.guidance_scale;
 }) {
   return useMemo(
     () => (
@@ -413,7 +413,7 @@ function Height_Grid_Slider({
 }: {
   value: ModelState["guidance_scale"]["value"];
   setValue: ModelState["guidance_scale"]["setValue"];
-  defaultValue: typeof defaults.guidance_scale;
+  defaultValue: typeof globalDefaults.guidance_scale;
 }) {
   return useMemo(
     () => (
@@ -451,7 +451,7 @@ function Seed({
 }: {
   value: ModelState["seed"]["value"];
   setValue: ModelState["seed"]["setValue"];
-  _defaultValue: typeof defaults.seed;
+  _defaultValue: typeof globalDefaults.seed;
   randomizeSeedValue: boolean;
 }) {
   return useMemo(() => {
@@ -521,7 +521,7 @@ function RandomizeSeed({
   setValue: ModelState["randomizeSeed"]["setValue"];
   _defaultValue: boolean;
   setSeed: ModelState["seed"]["setValue"];
-  defaultSeed: typeof defaults.seed;
+  defaultSeed: typeof globalDefaults.seed;
 }) {
   return useMemo(() => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -754,7 +754,7 @@ function ModelSelect({
 }: {
   value: ModelState["MODEL_ID"]["value"];
   setValue: ModelState["MODEL_ID"]["setValue"];
-  defaultValue: typeof defaults.MODEL_ID;
+  defaultValue: typeof globalDefaults.MODEL_ID;
 }) {
   return useMemo(
     () => (
@@ -800,7 +800,7 @@ function Sampler({
 }: {
   value: ModelState["sampler"]["value"];
   setValue: ModelState["sampler"]["setValue"];
-  defaultValue: typeof defaults.MODEL_ID;
+  defaultValue: typeof globalDefaults.MODEL_ID;
 }) {
   return useMemo(
     () => (
@@ -883,7 +883,7 @@ function ProviderSelect({
 {
   value: ModelState["PROVIDER_ID"]["value"];
   setValue: ModelState["PROVIDER_ID"]["setValue"];
-  // defaultValue: typeof defaults.PROVIDER_ID;
+  // defaultValue: typeof globalDefaults.PROVIDER_ID;
 }) {
   return useMemo(
     () => (
@@ -1014,8 +1014,22 @@ export default function SDControls({
     return () => clearTimeout(timeout);
   }, [inputs.height]);
 
+  const model = models[inputs.MODEL_ID.value];
+  const defaults = {
+    ...globalDefaults,
+    ...model.defaults,
+  } as typeof globalDefaults;
+
   React.useEffect(
     () => {
+      inputs.width && inputs.width.setValue(defaults.width);
+      inputs.height && inputs.height.setValue(defaults.height);
+      // mdefs.safety_checker === false && inputs.safety_checker.setValue(true);
+
+      // inputs.negative_prompt &&
+      //  inputs.negative_prompt.setValue(defaults.negative_prompt);
+
+      /*
       if (
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2" ||
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-1"
@@ -1039,6 +1053,7 @@ export default function SDControls({
           "worst quality, low quality, medium quality, deleted, lowres, comic, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry"
         );
       }
+      */
 
       if (inputs.sampler.value == "DPMSolverMultistepScheduler") {
         inputs.num_inference_steps.setValue(20);
@@ -1080,7 +1095,7 @@ export default function SDControls({
         <ModelSelect
           value={inputs.MODEL_ID.value}
           setValue={inputs.MODEL_ID.setValue}
-          defaultValue={defaults.MODEL_ID}
+          defaultValue={globalDefaults.MODEL_ID}
         />
         {inputs.MODEL_ID.value !== "rinna/japanese-stable-diffusion" && (
           <NegativePrompt
@@ -1143,9 +1158,7 @@ export default function SDControls({
             _defaultValue={defaults.shareInputs}
             sharedInputs={sharedInputs}
           />
-          {inputs.MODEL_ID.value.startsWith(
-            "stabilityai/stable-diffusion-2"
-          ) ? null : (
+          {models[inputs.MODEL_ID.value]?.safety_checker === false ? null : (
             <SafetyChecker
               value={inputs.safety_checker.value}
               setValue={inputs.safety_checker.setValue}
