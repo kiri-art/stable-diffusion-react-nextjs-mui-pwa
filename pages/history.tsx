@@ -2,8 +2,22 @@ import { t, Trans } from "@lingui/macro";
 import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
-import { Box, Button, Container, ImageListItem } from "@mui/material";
-import { AccessTime, Delete, Edit, Star } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Container,
+  ImageListItem,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+import {
+  AccessTime,
+  Delete,
+  Edit,
+  GridView,
+  Splitscreen,
+  Star,
+} from "@mui/icons-material";
 import sanitizeFilename from "sanitize-filename";
 import { Masonry } from "masonic";
 
@@ -226,7 +240,10 @@ function Item({ item }: { item: HistoryItem }) {
 
 export default function History() {
   const userId = useGongoUserId();
-  const cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
+  const gridCols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
+
+  const [useGrid, setUseGrid] = React.useState(true);
+  const cols = useGrid ? gridCols : 1;
 
   const items = useGongoLive((db) =>
     db.collection("history").find().sort("date", "desc").limit(MAX_HISTORY)
@@ -252,6 +269,22 @@ export default function History() {
         <Button size="small" onClick={clear}>
           <Trans>Clear History</Trans>
         </Button>
+        <ToggleButtonGroup
+          color="primary"
+          value={useGrid ? "grid" : "nogrid"}
+          exclusive
+          size="small"
+          onChange={(_event, newValue) => newValue && setUseGrid(!useGrid)}
+          aria-label="Platform"
+          sx={{ fontSize: "80%", position: "relative", top: 0 }}
+        >
+          <ToggleButton value="grid">
+            <GridView sx={{ fontSize: "120%" }} />
+          </ToggleButton>
+          <ToggleButton value="nogrid">
+            <Splitscreen sx={{ fontSize: "120%" }} />
+          </ToggleButton>
+        </ToggleButtonGroup>
 
         <Masonry
           items={items}
