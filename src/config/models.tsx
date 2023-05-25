@@ -11,6 +11,7 @@ export interface Model {
   modelKeys?: {
     [key: string]: Record<string, unknown>;
   };
+  tags?: string[];
 }
 
 const models: Record<string, Model> = {
@@ -82,6 +83,12 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     // CHECKPOINT_URL: "https://civitai.com/api/download/models/76459?type=Model&format=PickleTensor&size=pruned&fp=fp16",
     description: "I Can't Believe It's Not Photography",
+    tags: [
+      "portrait",
+      "photo",
+      "hyperrealistic character portraits",
+      "photography",
+    ],
     notes: (
       <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
         ICBINP page on CivitAI
@@ -101,8 +108,44 @@ const models: Record<string, Model> = {
       "close up of a european woman, ginger hair, winter forest, natural skin texture, 24mm, 4k textures, soft cinematic light, RAW photo, photorealism, photorealistic, intricate, elegant, highly detailed, sharp focus, ((((cinematic look)))), soothing tones, insane details, intricate details, hyperdetailed, low contrast, soft cinematic light, dim colors, exposure blend, hdr, faded",
     ],
     defaults: {
+      width: 768,
+      height: 768,
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
+    },
+  },
+  "A-Zovya_Photoreal_V1": {
+    MODEL_ID: "A-Zovya_Photoreal_V1",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    // CHECKPOINT_URL: "https://civitai.com/api/download/models/61727?type=Model&format=SafeTensor&size=pruned&fp=fp16",
+    description: "Photorealistic, emphasis on skin texture and details.",
+    tags: [
+      "photorealistic",
+      "realism",
+      "photography",
+      "photorealism",
+      "realistic",
+    ],
+    notes: (
+      <a href="https://civitai.com/models/57319?modelVersionId=61727">
+        A-Zovya Photoreal page on CivitAI
+      </a>
+    ),
+    randomPrompts: [
+      "closeup portrait of beautiful (80s cyberpunk:1.3) woman lips pressed (serious:1.2) look (bright side light rim light:1.2) deep dark shadows dramatic camera angle high contrast color grading (masterpiece:1.2) (photorealistic:1.2) (bokeh:1.2) (best quality) (detailed skin:1.3) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "closeup zoomed in tight crop portrait beautiful woman sitting at a (table on a seaside boardwalk cafe bar drinks cocktails:1.2) wearing a (button shirt:1.3) (drinks on table:1.3) (Lighting-Gold:1.2) foreground objects background details (masterpiece:1.2) (photorealistic:1.2) (bokeh:1.2) (best quality) (color grading) (detailed skin:1.3) (intricate) (8k) (HDR) (cinematic lighting:1.3) (sharp focus)",
+      "2girls women sitting at a kitchen table drinking coffee in large modern luxury home casual clothing love warmth caring compassion loving smiling Lighting-Gold dusty (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "cars around abandoned gas station sign made from a rocket beautiful blue sky, (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "product photography food photography from_above closeup contrast lighting roasted coffee beans mint leaves decorative porcelain cup milk decanter coffee grinder coffee cup rustic wooden tabletop leather bound journal Lighting-Gold dusty (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "bright sunny day beautiful cloudy sky sunset sports car racing down cyberpunk Miami city streets neon signs and crowds confetti debris dust wind volumetric fog exciting epic action camera, (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "beautiful western RPG character brunette hair upsweep updo button shirt at a cantina sitting bar tequila liquor bottles, Lighting-Gold (dark moody ambience:1.2) (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+      "beach party (bright sunny morning) (Style-Luxury:0.7) (tropical beach home bedroom:1.1) (masterpiece:1.1) (best quality) (detailed) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus:1.1)",
+      "CEO portrait stock photo middle-aged man in luxurious office sitting at desk overlooking city (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin) (intricate) (8k) (HDR) (cinematic lighting) (sharp focus)",
+    ],
+    defaults: {
+      negative_prompt:
+        "child nude cleavage (monochrome) (bad hands) (disfigured) (grain) (Deformed) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
     },
   },
   "hakurei/wd-1-5-illusion-beta3": {
