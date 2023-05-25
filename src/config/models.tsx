@@ -76,10 +76,39 @@ const models: Record<string, Model> = {
       </a>
     ),
   },
+  "ICBINP-v7": {
+    MODEL_ID: "ICBINP-v7",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    // CHECKPOINT_URL: "https://civitai.com/api/download/models/76459?type=Model&format=PickleTensor&size=pruned&fp=fp16",
+    description: "I Can't Believe It's Not Photography",
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+    randomPrompts: [
+      "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
+      "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
+      "anime, Portrait photo of muscular bearded guy in a worn mech suit, ((light bokeh)), intricate, (steel metal [rust]), elegant, sharp focus, photo by greg rutkowski, soft lighting, vibrant colors, masterpiece, ((streets)), detailed face",
+      "realistic photo, a realistic photo of 18yo girl in a sundress, blonde hair, beach, (1girl), (extremely detailed CG unity 8k wallpaper), photo of the most beautiful artwork in the world, professional majestic (photography by Steve McCurry), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3 sharp focus, f 5.6, High Detail, Sharp focus, dramatic, (looking at viewer:1.2), (detailed pupils:1.3), (natural light),",
+      "(masterpiece, photorealistic, raw,:1.4), (extremely low angle of stunning 25 year old woman wearing a beret and mohair jacket in 1969 Paris, looking away from camera, portrait taken by David Lazar, portrait by Joel Santos, Portrait by Steve McCurry :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body, old man, wearing pullover",
+      "((half body)) RAW photo of a man in a suit in a park",
+      "Unparalleled masterpiece, (photorealistic:1.4), best quality, beautiful lighting, (hot spring), (extremely detailed 8k wallpaper), full shot landscape photo of the most beautiful artwork in the world, cloudy sky background lush landscape house and trees illustration concept art",
+      "a close up photograph of a beautiful older woman, award winning photo, best quality, portrait, by lee jeffries ,nikon d850 ,film ,stock photograph, kodak 400, f1.6 lens ,(rich colors:1.1) ,hyper realistic, lifelike texture, natural lighting unreal engine, cinestill 800, (100mm lens)",
+      "(dark shot:1.1), epic realistic, portrait of halo, sunglasses, blue eyes, tartan scarf, white hair by atey ghailan, by greg rutkowski, by greg tocchini, by james gilleard, by joe fenton, by kaethe butcher, gradient yellow, black, brown and magenta color scheme, grunge aesthetic!!! graffiti tag wall background, art by greg rutkowski and artgerm, soft cinematic light, adobe lightroom, photolab, hdr, intricate, highly detailed, (depth of field:1.4), faded, (neutral colors:1.2), (hdr:1.4), (muted colors:1.2), hyperdetailed, (artstation:1.4), cinematic, warm lights, dramatic light, (intricate details:1.1), complex background, (rutkowski:0.66), (teal and orange:0.4)",
+      "(8k, best quality, masterpiece:1.2),(best quality:1.0), (ultra highres:1.0), RAW photo of a beautiful woman, shoulder, hair ribbons, by agnes cecile, half body portrait, extremely luminous bright design, pastel colors, (ink:1.3), autumn lights",
+      "close up of a european woman, ginger hair, winter forest, natural skin texture, 24mm, 4k textures, soft cinematic light, RAW photo, photorealism, photorealistic, intricate, elegant, highly detailed, sharp focus, ((((cinematic look)))), soothing tones, insane details, intricate details, hyperdetailed, low contrast, soft cinematic light, dim colors, exposure blend, hdr, faded",
+    ],
+    defaults: {
+      negative_prompt:
+        "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
+    },
+  },
   "hakurei/wd-1-5-illusion-beta3": {
     MODEL_ID: "hakurei/wd-1-5-illusion-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.4, Beta 3, Illusion",
+    description: "Waifu Diffusion v1.5, Beta 3, Illusion",
     randomPrompts: [
       "arknights, click (arknights), 1girl, baseball cap, black headwear, black jacket, blue eyes, grey hair, hand on headwear, hand up, hat, jacket, long sleeves, looking at viewer, open clothes, open jacket, shirt, short hair, simple background, smile, solo, upper body, white background, yellow shirt (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2)",
     ],
@@ -98,7 +127,7 @@ const models: Record<string, Model> = {
   "hakurei/wd-1-5-ink-beta3": {
     MODEL_ID: "hakurei/wd-1-5-ink-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.4, Beta 3, Ink",
+    description: "Waifu Diffusion v1.5, Beta 3, Ink",
     randomPrompts: [
       "genshin impact, 1girl, aqua dress, blue hair, blunt bangs, blunt tresses, brown headwear, bug, butterfly, butterfly hair ornament, closed eyes, closed mouth, cowboy shot, dress, english text, flower, hair ornament, light blue hair, long sleeves, multicolored clothes, multicolored dress, neck tassel, official alternate costume, official alternate hairstyle, skirt basket, skirt hold, smile, solo, white dress, white flower (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
@@ -117,7 +146,7 @@ const models: Record<string, Model> = {
   "hakurei/wd-1-5-mofu-beta3": {
     MODEL_ID: "hakurei/wd-1-5-mofu-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.4, Beta 3, Mofu",
+    description: "Waifu Diffusion v1.5, Beta 3, Mofu",
     randomPrompts: [
       "1girl, black shirt, black sleeves, school uniform, sailor uniform, serafuku, red neckerchief, sailor collar, collarbone, black hair, short hair, grey eyes, closed mouth, fox ears, fox girl, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
@@ -136,7 +165,7 @@ const models: Record<string, Model> = {
   "hakurei/wd-1-5-radiance-beta3": {
     MODEL_ID: "hakurei/wd-1-5-radiance-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.4, Beta 3, Radiance",
+    description: "Waifu Diffusion v1.5, Beta 3, Radiance",
     randomPrompts: [
       "1girl, arms at sides, black hair, black sailor collar, black skirt, black sleeves, city, closed eyes, closed mouth, collarbone, neckerchief, outdoors, pleated skirt, red neckerchief, sailor collar, scenery, school uniform, serafuku, short hair, short sleeves, skirt, sky, solo, split mouth, upper body, cat ears, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime:1.2)",
     ],
