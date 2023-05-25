@@ -20,6 +20,14 @@ function BufferFromBase64(base64: string | undefined) {
   return base64 && Buffer.from(base64, "base64");
 }
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb",
+    },
+  },
+};
+
 export default async function starItem(
   req: NextApiRequest,
   res: NextApiResponse
