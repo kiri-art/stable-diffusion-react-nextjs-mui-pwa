@@ -22,7 +22,7 @@ import {
 import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
 import Copyright from "../src/Copyright";
-import { useGongoLive, useGongoSub } from "gongo-client-react";
+import { useGongoLive, useGongoSub, db } from "gongo-client-react";
 import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
 import { useRouter } from "next/router";
@@ -52,6 +52,18 @@ function TextFieldDebounced({
       timeout.current && clearTimeout(timeout.current);
     };
   }, [onChange, value, currentValue]);
+
+  React.useEffect(() => {
+    const Stars = db.collection("stars");
+    if (
+      Stars.find().count() > 300 &&
+      !Stars.findOne("6355699c24ed079e88103b7b")
+    ) {
+      console.log("Bad 'star' subscription repair");
+      const sub = db.subscriptions.get('["stars"]');
+      if (sub && sub.updatedAt) sub.updatedAt.stars = 0;
+    }
+  }, []);
 
   return React.useMemo(
     () => (
