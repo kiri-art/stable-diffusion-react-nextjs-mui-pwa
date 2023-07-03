@@ -161,7 +161,11 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt={modelInputs.prompt}
-          src={"/api/file?id=" + strObjectId(item.files.output)}
+          src={
+            (typeof window !== "undefined" ? window.origin : "") +
+            "/api/file?id=" +
+            strObjectId(item.files.output)
+          }
           style={{ maxWidth: "100%", border: "1px solid black", aspectRatio }}
           width="100%"
           ref={imgRef}

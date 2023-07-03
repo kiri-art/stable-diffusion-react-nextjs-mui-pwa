@@ -13,4 +13,20 @@ module.exports = withPWA({
     defaultLocale: "en-US",
     // domains: [ { domain: "example.com", defaultLocale: 'en-US '} ]
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/api/file",
+      },
+      {
+        protocol: "https",
+        hostname: "kiri.art",
+        port: "",
+        pathname: "/api/file",
+      },
+    ],
+  },
 });

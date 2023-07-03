@@ -129,7 +129,11 @@ function Item({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <Image
           alt={alt}
-          src={"/api/file?id=" + strObjectId(item.files.output)}
+          src={
+            (typeof window !== "undefined" ? window.origin : "") +
+            "/api/file?id=" +
+            strObjectId(item.files.output)
+          }
           layout="fill"
           objectFit="contain"
           sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
