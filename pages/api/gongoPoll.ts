@@ -96,7 +96,12 @@ gs.publish("stars", async (db, { userId, username } = {}, { updatedAt }) => {
   } else if (userId) query.userId = new ObjectId(userId);
   if (updatedAt.stars) query.__updatedAt = { $gt: updatedAt.stars };
 
-  const stars = await db.collection("stars").find(query).limit(200).toArray();
+  const stars = await db
+    .collection("stars")
+    .find(query)
+    .sort("date", "desc")
+    .limit(200)
+    .toArray();
 
   const upQuery: Record<string, unknown> = {};
   if (updatedAt.userProfiles)
