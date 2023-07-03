@@ -99,7 +99,7 @@ gs.publish("stars", async (db, { userId, username } = {}, { updatedAt }) => {
   const stars = await db
     .collection("stars")
     .find(query)
-    .sort("date", "asc")
+    .sort("__updatedAt", "asc")
     .limit(200)
     .toArray();
 
