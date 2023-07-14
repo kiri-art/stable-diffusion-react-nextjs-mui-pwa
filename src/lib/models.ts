@@ -55,6 +55,8 @@ const models: Record<string, Model> = {
         callInputs.MODEL_PRECISION = subModel.MODEL_PRECISION ?? "fp16";
         callInputs.MODEL_REVISION = subModel.MODEL_REVISION ?? "fp16";
         callInputs.MODEL_URL = subModel.MODEL_URL ?? "s3://";
+        if (subModel.CHECKPOINT_URL)
+          callInputs.CHECKPOINT_URL = subModel.CHECKPOINT_URL;
       }
     },
   },

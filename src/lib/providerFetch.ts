@@ -59,7 +59,6 @@ function oldBananaKeys(request: ProviderFetchRequestBase) {
       break;
     case "hakurei/waifu-diffusion-v1-3":
       envName += "_WAIFU_v1_3";
-      // @ts-expect-error: ok
       callInputs.CHECKPOINT_URL =
         "https://huggingface.co/hakurei/waifu-diffusion-v1-3/resolve/main/wd-v1-3-float16.ckpt";
       break;

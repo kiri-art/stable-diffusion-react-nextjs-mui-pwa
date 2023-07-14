@@ -7,6 +7,7 @@ const ddaCallInputsSchema = object({
   MODEL_URL: string(),
   MODEL_REVISION: string(),
   MODEL_PRECISION: string(),
+  CHECKPOINT_URL: string().optional(),
   PROVIDER_ID: string().oneOf(Providers.map((p) => p.id)),
   // .default("CompVis/stable-diffusion-v1-4"),
   PIPELINE: string().oneOf([
