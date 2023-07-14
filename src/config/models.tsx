@@ -195,6 +195,53 @@ const models: Record<string, Model> = {
       height: 768,
     },
   },
+  "dreamshaper_7-inpainting": {
+    MODEL_ID: "dreamshaper_7-inpainting",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    CHECKPOINT_URL:
+      "https://civitai.com/api/download/models/110021?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=dreamshaper_7-inpainting.safetensors",
+    description: "Photorealistic, emphasis on skin texture and details.",
+    tags: [
+      "anime",
+      "landscapes",
+      "girl",
+      "3d",
+      "photorealistic",
+      "digital art",
+      "scifi",
+      "fantasy art",
+      "art style",
+      "paintings",
+      "woman",
+      "illustration",
+      "2d",
+      "digital illustration",
+      "fantasy",
+      "girls",
+      "portraits",
+      "realistic",
+      "video game",
+      "inpainting",
+    ],
+    notes: (
+      <a href="https://civitai.com/models/4384/dreamshaper">
+        DreamShaper page on CivitAI
+      </a>
+    ),
+    randomPrompts: [
+      "8k portrait of beautiful cyborg with brown hair, intricate, elegant, highly detailed, majestic, digital photography, art by artgerm and ruan jia and greg rutkowski surreal painting gold butterfly filigree, broken glass, (masterpiece, sidelighting, finely detailed beautiful eyes: 1.2), hdr, <lora:more_details:0.36>",
+      "photo of the warrior Aragorn from Lord of the Rings, film grain",
+      "(masterpiece), (extremely intricate), fantasy, (((photorealistic photo of an evil hermit, male, villain, anti hero, evil face, masculine face, medium hair, Maroon hair, wicked, cruel, sinister, malicious, ruthless, masculine, athletic))), (((dark bloody clothing, intricate details on clothing))), (perfect composition:1.4), aspect ratio 1:1, beach, deviantart hd, artstation hd, concept art, detailed face and body, award-winning photography, margins, detailed face, professional oil painting by Ed Blinkey, Atey Ghailan, Jeremy Mann, Greg Manchess, Alex Gray, trending on ArtStation, trending on CGSociety, intricate, high detail, sharp focus, dramatic, award winning matte drawing cinematic lighting octane render unreal engine volumetrics dtx",
+      "(anime coloring, anime screencap), 1girl, white gown, upper body",
+      "(masterpiece), (extremely intricate:1.3), (realistic), portrait of a girl, the most beautiful in the world, (medieval armor), metal reflections, upper body, outdoors, intense sunlight, far away castle, professional photograph of a stunning woman detailed, sharp focus, dramatic, award winning, cinematic lighting, , volumetrics dtx, (film grain, blurry background, blurry foreground, bokeh, depth of field, sunset, motion blur:1.3), chainmail",
+    ],
+    defaults: {
+      negative_prompt: "BadDream, FastNegativeV2, (UnrealisticDream:1.2)",
+      width: 768,
+      height: 768,
+    },
+  },
   epicrealism_pureEvolutionV3: {
     MODEL_ID: "epicrealism_pureEvolutionV3",
     MODEL_PRECISION: "fp16",
@@ -214,6 +261,45 @@ const models: Record<string, Model> = {
       "realistic",
       "photoshoot",
       "natural colors",
+    ],
+    notes: (
+      <a href="https://civitai.com/models/25694/epicrealism">
+        epiCRealism page on CivitAI
+      </a>
+    ),
+    randomPrompts: [
+      "RAW Photo, DSLR BREAK (kkw-ph1:0.9) BREAK half body portrait of a young 20yo woman, black hair, wearing a summer dress BREAK detailed, blowing bubble gum, green bubble gum <lora:Bubble Gum:0.65>, professional colorgraded",
+      "High detail RAW color, (full body Photo) of an unattractive man, wide hips, wearing a ((dirty grey hoodie, sweatpants)), ((scruffy beard, balding, chubby face, wide chin, squinting, glasses)), (standing in front of a wall of monitors and computers in an office), realistic, symmetrical, highly detailed, harsh lighting, cinematic lighting, serious eyes, contrast, textured skin, cold skin pores, hasselblad, 45 degree, hard light, gigapixel, pimples, 85mm, F/4",
+      "award winning upper body portrait photo of a man an old screaming sailor, wearing scarf, eyes looking upwards, (bokeh:0.7), sidelit, (wrinkled face in detail:0.7), telephoto, moonlit, torchlit, gritty atmosphere, oceanic night exterior, realistic, intricate details, true aged skin texture",
+      "Photo of a congolese woman, wrinkles, aged, necklace, crowded papers room, closeup, neutral colors, barren land",
+      "A tenacious female journalist uncovering a high-stakes conspiracy in a bustling metropolis, weaving through crowded streets and dark alleyways, close up, Detailed clothes, green eyes, flowing hair, determined expression, shiny glossy skin, subsurface scattering, (sharp:0.7), [(colorful explosion psychedelic paint colors:1.21)::0.05], amazing fine detail, Nikon D850 film stock photograph Kodak Portra 400 camera f1.6 lens, rich colors, lifelike texture, dramatic lighting, urban environment, skyscrapers, neon signs, street vendors, dynamic composition, unreal engine, trending on ArtStation, cinestill 800 tungsten",
+    ],
+    defaults: {
+      negative_prompt: "asian, chinese, busty, (epicnegative:0.9)",
+      width: 768,
+      height: 768,
+    },
+  },
+  "epicrealism_pureEvolutionV3-inpainting": {
+    MODEL_ID: "epicrealism_pureEvolutionV3-inpainting",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    CHECKPOINT_URL:
+      "https://civitai.com/api/download/models/105262?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=epicrealism_pureEvolutionV3-inpainting.safetensors",
+    description: "Photorealistic, emphasis on skin texture and details.",
+    tags: [
+      "photorealistic",
+      "female",
+      "analog",
+      "realism",
+      "portrait",
+      "raw photo",
+      "photography",
+      "photorealism",
+      "realistic",
+      "photoshoot",
+      "natural colors",
+      "inpainting",
     ],
     notes: (
       <a href="https://civitai.com/models/25694/epicrealism">

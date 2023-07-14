@@ -18,6 +18,7 @@ import locales, { defaultLocale } from "../src/lib/locales";
 import blobToBase64 from "../src/lib/blobToBase64";
 import sendQueue, { outputImageQueue } from "./lib/sendQueue";
 import fetchToOutput from "./lib/fetchToOutput";
+import { ddaCallInputs } from "./schemas";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -284,7 +285,8 @@ export default function Inpainting() {
         // Later we could get fancy and clip around just the mask at send time.
         let width, height;
         // const SD_MAX = [1024, 768]; // can also be 768x1024
-        const SD_MAX = [512, 512];
+        // const SD_MAX = [512, 512];
+        const SD_MAX = [1024, 1024];
 
         if (image.width >= image.height && image.width > SD_MAX[0]) {
           width = SD_MAX[0];
@@ -445,12 +447,17 @@ export default function Inpainting() {
       seed: randomizeSeedIfChecked(inputs),
     };
 
-    const callInputs = {
-      PIPELINE: "lpw_stable_diffusion",
-      custom_pipeline_method: "inpaint",
+    const callInputs: ddaCallInputs = {
       // @ts-expect-error: TODO
       SCHEDULER: modelInputs.sampler,
     };
+
+    if (inputs.MODEL_ID.value.match(/[Ii]npaint/)) {
+      callInputs.PIPELINE = "StableDiffusionInpaintPipeline";
+    } else {
+      callInputs.PIPELINE = "lpw_stable_diffusion";
+      callInputs.custom_pipeline_method = "inpaint";
+    }
 
     // return;
 
@@ -522,7 +529,7 @@ export default function Inpainting() {
 
             <ul>
               <li>
-                <Trans>Image will be scaled to max 512x512 (for now)</Trans>
+                <Trans>Image will be down scaled to max 1024x1024.</Trans>
               </li>
             </ul>
           </div>
