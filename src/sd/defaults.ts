@@ -10,7 +10,7 @@ const defaults = {
   PROVIDER_ID: "kiri",
   seed: () => Math.floor(Math.random() * MAX_SEED_VALUE),
   randomizeSeed: true,
-  shareInputs: false,
+  shareInputs: true,
   safety_checker: true,
   sampler: "DPMSolverMultistepScheduler",
   negative_prompt:
