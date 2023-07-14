@@ -191,6 +191,8 @@ const models: Record<string, Model> = {
     ],
     defaults: {
       negative_prompt: "BadDream, FastNegativeV2, (UnrealisticDream:1.2)",
+      width: 768,
+      height: 768,
     },
   },
   epicrealism_pureEvolutionV3: {
@@ -227,6 +229,8 @@ const models: Record<string, Model> = {
     ],
     defaults: {
       negative_prompt: "asian, chinese, busty, (epicnegative:0.9)",
+      width: 768,
+      height: 768,
     },
   },
   "hakurei/wd-1-5-illusion-beta3": {
