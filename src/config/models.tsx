@@ -149,6 +149,50 @@ const models: Record<string, Model> = {
         "child nude cleavage (monochrome) (bad hands) (disfigured) (grain) (Deformed) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
     },
   },
+  dreamshaper_7: {
+    MODEL_ID: "dreamshaper_7",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "",
+    CHECKPOINT_URL:
+      "https://civitai.com/api/download/models/109123?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=dreamshaper_7.safetensors",
+    description: "Photorealistic, emphasis on skin texture and details.",
+    tags: [
+      "anime",
+      "landscapes",
+      "girl",
+      "3d",
+      "photorealistic",
+      "digital art",
+      "scifi",
+      "fantasy art",
+      "art style",
+      "paintings",
+      "woman",
+      "illustration",
+      "2d",
+      "digital illustration",
+      "fantasy",
+      "girls",
+      "portraits",
+      "realistic",
+      "video game",
+    ],
+    notes: (
+      <a href="https://civitai.com/models/4384/dreamshaper">
+        DreamShaper page on CivitAI
+      </a>
+    ),
+    randomPrompts: [
+      "8k portrait of beautiful cyborg with brown hair, intricate, elegant, highly detailed, majestic, digital photography, art by artgerm and ruan jia and greg rutkowski surreal painting gold butterfly filigree, broken glass, (masterpiece, sidelighting, finely detailed beautiful eyes: 1.2), hdr, <lora:more_details:0.36>",
+      "photo of the warrior Aragorn from Lord of the Rings, film grain",
+      "(masterpiece), (extremely intricate), fantasy, (((photorealistic photo of an evil hermit, male, villain, anti hero, evil face, masculine face, medium hair, Maroon hair, wicked, cruel, sinister, malicious, ruthless, masculine, athletic))), (((dark bloody clothing, intricate details on clothing))), (perfect composition:1.4), aspect ratio 1:1, beach, deviantart hd, artstation hd, concept art, detailed face and body, award-winning photography, margins, detailed face, professional oil painting by Ed Blinkey, Atey Ghailan, Jeremy Mann, Greg Manchess, Alex Gray, trending on ArtStation, trending on CGSociety, intricate, high detail, sharp focus, dramatic, award winning matte drawing cinematic lighting octane render unreal engine volumetrics dtx",
+      "(anime coloring, anime screencap), 1girl, white gown, upper body",
+      "(masterpiece), (extremely intricate:1.3), (realistic), portrait of a girl, the most beautiful in the world, (medieval armor), metal reflections, upper body, outdoors, intense sunlight, far away castle, professional photograph of a stunning woman detailed, sharp focus, dramatic, award winning, cinematic lighting, , volumetrics dtx, (film grain, blurry background, blurry foreground, bokeh, depth of field, sunset, motion blur:1.3), chainmail",
+    ],
+    defaults: {
+      negative_prompt: "BadDream, FastNegativeV2, (UnrealisticDream:1.2)",
+    },
+  },
   epicrealism_pureEvolutionV3: {
     MODEL_ID: "epicrealism_pureEvolutionV3",
     MODEL_PRECISION: "fp16",
