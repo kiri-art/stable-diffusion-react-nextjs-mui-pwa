@@ -18,7 +18,7 @@ import locales, { defaultLocale } from "../src/lib/locales";
 import blobToBase64 from "../src/lib/blobToBase64";
 import sendQueue, { outputImageQueue } from "./lib/sendQueue";
 import fetchToOutput from "./lib/fetchToOutput";
-import { ddaCallInputs } from "./schemas";
+import { ddaCallInputs, ddaModelInputs } from "./schemas";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -250,6 +250,10 @@ export default function Inpainting() {
   const [initImageLoaded, setInImgLoaded] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
 
+  // Only used for StableDiffusionInpaintPipeline
+  // lpw_stable_diffusion gets it from the image
+  const [dims, setDims] = React.useState({ width: 0, height: 0 });
+
   const [imgSrc, setImgSrc] = React.useState<string>("");
   const [log, setLog] = React.useState([] as Array<string>);
   const [dest, setDest] = React.useState(
@@ -331,6 +335,7 @@ export default function Inpainting() {
         ctx.drawImage(image, 0, 0, width, height);
         setInImgLoaded(true);
         setFile(file);
+        setDims({ width, height });
       };
 
       if (!readerEvent) throw new Error("no readerEevent");
@@ -438,12 +443,15 @@ export default function Inpainting() {
       return;
     }
 
-    const modelInputs = {
+    const modelInputs: Partial<ddaModelInputs> = {
       ...modelStateValues(inputs),
       prompt: inputs.prompt.value,
       image: await blobToBase64(init_image_blob),
       mask_image: await blobToBase64(mask_image_blob),
-      strength: inputs.strength.value,
+      strength:
+        typeof inputs.strength.value === "number"
+          ? inputs.strength.value
+          : parseFloat(inputs.strength.value),
       seed: randomizeSeedIfChecked(inputs),
     };
 
@@ -454,6 +462,8 @@ export default function Inpainting() {
 
     if (inputs.MODEL_ID.value.match(/[Ii]npaint/)) {
       callInputs.PIPELINE = "StableDiffusionInpaintPipeline";
+      modelInputs.width = dims.width;
+      modelInputs.height = dims.height;
     } else {
       callInputs.PIPELINE = "lpw_stable_diffusion";
       callInputs.custom_pipeline_method = "inpaint";
@@ -484,7 +494,7 @@ export default function Inpainting() {
           // height: "calc(100vw - 46px)",
           aspectRatio: "1", // initial value; updated on imgLoad
           maxWidth: 512,
-          maxHeight: 512,
+          // maxHeight: 512,
           border: "1px solid black",
           marginLeft: "auto",
           marginRight: "auto",
