@@ -872,7 +872,9 @@ export function randomizeSeedIfChecked(inputs: ModelState) {
     inputs.seed.setValue(seed);
     return seed;
   } else {
-    return inputs.seed.value;
+    return typeof inputs.seed.value === "number"
+      ? inputs.seed.value
+      : parseInt(inputs.seed.value);
   }
 }
 
