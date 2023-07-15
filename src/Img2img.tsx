@@ -225,7 +225,7 @@ function Canvas({
     <div
       style={{
         maxWidth: 512,
-        maxHeight: 512,
+        // maxHeight: 512,
         marginLeft: "auto",
         marginRight: "auto",
       }}
@@ -242,7 +242,7 @@ function Canvas({
           // Canvas is cropped image size, browser will scale to fill window
           width: "100%",
           maxWidth: 512,
-          maxHeight: 512,
+          // maxHeight: 512,
           aspectRatio: "1",
           border: "1px solid black",
           marginLeft: "auto",
@@ -482,7 +482,7 @@ export default function Img2img() {
         // Later we could get fancy and clip around just the mask at send time.
         let width, height;
         // const SD_MAX = [1024, 768]; // can also be 768x1024
-        const SD_MAX = [512, 512];
+        const SD_MAX = [1024, 1024];
 
         if (image.width >= image.height && image.width > SD_MAX[0]) {
           width = SD_MAX[0];
