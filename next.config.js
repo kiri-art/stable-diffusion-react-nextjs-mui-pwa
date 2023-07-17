@@ -24,7 +24,7 @@ module.exports = withPWA({
       {
         protocol: "https",
         hostname: "kiri.art",
-        port: "",
+        port: "443",
         pathname: "/api/file",
       },
     ],
