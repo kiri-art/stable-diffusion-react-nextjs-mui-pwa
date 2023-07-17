@@ -35,6 +35,7 @@
     "gongo-server-db-mongo": "2.6.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
+    "ipdata": "^2.2.4",
     "masonic": "^3.7.0",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",

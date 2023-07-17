@@ -8,6 +8,8 @@ import {
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
 import { addDays } from "date-fns";
+import { NextApiRequest, NextApiResponse } from "next";
+import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -386,4 +388,18 @@ if (gs.dba) {
   });
 }
 
-module.exports = gs.expressPost();
+// module.exports = gs.expressPost();
+const gsExpressPost = gs.expressPost();
+async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
+  if (
+    process.env.NODE_ENV === "production" &&
+    !(await ipPass(ipFromReq(req)))
+  ) {
+    res.status(403).end("IP not allowed");
+    return;
+  }
+
+  // @ts-expect-error: TODO
+  return gsExpressPost(req, res);
+}
+module.exports = gongoPoll;

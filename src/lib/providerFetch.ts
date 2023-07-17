@@ -497,6 +497,7 @@ export class ProviderFetchServerless {
             request,
             extraInfo,
             deps,
+            req,
           }
         );
 
