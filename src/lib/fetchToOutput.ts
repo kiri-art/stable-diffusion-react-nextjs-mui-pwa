@@ -121,7 +121,7 @@ export default async function fetchToOutput(
       }
     );
 
-    console.log(result);
+    console.log("fetchToOutput result", result);
 
     if (!result) {
       // do something
@@ -129,10 +129,11 @@ export default async function fetchToOutput(
       return;
     }
 
-    if (result.message.match(/error/)) {
+    if (result.message.match(/[Ee]rror/)) {
       setLog(["FAILED: " + result.message]);
       console.error(result);
-      // return { $error: result };
+      // this was commented out, WHY???
+      return { $error: result };
     }
 
     if (!result.modelOutputs) {

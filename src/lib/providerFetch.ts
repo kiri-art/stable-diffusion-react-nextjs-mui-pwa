@@ -274,6 +274,18 @@ export class ProviderFetchRequestBase {
         }),
       });
 
+      if (response.status !== 200) {
+        // NB: messages with "error" in it are handled differently.
+        const bodyText = await response.text();
+        this.callID = "unknown";
+        this.message = "Error: " + bodyText;
+        this.modelOutputs = null;
+        this.finished = true;
+        return {
+          message: "Error: " + bodyText,
+        };
+      }
+
       const result = await response.json();
       // console.log("browserStart result", result);
 

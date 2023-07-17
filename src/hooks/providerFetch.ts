@@ -55,6 +55,15 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   const user = await gs.dba.collection("users").findOne({ _id: userId });
   if (!user) return res.status(500).end("Server error");
 
+  // --- TEMPORARY BAN --- //
+
+  if (user.createdAt > new Date("2023-07-16"))
+    return res
+      .status(403)
+      .end(
+        "Forbidden; all accounts created after 2023-07-16 are temporarily banned from using the API."
+      );
+
   // --- CHECK AND MODIFY CREDITS --- //
 
   const chargedCredits = { credits: 0, paid: false };
