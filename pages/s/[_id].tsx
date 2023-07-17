@@ -64,7 +64,6 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   const _id = router.query.showStarId || router.query._id;
 
   const clientItem = useGongoOne(
-    // @ts-expect-error: testing
     (db) => _id && db.collection("stars").find({ _id })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) as any;
@@ -76,8 +75,6 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
     db.collection("userProfiles").find({ _id: item && item.userId })
   );
 
-  // TODO, gongo should accept "false" args to ignore.
-  // @ts-expect-error: testing
   useGongoSub(_id && "star", { starId: _id });
 
   const { like, likedByUser } = useLike(item);
