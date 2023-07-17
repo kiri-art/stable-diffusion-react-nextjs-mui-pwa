@@ -34,7 +34,7 @@ function intOrFixedOneStr(num: number) {
   return num.toString();
 }
 
-export function creditsStrOrFalse(user: User) {
+export function creditsStrOrFalse(user: User | null) {
   if (!(user && user.credits)) return false;
   return intOrFixedOneStr(user.credits.free + user.credits.paid);
 }
