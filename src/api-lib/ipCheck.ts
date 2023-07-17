@@ -28,10 +28,11 @@ function ipFromReq(req: NextApiRequest) {
 async function ipPass(ip: string) {
   if (!ipdata) return false;
   const data = await ipdata.lookup(ip);
-  console.log(data.threat);
-  // < 40 high risk, 40-60 medium, > 60 low
+  console.log(ip, data.threat);
   // @ts-expect-error: does exist
-  return data.threat.scores.trust_score > 60;
+  const scores = data.threat.scores;
+  // Trust: < 40 high risk, 40-60 medium, > 60 low
+  return scores.trust_score > 60 && scores.threat_score < 50;
 }
 
 export { ipFromReq, ipPass };
