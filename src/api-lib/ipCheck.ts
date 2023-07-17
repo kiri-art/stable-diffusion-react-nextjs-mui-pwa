@@ -38,8 +38,8 @@ async function ipPass(ip: string) {
   // @ts-expect-error: does exist
   const scores = threat.scores;
   // Trust: < 40 high risk, 40-60 medium, > 60 low
+  if (scores.threat_score > 30) return false;
   if (scores.trust_score < 60) return false;
-  if (scores.threat_score > 50) return false;
 
   return true;
 }
