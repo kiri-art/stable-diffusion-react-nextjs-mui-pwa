@@ -4253,10 +4253,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gongo-client-react@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.1.tgz#d5160fa579a38ecc6c49c3a66902887f6323f0bc"
-  integrity sha512-1vdrM5oMEg0rM/aSnf446Xxfs32O45N1fEjaHXNAYBqpXzHu25pS/FourKi7TwmauC1sdhiUJSrPGx/4B1otbw==
+gongo-client-react@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.4.tgz#b0f104a4785381082c24e94ba695bd157c4d057f"
+  integrity sha512-xVMOjqexVMoSO80qAthqLKJUamyHUE/n9KLqbCwALNMmd2fL+ivRplYJ+nKfzfKUsmjnWJZV8U4Lx8FCZqb/EA==
 
 gongo-client@2.5.4:
   version "2.5.4"
