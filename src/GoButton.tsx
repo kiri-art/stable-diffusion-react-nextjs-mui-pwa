@@ -21,7 +21,7 @@ export default function GoButton({
     db.collection("users").find({ _id: userId })
   );
 
-  const userCredits = user?.credits?.free + user?.credits?.paid;
+  const userCredits = (user?.credits?.free || 0) + (user?.credits?.paid || 0);
 
   return (
     <>
