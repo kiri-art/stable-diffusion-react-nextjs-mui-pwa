@@ -38,11 +38,15 @@ async function ipPass(ip: string) {
   // @ts-expect-error: does exist
   const scores = threat.scores;
   // Trust: < 40 high risk, 40-60 medium, > 60 low
-  if (scores.threat_score > 30) return false;
-  if (scores.trust_score < 60) return false;
+  if (scores.trust_score < 40) return false; /// was 60
+  if (scores.threat_score > 50) return false; // was 30
 
   // Temporarily ban Iran during current attack.
   if (data.country_code === "IR") return false;
+
+  // @ts-expect-error: does exist
+  if (threat.is_datacenter) return false;
+  if (data.asn.name.match(/DigitalOcean|Hetzner|OVH/)) return false;
 
   return true;
 }
