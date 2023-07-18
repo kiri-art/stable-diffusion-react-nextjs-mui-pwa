@@ -24,6 +24,7 @@ import {
   SwipeableDrawer,
   Slide,
   useScrollTrigger,
+  Container,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -444,6 +445,14 @@ export default function MyAppBar({ title }: { title: string }) {
             </SwipeableDrawer>
           </Box>
         </Box>
+
+        <Container sx={{ p: 2, color: "red", textAlign: "center" }}>
+          Problems accessing the site? Read about the{" "}
+          <a href="https://forums.kiri.art/t/recent-massive-abuse-and-mitigation/171">
+            ongoing mass abuse
+          </a>{" "}
+          we are currently experiencing.{" "}
+        </Container>
       </>
     ),
     [
