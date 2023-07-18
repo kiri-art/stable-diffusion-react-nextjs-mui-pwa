@@ -2,6 +2,7 @@ import hooks from "../../src/lib/hooks";
 import { db } from "gongo-client-react";
 import { BananaRequest } from "../schemas";
 import { ipPass, ipFromReq } from "../api-lib/ipCheck";
+import { ProviderFetchRequestBase } from "../lib/providerFetch";
 
 hooks.register("providerFetch.browser.extraInfoToSend");
 hooks.register("providerFetch.server.preStart");
@@ -16,7 +17,9 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   console.log("providerFetch.server.preStart", data, hookResult);
   console.log({ data });
   // @ts-expect-error: TODO
-  const { request, extraInfo, deps, req } = data;
+  const { extraInfo, deps, req } = data;
+  // @ts-expect-error: TODO
+  const { request }: { request: ProviderFetchRequestBase } = data;
   const { gs, Auth } = deps;
 
   // docker-diffusers-api specific
@@ -58,7 +61,10 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   // --- TEMPORARY BAN --- //
 
-  if (user.createdAt > new Date("2023-07-16"))
+  if (
+    request.model.id === "upsample" &&
+    user.createdAt > new Date("2023-07-16")
+  )
     return res
       .status(403)
       .end(
