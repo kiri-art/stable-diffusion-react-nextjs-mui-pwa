@@ -41,6 +41,9 @@ async function ipPass(ip: string) {
   if (scores.threat_score > 30) return false;
   if (scores.trust_score < 60) return false;
 
+  // Temporarily ban Iran during current attack.
+  if (data.country_code === "IR") return false;
+
   return true;
 }
 
