@@ -23,8 +23,10 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   const { gs, Auth } = deps;
 
   // docker-diffusers-api specific
-  const callInputs = request.inputs.callInputs || {};
-  const modelInputs = request.inputs.modelInputs || {};
+  const callInputs =
+    (request.inputs.callInputs as Record<string, unknown>) || {};
+  const modelInputs =
+    (request.inputs.modelInputs as Record<string, unknown>) || {};
 
   const res = {
     status(code: number) {
@@ -84,7 +86,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   const chargedCredits = { credits: 0, paid: false };
 
   let CREDIT_COST = 1;
-  if (request.inputs.callInputs.PROVIDER_ID === "kiri") CREDIT_COST = 0.25;
+  if (callInputs.PROVIDER_ID === "kiri") CREDIT_COST = 0.25;
   if (request.model.id === "upsample") CREDIT_COST = 0.2;
 
   if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
