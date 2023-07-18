@@ -35,7 +35,8 @@ import sendQueue from "../src/lib/sendQueue";
 import fetchToOutput from "../src/lib/fetchToOutput";
 
 // Also in banana-upsaple.ts; TODO
-const CREDIT_COST = 0.2;
+// const CREDIT_COST = 0.2;
+const CREDIT_COST = 1;
 
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
@@ -306,7 +307,13 @@ export default function Upsample() {
     <>
       <MyAppBar title={t`Upsampling`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
-        <p style={{ textAlign: "center" }}>UNDER ACTIVE DEVELOPMENT</p>
+        <p style={{ textAlign: "center" }}>
+          UNDER ACTIVE DEVELOPMENT
+          <br />
+          Credit cost may fluctuate during current high use.
+          <br />
+          It should be back to 0.2 again, and much faster, in a few more days.
+        </p>
         <Box
           sx={{
             border: "1px solid black",
