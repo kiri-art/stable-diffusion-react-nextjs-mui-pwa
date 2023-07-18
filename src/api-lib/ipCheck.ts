@@ -1,6 +1,7 @@
-import IPData from "ipdata";
+// import IPData from "ipdata";
 import { NextApiRequest } from "next";
 
+/*
 let ipdata: IPData | null = null;
 if (typeof window !== "object") {
   if (!process.env.IPDATA_API_KEY)
@@ -8,6 +9,7 @@ if (typeof window !== "object") {
 
   ipdata = new IPData(process.env.IPDATA_API_KEY);
 }
+*/
 
 // taken from gongo;
 // TODO: export a method like this from gongo-server, that accepts x-fw number.
@@ -25,7 +27,11 @@ function ipFromReq(req: NextApiRequest) {
   return ip;
 }
 
-async function ipPass(ip: string) {
+async function ipPass(_ip: string) {
+  // pass all for now.
+  return true;
+
+  /*
   if (!ipdata) return false;
   const data = await ipdata.lookup(ip);
   const { threat } = data;
@@ -49,6 +55,7 @@ async function ipPass(ip: string) {
   if (data.asn.name.match(/DigitalOcean|Hetzner|OVH/)) return false;
 
   return true;
+  */
 }
 
 export { ipFromReq, ipPass };

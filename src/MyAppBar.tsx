@@ -446,12 +446,10 @@ export default function MyAppBar({ title }: { title: string }) {
           </Box>
         </Box>
 
-        <Container sx={{ p: 2, color: "red", textAlign: "center" }}>
-          Problems accessing the site? Read about the{" "}
-          <a href="https://forums.kiri.art/t/recent-massive-abuse-and-mitigation/171">
-            ongoing mass abuse
-          </a>{" "}
-          we are currently experiencing.{" "}
+        <Container sx={{ p: 2, textAlign: "center" }}>
+          Kiri ❤️ 🇮🇷 & artech.cafe 🙏
+          <br />
+          Sorry for the issues, more details coming soon.
         </Container>
       </>
     ),
