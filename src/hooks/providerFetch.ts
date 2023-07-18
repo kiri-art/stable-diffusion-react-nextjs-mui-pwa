@@ -63,6 +63,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   // --- TEMPORARY BAN --- //
 
+  /*
   if (
     request.model.id === "upsample" &&
     user.createdAt > new Date("2023-07-16")
@@ -72,6 +73,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
       .end(
         "Forbidden; all accounts created after 2023-07-16 are temporarily banned from using the API."
       );
+  */
 
   if (
     process.env.NODE_ENV === "production" &&
