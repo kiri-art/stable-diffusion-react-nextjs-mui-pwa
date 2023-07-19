@@ -878,7 +878,7 @@ export function randomizeSeedIfChecked(inputs: ModelState) {
   }
 }
 
-function ProviderSelect({
+export function ProviderSelect({
   value,
   setValue,
 }: // defaultValue,

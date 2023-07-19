@@ -50,7 +50,8 @@ const models: Record<string, Model> = {
 
       delete modelInputs.sampler;
 
-      if (callInputs.MODEL_ID) {
+      // @ts-expect-error: TODO
+      if (callInputs.MODEL_ID && !callInputs.use_extra) {
         const subModel = SubModels[callInputs.MODEL_ID];
         callInputs.MODEL_PRECISION = subModel.MODEL_PRECISION ?? "fp16";
         callInputs.MODEL_REVISION = subModel.MODEL_REVISION ?? "fp16";

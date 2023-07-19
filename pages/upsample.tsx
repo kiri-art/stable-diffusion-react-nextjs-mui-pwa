@@ -33,10 +33,7 @@ import GoButton from "../src/GoButton";
 import blobToBase64 from "../src/lib/blobToBase64";
 import sendQueue from "../src/lib/sendQueue";
 import fetchToOutput from "../src/lib/fetchToOutput";
-
-// Also in banana-upsaple.ts; TODO
-// const CREDIT_COST = 0.2;
-const CREDIT_COST = 1;
+import { ProviderSelect } from "../src/sd/Controls";
 
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
@@ -111,9 +108,11 @@ function ModelSelect({
 function FaceEnhance({
   value,
   setValue,
+  disabled,
 }: {
   value: boolean;
   setValue: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled: boolean;
 }) {
   return React.useMemo(() => {
     return (
@@ -131,6 +130,7 @@ function FaceEnhance({
                 <Switch
                   checked={value}
                   onChange={(event) => setValue(event.target.checked)}
+                  disabled={disabled}
                 />
               }
               label={
@@ -161,13 +161,14 @@ function FaceEnhance({
         </Stack>
       </Grid>
     );
-  }, [value, setValue]);
+  }, [value, setValue, disabled]);
 }
 
 export default function Upsample() {
   const inputImage = React.useRef<HTMLImageElement>(null);
   const [modelId, setModelId] = React.useState("RealESRGAN_x4plus");
   const [faceEnhance, setFaceEnhance] = React.useState(true);
+  const [PROVIDER_ID, setPROVIDER_ID] = React.useState("kiri");
 
   const [imgSrc, setImgSrc] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
@@ -188,6 +189,11 @@ export default function Upsample() {
   );
   const router = useRouter();
 
+  // Also in hooks/providerFetch
+  const CREDIT_COST = ["kiri", "0", "kiri-local"].includes(PROVIDER_ID)
+    ? 0.1
+    : 5;
+
   React.useEffect(() => {
     if (sendQueue.has()) {
       const share = sendQueue.get();
@@ -197,6 +203,10 @@ export default function Upsample() {
       toast(t`Image Loaded`);
     }
   }, []);
+
+  React.useEffect(() => {
+    if (faceEnhance && modelId.match(/anime/) !== null) setFaceEnhance(false);
+  }, [modelId, faceEnhance]);
 
   function readFile(file: File) {
     const fileReader = new FileReader();
@@ -278,10 +288,12 @@ export default function Upsample() {
     setRequestEndTime(null);
 
     await fetchToOutput(
-      "upsample",
+      PROVIDER_ID === "banana" ? "upsample" : "dda",
       modelInputs,
       {
-        PROVIDER_ID: "banana",
+        // PROVIDER_ID: "banana",
+        PROVIDER_ID,
+        use_extra: "upsample",
         ...callInputs,
       },
       {
@@ -307,6 +319,7 @@ export default function Upsample() {
     <>
       <MyAppBar title={t`Upsampling`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
+        {/*
         <p style={{ textAlign: "center" }}>
           UNDER ACTIVE DEVELOPMENT
           <br />
@@ -314,6 +327,7 @@ export default function Upsample() {
           <br />
           It should be back to 0.2 again, and much faster, in a few more days.
         </p>
+        */}
         <Box
           sx={{
             border: "1px solid black",
@@ -354,13 +368,20 @@ export default function Upsample() {
             // setDest={setDest}
             credits={CREDIT_COST}
           />
+          <Container sx={{ py: 1, textAlign: "center" }}>
+            <ProviderSelect value={PROVIDER_ID} setValue={setPROVIDER_ID} />
+          </Container>
           <ModelSelect
             value={modelId}
             setValue={setModelId}
             defaultValue="RealESRGAN_x4plus"
           />
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <FaceEnhance value={faceEnhance} setValue={setFaceEnhance} />
+            <FaceEnhance
+              value={faceEnhance}
+              setValue={setFaceEnhance}
+              disabled={modelId.match(/anime/) !== null}
+            />
           </Grid>
         </form>
       </Container>
