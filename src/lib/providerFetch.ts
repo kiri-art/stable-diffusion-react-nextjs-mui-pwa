@@ -245,7 +245,17 @@ export class ProviderFetchRequestBase {
       body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
+    const text = await response.text();
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch (error) {
+      this.callID = "unknown";
+      this.finished = true;
+      this.modelOutputs = null;
+      this.message = "Error: " + text;
+      return { message: this.message };
+    }
     console.log("fetchStart result", result);
 
     this.callID = result.callID;
@@ -278,11 +288,18 @@ export class ProviderFetchRequestBase {
         // NB: messages with "error" in it are handled differently.
         const bodyText = await response.text();
         this.callID = "unknown";
-        this.message = "Error: " + bodyText;
+        this.message =
+          "Error: " +
+          JSON.stringify({
+            $error: {
+              status: response.status,
+              body: bodyText,
+            },
+          });
         this.modelOutputs = null;
         this.finished = true;
         return {
-          message: "Error: " + bodyText,
+          message: this.message,
         };
       }
 
@@ -512,6 +529,8 @@ export class ProviderFetchServerless {
           | Record<string, unknown>;
         if ($error) return res.status(200).end({ $error });
 
+        // try/catch?  handle non-200?
+        // startResult: { statusCode: 413, code: 'FST_ERR_CTP_BODY_TOO_LARGE', error: 'Payload Too Large', message: 'Request body is too large' }
         const startResult = await request.fetchStart();
 
         await hooks.exec("providerFetch.server.postStart", {

@@ -129,18 +129,54 @@ export default async function fetchToOutput(
       return;
     }
 
-    if (result.message.match(/[Ee]rror/)) {
+    if (!result.modelOutputs || result.message.match(/[Ee]rror/)) {
+      /*
+      if (result.modelOutputs?.[0].$error) {
+        console.error(result.modelOutputs?.[0].$error);
+        setLog(
+          JSON.stringify(result.modelOutputs?.[0].$error, null, 2).split("\n")
+        );
+        return { $error: result };
+      }
+      */
+
+      // {"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/api/providerFetch"},"buildId":"development","isFallback":false,"err":{"name":"SyntaxError","source":"server","message":"Unexpected token \u003c in JSON at position 0","stack":"SyntaxError: Unexpected token \u003c in JSON at position 0\n    at JSON.parse (\u003canonymous\u003e)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:6571:19)\n    at successSteps (node:internal/deps/undici/undici:6545:27)\n    at node:internal/deps/undici/undici:1211:60\n    at node:internal/process/task_queues:140:7\n    at AsyncResource.runInAsyncScope (node:async_hooks:203:9)\n    at AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"},"gip":true,"locales":["en-US","he-IL","ja-JP"],"scriptLoader":[]}
+      let message = result.message;
+      if (message && message.startsWith('Error: {"$error":{'))
+        message = JSON.parse(message.substring(7)).$error.body;
+
+      const match =
+        message &&
+        message.match(
+          /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/
+        );
+
+      if (match) {
+        try {
+          const parsed = JSON.parse(match[1]);
+          if (parsed?.err?.stack)
+            parsed.err.stack = parsed.err.stack.split("\n");
+          setLog(JSON.stringify(parsed, null, 2).split("\n"));
+          return { $error: result };
+        } catch (e) {
+          console.error(e);
+        }
+        console.log(match);
+      }
+
       setLog(["FAILED: " + result.message]);
       console.error(result);
       // this was commented out, WHY???
       return { $error: result };
     }
 
+    /*
     if (!result.modelOutputs) {
       // do something
       console.error("no modelOutputs");
       return;
     }
+    */
 
     const output1 = result.modelOutputs[0];
 
