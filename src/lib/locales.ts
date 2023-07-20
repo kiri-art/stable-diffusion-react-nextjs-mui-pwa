@@ -18,6 +18,7 @@ const locales: Record<string, locale> = {
       "en-US": "English (US)",
       "he-IL": 'אנגלית (ארה"ב)',
       "ja-JP": "英語 (米国)",
+      "fa-IR": "فارسی (ایران)",
     },
   },
 
@@ -30,6 +31,7 @@ const locales: Record<string, locale> = {
       "en-US": "English (US)",
       "he-IL": "עברית (ישראל)",
       "ja-JP": "ヘブライ語 (イスラエル)",
+      "fa-IR": "فارسی (ایران)",
     },
   },
 
@@ -42,6 +44,20 @@ const locales: Record<string, locale> = {
       "en-US": "Japanese (JP)",
       "he-IL": "יפנית (יפן)",
       "ja-JP": "日本語（日本）",
+      "fa-IR": "فارسی (ایران)",
+    },
+  },
+
+  "fa-IR": {
+    id: "fa-IR",
+    dir: "rtl",
+    language: "fa",
+    region: "ir",
+    label: {
+      "en-US": "Persian (IR)",
+      "he-IL": "פרסית (איראן)",
+      "ja-JP": "ペルシア語（イラン）",
+      "fa-IR": "فارسی (ایران)",
     },
   },
 };

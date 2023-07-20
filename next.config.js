@@ -9,7 +9,7 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: true,
   i18n: {
-    locales: ["en-US", "he-IL", "ja-JP"],
+    locales: ["en-US", "he-IL", "ja-JP", "fa-IR"],
     defaultLocale: "en-US",
     // domains: [ { domain: "example.com", defaultLocale: 'en-US '} ]
   },
