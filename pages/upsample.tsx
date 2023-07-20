@@ -319,13 +319,6 @@ export default function Upsample() {
     <>
       <MyAppBar title={t`Upsampling`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
-        <p style={{ textAlign: "center" }}>
-          There is currently an issue with large images (&quot;FAILED:
-          Error:&quot;).
-          <br />
-          Please use images smaller than 512x512 for now. This will be fixed
-          soon.
-        </p>
         {/*
         <p style={{ textAlign: "center" }}>
           UNDER ACTIVE DEVELOPMENT
