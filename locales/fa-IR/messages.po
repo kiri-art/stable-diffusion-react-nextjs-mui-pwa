@@ -140,7 +140,7 @@ msgstr "بازگشت به طراحان"
 msgid "Be Responsible"
 msgstr "مسئولیت‌پذیر باشید"
 
-#: pages/upsample.tsx:88
+#: pages/upsample.tsx:90
 msgid "Best for Anime"
 msgstr "بهترین برای انیمه"
 
@@ -244,13 +244,21 @@ msgstr "گزارش رویداد"
 msgid "Explicit"
 msgstr "صریح"
 
-#: pages/upsample.tsx:138
+#: pages/upsample.tsx:140
 msgid "Face Enhance"
 msgstr "تقویت صورت"
 
-#: pages/upsample.tsx:146
+#: pages/upsample.tsx:148
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "ترمیم صورت. خوب برای تصاویر واقعی، بد برای انیمه."
+
+#: pages/upsample.tsx:257
+msgid "File is not a valid image."
+msgstr ""
+
+#: pages/upsample.tsx:263
+msgid "File is too large; {maxSizeText} max."
+msgstr ""
 
 #: pages/index.tsx:71
 msgid "Filter"
@@ -264,7 +272,7 @@ msgstr "تصاویری را که ممکن است NSFW (\"غیر ایمن برا�
 msgid "Free Credits"
 msgstr "اعتبارهای رایگان"
 
-#: pages/upsample.tsx:98
+#: pages/upsample.tsx:100
 msgid "General - v3"
 msgstr "عمومی - v3"
 
@@ -308,7 +316,7 @@ msgstr "صفحه اصلی"
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "چقدر دقیق باید از دستور پیروی شود. مقادیر کمتر = خلاقیت بیشتر، تنوع بیشتر. مقادیر بیشتر = دقیق‌تر، ممکن است باعث ایجاد مصنوعات شود. مقادیر 5 تا 15 به بهترین شکل عمل می‌کنند."
 
-#: pages/upsample.tsx:203
+#: pages/upsample.tsx:207
 #: src/Inpaint.tsx:384
 msgid "Image Loaded"
 msgstr "تصویر بارگذاری شد"
@@ -322,6 +330,10 @@ msgstr "تصویر به تصویر"
 #: src/Inpaint.tsx:542
 msgid "Image will be down scaled to max 1024x1024."
 msgstr "مقیاس تصویر به حداکثر 1024x1024 کوچک می‌شود."
+
+#: pages/upsample.tsx:374
+msgid "Images should be max {maxSizeText}."
+msgstr ""
 
 #: src/OutputImage.tsx:324
 msgid "Inpaint"
@@ -387,8 +399,8 @@ msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "به دلیل محدودیت حافظه، حداکثر اندازه 1024x768 یا 768x1024 است."
 
 #: pages/s/[_id].tsx:203
-#: pages/upsample.tsx:60
-#: pages/upsample.tsx:64
+#: pages/upsample.tsx:62
+#: pages/upsample.tsx:66
 #: src/sd/Controls.tsx:763
 #: src/sd/Controls.tsx:767
 msgid "Model"
@@ -484,7 +496,7 @@ msgstr "وضعیت سفارش"
 msgid "Orders"
 msgstr "سفارشات"
 
-#: pages/upsample.tsx:78
+#: pages/upsample.tsx:80
 msgid "Original model, best for most cases."
 msgstr "مدل اصلی، بهترین حالت برای اکثر موارد."
 
@@ -730,7 +742,7 @@ msgid "Upsample"
 msgstr " نمونه‌برداری افزایشی"
 
 #: pages/start.tsx:42
-#: pages/upsample.tsx:320
+#: pages/upsample.tsx:336
 #: src/MyAppBar.tsx:175
 msgid "Upsampling"
 msgstr " نمونه افزایی"

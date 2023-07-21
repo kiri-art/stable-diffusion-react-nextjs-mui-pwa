@@ -150,7 +150,7 @@ msgstr "クレジットに戻る"
 msgid "Be Responsible"
 msgstr "責任を持ちましょう"
 
-#: pages/upsample.tsx:88
+#: pages/upsample.tsx:90
 msgid "Best for Anime"
 msgstr ""
 
@@ -270,12 +270,20 @@ msgstr ""
 msgid "Explicit"
 msgstr ""
 
-#: pages/upsample.tsx:138
+#: pages/upsample.tsx:140
 msgid "Face Enhance"
 msgstr ""
 
-#: pages/upsample.tsx:146
+#: pages/upsample.tsx:148
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
+msgstr ""
+
+#: pages/upsample.tsx:257
+msgid "File is not a valid image."
+msgstr ""
+
+#: pages/upsample.tsx:263
+msgid "File is too large; {maxSizeText} max."
 msgstr ""
 
 #: pages/index.tsx:71
@@ -298,7 +306,7 @@ msgstr "無料クレジット"
 #~ msgid "Full precision, slower, sometimes better."
 #~ msgstr ""
 
-#: pages/upsample.tsx:98
+#: pages/upsample.tsx:100
 msgid "General - v3"
 msgstr ""
 
@@ -350,7 +358,7 @@ msgstr "ホーム"
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "プロンプトに従う程度。 値が低い = より創造的で、より多様性があります。 値が高い = より正確で、アーティファクトが発生する場合があります。 5 ～ 15 の値が最適です。"
 
-#: pages/upsample.tsx:203
+#: pages/upsample.tsx:207
 #: src/Inpaint.tsx:384
 msgid "Image Loaded"
 msgstr ""
@@ -368,6 +376,10 @@ msgstr ""
 #: src/Inpaint.tsx:528
 #~ msgid "Image will be scaled to max 512x512 (for now)"
 #~ msgstr "画像は最大 512x512 にスケール調整されます (現時点では)"
+
+#: pages/upsample.tsx:374
+msgid "Images should be max {maxSizeText}."
+msgstr ""
 
 #: src/OutputImage.tsx:324
 msgid "Inpaint"
@@ -453,8 +465,8 @@ msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
 
 #: pages/s/[_id].tsx:203
-#: pages/upsample.tsx:60
-#: pages/upsample.tsx:64
+#: pages/upsample.tsx:62
+#: pages/upsample.tsx:66
 #: src/sd/Controls.tsx:763
 #: src/sd/Controls.tsx:767
 msgid "Model"
@@ -554,7 +566,7 @@ msgstr "注文状況"
 msgid "Orders"
 msgstr "注文"
 
-#: pages/upsample.tsx:78
+#: pages/upsample.tsx:80
 msgid "Original model, best for most cases."
 msgstr "元のモデル、ほとんどのケースに最適"
 
@@ -832,7 +844,7 @@ msgid "Upsample"
 msgstr ""
 
 #: pages/start.tsx:42
-#: pages/upsample.tsx:320
+#: pages/upsample.tsx:336
 #: src/MyAppBar.tsx:175
 msgid "Upsampling"
 msgstr ""
