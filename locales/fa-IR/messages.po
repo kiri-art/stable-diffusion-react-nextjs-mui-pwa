@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: fa-IR\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #: src/sd/Controls.tsx:615
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
@@ -19,17 +25,25 @@ msgstr "قدرت (کاهش نویز)"
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(کشیدن و رها کردن، اشتراک‌گذاری به زودی)"
 
-#: pages/start.tsx:175
-msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
-msgstr "1) با مسئولیت خود استفاده کنید، ما هیچ مسئولیتی را در قبال هر گونه عواقب ناشی از استفاده (یا سوء استفاده) شما از این پروژه بر عهده نمی‌گیریم. 2) هر گونه استفاده از این سایت یا پروژه به معنای پذیرش شرایط و قوانین آن، از جمله قوانین \"مسئولیت‌پذیر بودن\" در بالا، <0>مجوز CreativeML Open RAIL-M</0> Stable Diffusion و <1>مجوز MIT</1> این پروژه است."
+#: src/GoButton.tsx:48
+msgid "{credits, plural, one {# Credit} other {# Credits}}"
+msgstr "{credits, plural, one {# اعتبار} other {# اعتبار}}"
 
-#: pages/credits.tsx:186
-msgid "<0>*</0>May change at any time."
-msgstr "<0>*</0>ممکن است هر زمانی تغییر کند."
+#: pages/checkout.tsx:67
+msgid "{numCredits} credits"
+msgstr "{numCredits} اعتبار"
+
+#: src/GoButton.tsx:62
+msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
+msgstr "{userCredits, plural, one {# اعتبار باقی مانده} other {# اعتبار باقی مانده}}"
 
 #: pages/about.tsx:135
 msgid "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 msgstr "<0>@Comamoca_</0> (こまもか🦊) که در ارائه نام \"KIRI\" (\"霧\") کمک و مشارکت کرد و به طور کلی برای پروژه فوق‌العاده مفید بوده و از آن حمایت کرده است 🙏."
+
+#: pages/credits.tsx:186
+msgid "<0>*</0>May change at any time."
+msgstr "<0>*</0>ممکن است هر زمانی تغییر کند."
 
 #: pages/about.tsx:123
 msgid "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
@@ -58,11 +72,14 @@ msgstr "<0>Stability.Ai</0> - برای وقت، کار و تلاش باورنک�
 msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 msgstr "<0>تصاویر را از <1>تاریخچه</1></0> <2>خود ستاره‌دار کنید و بگذارید اینجا نیز نمایش داده شوند!</2>"
 
+#: pages/start.tsx:175
+msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
+msgstr "1) با مسئولیت خود استفاده کنید، ما هیچ مسئولیتی را در قبال هر گونه عواقب ناشی از استفاده (یا سوء استفاده) شما از این پروژه بر عهده نمی‌گیریم. 2) هر گونه استفاده از این سایت یا پروژه به معنای پذیرش شرایط و قوانین آن، از جمله قوانین \"مسئولیت‌پذیر بودن\" در بالا، <0>مجوز CreativeML Open RAIL-M</0> Stable Diffusion و <1>مجوز MIT</1> این پروژه است."
+
 #: src/sd/Controls.tsx:714
 msgid "A black image will be shown instead."
 msgstr "در عوض یک تصویر سیاه نمایش داده خواهد شد."
 
-#: src/workboxStuff.tsx:54
 #: src/workboxStuff.tsx:54
 msgid "A newer version of this web app is available, reload to update?"
 msgstr "نسخه جدیدتری از این برنامه تحت وب موجود است، برای به‌روزرسانی مجدداً بارگیری شود؟"
@@ -94,7 +111,6 @@ msgid "Amount"
 msgstr "مقدار"
 
 #: src/Starred.tsx:43
-#: src/Starred.tsx:43
 msgid "An error occured:"
 msgstr "خطایی رخ داد:"
 
@@ -105,11 +121,9 @@ msgid "Anonymous User"
 msgstr "کاربر ناشناس"
 
 #: pages/history.tsx:253
-#: pages/history.tsx:253
 msgid "Are you sure?  This action cannot be undone"
 msgstr "آیا مطمئن هستید؟ این عمل قابل بازگشت نیست"
 
-#: pages/history.tsx:138
 #: pages/history.tsx:138
 msgid "Are you sure?  This cannot be undone."
 msgstr "آیا مطمئن هستید؟ این قابل بازگشت نیست."
@@ -130,22 +144,22 @@ msgstr "مسئولیت‌پذیر باشید"
 msgid "Best for Anime"
 msgstr "بهترین برای انیمه"
 
-#: pages/s/[_id].tsx:214
-msgid "CFG"
-msgstr "CFG"
-
 #: pages/[_id].tsx:125
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "لغو"
 
-#: pages/[_id].tsx:88
-msgid "Check out this user page on kiri.art"
-msgstr "صفحه این کاربر را در kiri.art بررسی کنید"
+#: pages/s/[_id].tsx:214
+msgid "CFG"
+msgstr "CFG"
 
 #: pages/[_id].tsx:87
 msgid "Check out {username}'s page on kiri.art"
 msgstr "صفحه {username} را در kiri.art بررسی کنید"
+
+#: pages/[_id].tsx:88
+msgid "Check out this user page on kiri.art"
+msgstr "صفحه این کاربر را در kiri.art بررسی کنید"
 
 #: pages/checkout.tsx:60
 #: pages/checkout.tsx:63
@@ -161,7 +175,6 @@ msgstr "راهنمای بدون طبقه‌بندی (مقیاس)"
 msgid "Clear History"
 msgstr "پاک کردن تاریخچه"
 
-#: pages/credits.tsx:63
 #: pages/credits.tsx:63
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr "این کد قبلاً به تعداد حداکثر استفاده شده است، متأسفیم."
@@ -203,7 +216,6 @@ msgstr "واحد پول"
 msgid "Date"
 msgstr "تاریخ"
 
-#: src/Starred.tsx:22
 #: src/Starred.tsx:22
 msgid "Delete this star?"
 msgstr "این ستاره حذف شود؟"
@@ -335,16 +347,13 @@ msgid "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface 
 msgstr "تمرکز آن یک رابط ساده، <0>بدون نیاز به تنظیم</0>، <1>ابتدا مناسب موبایل</1> است که <2>قابل اشتراک‌گذاری آسان</2> با دوستان باشد."
 
 #: src/Starred.tsx:47
-#: src/Starred.tsx:47
 msgid "Item was reported {0} times has been removed.  Thank you!"
 msgstr "این مورد {0} بار گزارش شده و حذف شده است. متشکریم!"
 
 #: src/Starred.tsx:51
-#: src/Starred.tsx:51
 msgid "Item was reported {0} times.  Thanks for reporting!"
 msgstr "مورد {0} بار گزارش شده است. از اینکه گزارش دادید، متشکریم!"
 
-#: src/Starred.tsx:34
 #: src/Starred.tsx:34
 msgid "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
 msgstr "موارد گزارش‌شده توسط {NUM_REPORTS_UNTIL_REMOVAL} کاربر به طور خودکار حذف خواهند شد."
@@ -401,11 +410,6 @@ msgstr "باید مضرب 64 باشد. به دلیل محدودیت حافظه،
 msgid "My Credits"
 msgstr "اعتبارهای من"
 
-#: pages/index.tsx:240
-#: src/sd/Controls.tsx:702
-msgid "NSFW Filter"
-msgstr "فیلتر NSFW"
-
 #: pages/s/[_id].tsx:211
 #: src/sd/Controls.tsx:169
 msgid "Negative Prompt"
@@ -430,7 +434,6 @@ msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleadi
 msgstr "برای استفاده منصفانه، هیچ دیپ‌فیکی کنار گذاشته نشود (مثلاً طنز، آموزش، هیچ چیز گمراه‌کننده یا سیاسی)."
 
 #: pages/credits.tsx:60
-#: pages/credits.tsx:60
 msgid "No such code exists."
 msgstr "چنین کدی وجود ندارد."
 
@@ -438,13 +441,18 @@ msgstr "چنین کدی وجود ندارد."
 msgid "Notes"
 msgstr "یادداشت‌ها"
 
-#: src/sd/Controls.tsx:331
-msgid "Number of Inference Steps"
-msgstr "تعداد مراحل استنتاج"
+#: pages/index.tsx:240
+#: src/sd/Controls.tsx:702
+msgid "NSFW Filter"
+msgstr "فیلتر NSFW"
 
 #: src/sd/Controls.tsx:340
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "تعداد مراحل حذف نویز (چند بار تکرار و بهبود تصویر). وارد کردن اعداد بزرگتر به زمان بیشتری برای رندر نیاز دارد، اما می‌تواند نتایج با کیفیت بالاتری تولید کند."
+
+#: src/sd/Controls.tsx:331
+msgid "Number of Inference Steps"
+msgstr "تعداد مراحل استنتاج"
 
 #: src/asyncConfirm.tsx:70
 msgid "OK"
@@ -458,6 +466,10 @@ msgstr "فقط ستاره‌هایی با دستورات منطبق نمایش �
 msgid "Open Source, developer friendly."
 msgstr "منبع‌باز، برنامه‌نویس پسند."
 
+#: pages/order/[_id].tsx:52
+msgid "Order {_id}"
+msgstr "{_id} سفارش"
+
 #: pages/credits.tsx:264
 #: pages/order/[_id].tsx:78
 msgid "Order History"
@@ -467,10 +479,6 @@ msgstr "سوابق سفارش"
 #: pages/orders.tsx:46
 msgid "Order Status"
 msgstr "وضعیت سفارش"
-
-#: pages/order/[_id].tsx:52
-msgid "Order {_id}"
-msgstr "{_id} سفارش"
 
 #: pages/orders.tsx:49
 msgid "Orders"
@@ -568,7 +576,6 @@ msgid "Reminder: this is Free and Open Source Software. You can run your own cop
 msgstr "یادآوری: این نرم‌افزار رایگان و متن‌باز است. می‌توانید نسخه شخصی خود را به صورت رایگان بر روی رایانه شخصی خود، با یک کارت گرافیک مناسب یا یک حساب Banana.Dev ارزان اجرا کنید. اطلاعات بیشتر در <0>صفحه درباره</0>."
 
 #: src/Starred.tsx:33
-#: src/Starred.tsx:33
 msgid "Report this star?"
 msgstr "این ستاره را گزارش می‌کنید؟"
 
@@ -587,10 +594,6 @@ msgstr "منابع"
 #: src/Inpaint.tsx:536
 msgid "Roadmap"
 msgstr "نقشه راه"
-
-#: src/OutputImage.tsx:387
-msgid "SEND IMAGE TO"
-msgstr "ارسال تصویر به"
 
 #: src/sd/Controls.tsx:810
 #: src/sd/Controls.tsx:814
@@ -618,6 +621,10 @@ msgstr "خلاقیت Kiri.Art من را ببینید!"
 #: src/sd/Controls.tsx:463
 msgid "Seed"
 msgstr "عدد آغازین"
+
+#: src/OutputImage.tsx:387
+msgid "SEND IMAGE TO"
+msgstr "ارسال تصویر به"
 
 #: src/sd/Controls.tsx:607
 msgid "Share Inputs"
@@ -649,17 +656,12 @@ msgid "Steps"
 msgstr "مراحل"
 
 #: pages/credits.tsx:90
-#: pages/credits.tsx:90
 msgid "Successfully redeemed {0} credits."
 msgstr "{0} اعتبار با موفقیت بازخرید شد."
 
 #: pages/start.tsx:133
 msgid "Super simple, easy to share."
 msgstr "فوق‌العاده ساده، قابلیت اشتراک‌گذاری آسان."
-
-#: pages/checkout.tsx:72
-msgid "TOTAL"
-msgstr "مجموع"
 
 #: pages/start.tsx:172
 #: src/Copyright.tsx:24
@@ -678,7 +680,6 @@ msgid "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 msgstr "هزینه از طرف \"Wastelands Networking\" یا \"KIRI.ART\" در صورتحساب شما منظور می‌شود."
 
 #: src/Starred.tsx:23
-#: src/Starred.tsx:23
 msgid "This cannot be undone.  All likes will be lost."
 msgstr "این قابل بازگشت نیست. همه لایک‌ها از بین خواهند رفت."
 
@@ -690,9 +691,17 @@ msgstr "این پروژه بر اساس نرم‌افزار رایگان و مت
 msgid "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 msgstr "این پروژه توسط داوطلبان جامعه در اوقات فراغت ما اداره می‌شود. ما هیچ تضمینی ارائه نمی‌کنیم و بازپرداخت در حال حاضر امکان‌پذیر نیست."
 
+#: pages/checkout.tsx:72
+msgid "TOTAL"
+msgstr "مجموع"
+
 #: pages/credits.tsx:173
 msgid "Total Credits"
 msgstr "مجموع اعتبار"
+
+#: pages/credits.tsx:175
+msgid "Total credits available for immediate use."
+msgstr "مجموع اعتبارات موجود برای استفاده فوری."
 
 #: pages/stats.tsx:370
 #: pages/stats.tsx:512
@@ -703,10 +712,6 @@ msgstr "کل درخواست‌ها"
 msgid "Total Users"
 msgstr "مجموع کاربران"
 
-#: pages/credits.tsx:175
-msgid "Total credits available for immediate use."
-msgstr "مجموع اعتبارات موجود برای استفاده فوری."
-
 #: pages/start.tsx:146
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr "توسعه شفاف و امکان مشارکت آسان برای توسعه‌دهندگان. به خصوص توسعه‌دهندگان وب بدون پیشینه قبلی در یادگیری ماشین."
@@ -714,10 +719,6 @@ msgstr "توسعه شفاف و امکان مشارکت آسان برای توس�
 #: pages/login.tsx:48
 msgid "Twitter"
 msgstr "توئیتر"
-
-#: pages/checkout.tsx:72
-msgid "USD"
-msgstr "دلار"
 
 #: src/Inpaint.tsx:522
 msgid "Upload an image with button below"
@@ -733,6 +734,10 @@ msgstr " نمونه‌برداری افزایشی"
 #: src/MyAppBar.tsx:175
 msgid "Upsampling"
 msgstr " نمونه افزایی"
+
+#: pages/checkout.tsx:72
+msgid "USD"
+msgstr "دلار"
 
 #: src/Inpaint.tsx:527
 msgid "Use mouse / finger to draw mask over it"
@@ -769,7 +774,6 @@ msgid "Width of output image."
 msgstr "عرض تصویر خروجی."
 
 #: pages/credits.tsx:66
-#: pages/credits.tsx:66
 msgid "You have already redeemed this code before."
 msgstr "قبلاً از این کد استفاده کرده‌اید."
 
@@ -784,15 +788,3 @@ msgstr "<0>{0}</0><1>*</1> اعتبارهای ایگان شما هر <2>روز �
 #: pages/start.tsx:135
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 msgstr "بدون نیاز به راه‌اندازی، ابتدا مناسب موبایل دسترسی به این فناوری برای هر کسی - بدون توجه به تجربه فنی که دارد - آسان است و می‌تواند با آن بازی کند و هیجان زده شود."
-
-#: src/GoButton.tsx:48
-msgid "{credits, plural, one {# Credit} other {# Credits}}"
-msgstr "{credits, plural, one {# اعتبار} other {# اعتبار}}"
-
-#: pages/checkout.tsx:67
-msgid "{numCredits} credits"
-msgstr "{numCredits} اعتبار"
-
-#: src/GoButton.tsx:62
-msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
-msgstr "{userCredits, plural, one {# اعتبار باقی مانده} other {# اعتبار باقی مانده}}"
