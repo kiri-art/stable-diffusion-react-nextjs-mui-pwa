@@ -35,6 +35,8 @@ import sendQueue from "../src/lib/sendQueue";
 import fetchToOutput from "../src/lib/fetchToOutput";
 import { ProviderSelect } from "../src/sd/Controls";
 
+const maxSizeText = "3.2MB";
+
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
     <Box sx={{ textAlign: "center", width: "100%" }}>
@@ -169,6 +171,8 @@ export default function Upsample() {
   const [modelId, setModelId] = React.useState("RealESRGAN_x4plus");
   const [faceEnhance, setFaceEnhance] = React.useState(true);
   const [PROVIDER_ID, setPROVIDER_ID] = React.useState("kiri");
+  const [validImageLoaded, setValidImageLoaded] = React.useState(false);
+  const [invalidImageReason, setInvalidImageReason] = React.useState("");
 
   const [imgSrc, setImgSrc] = React.useState("");
   const [log, setLog] = React.useState([] as Array<string>);
@@ -248,10 +252,22 @@ export default function Upsample() {
     const file = target.files[0];
 
     console.log(file);
-    if (!file.type.match(/^image\//)) return toast("Not an image");
+    if (!file.type.match(/^image\//)) {
+      setValidImageLoaded(false);
+      setInvalidImageReason(t`File is not a valid image.`);
+      return;
+    }
+
+    if (file.size > 3.2 * 1024 * 1024) {
+      setValidImageLoaded(false);
+      setInvalidImageReason(t`File is too large; ${maxSizeText} max.`);
+      return;
+    }
+
+    setValidImageLoaded(true);
+    setInvalidImageReason("");
 
     setImgSrc("");
-
     readFile(file);
   }
 
@@ -350,6 +366,13 @@ export default function Upsample() {
         </Box>
         <div style={{ textAlign: "center" }}>
           <input type="file" onChange={fileChange}></input>
+          {invalidImageReason ? (
+            <div style={{ color: "red" }}>{invalidImageReason}</div>
+          ) : validImageLoaded ? null : (
+            <div
+              style={{ fontSize: "80%" }}
+            >{t`Images should be max ${maxSizeText}.`}</div>
+          )}
         </div>
         {imgSrc && (
           <OutputImage
@@ -363,7 +386,7 @@ export default function Upsample() {
         )}
         <form onSubmit={go}>
           <GoButton
-            disabled={false}
+            disabled={!validImageLoaded}
             // dest={dest}
             // setDest={setDest}
             credits={CREDIT_COST}
