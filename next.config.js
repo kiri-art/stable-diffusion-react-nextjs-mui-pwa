@@ -29,4 +29,14 @@ module.exports = withPWA({
       },
     ],
   },
+  experimental: {
+    swcPlugins: [
+      [
+        "@lingui/swc-plugin",
+        {
+          // the same options as in .swcrc
+        },
+      ],
+    ],
+  },
 });
