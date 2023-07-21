@@ -13,7 +13,7 @@ import {
 import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
 import Copyright from "../src/Copyright";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 
 const Start: NextPage = () => {

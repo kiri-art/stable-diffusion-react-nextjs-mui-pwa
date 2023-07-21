@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import { Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import {
   AppBar,

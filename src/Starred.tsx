@@ -3,7 +3,7 @@ import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import { Box, Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
 // import Masonry from "@mui/lab/Masonry";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
