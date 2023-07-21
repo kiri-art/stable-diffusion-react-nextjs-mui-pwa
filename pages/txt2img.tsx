@@ -3,7 +3,10 @@ import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
-import useModelState, { modelStateValues } from "../src/sd/useModelState";
+import useModelState, {
+  modelStateCallInputs,
+  modelStateModelInputs,
+} from "../src/sd/useModelState";
 
 import { Container } from "@mui/material";
 
@@ -22,6 +25,8 @@ const txt2imgState = [
   "MODEL_ID",
   "PROVIDER_ID",
   "negative_prompt",
+  "textual_inversions",
+  "lora_weights",
   "num_inference_steps",
   "guidance_scale",
   "width",
@@ -79,7 +84,8 @@ export default function Txt2Img() {
     setRequestStartTime(Date.now());
     setRequestEndTime(null);
 
-    const modelInputs = modelStateValues(inputs);
+    const modelInputs = modelStateModelInputs(inputs);
+    const callInputs = modelStateCallInputs(inputs);
     const seed = randomizeSeedIfChecked(inputs);
 
     await fetchToOutput(
@@ -93,6 +99,7 @@ export default function Txt2Img() {
         PIPELINE: "lpw_stable_diffusion",
         custom_pipeline_method: "text2img",
         SCHEDULER: modelInputs.sampler,
+        ...callInputs,
       },
       {
         setLog,

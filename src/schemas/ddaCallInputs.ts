@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from "yup";
+import { object, string, boolean, InferType, array } from "yup";
 import models from "../config/models";
 import Providers from "../config/providers";
 
@@ -35,6 +35,11 @@ const ddaCallInputsSchema = object({
   ]), // .default("DDIM"),
   startRequestId: string(),
   safety_checker: boolean(),
+  textual_inversions: array().of(
+    string().matches(
+      /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/
+    )
+  ),
 });
 
 type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;

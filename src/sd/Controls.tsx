@@ -3,6 +3,7 @@ import { t, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import models from "../config/models";
 import Providers from "../config/providers";
+import Addons from "./Addons";
 
 import {
   Box,
@@ -1105,6 +1106,9 @@ export default function SDControls({
             setValue={inputs.negative_prompt.setValue}
             defaultValue={defaults.negative_prompt}
           />
+        )}
+        {(inputs.textual_inversions || inputs.lora_weights) && (
+          <Addons inputs={inputs} />
         )}
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {inputs.strength && (

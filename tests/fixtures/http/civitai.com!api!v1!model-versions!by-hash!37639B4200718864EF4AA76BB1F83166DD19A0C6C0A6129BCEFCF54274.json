@@ -1,0 +1,256 @@
+{
+  "request": {
+    "url": "https://civitai.com/api/v1/model-versions/by-hash/37639B4200718864EF4AA76BB1F83166DD19A0C6C0A6129BCEFCF5427442DF11"
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "access-control-allow-headers": "*",
+      "access-control-allow-methods": "GET",
+      "access-control-allow-origin": "*",
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "cache-control": "public, s-maxage=300, stale-while-revalidate=150",
+      "cf-cache-status": "REVALIDATED",
+      "cf-ray": "7ec421d25b3ce3db-TLV",
+      "connection": "close",
+      "content-encoding": "gzip",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Tue, 25 Jul 2023 11:41:09 GMT",
+      "etag": "W/\"82kc9xhbbs4v4\"",
+      "server": "cloudflare",
+      "strict-transport-security": "max-age=15724800; includeSubDomains",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding",
+      "x-handled-by": "civitai-api-54779df668-qkpcx"
+    },
+    "bodyJson": {
+      "id": 111013,
+      "modelId": 103638,
+      "name": "V1",
+      "createdAt": "2023-07-05T18:10:59.274Z",
+      "updatedAt": "2023-07-05T18:12:29.412Z",
+      "trainedWords": [
+        "Clutter-Mechanical"
+      ],
+      "baseModel": "SD 1.5",
+      "earlyAccessTimeFrame": 0,
+      "description": null,
+      "stats": {
+        "downloadCount": 1682,
+        "ratingCount": 8,
+        "rating": 4.88
+      },
+      "model": {
+        "name": "Clutter (Mechanical)",
+        "type": "TextualInversion",
+        "nsfw": false,
+        "poi": false
+      },
+      "files": [
+        {
+          "id": 78521,
+          "url": "https://civitai-delivery-worker-prod-2023-07-01.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/48396/model/clutterMechanical.dI1h.pt",
+          "sizeKB": 48.94921875,
+          "name": "Clutter-Mechanical.pt",
+          "type": "Model",
+          "metadata": {
+            "fp": null,
+            "size": null,
+            "format": "PickleTensor"
+          },
+          "pickleScanResult": "Success",
+          "pickleScanMessage": "No Pickle imports",
+          "virusScanResult": "Success",
+          "virusScanMessage": null,
+          "scannedAt": "2023-07-05T18:15:41.768Z",
+          "hashes": {
+            "AutoV2": "7BFDB20388",
+            "SHA256": "7BFDB20388CD3511DB6FB0B0D0F2868729B9FCA121A1314C7EBB1B180FA6B43D",
+            "CRC32": "874FAE83",
+            "BLAKE3": "37639B4200718864EF4AA76BB1F83166DD19A0C6C0A6129BCEFCF5427442DF11"
+          },
+          "primary": true,
+          "downloadUrl": "https://civitai.com/api/download/models/111013"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/915ccb96-a4ac-430b-89ff-14dd32655fc6/width=450/1422010.jpeg",
+          "nsfw": "None",
+          "width": 1024,
+          "height": 1536,
+          "hash": "UFAcubLMyDX-~Wpdk=Xmfj-pXnxtR*smxa$%",
+          "meta": {
+            "ENSD": "31337",
+            "Size": "512x768",
+            "seed": 1749929807,
+            "Model": "Best_A-Zovya_RPG_Artist_Tools_V3",
+            "steps": 20,
+            "hashes": {
+              "model": "c7751e6108"
+            },
+            "prompt": "pretty woman mechanic working in a submarine engine room\n(Clutter-Mechanical:1)\n(best quality) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+            "Version": "v1.3.2",
+            "sampler": "DPM++ 2S a Karras",
+            "cfgScale": 7,
+            "resources": [
+              {
+                "hash": "c7751e6108",
+                "name": "Best_A-Zovya_RPG_Artist_Tools_V3",
+                "type": "model"
+              }
+            ],
+            "Model hash": "c7751e6108",
+            "Hires upscale": "2",
+            "Hires upscaler": "4x_foolhardy_Remacri",
+            "negativePrompt": "((cleavage)) (monochrome) (disfigured) (grain) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
+            "Denoising strength": "0.4"
+          }
+        },
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f9f29b39-fc9b-4ec4-beb8-2a6742e89bff/width=450/1422012.jpeg",
+          "nsfw": "None",
+          "width": 768,
+          "height": 1380,
+          "hash": "U5A+]Ov#?a5772AI9aI:}S=D-nEM019vIV$*",
+          "meta": null
+        },
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e750e84f-3891-411f-815a-04a571d3cf15/width=450/1422007.jpeg",
+          "nsfw": "None",
+          "width": 1024,
+          "height": 1536,
+          "hash": "UBBMlLS$4TwI.T^%DhIU_3o29Fn$tSR*D%E2",
+          "meta": {
+            "ENSD": "31337",
+            "Size": "512x768",
+            "seed": 3449272138,
+            "Model": "Best_A-Zovya_RPG_Artist_Tools_V3",
+            "steps": 20,
+            "hashes": {
+              "model": "c7751e6108"
+            },
+            "prompt": "basement workshop assembling a robot from scrap\n(Clutter-Mechanical:1)\n(best quality) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+            "Version": "v1.3.2",
+            "sampler": "DPM++ 2S a Karras",
+            "cfgScale": 7,
+            "resources": [
+              {
+                "hash": "c7751e6108",
+                "name": "Best_A-Zovya_RPG_Artist_Tools_V3",
+                "type": "model"
+              }
+            ],
+            "Model hash": "c7751e6108",
+            "Hires upscale": "2",
+            "Hires upscaler": "4x_foolhardy_Remacri",
+            "negativePrompt": "(monochrome) (disfigured) (grain) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
+            "Denoising strength": "0.4"
+          }
+        },
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/39bf98cc-11f6-4a72-9961-ecf4ee86b06d/width=450/1422006.jpeg",
+          "nsfw": "None",
+          "width": 1024,
+          "height": 1536,
+          "hash": "UA8EPQysn+x[yqu4yD%K-.x]kr$e%LpIyDxu",
+          "meta": {
+            "ENSD": "31337",
+            "Size": "512x768",
+            "seed": 1933868315,
+            "Model": "Best_A-Zovya_RPG_Artist_Tools_V3",
+            "steps": 20,
+            "hashes": {
+              "model": "c7751e6108"
+            },
+            "prompt": "scientific laboratory on a spaceship\n(Clutter-Mechanical:0.5)\n(best quality) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+            "Version": "v1.3.2",
+            "sampler": "DPM++ 2S a Karras",
+            "cfgScale": 7,
+            "resources": [
+              {
+                "hash": "c7751e6108",
+                "name": "Best_A-Zovya_RPG_Artist_Tools_V3",
+                "type": "model"
+              }
+            ],
+            "Model hash": "c7751e6108",
+            "Hires upscale": "2",
+            "Hires upscaler": "4x_foolhardy_Remacri",
+            "negativePrompt": "(monochrome) (disfigured) (grain) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
+            "Denoising strength": "0.4"
+          }
+        },
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b2f93a29-4c7d-4467-9fc3-cb8131f7ccd9/width=450/1422008.jpeg",
+          "nsfw": "None",
+          "width": 1024,
+          "height": 1536,
+          "hash": "U99@ec.ToaDiITSh.8t800D$E1%MSP%LIVtS",
+          "meta": {
+            "ENSD": "31337",
+            "Size": "512x768",
+            "seed": 545772528,
+            "Model": "Best_A-Zovya_RPG_Artist_Tools_V3",
+            "steps": 20,
+            "hashes": {
+              "model": "c7751e6108"
+            },
+            "prompt": "cyberpunk car workshop garage\n(Clutter-Mechanical:1)\n(best quality) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+            "Version": "v1.3.2",
+            "sampler": "DPM++ 2S a Karras",
+            "cfgScale": 7,
+            "resources": [
+              {
+                "hash": "c7751e6108",
+                "name": "Best_A-Zovya_RPG_Artist_Tools_V3",
+                "type": "model"
+              }
+            ],
+            "Model hash": "c7751e6108",
+            "Hires upscale": "2",
+            "Hires upscaler": "4x_foolhardy_Remacri",
+            "negativePrompt": "(monochrome) (disfigured) (grain) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
+            "Denoising strength": "0.4"
+          }
+        },
+        {
+          "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c55b4b3c-d5ec-4f40-a465-076bf2e4b046/width=450/1422009.jpeg",
+          "nsfw": "None",
+          "width": 1024,
+          "height": 1536,
+          "hash": "UMC?T8IV?wOFXmNH-os,8_xY9ZR+D%WpIAs9",
+          "meta": {
+            "ENSD": "31337",
+            "Size": "512x768",
+            "seed": 2050620428,
+            "Model": "Best_A-Zovya_RPG_Artist_Tools_V3",
+            "steps": 20,
+            "hashes": {
+              "model": "c7751e6108"
+            },
+            "prompt": "white room sterile environment nasa laboratory\n(Clutter-Mechanical:0.5)\n(best quality) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
+            "Version": "v1.3.2",
+            "sampler": "DPM++ 2S a Karras",
+            "cfgScale": 7,
+            "resources": [
+              {
+                "hash": "c7751e6108",
+                "name": "Best_A-Zovya_RPG_Artist_Tools_V3",
+                "type": "model"
+              }
+            ],
+            "Model hash": "c7751e6108",
+            "Hires upscale": "2",
+            "Hires upscaler": "4x_foolhardy_Remacri",
+            "negativePrompt": "(monochrome) (disfigured) (grain) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
+            "Denoising strength": "0.4"
+          }
+        }
+      ],
+      "downloadUrl": "https://civitai.com/api/download/models/111013"
+    }
+  }
+}

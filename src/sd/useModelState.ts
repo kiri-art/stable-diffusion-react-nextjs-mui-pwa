@@ -3,17 +3,34 @@ import React from "react";
 
 import defaults from "./defaults";
 
-function useSdState<T>(initialValue: T) {
+function useSdState<T>(initialValue: T, type: "call" | "model" = "model") {
   const state = React.useState<T>(initialValue);
   return {
     value: state[0],
     setValue: state[1],
+    type,
   };
 }
 
 export function modelStateValues(modelState: ModelState) {
   return Object.fromEntries(
     Object.entries(modelState).map(([key, { value }]) => [key, value])
+  );
+}
+
+export function modelStateModelInputs(modelState: ModelState) {
+  return Object.fromEntries(
+    Object.entries(modelState)
+      .filter(([_key, { type }]) => !type || type === "model")
+      .map(([key, { value }]) => [key, value])
+  );
+}
+
+export function modelStateCallInputs(modelState: ModelState) {
+  return Object.fromEntries(
+    Object.entries(modelState)
+      .filter(([_key, { type }]) => type === "call")
+      .map(([key, { value }]) => [key, value])
   );
 }
 
@@ -39,6 +56,8 @@ export interface ModelState {
   shareInputs: ValueSetValue<boolean>;
   safety_checker: ValueSetValue<boolean>;
   sampler: ValueSetValue<string>;
+  lora_weights: ValueSetValue<string[]>;
+  textual_inversions: ValueSetValue<string[]>;
 }
 
 export default function useModelState(inputs?: string[]): ModelState {
@@ -58,6 +77,8 @@ export default function useModelState(inputs?: string[]): ModelState {
     shareInputs?: string | boolean;
     safety_checker?: string | boolean;
     sampler?: string;
+    lora_weights?: string[];
+    textual_inversions?: string[];
   };
   for (const v of ["randomizeSeed", "shareInputs", "safety_checker"] as const)
     if (query[v]) query[v] = query[v] === "true";
@@ -87,6 +108,8 @@ export default function useModelState(inputs?: string[]): ModelState {
       (query.safety_checker as boolean) ?? defaults.safety_checker
     ),
     sampler: useSdState<string>(defaults.sampler),
+    lora_weights: useSdState<string[]>([], "call"),
+    textual_inversions: useSdState<string[]>([], "call"),
   };
 
   const ref = React.useRef(allStates);

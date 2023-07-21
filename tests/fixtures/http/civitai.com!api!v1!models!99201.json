@@ -1,0 +1,442 @@
+{
+  "request": {
+    "url": "https://civitai.com/api/v1/models/99201"
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "access-control-allow-headers": "*",
+      "access-control-allow-methods": "GET",
+      "access-control-allow-origin": "*",
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "cache-control": "public, s-maxage=300, stale-while-revalidate=150",
+      "cf-cache-status": "MISS",
+      "cf-ray": "7ed43f3f3cba412e-LHR",
+      "connection": "close",
+      "content-encoding": "gzip",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 27 Jul 2023 10:37:26 GMT",
+      "etag": "W/\"45dwtcrhjdikb\"",
+      "server": "cloudflare",
+      "set-cookie": [
+        "__Host-next-auth.csrf-token=7a46e4aad7ecb58e80b735010b854d91f6cabc091aeff0fc1d7dbe7cf5a3736e%7Ca91213ac8dfa0b2ebbd1d5dac96d73c00a23ffbe25dd59ffad55b83e47839d0d; Path=/; HttpOnly; Secure; SameSite=Lax",
+        "__Secure-next-auth.callback-url=https%3A%2F%2Fcivitai.com; Path=/; HttpOnly; Secure; SameSite=Lax"
+      ],
+      "strict-transport-security": "max-age=15724800; includeSubDomains",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding",
+      "x-handled-by": "civitai-api-574bf9cd95-scdtv"
+    },
+    "bodyJson": {
+      "id": 99201,
+      "name": "Angelina Jolie (JG)",
+      "description": "<p><a target=\"_blank\" rel=\"ugc\" href=\"https://www.instagram.com/angelinajolie/\">Angelina Jolie</a> is an American actress and filmmaker, known for many roles in films such as <em>Girl, Interrupted </em>(for which she won an Academy Award), <em>Lara Croft: Tomb Raider</em>, <em>Salt</em>, <em>Mr. and Mrs Smith</em> or <em>Maleficent</em>, among others.</p><p>This is a 180-step TI trained on a dataset of 14 images with <a target=\"_blank\" rel=\"ugc\" href=\"https://imgur.com/a/atFd9CX\">these settings</a>.</p><p>I have focused on pictures of her <strong>mid 2000s to early 2010s </strong>era for her dataset.</p><p>Appreciate my work? My TIs are free, but you can always <a target=\"_blank\" rel=\"ugc\" href=\"https://www.buymeacoffee.com/jernaugurgeh\">buy me a coffee</a>. :)</p><p>Curious about my work process? I have summarized it <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/56570/renata-valliulina?commentId=118383&amp;modal=commentThread\">here</a>.</p><h2 id=\"heading-386\">How to create a good prompt using my TIs</h2><p>You're obviously free to experiment, but bear in mind that my TIs are trained with a more or less fixed phrasing, that normally starts with:</p><p>\"photo of EMBEDDING_NAME, a woman\"</p><p>So I recommend always starting your prompt like that and then building the rest of the prompt from there. For instance, \"photo of beautiful (4nj0lie:0.99), a woman as a movie star, sweater off-shoulders, trousers, at a movie premiere gala, dark moody ambience (masterpiece:1.2) (photorealistic:1.2) (bokeh) (best quality) (detailed skin:1.2) (intricate details) (nighttime) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), (closeup portrait:1.1)\"</p>",
+      "type": "TextualInversion",
+      "poi": true,
+      "nsfw": false,
+      "allowNoCredit": false,
+      "allowCommercialUse": "None",
+      "allowDerivatives": true,
+      "allowDifferentLicense": true,
+      "stats": {
+        "downloadCount": 2010,
+        "favoriteCount": 226,
+        "commentCount": 8,
+        "ratingCount": 8,
+        "rating": 5
+      },
+      "creator": {
+        "username": "JernauGurgeh",
+        "image": "https://lh3.googleusercontent.com/a/AEdFTp6WZ2AErsIu9WfTPT9jMukJhdi_32eLXozl5acbrA=s96-c"
+      },
+      "tags": [
+        "lara croft",
+        "hollywood",
+        "actress",
+        "celebrity",
+        "classic beauties"
+      ],
+      "modelVersions": [
+        {
+          "id": 106132,
+          "modelId": 99201,
+          "name": "v1.0",
+          "createdAt": "2023-06-28T21:20:31.942Z",
+          "updatedAt": "2023-06-28T21:24:37.829Z",
+          "trainedWords": [
+            "4nj0lie"
+          ],
+          "baseModel": "SD 1.5",
+          "earlyAccessTimeFrame": 0,
+          "description": "<p>180-step TI trained on a dataset of 15 images with <a target=\"_blank\" rel=\"ugc\" href=\"https://imgur.com/a/atFd9CX\">these settings</a>.</p>",
+          "vaeId": null,
+          "stats": {
+            "downloadCount": 2010,
+            "ratingCount": 8,
+            "rating": 5
+          },
+          "files": [
+            {
+              "id": 74687,
+              "url": "https://civitai-delivery-worker-prod-2023-06-01.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/75330/model/4nj0lie.llXm.pt",
+              "sizeKB": 6.9287109375,
+              "name": "4nj0lie.pt",
+              "type": "Model",
+              "metadata": {
+                "fp": null,
+                "size": null,
+                "format": "PickleTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "virusScanMessage": null,
+              "scannedAt": "2023-06-28T21:25:39.962Z",
+              "hashes": {
+                "AutoV2": "66C3BE7CDE",
+                "SHA256": "66C3BE7CDED42DDCE949C870B88FFF7E01DF03FDE14586D68FEF30C0869CACFF",
+                "CRC32": "6C1D1A0D",
+                "BLAKE3": "82075A5D535E7F75C49C0D4E12B427C0272C4ECB218822B2218C215ED17EE00A"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/106132",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6043d30e-0893-4a85-804b-5d7ba504bd14/width=450/1326514.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "URGl0D%h%gMx~WxtNeadbw%MWBofkr^+$*WU",
+              "meta": {
+                "Size": "512x768",
+                "seed": 21728885,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (tight long sleeve top:1.2), (long jeans), in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), ((closeup portrait:1.2)), hoop earrings",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "Mask blur": "4",
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.6"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d3c94a67-2325-45d1-9c63-798a671220a1/width=450/1326513.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "U9HBh_%2PVx]}=_N.8D%0}xurCaxJWM|xu%L",
+              "meta": {
+                "Size": "512x768",
+                "seed": 21728884,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (tight long sleeve top:1.2), (long jeans), in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), ((closeup portrait:1.2)), hoop earrings",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b7456b62-2c31-4777-9cd1-bfd56ba77b1f/width=450/1326760.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UCGbbY0m00vzDN9G~pEm4nD+^i9bD%o~NGIA",
+              "meta": {
+                "Size": "512x768",
+                "seed": 4162927225,
+                "Model": "consistentFactor_euclidV51",
+                "steps": 25,
+                "hashes": {
+                  "model": "71776d06b6"
+                },
+                "prompt": "photo of (4nj0lie-180:0.99), a woman as a movie star, modelshoot style, (extremely detailed CG unity 8k wallpaper), photo of the most beautiful artwork in the world, professional majestic oil painting by Ed Blinkey, Atey Ghailan, Studio Ghibli, by Jeremy Mann, Greg Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate, High Detail, Sharp focus, dramatic, photorealistic painting art by midjourney and greg rutkowski, (sexy tight white turtleneck top:1.2), (long trousers), ((movie premiere)), (nighttime), (bokeh), (perfect eyes:1.2), (looking at viewer:1.2), (frontal angle), large breasts, ((sexy waist)), (grin512:1.1)",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "71776d06b6",
+                    "name": "consistentFactor_euclidV51",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "71776d06b6",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "canvas frame, cartoon, 3d, ((cleavage)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (umbrella), (crown), (badhands)",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f63d585d-1d0b-4505-96d4-79d6a551b51f/width=450/1326642.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UBH-=H}@020z4T-;T0EgPVT0,UiwX.01$%^*",
+              "meta": {
+                "Size": "512x768",
+                "seed": 1337128477,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (sexy tight long sleeve top:1.2), (long jeans), in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), (closeup portrait:1.2), hoop earrings",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/92b5c329-be1d-4a71-b187-51a823d1d5c0/width=450/1326546.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UOHn{SVW4T~qMc~W-pIUaJ-p?HIUWUozkDae",
+              "meta": {
+                "Size": "512x768",
+                "seed": 3098893429,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of (4nj0lie-180:0.99), a woman as a movie star, modelshoot style, (extremely detailed CG unity 8k wallpaper), photo of the most beautiful artwork in the world, professional majestic oil painting by Ed Blinkey, Atey Ghailan, Studio Ghibli, by Jeremy Mann, Greg Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate, High Detail, Sharp focus, dramatic, photorealistic painting art by midjourney and greg rutkowski, (white turtleneck top:1.2), (long trousers), ((movie premiere)), (nighttime), (bokeh), (perfect eyes:1.2), (looking at viewer:1.2), (frontal angle), ((hands on hips:1.2)), ((sexy waist))",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "canvas frame, cartoon, 3d, ((cleavage)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (umbrella), (crown), (badhands)",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b276e7fc-1d87-47b9-a91d-66797d3bdecf/width=450/1326518.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UNF=K.x]^+-;~Wt7JCx]kr%1E1t7R+xZaLof",
+              "meta": {
+                "Size": "512x768",
+                "seed": 2973934556,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (tight long sleeve top:1.2), (long jeans), in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), closeup portrait, hoop earrings",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6ae14990-8371-420a-a39e-b5e8dd4fe910/width=450/1326523.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UFD]C=IUBDWA~Wn$tlD*01%LrWNG9F%M9F?H",
+              "meta": {
+                "Size": "512x768",
+                "seed": 3662548339,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (black leather jacket:1.2), (long sleeve top with collar:1.2), (jeans), (walking) in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), hoop earrings, ((closeup portrait:1.2))",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/fda64867-3a14-411e-8bf0-6dc6d1c92827/width=450/1326535.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UHC$v8_4%#-;_3_3x]S$?Gt7Ipn$Ip%1o0Io",
+              "meta": {
+                "Size": "512x768",
+                "seed": 3662548343,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (black leather jacket:1.2), (long sleeve top with collar:1.2), (jeans), (walking) in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), hoop earrings, ((closeup portrait:1.2))",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/256b2a66-42d2-49c4-94c8-1bcc0aa2f39a/width=450/1326536.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "ULEoSutS5S~pxD%M%gjYE3IAIAoe00RiM{D%",
+              "meta": {
+                "Size": "512x768",
+                "seed": 1054875426,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of beautiful young (4nj0lie-180:0.99), a woman, (black leather jacket:1.2), (long sleeve top with collar:1.2), (jeans), (walking) in a department store, natural light, (masterpiece:1.2) (photorealistic:1.2) (best quality) (detailed skin:1.2) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus), (looking at the camera:1.1), hoop earrings, (closeup portrait:1.1)",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "(((hat))), (((cleavage))), (hood), canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (tiara), (crown), (badhands), (((nipples))), (((nudity))), (((naked))), (((bare breasts))), (((topless)))",
+                "Denoising strength": "0.2"
+              }
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/60b09d36-ec15-4e13-a9dd-ad14264ab157/width=450/1326538.jpeg",
+              "nsfw": "None",
+              "width": 768,
+              "height": 1152,
+              "hash": "UBEn|yxU1K58%~IATI~B%Ns+oNNeER%2RlIV",
+              "meta": {
+                "Size": "512x768",
+                "seed": 3137104842,
+                "Model": "icbinpICantBelieveIts_final",
+                "steps": 25,
+                "hashes": {
+                  "model": "73f48afbdc"
+                },
+                "prompt": "photo of (4nj0lie-180:0.99), a woman as a movie star, modelshoot style, (extremely detailed CG unity 8k wallpaper), photo of the most beautiful artwork in the world, professional majestic oil painting by Ed Blinkey, Atey Ghailan, Studio Ghibli, by Jeremy Mann, Greg Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate, High Detail, Sharp focus, dramatic, photorealistic painting art by midjourney and greg rutkowski, (red turtleneck top:1.2), (long trousers), ((movie premiere)), ((standing near a movie theater)), ((paparazzi in the background)), (looking at viewer:1.2), (detailed pupils:1.3), (closeup portrait:1.2)",
+                "Version": "v1.4.0",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                  {
+                    "hash": "73f48afbdc",
+                    "name": "icbinpICantBelieveIts_final",
+                    "type": "model"
+                  }
+                ],
+                "Model hash": "73f48afbdc",
+                "Hires steps": "15",
+                "Hires upscale": "1.5",
+                "Hires upscaler": "R-ESRGAN 4x+",
+                "negativePrompt": "canvas frame, cartoon, 3d, ((cleavage)), ((bad art)), ((deformed)),((extra limbs)), ((b&w)), blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render, (((nsfw))), (umbrella), (crown), (badhands)",
+                "Denoising strength": "0.2"
+              }
+            }
+          ],
+          "downloadUrl": "https://civitai.com/api/download/models/106132"
+        }
+      ]
+    }
+  }
+}
