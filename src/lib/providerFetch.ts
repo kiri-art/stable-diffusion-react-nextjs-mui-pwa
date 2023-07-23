@@ -185,23 +185,22 @@ export class ProviderFetchRequestBase {
           }
 
           const str = textDecoder.decode(value);
-          const parts = str.split("\n");
-          for (let i = 0; i < parts.length; i++) {
-            const part = parts[i];
-            if (i === parts.length - 1 && part === "") {
-              continue;
-            } else if (i === parts.length - 1 && parts[i + 1] !== "") {
-              buffer += part;
-              continue;
-            }
-            const fullString = buffer + part;
-            buffer = "";
-            let result;
+          buffer += str;
+
+          const parts = buffer.split("\n");
+          const last = parts.pop();
+
+          // if (last !== "") it means its the chunk did not end on newline
+          // and is still unfinished (will continue on next chunk)
+          if (last !== undefined && last !== "") buffer = last;
+
+          let result;
+          for (const part of parts) {
             try {
-              result = JSON.parse(fullString);
+              result = JSON.parse(part);
             } catch (error) {
               console.warn(error);
-              console.log(fullString);
+              console.log(part);
               reject(error);
               return;
             }
