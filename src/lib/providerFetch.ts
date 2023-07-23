@@ -193,6 +193,7 @@ export class ProviderFetchRequestBase {
           // if (last !== "") it means its the chunk did not end on newline
           // and is still unfinished (will continue on next chunk)
           if (last !== undefined && last !== "") buffer = last;
+          else buffer = "";
 
           let result;
           for (const part of parts) {
