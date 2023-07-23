@@ -236,7 +236,17 @@ export class ProviderFetchRequestBase {
   async fetchStart() {
     const { url, payload } = this.prepareStart();
 
-    console.log("fetchStart", url, payload);
+    const truncatedPayload = JSON.parse(JSON.stringify(payload));
+    const tpmi = truncatedPayload.modelInputs.modelInputs;
+    if (tpmi)
+      for (const key of ["image", "input_image", "mask_image"])
+        if (tpmi[key])
+          tpmi[key] =
+            tpmi[key].substring(0, 5) +
+            "...[truncated]..." +
+            tpmi[key].substring(tpmi[key].length - 5);
+
+    console.log("fetchStart", url, truncatedPayload);
     const response = await fetch(url, {
       method: "POST",
       headers: {

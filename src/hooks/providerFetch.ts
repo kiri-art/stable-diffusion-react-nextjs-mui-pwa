@@ -14,8 +14,8 @@ hooks.on("providerFetch.browser.extraInfoToSend", (data, result) => {
 });
 
 hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
-  console.log("providerFetch.server.preStart", data, hookResult);
-  console.log({ data });
+  console.log("providerFetch.server.preStart"); // , data, hookResult);
+  // console.log({ data });
   // @ts-expect-error: TODO
   const { extraInfo, deps, req } = data;
   // @ts-expect-error: TODO
