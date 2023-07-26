@@ -83,7 +83,8 @@ const models: Record<string, Model> = {
     MODEL_ID: "ICBINP-v7",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
-    // CHECKPOINT_URL: "https://civitai.com/api/download/models/76459?type=Model&format=PickleTensor&size=pruned&fp=fp16",
+    CHECKPOINT_URL:
+      "https://civitai.com/api/download/models/76459?type=Model&format=PickleTensor&size=pruned&fp=fp16",
     description: "I Can't Believe It's Not Photography",
     tags: [
       "portrait",
