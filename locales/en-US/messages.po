@@ -114,8 +114,8 @@ msgid "Acknowledements and Thanks"
 msgstr "Acknowledements and Thanks"
 
 #: src/sd/Addons.tsx:276
-msgid "Add"
-msgstr "Add"
+#~ msgid "Add"
+#~ msgstr "Add"
 
 #: src/Inpaint.tsx:530
 msgid "Adjust prompt and GO"
@@ -239,7 +239,7 @@ msgstr "Connect with {0}"
 msgid "Copied to clipboard"
 msgstr "Copied to clipboard"
 
-#: src/sd/Addons.tsx:246
+#: src/sd/Addons.tsx:265
 msgid "Created images may not be sold."
 msgstr "Created images may not be sold."
 
@@ -296,7 +296,7 @@ msgstr "Face Enhance"
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 
-#: src/sd/Addons.tsx:218
+#: src/sd/Addons.tsx:237
 msgid "Failed to copy to clipboard"
 msgstr "Failed to copy to clipboard"
 
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
 
-#: src/sd/Addons.tsx:241
+#: src/sd/Addons.tsx:260
 msgid "May only be used with free credits."
 msgstr "May only be used with free credits."
 
@@ -502,11 +502,11 @@ msgstr "May only be used with free credits."
 msgid "Model"
 msgstr "Model"
 
-#: src/sd/Addons.tsx:99
+#: src/sd/Addons.tsx:118
 msgid "Model is already added."
 msgstr "Model is already added."
 
-#: src/sd/Addons.tsx:92
+#: src/sd/Addons.tsx:111
 msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
 msgstr "Model must be a \"Textual Inversion\", not a \"{type}\"."
 
@@ -522,7 +522,7 @@ msgstr "Most Recent"
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 
-#: src/sd/Addons.tsx:236
+#: src/sd/Addons.tsx:255
 msgid "Must credit the model creator."
 msgstr "Must credit the model creator."
 
@@ -560,6 +560,10 @@ msgstr ""
 #: pages/credits.tsx:60
 msgid "No such code exists."
 msgstr ""
+
+#: src/sd/Addons.tsx:86
+msgid "No valid model ID, URL, or hash found."
+msgstr "No valid model ID, URL, or hash found."
 
 #: src/Inpaint.tsx:536
 msgid "Notes"

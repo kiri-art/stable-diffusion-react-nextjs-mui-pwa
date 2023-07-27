@@ -114,8 +114,8 @@ msgid "Acknowledements and Thanks"
 msgstr ""
 
 #: src/sd/Addons.tsx:276
-msgid "Add"
-msgstr ""
+#~ msgid "Add"
+#~ msgstr ""
 
 #: src/Inpaint.tsx:530
 msgid "Adjust prompt and GO"
@@ -239,7 +239,7 @@ msgstr "להתחבר אל {0}"
 msgid "Copied to clipboard"
 msgstr ""
 
-#: src/sd/Addons.tsx:246
+#: src/sd/Addons.tsx:265
 msgid "Created images may not be sold."
 msgstr ""
 
@@ -296,7 +296,7 @@ msgstr ""
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr ""
 
-#: src/sd/Addons.tsx:218
+#: src/sd/Addons.tsx:237
 msgid "Failed to copy to clipboard"
 msgstr ""
 
@@ -486,7 +486,7 @@ msgstr "ציאה"
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "עקב הגבלות הזיכרון הגודל המקסימלי הוא 1024x768 או 768x1024."
 
-#: src/sd/Addons.tsx:241
+#: src/sd/Addons.tsx:260
 msgid "May only be used with free credits."
 msgstr ""
 
@@ -498,11 +498,11 @@ msgstr ""
 msgid "Model"
 msgstr ""
 
-#: src/sd/Addons.tsx:99
+#: src/sd/Addons.tsx:118
 msgid "Model is already added."
 msgstr ""
 
-#: src/sd/Addons.tsx:92
+#: src/sd/Addons.tsx:111
 msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
 msgstr ""
 
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "חייב להיות כפולה של 64. עקב הגבלות הזיכרון גודל התמונה המקסימלי הוא 1024x768 או 768x1024."
 
-#: src/sd/Addons.tsx:236
+#: src/sd/Addons.tsx:255
 msgid "Must credit the model creator."
 msgstr ""
 
@@ -556,6 +556,10 @@ msgstr "דיפ-פייק אסור, פרט למה שעומד בכללי שימוש
 #: pages/credits.tsx:60
 msgid "No such code exists."
 msgstr "אין קוד כזה"
+
+#: src/sd/Addons.tsx:86
+msgid "No valid model ID, URL, or hash found."
+msgstr ""
 
 #: src/Inpaint.tsx:536
 msgid "Notes"
