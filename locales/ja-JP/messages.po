@@ -13,11 +13,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\";\n"
 "X-Generator: Poedit 3.1\n"
 
-#: src/sd/Controls.tsx:615
+#: src/sd/Controls.tsx:616
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr ""
 
-#: src/sd/Controls.tsx:255
+#: src/sd/Controls.tsx:256
 msgid "(Denoising) Strength"
 msgstr "(ノイズ除去) 強度"
 
@@ -63,10 +63,10 @@ msgstr ""
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr ""
 
-#: src/sd/Controls.tsx:117
-#: src/sd/Controls.tsx:200
-#: src/sd/Controls.tsx:294
-#: src/sd/Controls.tsx:345
+#: src/sd/Controls.tsx:118
+#: src/sd/Controls.tsx:201
+#: src/sd/Controls.tsx:295
+#: src/sd/Controls.tsx:346
 msgid "<0>Learn more</0>"
 msgstr "<0>詳細を見る</0>"
 
@@ -82,7 +82,7 @@ msgstr ""
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) 自己責任でご使用ください。このプロジェクトの使用（または誤用）の結果として生じる結果について、当社は一切の責任を負いません。2) このサイトまたはプロジェクトを使用することは、上記の「自己責任」の原則、Stable Diffusion の <0>CreativeML Open RAIL-M ライセンス</0>、およびこのプロジェクトの <1>MIT ライセンス</1>を含む、その条項および規則に同意することを意味します。"
 
-#: src/sd/Controls.tsx:714
+#: src/sd/Controls.tsx:715
 msgid "A black image will be shown instead."
 msgstr ""
 
@@ -102,6 +102,10 @@ msgstr "アクセスが拒否されました。"
 #: pages/about.tsx:100
 msgid "Acknowledements and Thanks"
 msgstr "謝辞"
+
+#: src/sd/Addons.tsx:276
+msgid "Add"
+msgstr ""
 
 #: src/Inpaint.tsx:530
 msgid "Adjust prompt and GO"
@@ -193,7 +197,7 @@ msgstr ""
 msgid "Checkout"
 msgstr "お支払い"
 
-#: src/sd/Controls.tsx:283
+#: src/sd/Controls.tsx:284
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "分類子なしのガイダンス (スケール)"
 
@@ -213,7 +217,7 @@ msgstr "近日追加予定"
 msgid "Community"
 msgstr ""
 
-#: src/sd/Controls.tsx:732
+#: src/sd/Controls.tsx:733
 msgid "Confirm Date of Birth"
 msgstr ""
 
@@ -223,6 +227,10 @@ msgstr "{0} とつなげる"
 
 #: pages/[_id].tsx:104
 msgid "Copied to clipboard"
+msgstr ""
+
+#: src/sd/Addons.tsx:246
+msgid "Created images may not be sold."
 msgstr ""
 
 #: pages/order/[_id].tsx:64
@@ -246,11 +254,11 @@ msgstr "日付"
 msgid "Delete this star?"
 msgstr ""
 
-#: src/sd/Controls.tsx:111
+#: src/sd/Controls.tsx:112
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "ご希望の画像の説明/キャプション。 「印象派」、「デジタルアート」、写真のスタイルやレンズなどのアートスタイル、その他のヒントが含まれる場合があります。"
 
-#: src/sd/Controls.tsx:192
+#: src/sd/Controls.tsx:193
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr ""
 
@@ -278,6 +286,10 @@ msgstr ""
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr ""
 
+#: src/sd/Addons.tsx:218
+msgid "Failed to copy to clipboard"
+msgstr ""
+
 #: pages/upsample.tsx:257
 msgid "File is not a valid image."
 msgstr ""
@@ -290,7 +302,7 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: src/sd/Controls.tsx:710
+#: src/sd/Controls.tsx:711
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr ""
 
@@ -327,7 +339,7 @@ msgstr "進む"
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:422
+#: src/sd/Controls.tsx:423
 msgid "Height"
 msgstr "高さ"
 
@@ -354,7 +366,7 @@ msgstr ""
 msgid "Home"
 msgstr "ホーム"
 
-#: src/sd/Controls.tsx:289
+#: src/sd/Controls.tsx:290
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "プロンプトに従う程度。 値が低い = より創造的で、より多様性があります。 値が高い = より正確で、アーティファクトが発生する場合があります。 5 ～ 15 の値が最適です。"
 
@@ -460,17 +472,29 @@ msgstr "ログイン"
 msgid "Logout"
 msgstr "ログアウト"
 
-#: src/sd/Controls.tsx:434
+#: src/sd/Controls.tsx:435
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
+
+#: src/sd/Addons.tsx:241
+msgid "May only be used with free credits."
+msgstr ""
 
 #: pages/s/[_id].tsx:203
 #: pages/upsample.tsx:62
 #: pages/upsample.tsx:66
-#: src/sd/Controls.tsx:763
-#: src/sd/Controls.tsx:767
+#: src/sd/Controls.tsx:764
+#: src/sd/Controls.tsx:768
 msgid "Model"
 msgstr "モデル"
+
+#: src/sd/Addons.tsx:99
+msgid "Model is already added."
+msgstr ""
+
+#: src/sd/Addons.tsx:92
+msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
+msgstr ""
 
 #: pages/index.tsx:276
 msgid "Most Popular"
@@ -480,16 +504,20 @@ msgstr ""
 msgid "Most Recent"
 msgstr ""
 
-#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:397
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "64 の倍数である必要があります。 メモリの制限により、最大解像度は 1024x768 または 768x1024 です。"
+
+#: src/sd/Addons.tsx:236
+msgid "Must credit the model creator."
+msgstr ""
 
 #: pages/credits.tsx:165
 msgid "My Credits"
 msgstr "私のクレジット"
 
 #: pages/s/[_id].tsx:211
-#: src/sd/Controls.tsx:169
+#: src/sd/Controls.tsx:170
 msgid "Negative Prompt"
 msgstr ""
 
@@ -524,15 +552,15 @@ msgid "Notes"
 msgstr "メモ"
 
 #: pages/index.tsx:240
-#: src/sd/Controls.tsx:702
+#: src/sd/Controls.tsx:703
 msgid "NSFW Filter"
 msgstr ""
 
-#: src/sd/Controls.tsx:340
+#: src/sd/Controls.tsx:341
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "ノイズ除去のステップ数 (画像をやり直して改善する回数)。 数値が大きいほどレンダリングに時間がかかりますが、より質が高い結果が得られる場合があります。"
 
-#: src/sd/Controls.tsx:331
+#: src/sd/Controls.tsx:332
 msgid "Number of Inference Steps"
 msgstr "推論ステップ数"
 
@@ -578,7 +606,7 @@ msgstr ""
 msgid "Pay"
 msgstr "支払う"
 
-#: src/sd/Controls.tsx:473
+#: src/sd/Controls.tsx:474
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "有効なシードを入力するか、「ランダム化」をもう一度有効にしてください。"
 
@@ -605,11 +633,11 @@ msgid "Project Goals"
 msgstr ""
 
 #: pages/s/[_id].tsx:207
-#: src/sd/Controls.tsx:89
+#: src/sd/Controls.tsx:90
 msgid "Prompt"
 msgstr ""
 
-#: src/sd/Controls.tsx:930
+#: src/sd/Controls.tsx:931
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr ""
 
@@ -629,11 +657,11 @@ msgstr "購入したクレジットはその月の無料クレジットがなく
 msgid "Quick Start"
 msgstr "クイックスタート"
 
-#: src/sd/Controls.tsx:546
+#: src/sd/Controls.tsx:547
 msgid "Randomize"
 msgstr "ランダム化"
 
-#: src/sd/Controls.tsx:554
+#: src/sd/Controls.tsx:555
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "すべての要求でシードをランダム化します。 つまり、新しい画像はそれぞれ完全に異なるものになります。 代わりに前回の作品を「調整」したい場合は、この機能をオフにしてください。"
 
@@ -681,8 +709,8 @@ msgstr "リソース"
 msgid "Roadmap"
 msgstr "ロードマップ"
 
-#: src/sd/Controls.tsx:810
-#: src/sd/Controls.tsx:814
+#: src/sd/Controls.tsx:811
+#: src/sd/Controls.tsx:815
 msgid "Sampler"
 msgstr ""
 
@@ -708,7 +736,7 @@ msgid "See my Kiri.Art creation!"
 msgstr ""
 
 #: pages/s/[_id].tsx:225
-#: src/sd/Controls.tsx:463
+#: src/sd/Controls.tsx:464
 msgid "Seed"
 msgstr "シード"
 
@@ -716,7 +744,7 @@ msgstr "シード"
 msgid "SEND IMAGE TO"
 msgstr ""
 
-#: src/sd/Controls.tsx:607
+#: src/sd/Controls.tsx:608
 msgid "Share Inputs"
 msgstr ""
 
@@ -728,7 +756,7 @@ msgstr ""
 msgid "Sheduler"
 msgstr ""
 
-#: src/sd/Controls.tsx:926
+#: src/sd/Controls.tsx:927
 msgid "Speed, stability, cost"
 msgstr ""
 
@@ -775,7 +803,7 @@ msgid "Terms of Service"
 msgstr "利用規約"
 
 #: pages/start.tsx:24
-#: pages/txt2img.tsx:124
+#: pages/txt2img.tsx:131
 #: src/MyAppBar.tsx:130
 msgid "Text to Image"
 msgstr "テキストから画像へ"
@@ -870,7 +898,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: src/sd/Controls.tsx:484
+#: src/sd/Controls.tsx:485
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "同じシードとオプション (プロンプト、ガイダンススケールなど) を使うと、常に同じ画像が作成されます。 これは、以前の作品を調整したり、(「ランダム」な要素を取り除いて) 他のオプションがプロセスに与える影響を把握したり、作品を共有したりする際に便利です。 {0} から {MAX_SEED_VALUE} の間の数字。"
 
@@ -878,12 +906,12 @@ msgstr "同じシードとオプション (プロンプト、ガイダンスス�
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "<0>誰もが AI を使えるようにする</0>取り組みにご協力いただいた、次の研究者、団体、企業の皆様への感謝の気持ちは、言葉では表しきれません。"
 
-#: src/sd/Controls.tsx:384
+#: src/sd/Controls.tsx:385
 msgid "Width"
 msgstr "幅"
 
-#: src/sd/Controls.tsx:395
-#: src/sd/Controls.tsx:433
+#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:434
 msgid "Width of output image."
 msgstr "出力画像の幅。"
 

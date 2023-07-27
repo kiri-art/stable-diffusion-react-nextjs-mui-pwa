@@ -13,11 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/sd/Controls.tsx:615
+#: src/sd/Controls.tsx:616
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr "دکمه \"اشتراک‌گذاری\" / نام فایل شامل \"{sharedInputs}\" بعد از دستور خواهد شد."
 
-#: src/sd/Controls.tsx:255
+#: src/sd/Controls.tsx:256
 msgid "(Denoising) Strength"
 msgstr "قدرت (کاهش نویز)"
 
@@ -57,10 +57,10 @@ msgstr "<0>KIRI.ART</0> (\"SD-MUI\") یک فرانت اند رابط کاربر�
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr "<0>KIRI</0> (\"霧\") معادل ژاپنی کلمه \"مه\" است، یک پدیده طبیعی با همان کیفیت \"گسترش\" (<1> انتشار</1>) مشابه روشی که ما برای تولید تصویر استفاده می‌کنیم. صدای واضحی دارد، درست مانند تصاویر واضحی که امیدواریم در اینجا تولید کنید :) بنابراین می‌توانید سایت را «هنر مه» یا «هنر انتشار» نیز در نظر بگیرید."
 
-#: src/sd/Controls.tsx:117
-#: src/sd/Controls.tsx:200
-#: src/sd/Controls.tsx:294
-#: src/sd/Controls.tsx:345
+#: src/sd/Controls.tsx:118
+#: src/sd/Controls.tsx:201
+#: src/sd/Controls.tsx:295
+#: src/sd/Controls.tsx:346
 msgid "<0>Learn more</0>"
 msgstr "<0>بیشتر بدانید</0>"
 
@@ -76,7 +76,7 @@ msgstr "<0>تصاویر را از <1>تاریخچه</1></0> <2>خود ستاره
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) با مسئولیت خود استفاده کنید، ما هیچ مسئولیتی را در قبال هر گونه عواقب ناشی از استفاده (یا سوء استفاده) شما از این پروژه بر عهده نمی‌گیریم. 2) هر گونه استفاده از این سایت یا پروژه به معنای پذیرش شرایط و قوانین آن، از جمله قوانین \"مسئولیت‌پذیر بودن\" در بالا، <0>مجوز CreativeML Open RAIL-M</0> Stable Diffusion و <1>مجوز MIT</1> این پروژه است."
 
-#: src/sd/Controls.tsx:714
+#: src/sd/Controls.tsx:715
 msgid "A black image will be shown instead."
 msgstr "در عوض یک تصویر سیاه نمایش داده خواهد شد."
 
@@ -96,6 +96,10 @@ msgstr "دسترسی رد شد."
 #: pages/about.tsx:100
 msgid "Acknowledements and Thanks"
 msgstr "قدردانی و تشکر"
+
+#: src/sd/Addons.tsx:276
+msgid "Add"
+msgstr ""
 
 #: src/Inpaint.tsx:530
 msgid "Adjust prompt and GO"
@@ -167,7 +171,7 @@ msgstr "صفحه این کاربر را در kiri.art بررسی کنید"
 msgid "Checkout"
 msgstr "تسویه حساب"
 
-#: src/sd/Controls.tsx:283
+#: src/sd/Controls.tsx:284
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "راهنمای بدون طبقه‌بندی (مقیاس)"
 
@@ -187,7 +191,7 @@ msgstr "به زودی"
 msgid "Community"
 msgstr "جامعه"
 
-#: src/sd/Controls.tsx:732
+#: src/sd/Controls.tsx:733
 msgid "Confirm Date of Birth"
 msgstr "تاریخ تولد را تأیید کنید"
 
@@ -198,6 +202,10 @@ msgstr "ارتباط با {0}"
 #: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr "در کلیپ‌بورد کپی شد"
+
+#: src/sd/Addons.tsx:246
+msgid "Created images may not be sold."
+msgstr ""
 
 #: pages/order/[_id].tsx:64
 msgid "Credits"
@@ -220,11 +228,11 @@ msgstr "تاریخ"
 msgid "Delete this star?"
 msgstr "این ستاره حذف شود؟"
 
-#: src/sd/Controls.tsx:111
+#: src/sd/Controls.tsx:112
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "توضیحات / شرح تصویر مورد نظر شما. می‌تواند شامل سبک‌های هنری مانند «امپرسیونیست»، «هنر دیجیتال»، سبک‌ها و لنزهای عکاسی و نکات دیگر باشد."
 
-#: src/sd/Controls.tsx:192
+#: src/sd/Controls.tsx:193
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "شرح همه چیزهایی که در تصویر خروجی <0>نمی‌خواهید</0>، به‌عنوان مثال دستور: \"دسته گل رز\"، دستور منفی: \"رز قرمز\". همچنین می‌توانید درخواست کنید که مصنوعات دیفیوژن رایج مانند «دست‌های تغییر شکل یافته» حذف شوند. برای برخی از پیش‌فرض‌های رایج، روی آیکن\"تنظیم مجدد\" کلیک کنید."
 
@@ -252,6 +260,10 @@ msgstr "تقویت صورت"
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "ترمیم صورت. خوب برای تصاویر واقعی، بد برای انیمه."
 
+#: src/sd/Addons.tsx:218
+msgid "Failed to copy to clipboard"
+msgstr ""
+
 #: pages/upsample.tsx:257
 msgid "File is not a valid image."
 msgstr ""
@@ -264,7 +276,7 @@ msgstr ""
 msgid "Filter"
 msgstr "فیلتر"
 
-#: src/sd/Controls.tsx:710
+#: src/sd/Controls.tsx:711
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "تصاویری را که ممکن است NSFW (\"غیر ایمن برای کار\") و برای افراد زیر 18 سال نامناسب باشند، فیلتر کن."
 
@@ -293,7 +305,7 @@ msgstr "برو"
 msgid "Google"
 msgstr "گوگل"
 
-#: src/sd/Controls.tsx:422
+#: src/sd/Controls.tsx:423
 msgid "Height"
 msgstr "ارتفاع"
 
@@ -312,7 +324,7 @@ msgstr "سابقه <0>فقط در دستگاه محلی</0> شما نگهدار�
 msgid "Home"
 msgstr "صفحه اصلی"
 
-#: src/sd/Controls.tsx:289
+#: src/sd/Controls.tsx:290
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "چقدر دقیق باید از دستور پیروی شود. مقادیر کمتر = خلاقیت بیشتر، تنوع بیشتر. مقادیر بیشتر = دقیق‌تر، ممکن است باعث ایجاد مصنوعات شود. مقادیر 5 تا 15 به بهترین شکل عمل می‌کنند."
 
@@ -394,17 +406,29 @@ msgstr "ورود"
 msgid "Logout"
 msgstr "خروج"
 
-#: src/sd/Controls.tsx:434
+#: src/sd/Controls.tsx:435
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "به دلیل محدودیت حافظه، حداکثر اندازه 1024x768 یا 768x1024 است."
+
+#: src/sd/Addons.tsx:241
+msgid "May only be used with free credits."
+msgstr ""
 
 #: pages/s/[_id].tsx:203
 #: pages/upsample.tsx:62
 #: pages/upsample.tsx:66
-#: src/sd/Controls.tsx:763
-#: src/sd/Controls.tsx:767
+#: src/sd/Controls.tsx:764
+#: src/sd/Controls.tsx:768
 msgid "Model"
 msgstr "مدل"
+
+#: src/sd/Addons.tsx:99
+msgid "Model is already added."
+msgstr ""
+
+#: src/sd/Addons.tsx:92
+msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
+msgstr ""
 
 #: pages/index.tsx:276
 msgid "Most Popular"
@@ -414,16 +438,20 @@ msgstr "محبوب‌ترین"
 msgid "Most Recent"
 msgstr "جدیدترین"
 
-#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:397
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "باید مضرب 64 باشد. به دلیل محدودیت حافظه، حداکثر اندازه تصویر 1024x768 یا 768x1024 است."
+
+#: src/sd/Addons.tsx:236
+msgid "Must credit the model creator."
+msgstr ""
 
 #: pages/credits.tsx:165
 msgid "My Credits"
 msgstr "اعتبارهای من"
 
 #: pages/s/[_id].tsx:211
-#: src/sd/Controls.tsx:169
+#: src/sd/Controls.tsx:170
 msgid "Negative Prompt"
 msgstr "دستور منفی"
 
@@ -454,15 +482,15 @@ msgid "Notes"
 msgstr "یادداشت‌ها"
 
 #: pages/index.tsx:240
-#: src/sd/Controls.tsx:702
+#: src/sd/Controls.tsx:703
 msgid "NSFW Filter"
 msgstr "فیلتر NSFW"
 
-#: src/sd/Controls.tsx:340
+#: src/sd/Controls.tsx:341
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "تعداد مراحل حذف نویز (چند بار تکرار و بهبود تصویر). وارد کردن اعداد بزرگتر به زمان بیشتری برای رندر نیاز دارد، اما می‌تواند نتایج با کیفیت بالاتری تولید کند."
 
-#: src/sd/Controls.tsx:331
+#: src/sd/Controls.tsx:332
 msgid "Number of Inference Steps"
 msgstr "تعداد مراحل استنتاج"
 
@@ -508,7 +536,7 @@ msgstr "<0>گزارش‌های رویداد</0> ما نیز موجود است."
 msgid "Pay"
 msgstr "پرداخت"
 
-#: src/sd/Controls.tsx:473
+#: src/sd/Controls.tsx:474
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "لطفاً یک عدد آغازین معتبر وارد کنید یا \"تصادفی\" را دوباره روشن کنید."
 
@@ -535,11 +563,11 @@ msgid "Project Goals"
 msgstr "اهداف پروژه"
 
 #: pages/s/[_id].tsx:207
-#: src/sd/Controls.tsx:89
+#: src/sd/Controls.tsx:90
 msgid "Prompt"
 msgstr "دستور"
 
-#: src/sd/Controls.tsx:930
+#: src/sd/Controls.tsx:931
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr "ارائه دهنده 1 ارائه دهنده اصلی و تاریخی ما است. ارائه‌دهنده 2 یک ارائه‌دهنده جدید و اضافی است - با نسل‌هایی که هر کدام 0.25 اعتبار هزینه دارند - به طور موقت - در حالی که ما هنوز روی آن کار می‌کنیم."
 
@@ -559,11 +587,11 @@ msgstr "اعتبارهای خریداری‌شده پس از اتمام اعتب
 msgid "Quick Start"
 msgstr "شروع سریع"
 
-#: src/sd/Controls.tsx:546
+#: src/sd/Controls.tsx:547
 msgid "Randomize"
 msgstr "تصادفی"
 
-#: src/sd/Controls.tsx:554
+#: src/sd/Controls.tsx:555
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "عدد آغازین تصادفی، در هر درخواست. این بدان معناست که هر تصویر جدید کاملاً متفاوت خواهد بود. در عوض اگر می‌خواهید آخرین ساخته خود را «اصلاح» کنید، آن را خاموش کنید."
 
@@ -607,8 +635,8 @@ msgstr "منابع"
 msgid "Roadmap"
 msgstr "نقشه راه"
 
-#: src/sd/Controls.tsx:810
-#: src/sd/Controls.tsx:814
+#: src/sd/Controls.tsx:811
+#: src/sd/Controls.tsx:815
 msgid "Sampler"
 msgstr "نمونه‌بردار"
 
@@ -630,7 +658,7 @@ msgid "See my Kiri.Art creation!"
 msgstr "خلاقیت Kiri.Art من را ببینید!"
 
 #: pages/s/[_id].tsx:225
-#: src/sd/Controls.tsx:463
+#: src/sd/Controls.tsx:464
 msgid "Seed"
 msgstr "عدد آغازین"
 
@@ -638,7 +666,7 @@ msgstr "عدد آغازین"
 msgid "SEND IMAGE TO"
 msgstr "ارسال تصویر به"
 
-#: src/sd/Controls.tsx:607
+#: src/sd/Controls.tsx:608
 msgid "Share Inputs"
 msgstr "اشتراک‌گذاری ورودی‌ها"
 
@@ -646,7 +674,7 @@ msgstr "اشتراک‌گذاری ورودی‌ها"
 msgid "Sheduler"
 msgstr "برنامه‌ریز"
 
-#: src/sd/Controls.tsx:926
+#: src/sd/Controls.tsx:927
 msgid "Speed, stability, cost"
 msgstr "سرعت، ثبات، هزینه"
 
@@ -681,7 +709,7 @@ msgid "Terms of Service"
 msgstr "شرایط استفاده از خدمات"
 
 #: pages/start.tsx:24
-#: pages/txt2img.tsx:124
+#: pages/txt2img.tsx:131
 #: src/MyAppBar.tsx:130
 msgid "Text to Image"
 msgstr "متن به تصویر"
@@ -768,7 +796,7 @@ msgstr "نام کاربری در دسترس نیست."
 msgid "Users"
 msgstr "کاربران"
 
-#: src/sd/Controls.tsx:484
+#: src/sd/Controls.tsx:485
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "استفاده از یک عدد آغازین یکسان با گزینه‌های یکسان (دستور، مقیاس راهنما، و غیره) همیشه یک تصویر را ایجاد می‌کند. این قابلیت می‌تواند برای بهینه‌سازی آثار قبلی، درک نحوه تأثیر گزینه‌های دیگر بر فرآیند (با حذف عنصر «تصادفی»)، یا هنگام اشتراک‌گذاری کارتان مفید باشد. عددی بین {0} و {MAX_SEED_VALUE}."
 
@@ -776,12 +804,12 @@ msgstr "استفاده از یک عدد آغازین یکسان با گزینه�
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "ما نمی‌توانیم آنگونه که شایسته است مراتب تشکر، قدردانی و سپاس خود را نسبت به محققان، سازمان‌ها و شرکت‌های زیر به خاطر نقشی که در کمک به <0>دموکراتیک‌سازی هوش مصنوعی</0> داشتند، بیان کنیم."
 
-#: src/sd/Controls.tsx:384
+#: src/sd/Controls.tsx:385
 msgid "Width"
 msgstr "عرض"
 
-#: src/sd/Controls.tsx:395
-#: src/sd/Controls.tsx:433
+#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:434
 msgid "Width of output image."
 msgstr "عرض تصویر خروجی."
 

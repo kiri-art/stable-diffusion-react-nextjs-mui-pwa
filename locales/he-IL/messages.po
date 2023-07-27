@@ -13,11 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;"\n"
 
-#: src/sd/Controls.tsx:615
+#: src/sd/Controls.tsx:616
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr ""
 
-#: src/sd/Controls.tsx:255
+#: src/sd/Controls.tsx:256
 msgid "(Denoising) Strength"
 msgstr "(הפחתת רעש) עוצמה"
 
@@ -73,10 +73,10 @@ msgstr ""
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr ""
 
-#: src/sd/Controls.tsx:117
-#: src/sd/Controls.tsx:200
-#: src/sd/Controls.tsx:294
-#: src/sd/Controls.tsx:345
+#: src/sd/Controls.tsx:118
+#: src/sd/Controls.tsx:201
+#: src/sd/Controls.tsx:295
+#: src/sd/Controls.tsx:346
 msgid "<0>Learn more</0>"
 msgstr "<0>למידע נוסף</0>"
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) השימוש הוא על אחריותך בלבד, איננו אחראים להשלכות שימושכם בפרויקט זה (או שימוש בלתי הולם בו). 2) כל שימוש באתר או בפרויקט זה מהווה הסכמה לתנאים ולכללים שלו, כולל כללי \"גילוי אחריות\" כמפורט למעלה, <0>רישיון {LRM}CreativeML Open RAIL-M</0> וגם <1>רישיון {LRM}MIT</1> של פרויקט זה."
 
-#: src/sd/Controls.tsx:714
+#: src/sd/Controls.tsx:715
 msgid "A black image will be shown instead."
 msgstr ""
 
@@ -111,6 +111,10 @@ msgstr "הגישה נדחתה."
 
 #: pages/about.tsx:100
 msgid "Acknowledements and Thanks"
+msgstr ""
+
+#: src/sd/Addons.tsx:276
+msgid "Add"
 msgstr ""
 
 #: src/Inpaint.tsx:530
@@ -203,7 +207,7 @@ msgstr ""
 msgid "Checkout"
 msgstr "השלמת קנייה"
 
-#: src/sd/Controls.tsx:283
+#: src/sd/Controls.tsx:284
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "הנחייה ללא סיווג (סולם)"
 
@@ -223,7 +227,7 @@ msgstr ""
 msgid "Community"
 msgstr ""
 
-#: src/sd/Controls.tsx:732
+#: src/sd/Controls.tsx:733
 msgid "Confirm Date of Birth"
 msgstr ""
 
@@ -233,6 +237,10 @@ msgstr "להתחבר אל {0}"
 
 #: pages/[_id].tsx:104
 msgid "Copied to clipboard"
+msgstr ""
+
+#: src/sd/Addons.tsx:246
+msgid "Created images may not be sold."
 msgstr ""
 
 #: pages/order/[_id].tsx:64
@@ -256,11 +264,11 @@ msgstr "תאריך"
 msgid "Delete this star?"
 msgstr ""
 
-#: src/sd/Controls.tsx:111
+#: src/sd/Controls.tsx:112
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "תיאור / כתובית לתמונה הרצויה. יכולים לכלול סגנונות אמנות כמו \"אימפרסיוניזם\", \"אמנות דיגיטלית\", סגנונות ועדשות צילום ורמזים נוספים."
 
-#: src/sd/Controls.tsx:192
+#: src/sd/Controls.tsx:193
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr ""
 
@@ -288,6 +296,10 @@ msgstr ""
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr ""
 
+#: src/sd/Addons.tsx:218
+msgid "Failed to copy to clipboard"
+msgstr ""
+
 #: pages/upsample.tsx:257
 msgid "File is not a valid image."
 msgstr ""
@@ -300,7 +312,7 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: src/sd/Controls.tsx:710
+#: src/sd/Controls.tsx:711
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr ""
 
@@ -337,7 +349,7 @@ msgstr "קדימה"
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:422
+#: src/sd/Controls.tsx:423
 msgid "Height"
 msgstr "גובה"
 
@@ -364,7 +376,7 @@ msgstr ""
 msgid "Home"
 msgstr "דף הבית"
 
-#: src/sd/Controls.tsx:289
+#: src/sd/Controls.tsx:290
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "עד כמה יש להיצמד להנחיה. ערכים נמוכים יותר = יותר יצירתיות וגיוון. ערכים גבוהים יותר = יותר דיוק, ייתכנו ארטיפקטים. בדרך כלל הערכים הטובים ביותר הם 5 - 15."
 
@@ -470,16 +482,28 @@ msgstr "התחברות"
 msgid "Logout"
 msgstr "ציאה"
 
-#: src/sd/Controls.tsx:434
+#: src/sd/Controls.tsx:435
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "עקב הגבלות הזיכרון הגודל המקסימלי הוא 1024x768 או 768x1024."
+
+#: src/sd/Addons.tsx:241
+msgid "May only be used with free credits."
+msgstr ""
 
 #: pages/s/[_id].tsx:203
 #: pages/upsample.tsx:62
 #: pages/upsample.tsx:66
-#: src/sd/Controls.tsx:763
-#: src/sd/Controls.tsx:767
+#: src/sd/Controls.tsx:764
+#: src/sd/Controls.tsx:768
 msgid "Model"
+msgstr ""
+
+#: src/sd/Addons.tsx:99
+msgid "Model is already added."
+msgstr ""
+
+#: src/sd/Addons.tsx:92
+msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
 msgstr ""
 
 #: pages/index.tsx:276
@@ -490,16 +514,20 @@ msgstr ""
 msgid "Most Recent"
 msgstr ""
 
-#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:397
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "חייב להיות כפולה של 64. עקב הגבלות הזיכרון גודל התמונה המקסימלי הוא 1024x768 או 768x1024."
+
+#: src/sd/Addons.tsx:236
+msgid "Must credit the model creator."
+msgstr ""
 
 #: pages/credits.tsx:165
 msgid "My Credits"
 msgstr "הקרדיט שלי"
 
 #: pages/s/[_id].tsx:211
-#: src/sd/Controls.tsx:169
+#: src/sd/Controls.tsx:170
 msgid "Negative Prompt"
 msgstr ""
 
@@ -534,15 +562,15 @@ msgid "Notes"
 msgstr ""
 
 #: pages/index.tsx:240
-#: src/sd/Controls.tsx:702
+#: src/sd/Controls.tsx:703
 msgid "NSFW Filter"
 msgstr ""
 
-#: src/sd/Controls.tsx:340
+#: src/sd/Controls.tsx:341
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "מספר השלבים בהפחתת רעש (כמה פעמים לחזור על הפעולה ולשפר את התמונה). עבור מספרים גדולים הרנדור לוקח יותר זמן, אבל ייתכן שהתוצאות שיתקבלו יהיו איכותיות יותר."
 
-#: src/sd/Controls.tsx:331
+#: src/sd/Controls.tsx:332
 msgid "Number of Inference Steps"
 msgstr "מספר שלבי ההיסק"
 
@@ -588,7 +616,7 @@ msgstr ""
 msgid "Pay"
 msgstr "תשלום"
 
-#: src/sd/Controls.tsx:473
+#: src/sd/Controls.tsx:474
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr ""
 
@@ -615,11 +643,11 @@ msgid "Project Goals"
 msgstr ""
 
 #: pages/s/[_id].tsx:207
-#: src/sd/Controls.tsx:89
+#: src/sd/Controls.tsx:90
 msgid "Prompt"
 msgstr ""
 
-#: src/sd/Controls.tsx:930
+#: src/sd/Controls.tsx:931
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr ""
 
@@ -639,11 +667,11 @@ msgstr "נקודות קרדיט שנרכשו מנוצלות אחרי שנגמר�
 msgid "Quick Start"
 msgstr ""
 
-#: src/sd/Controls.tsx:546
+#: src/sd/Controls.tsx:547
 msgid "Randomize"
 msgstr ""
 
-#: src/sd/Controls.tsx:554
+#: src/sd/Controls.tsx:555
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr ""
 
@@ -691,8 +719,8 @@ msgstr ""
 msgid "Roadmap"
 msgstr ""
 
-#: src/sd/Controls.tsx:810
-#: src/sd/Controls.tsx:814
+#: src/sd/Controls.tsx:811
+#: src/sd/Controls.tsx:815
 msgid "Sampler"
 msgstr ""
 
@@ -718,7 +746,7 @@ msgid "See my Kiri.Art creation!"
 msgstr ""
 
 #: pages/s/[_id].tsx:225
-#: src/sd/Controls.tsx:463
+#: src/sd/Controls.tsx:464
 msgid "Seed"
 msgstr ""
 
@@ -726,7 +754,7 @@ msgstr ""
 msgid "SEND IMAGE TO"
 msgstr ""
 
-#: src/sd/Controls.tsx:607
+#: src/sd/Controls.tsx:608
 msgid "Share Inputs"
 msgstr ""
 
@@ -738,7 +766,7 @@ msgstr ""
 msgid "Sheduler"
 msgstr ""
 
-#: src/sd/Controls.tsx:926
+#: src/sd/Controls.tsx:927
 msgid "Speed, stability, cost"
 msgstr ""
 
@@ -786,7 +814,7 @@ msgid "Terms of Service"
 msgstr "תנאי השירות"
 
 #: pages/start.tsx:24
-#: pages/txt2img.tsx:124
+#: pages/txt2img.tsx:131
 #: src/MyAppBar.tsx:130
 msgid "Text to Image"
 msgstr "טקסט לתמונה"
@@ -882,7 +910,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: src/sd/Controls.tsx:484
+#: src/sd/Controls.tsx:485
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr ""
 
@@ -890,12 +918,12 @@ msgstr ""
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr ""
 
-#: src/sd/Controls.tsx:384
+#: src/sd/Controls.tsx:385
 msgid "Width"
 msgstr "רוחב"
 
-#: src/sd/Controls.tsx:395
-#: src/sd/Controls.tsx:433
+#: src/sd/Controls.tsx:396
+#: src/sd/Controls.tsx:434
 msgid "Width of output image."
 msgstr "רוחב תמונת הפלט"
 
