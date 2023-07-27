@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Container,
   IconButton,
   Stack,
@@ -15,16 +16,17 @@ import {
 import {
   Attribution,
   FilterAlt,
+  KeyboardReturn,
   Link as LinkIcon,
   MoneyOffCsred,
   RemoveShoppingCart,
+  Delete,
 } from "@mui/icons-material";
 
 import models from "../../src/config/models";
 import { fetchModel, modelIdFromIdOrUrlOrHash } from "../lib/civitai";
 import type { Model, ModelVersion, ModelVersionFile } from "../lib/civitai";
 import { ModelState } from "./useModelState";
-import { Delete, HourglassTop } from "@mui/icons-material";
 import { t } from "@lingui/macro";
 
 function LoRAs({
@@ -80,10 +82,27 @@ function TextualInversion({
     event.preventDefault();
 
     const id = await modelIdFromIdOrUrlOrHash(value);
-    if (!id) return;
+    if (!id) {
+      toast(t`No valid model ID, URL, or hash found.`);
+      return;
+    }
 
     setLoading(true);
-    const model = await fetchModel(id);
+    let model;
+    try {
+      model = await fetchModel(id);
+    } catch (error) {
+      if (error instanceof Error) toast(error.message);
+      setLoading(false);
+      return;
+    }
+
+    if (typeof model === "string") {
+      toast(model);
+      setLoading(false);
+      return;
+    }
+
     console.log(model);
 
     if (model.type !== "TextualInversion") {
@@ -110,7 +129,7 @@ function TextualInversion({
     if (!file) file = modelVersion.files[0];
 
     if (!file) {
-      // XXX TODO
+      toast(`Model has no files.`);
       setLoading(false);
       return;
     }
@@ -273,7 +292,11 @@ function TextualInversion({
             onChange={(error) => setValue(error.target.value)}
           />
           <Button onClick={add} disabled={loading} type="submit">
-            {loading ? <HourglassTop /> : t`Add`}
+            {loading ? (
+              <CircularProgress size="1.5em" />
+            ) : (
+              <KeyboardReturn fontSize="small" />
+            )}
           </Button>
         </Stack>
       </form>
@@ -295,6 +318,20 @@ export default function Addons({ inputs }: { inputs: ModelState }) {
       <Button onClick={() => setShow(!show)}>
         {show ? "Hide" : "Show"} Addon Options (WIP experiment)
       </Button>
+      <span
+        style={{
+          position: "relative",
+          top: "5px",
+          marginLeft: "2px",
+          verticalAlign: "top",
+          background: "#dada88",
+          borderRadius: "3px",
+          fontSize: "30%",
+          padding: "2px 5px 2px 5px",
+        }}
+      >
+        NEW
+      </span>
       {show && (
         <Container
           sx={{
