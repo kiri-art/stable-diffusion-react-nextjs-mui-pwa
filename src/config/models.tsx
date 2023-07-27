@@ -13,49 +13,61 @@ export interface Model {
     [key: string]: Record<string, unknown>;
   };
   tags?: string[];
+  baseModel: string;
+  dateAdded?: Date;
 }
 
 const models: Record<string, Model> = {
   "stabilityai/stable-diffusion-2-1-base": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1-base",
-    description: "Latest Stable Diffusion, Dec 6th. (512x512)",
+    description: "Latest Stable Diffusion, SD 2.1. (512x512)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
+    baseModel: "SD 2.1",
+    dateAdded: new Date("2022-12-06"),
   },
   "stabilityai/stable-diffusion-2-1": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1",
-    description: "Latest Stable Diffusion, Dec 6th. (768x768)",
+    description: "Latest Stable Diffusion, SD 2.1. (768x768)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
     defaults: {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 2.1 768",
+    dateAdded: new Date("2022-12-06"),
   },
   "stabilityai/stable-diffusion-2-base": {
     MODEL_ID: "stabilityai/stable-diffusion-2-base",
-    description: "Stable Diffusion from Nov 24th. (512x512)",
+    description: "Stable Diffusion, SD 2.0 (512x512)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
+    baseModel: "SD 2.0",
+    dateAdded: new Date("2022-11-24"),
   },
   "stabilityai/stable-diffusion-2": {
     MODEL_ID: "stabilityai/stable-diffusion-2",
-    description: "Stable Diffusion from Nov 24th. (768x768)",
+    description: "Stable Diffusion, SD 2.0 768 (768x768)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
     defaults: {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 2.0 768",
+    dateAdded: new Date("2022-11-24"),
   },
   "runwayml/stable-diffusion-v1-5": {
     MODEL_ID: "runwayml/stable-diffusion-v1-5",
-    description: "Stable Diffusion from Oct 20th.",
+    description: "Stable Diffusion, SD 1.5",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    baseModel: "SD 1.5",
+    dateAdded: new Date("2022-10-20"),
   },
   "runwayml/stable-diffusion-inpainting": {
     MODEL_ID: "runwayml/stable-diffusion-inpainting",
-    description: "Fine-tuned SD; Best for Inpainting.",
+    description: "Fine-tuned SD 1.5; Best for Inpainting.",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     tags: ["inpainting"],
     notes: (
@@ -64,12 +76,14 @@ const models: Record<string, Model> = {
         Warning! Currently breaks easily on non-standard image sizes.
       </div>
     ),
+    baseModel: "SD 1.5",
+    dateAdded: new Date("2022-10-20"),
   },
   "prompthero/openjourney-v2": {
     MODEL_ID: "prompthero/openjourney-v2",
     MODEL_PRECISION: "",
     MODEL_REVISION: "",
-    description: "SDv1.5 finetuned on Midjourney",
+    description: "SD 1.5 finetuned on Midjourney",
     randomPrompts: [
       "retro serie of different cars with different colors and shapes",
     ],
@@ -78,6 +92,7 @@ const models: Record<string, Model> = {
         Openjourney by PromptHero, Model Card
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "ICBINP-v7": {
     MODEL_ID: "ICBINP-v7",
@@ -85,7 +100,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/76459?type=Model&format=PickleTensor&size=pruned&fp=fp16",
-    description: "I Can't Believe It's Not Photography",
+    description: "I Can't Believe It's Not Photography SD 1.5",
     tags: [
       "portrait",
       "photo",
@@ -116,6 +131,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
     },
+    baseModel: "SD 1.5",
   },
   "ICBINP-Final": {
     MODEL_ID: "ICBINP-Final",
@@ -123,7 +139,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/89464?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=icbinpICantBelieveIts_final.safetensors",
-    description: "I Can't Believe It's Not Photography",
+    description: "I Can't Believe It's Not Photography SD 1.5",
     tags: [
       "person",
       "realism",
@@ -156,6 +172,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
     },
+    baseModel: "SD 1.5",
   },
   "ICBINP-Final-Inpainting": {
     MODEL_ID: "ICBINP-Final-Inpainting",
@@ -163,7 +180,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/89658?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=icbinpICantBelieveIts_finalInpainting.safetensors",
-    description: "I Can't Believe It's Not Photography",
+    description: "I Can't Believe It's Not Photography SD 1.5",
     tags: [
       "person",
       "realism",
@@ -197,6 +214,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
     },
+    baseModel: "SD 1.5",
   },
   "ICBINP-Afterburn": {
     MODEL_ID: "ICBINP-Afterburn",
@@ -204,7 +222,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/109115?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=icbinpICantBelieveIts_afterburn.safetensors",
-    description: "I Can't Believe It's Not Photography",
+    description: "I Can't Believe It's Not Photography SD 1.5",
     tags: [
       "person",
       "realism",
@@ -237,6 +255,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
     },
+    baseModel: "SD 1.5",
   },
   "ICBINP-Afterburn-Inpainting": {
     MODEL_ID: "ICBINP-Afterburn-Inpainting",
@@ -244,7 +263,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/116459?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=icbinpICantBelieveIts_afterburnInpainting.safetensors",
-    description: "I Can't Believe It's Not Photography",
+    description: "I Can't Believe It's Not Photography SD 1.5",
     tags: [
       "person",
       "realism",
@@ -278,13 +297,14 @@ const models: Record<string, Model> = {
       negative_prompt:
         "(semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4, monochrome), text, close up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, watermark",
     },
+    baseModel: "SD 1.5",
   },
   "A-Zovya_Photoreal_V1": {
     MODEL_ID: "A-Zovya_Photoreal_V1",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
     // CHECKPOINT_URL: "https://civitai.com/api/download/models/61727?type=Model&format=SafeTensor&size=pruned&fp=fp16",
-    description: "Photorealistic, emphasis on skin texture and details.",
+    description: "Photorealistic, skin texture and details. SD 1.5",
     tags: [
       "photorealistic",
       "realism",
@@ -312,6 +332,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "child nude cleavage (monochrome) (bad hands) (disfigured) (grain) (Deformed) (poorly drawn) (mutilated) (lowres) (deformed) (dark) (lowpoly) (CG) (3d) (blurry) (duplicate) (watermark) (label) (signature) (frames) (text)",
     },
+    baseModel: "SD 1.5",
   },
   dreamshaper_7: {
     MODEL_ID: "dreamshaper_7",
@@ -319,7 +340,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/109123?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=dreamshaper_7.safetensors",
-    description: "Photorealistic, emphasis on skin texture and details.",
+    description: "Portrait paintings w/o CGI & filters. SD 1.5",
     tags: [
       "anime",
       "landscapes",
@@ -358,6 +379,7 @@ const models: Record<string, Model> = {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 1.5",
   },
   "dreamshaper_7-inpainting": {
     MODEL_ID: "dreamshaper_7-inpainting",
@@ -365,7 +387,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/110021?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=dreamshaper_7-inpainting.safetensors",
-    description: "Photorealistic, emphasis on skin texture and details.",
+    description: "Portrait paintings w/o CGI & filters. SD 1.5",
     tags: [
       "anime",
       "landscapes",
@@ -405,6 +427,7 @@ const models: Record<string, Model> = {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 1.5",
   },
   epicrealism_pureEvolutionV3: {
     MODEL_ID: "epicrealism_pureEvolutionV3",
@@ -412,7 +435,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/105035#fname=epicrealism_pureEvolutionV3.safetensors",
-    description: "Photorealistic, emphasis on skin texture and details.",
+    description: "HQ Hyperrealistic Portraits. SD 1.5",
     tags: [
       "photorealistic",
       "female",
@@ -443,6 +466,7 @@ const models: Record<string, Model> = {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 1.5",
   },
   "epicrealism_pureEvolutionV3-inpainting": {
     MODEL_ID: "epicrealism_pureEvolutionV3-inpainting",
@@ -450,7 +474,7 @@ const models: Record<string, Model> = {
     MODEL_REVISION: "",
     CHECKPOINT_URL:
       "https://civitai.com/api/download/models/105262?type=Model&format=SafeTensor&size=pruned&fp=fp16#fname=epicrealism_pureEvolutionV3-inpainting.safetensors",
-    description: "Photorealistic, emphasis on skin texture and details.",
+    description: "HQ Hyperrealistic Portraits. SD 1.5",
     tags: [
       "photorealistic",
       "female",
@@ -482,11 +506,12 @@ const models: Record<string, Model> = {
       width: 768,
       height: 768,
     },
+    baseModel: "SD 1.5",
   },
   "hakurei/wd-1-5-illusion-beta3": {
     MODEL_ID: "hakurei/wd-1-5-illusion-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.5, Beta 3, Illusion",
+    description: "Waifu Diffusion v1.5, Beta 3, Illusion, SD 2.1 768",
     randomPrompts: [
       "arknights, click (arknights), 1girl, baseball cap, black headwear, black jacket, blue eyes, grey hair, hand on headwear, hand up, hat, jacket, long sleeves, looking at viewer, open clothes, open jacket, shirt, short hair, simple background, smile, solo, upper body, white background, yellow shirt (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2)",
     ],
@@ -501,11 +526,12 @@ const models: Record<string, Model> = {
       negative_prompt:
         "lowres, ((bad anatomy)), ((bad hands)), text, missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
     },
+    baseModel: "SD 2.1 768",
   },
   "hakurei/wd-1-5-ink-beta3": {
     MODEL_ID: "hakurei/wd-1-5-ink-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.5, Beta 3, Ink",
+    description: "Waifu Diffusion v1.5, Beta 3, Ink, SD 2.1 768",
     randomPrompts: [
       "genshin impact, 1girl, aqua dress, blue hair, blunt bangs, blunt tresses, brown headwear, bug, butterfly, butterfly hair ornament, closed eyes, closed mouth, cowboy shot, dress, english text, flower, hair ornament, light blue hair, long sleeves, multicolored clothes, multicolored dress, neck tassel, official alternate costume, official alternate hairstyle, skirt basket, skirt hold, smile, solo, white dress, white flower (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
@@ -520,11 +546,12 @@ const models: Record<string, Model> = {
       negative_prompt:
         "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
     },
+    baseModel: "SD 2.1 768",
   },
   "hakurei/wd-1-5-mofu-beta3": {
     MODEL_ID: "hakurei/wd-1-5-mofu-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.5, Beta 3, Mofu",
+    description: "Waifu Diffusion v1.5, Beta 3, Mofu, SD 2.1 768",
     randomPrompts: [
       "1girl, black shirt, black sleeves, school uniform, sailor uniform, serafuku, red neckerchief, sailor collar, collarbone, black hair, short hair, grey eyes, closed mouth, fox ears, fox girl, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
@@ -539,11 +566,12 @@ const models: Record<string, Model> = {
       negative_prompt:
         "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
     },
+    baseModel: "SD 2.1 768",
   },
   "hakurei/wd-1-5-radiance-beta3": {
     MODEL_ID: "hakurei/wd-1-5-radiance-beta3",
     MODEL_PRECISION: "fp16",
-    description: "Waifu Diffusion v1.5, Beta 3, Radiance",
+    description: "Waifu Diffusion v1.5, Beta 3, Radiance, SD 2.1 768",
     randomPrompts: [
       "1girl, arms at sides, black hair, black sailor collar, black skirt, black sleeves, city, closed eyes, closed mouth, collarbone, neckerchief, outdoors, pleated skirt, red neckerchief, sailor collar, scenery, school uniform, serafuku, short hair, short sleeves, skirt, sky, solo, split mouth, upper body, cat ears, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime:1.2)",
     ],
@@ -558,6 +586,7 @@ const models: Record<string, Model> = {
       negative_prompt:
         "lowres, ((bad anatomy)), ((bad hands)), missing finger, extra digits, fewer digits, blurry, ((mutated hands and fingers)), (poorly drawn face), ((mutation)), ((deformed face)), (ugly), ((bad proportions)), ((extra limbs)), extra face, (double head), (extra head), ((extra feet)), monster, logo, cropped, worst quality, jpeg, humpbacked, long body, long neck, ((jpeg artifacts)), deleted, old, oldest, ((censored)), ((bad aesthetic)), (mosaic censoring, bar censor, blur censor)",
     },
+    baseModel: "SD 2.1 768",
   },
 
   "wd-1-4-anime_e1": {
@@ -565,7 +594,7 @@ const models: Record<string, Model> = {
     MODEL_URL: "s3:///diffusers/models--wd-1-4-anime_e1.tar.zst",
     MODEL_PRECISION: "",
     MODEL_REVISION: "",
-    description: "Waifu Diffusion v1.4, Epoch 1, Dec 31",
+    description: "Waifu Diffusion v1.4, Epoch 1, Dec 31, SD 2.0",
     randomPrompts: [
       "masterpiece, best quality, 1girl, black eyes, black hair, black sweater, blue background, bob cut, closed mouth, glasses, medium hair, red-framed eyewear, simple background, solo, sweater, upper body, wide-eyed",
       "masterpiece, best quality, 1girl, aqua eyes, baseball cap, blonde hair, closed mouth, earrings, green background, hat, hoop earrings, jewelry, looking at viewer, shirt, short hair, simple background, solo, upper body, yellow shirt",
@@ -578,10 +607,11 @@ const models: Record<string, Model> = {
         WD 1.4 Release Notes and Prompt Hints
       </a>
     ),
+    baseModel: "SD 2.0",
   },
   "hakurei/waifu-diffusion-v1-3": {
     MODEL_ID: "hakurei/waifu-diffusion-v1-3",
-    description: "Best for Anime.  Final Release.  Oct 6",
+    description: "Best for Anime.  Final Release.  Oct 6, SD 1.5",
     randomPrompts: [
       "1girl, witch, purple hair, facing the viewer, night sky, big moon, highly detailed",
       "chen, arknights, 1girl, animal ears, brown hair, cat ears, cat tail, closed mouth, earrings, face, hat, jewelry, lips, multiple tails, nekomata, painterly, red eyes, short hair, simple background, solo, tail, white background",
@@ -592,10 +622,11 @@ const models: Record<string, Model> = {
         WD 1.3 Release Notes and Prompt Hints
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "Linaqruf/anything-v3.0": {
     MODEL_ID: "Linaqruf/anything-v3.0",
-    description: "Anime Anything V3 (added Jan 2nd)",
+    description: "Anime Anything V3 (added Jan 2nd) SD 1.5",
     randomPrompts: [
       "1girl, brown hair, green eyes, colorful, autumn, cumulonimbus clouds, lighting, blue sky, falling leaves, garden",
       "1boy, medium hair, blonde hair, blue eyes, bishounen, colorful, autumn, cumulonimbus clouds, lighting, blue sky, falling leaves, garden",
@@ -606,30 +637,33 @@ const models: Record<string, Model> = {
         WD 1.3 Release Notes and Prompt Hints
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "CompVis/stable-diffusion-v1-4": {
     MODEL_ID: "CompVis/stable-diffusion-v1-4",
-    description: "Original model, best for most cases.",
+    description: "The first and original model, SD 1.4.",
     randomPrompts: [
       "Super Dog",
       "A digital illustration of a medieval town, 4k, detailed, trending in artstation, fantasy",
       "Cute and adorable ferret wizard, wearing coat and suit, steampunk, lantern, anthromorphic, Jean paptiste monge, oil painting",
       "<Scene>, skylight, soft shadows, depth of field, canon, f 1.8, 35mm",
     ],
+    baseModel: "SD 1.4",
   },
   "hakurei/waifu-diffusion": {
     MODEL_ID: "hakurei/waifu-diffusion",
-    description: "Anime.  Original, previous model (v1.2)",
+    description: "Anime.  Original, previous model (v1.2) SD 1.4",
     randomPrompts: [
       "touhou hakurei_reimu 1girl solo portrait",
       // @leemengtaiwan
       // https://www.reddit.com/r/StableDiffusion/comments/x8un2h/testing_waifu_diffusion_see_prompt_comparison/
       "a portrait of a charming girl with a perfect face and long hair and tattoo on her cheek and cyberpunk headset, anime, captivating, aesthetic, hyper-detailed and intricate, realistic shaded, realistic proportion, symmetrical, concept art, full resolution, golden ratio, global resolution",
     ],
+    baseModel: "SD 1.4",
   },
   "rinna/japanese-stable-diffusion": {
     MODEL_ID: "rinna/japanese-stable-diffusion",
-    description: "Japanese / Japanglish prompt input, style",
+    description: "Japanese / Japanglish prompt input, style SD 1.4",
     randomPrompts: [
       // https://prtimes.jp/main/html/rd/p/000000035.000070041.html
       "サラリーマン 油絵",
@@ -639,12 +673,13 @@ const models: Record<string, Model> = {
       "宇宙の月でバイクで走るライダー",
       "かわいいわんこのイラスト",
     ],
+    baseModel: "SD 1.4",
   },
   "OrangeMix/AbyssOrangeMix2": {
     MODEL_ID: "OrangeMix/AbyssOrangeMix2",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
-    description: "Anime.  Highly detailed, realistic illustrations.",
+    description: "Anime.  Highly detailed, realistic illustrations. SD 1.5",
     randomPrompts: [
       "(masterpiece:1,2), best quality, masterpiece, highres, original, extremely detailed wallpaper, looking at viewer, (sitting:1.4), (A robotic girl stands in the center holding a bouquet of orange flowers.:1.4).,(1humanoid cyborg girl:1.0), (happy, closed eye smile:1.6), (mechanical hand:1.05), [[cyborg]], metallic mixture, drawing, paintbrush, beret, (glowing_eyes:0.95), (separate sleeves), silver long_hair, hair_between_eyes, sigma 135mm lens, (Lots of oldman male researchers in white coats standing aside:1.2), 👨‍💻👨‍🔬,(cowboy shot:1.2), upper body,perfect lighting,(extremely detailed CG:1.2),(8k:1.1},(happy:1.3), :d, group of male researchers surrounding a female-shaped AI cyborg, smiling and laughing. cyborg cute girl sitting in the center of the group of male human researchers.The human male researchers are all smiling and laughing, (Group photo, commemorative photo, :1.4)",
     ],
@@ -653,23 +688,25 @@ const models: Record<string, Model> = {
         AbyssOrangeMix2 (AOM2) notes
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "OrangeMix/ElyOrangeMix": {
     MODEL_ID: "OrangeMix/ElyOrangeMix",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
-    description: "Improves Elysium_AnimeV2; 3d thick paint style.",
+    description: "Improves Elysium_AnimeV2; 3d thick paint style. SD 1.5",
     notes: (
       <a href="https://huggingface.co/WarriorMama777/OrangeMixs#elyorangemix-elom">
         ElyOrangeMix (ELOM) notes
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "OrangeMix/EerieOrangeMix": {
     MODEL_ID: "OrangeMix/EerieOrangeMix",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
-    description: "Improves Elysium_AnimeV2",
+    description: "Improves Elysium_AnimeV2 SD 1.5",
     randomPrompts: [
       "((masterpiece)), best quality, perfect anatomy, (1girl, solo focus:1.4), pov, looking at viewer, flower trim,(perspective, sideway, From directly above ,lying on water, open hand, palm, :1.3),(Accurate five-fingered hands, Reach out, hand focus, foot focus, Sole, heel, ball of the thumb:1.2), (outdoor, sunlight:1.2),(shiny skin:1.3),,(masterpiece, white border, outside border, frame:1.3), (motherhood, aged up, mature female, medium breasts:1.2), (curvy:1.1), (single side braid:1.2), (long hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), (light Ivory hair:1.2), looking at viewer, Calm, Slight smile, (anemic, dark, lake, river,puddle, Meadow, rock, stone, moss, cliff, white flower, stalactite, Godray, ruins, ancient, eternal, deep ,mystic background,sunlight,plant,lily,white flowers, Abyss, :1.2), (orange fruits, citrus fruit, citrus fruit bearing tree:1.4), volumetric lighting,good lighting,, masterpiece, best quality, highly detailed,extremely detailed cg unity 8k wallpaper,illustration,((beautiful detailed face)), best quality, (((hyper-detailed ))), high resolution illustration ,high quality, highres, sidelighting, ((illustrationbest)),highres,illustration, absurdres, hyper-detailed, intricate detail, perfect, high detailed eyes,perfect lighting, (extremely detailed CG:1.2)",
       "street, 130mm f1.4 lens, ,(shiny skin:1.3),, (teen age, school uniform:1.2), (glasses, black hair, medium hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), looking at viewer,, Calm, Slight smile",
@@ -679,17 +716,19 @@ const models: Record<string, Model> = {
         EerieOrangeMix (EOM) notes
       </a>
     ),
+    baseModel: "SD 1.5",
   },
   "OrangeMix/BloodOrangeMix": {
     MODEL_ID: "OrangeMix/BloodOrangeMix",
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
-    description: "Improves AnythingV3, paint style, popular in JP.",
+    description: "Improves AnythingV3, paint style, popular in JP. SD 1.5",
     notes: (
       <a href="https://huggingface.co/WarriorMama777/OrangeMixs#bloodorangemix-bom">
         BloodOrangeMix (BOM)
       </a>
     ),
+    baseModel: "SD 1.5",
   },
 };
 
