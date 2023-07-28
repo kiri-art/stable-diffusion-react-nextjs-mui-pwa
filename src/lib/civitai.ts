@@ -77,7 +77,7 @@ interface ModelVersionFileImage {
   width: number;
   height: number;
   hash: string;
-  meta: {
+  meta: null | {
     ENSD: string; // "31337"
     Size: string; // "512x768"
     seed: number;

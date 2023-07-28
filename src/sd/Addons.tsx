@@ -54,6 +54,40 @@ function LoRAs({
   );
 }
 
+interface AddedModel {
+  model: Model;
+  versionIndex: number;
+}
+
+function ModelVersionSelector({
+  model,
+  versionIndex,
+  setVersionIndex,
+}: {
+  model: Model;
+  versionIndex: number;
+  setVersionIndex: (newIndex: number) => void;
+}) {
+  if (model.modelVersions.length === 1) return null;
+
+  return (
+    <>
+      <select
+        value={versionIndex}
+        onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+          setVersionIndex(parseInt(event.target.value))
+        }
+      >
+        {model.modelVersions.map((modelVersion, i) => (
+          <option key={i} value={i}>
+            {modelVersion.name}
+          </option>
+        ))}
+      </select>{" "}
+    </>
+  );
+}
+
 function TextualInversion({
   inputs,
   setTextualInversions,
@@ -61,7 +95,7 @@ function TextualInversion({
   inputs: ModelState;
   setTextualInversions: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
-  const [added, setAdded] = React.useState<Model[]>([]);
+  const [added, setAdded] = React.useState<AddedModel[]>([]);
   const [value, setValue] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   console.log({ added });
@@ -112,18 +146,19 @@ function TextualInversion({
       return;
     }
 
-    for (const m of added)
+    for (const { model: m } of added)
       if (m.id === model.id) {
         setLoading(false);
         toast(t`Model is already added.`);
         return;
       }
 
-    const newAdded = [...added, model];
+    const versionIndex = 0;
+    const newAdded = [...added, { model, versionIndex }];
     setAdded(newAdded);
 
     let file: ModelVersionFile | undefined;
-    const modelVersion = model.modelVersions[0]; // TODO
+    const modelVersion = model.modelVersions[versionIndex];
 
     for (const f of modelVersion.files) if (f.primary) file = f;
     if (!file) file = modelVersion.files[0];
@@ -134,38 +169,8 @@ function TextualInversion({
       return;
     }
 
-    const token = getTokenFromModelVersion(modelVersion);
-
-    console.log(
-      newAdded.map(
-        (_model) =>
-          // @ts-expect-error: 'file' is possibly 'undefined'
-          file.downloadUrl +
-          "#fname=" +
-          // @ts-expect-error: 'file' is possibly 'undefined'
-          file.name +
-          "&token=" +
-          token
-        // modelVersion.trainedWords?.[0]
-      )
-    );
-
-    setTextualInversions(
-      newAdded.map(
-        (_model) =>
-          // @ts-expect-error: 'file' is possibly 'undefined'
-          file.downloadUrl +
-          "#fname=" +
-          // @ts-expect-error: 'file' is possibly 'undefined'
-          file.name +
-          "&token=" +
-          token
-        // modelVersion.trainedWords?.[0]
-      )
-    );
-
     const image = model.modelVersions[0].images[0];
-    if (image) {
+    if (image && image.meta) {
       const { meta } = image;
       if (inputs.prompt.value === "") inputs.prompt.setValue(meta.prompt);
       if (inputs.negative_prompt.value === "")
@@ -177,6 +182,28 @@ function TextualInversion({
 
     setLoading(false);
   }
+
+  React.useEffect(() => {
+    const textualInversions = added.map(({ model, versionIndex }) => {
+      const modelVersion = model.modelVersions[versionIndex];
+
+      let file;
+      for (const f of modelVersion.files) if (f.primary) file = f;
+      if (!file) file = modelVersion.files[0];
+
+      return (
+        file.downloadUrl +
+        "#fname=" +
+        file.name +
+        "&token=" +
+        getTokenFromModelVersion(model.modelVersions[versionIndex])
+      );
+      // modelVersion.trainedWords?.[0]
+    });
+
+    console.log(textualInversions);
+    setTextualInversions(textualInversions);
+  }, [added, setTextualInversions]);
 
   async function removeIndex(i: number) {
     const newAdded = added.filter((_, j) => j !== i);
@@ -201,7 +228,12 @@ function TextualInversion({
         models.
       </p>
       <ol>
-        {added.map((model, i) => (
+        <style jsx>{`
+          li {
+            margin-bottom: 1.5em;
+          }
+        `}</style>
+        {added.map(({ model, versionIndex }, i) => (
           <li key={model.id}>
             <a target="_blank" href={`https://civitai.com/models/${model.id}`}>
               {model.name}
@@ -213,25 +245,42 @@ function TextualInversion({
             >
               {model.creator.username}
             </a>{" "}
-            (CivitAI){" "}
+            (CivitAI)
+            <br />
+            <ModelVersionSelector
+              model={model}
+              versionIndex={versionIndex}
+              setVersionIndex={(index) => {
+                const newAdded = [...added];
+                newAdded[i] = { ...newAdded[i], versionIndex: index };
+                setAdded(newAdded);
+              }}
+            />
             <Chip
-              key={getTokenFromModelVersion(model.modelVersions[0])}
-              label={getTokenFromModelVersion(model.modelVersions[0])}
+              key={getTokenFromModelVersion(model.modelVersions[versionIndex])}
+              label={getTokenFromModelVersion(
+                model.modelVersions[versionIndex]
+              )}
               sx={{
-                "& .copied::after": {
-                  content: '"📋✅"',
+                "& .MuiChip-label:not(.copied)::after": {
+                  content: '"📋"',
+                },
+                "& .MuiChip-label.copied::after": {
+                  content: '"✅"',
                 },
               }}
-              onClick={async (event: React.SyntheticEvent) => {
+              onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
                 try {
+                  const target = event.target as HTMLSpanElement;
                   await navigator.clipboard.writeText(
-                    getTokenFromModelVersion(model.modelVersions[0])
+                    getTokenFromModelVersion(model.modelVersions[versionIndex])
                   );
-                  // @ts-expect-error: another day
-                  event.target.classList.add("copied");
+                  target.classList.add("copied");
+                  // const innerHTML = target.innerHTML;
+                  // target.innerHTML = t`Copied!`;
                   setTimeout(() => {
-                    // @ts-expect-error: another day
-                    event.target.classList.remove("copied");
+                    target.classList.remove("copied");
+                    // target.innerHTML = innerHTML;
                   }, 1000);
                 } catch (error) {
                   toast(t`Failed to copy to clipboard`);
@@ -250,20 +299,33 @@ function TextualInversion({
                 allowCommercialUse === "Rent" || allowCommercialUse === "Sell";
 
               return (
-                <span style={{ color: "#999" }}>
+                <span style={{ color: "#999", margin: "0 6px 0 6px" }}>
                   {!allowNoCredit && (
-                    <Tooltip title={t`Must credit the model creator.`}>
-                      <Attribution sx={{ verticalAlign: "middle" }} />
+                    <Tooltip
+                      enterTouchDelay={0}
+                      title={t`Must credit the model creator.`}
+                    >
+                      <Attribution sx={{ verticalAlign: "middle", mx: 0.2 }} />
                     </Tooltip>
                   )}
                   {!canRent && (
-                    <Tooltip title={t`May only be used with free credits.`}>
-                      <MoneyOffCsred sx={{ verticalAlign: "middle" }} />
+                    <Tooltip
+                      enterTouchDelay={0}
+                      title={t`May only be used with free credits.`}
+                    >
+                      <MoneyOffCsred
+                        sx={{ verticalAlign: "middle", mx: 0.2 }}
+                      />
                     </Tooltip>
                   )}
                   {!canSellImages && (
-                    <Tooltip title={t`Created images may not be sold.`}>
-                      <RemoveShoppingCart sx={{ verticalAlign: "middle" }} />
+                    <Tooltip
+                      enterTouchDelay={0}
+                      title={t`Created images may not be sold.`}
+                    >
+                      <RemoveShoppingCart
+                        sx={{ verticalAlign: "middle", mx: 0.2 }}
+                      />
                     </Tooltip>
                   )}
                 </span>
@@ -272,18 +334,19 @@ function TextualInversion({
             <IconButton onClick={() => removeIndex(i)}>
               <Delete />
             </IconButton>
-            {model.modelVersions[0].baseModel !==
+            {model.modelVersions[versionIndex].baseModel !==
               models[inputs.MODEL_ID.value].baseModel && (
               <div style={{ color: "#a00" }}>
-                Requires {model.modelVersions[0].baseModel} but you selected a{" "}
-                {models[inputs.MODEL_ID.value].baseModel} base model above.
+                Requires {model.modelVersions[versionIndex].baseModel} but you
+                selected a {models[inputs.MODEL_ID.value].baseModel} base model
+                above.
               </div>
             )}
           </li>
         ))}
       </ol>
       <form>
-        <Box sx={{ lineHeight: "2.4em" }}>Model hash or CivitAI ID / URL:</Box>
+        <Box>Model hash or CivitAI ID / URL:</Box>
         <Stack direction="row">
           <TextField
             sx={{ mx: 1 }}
