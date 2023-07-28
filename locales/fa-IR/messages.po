@@ -203,7 +203,7 @@ msgstr "ارتباط با {0}"
 msgid "Copied to clipboard"
 msgstr "در کلیپ‌بورد کپی شد"
 
-#: src/sd/Addons.tsx:265
+#: src/sd/Addons.tsx:324
 msgid "Created images may not be sold."
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr "تقویت صورت"
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "ترمیم صورت. خوب برای تصاویر واقعی، بد برای انیمه."
 
-#: src/sd/Addons.tsx:237
+#: src/sd/Addons.tsx:286
 msgid "Failed to copy to clipboard"
 msgstr ""
 
@@ -410,7 +410,7 @@ msgstr "خروج"
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "به دلیل محدودیت حافظه، حداکثر اندازه 1024x768 یا 768x1024 است."
 
-#: src/sd/Addons.tsx:260
+#: src/sd/Addons.tsx:314
 msgid "May only be used with free credits."
 msgstr ""
 
@@ -422,11 +422,11 @@ msgstr ""
 msgid "Model"
 msgstr "مدل"
 
-#: src/sd/Addons.tsx:118
+#: src/sd/Addons.tsx:152
 msgid "Model is already added."
 msgstr ""
 
-#: src/sd/Addons.tsx:111
+#: src/sd/Addons.tsx:145
 msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
 msgstr ""
 
@@ -442,7 +442,7 @@ msgstr "جدیدترین"
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "باید مضرب 64 باشد. به دلیل محدودیت حافظه، حداکثر اندازه تصویر 1024x768 یا 768x1024 است."
 
-#: src/sd/Addons.tsx:255
+#: src/sd/Addons.tsx:306
 msgid "Must credit the model creator."
 msgstr ""
 
@@ -477,7 +477,7 @@ msgstr "برای استفاده منصفانه، هیچ دیپ‌فیکی کنا
 msgid "No such code exists."
 msgstr "چنین کدی وجود ندارد."
 
-#: src/sd/Addons.tsx:86
+#: src/sd/Addons.tsx:120
 msgid "No valid model ID, URL, or hash found."
 msgstr ""
 
