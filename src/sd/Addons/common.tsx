@@ -269,7 +269,7 @@ export function Models({
           </li>
         ))}
       </ol>
-      {maxLength && added.length < maxLength && (
+      {(!maxLength || added.length < maxLength) && (
         <form>
           <Box>Model hash or CivitAI ID / URL:</Box>
           <Stack direction="row">
