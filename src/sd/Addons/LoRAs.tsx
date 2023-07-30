@@ -3,8 +3,13 @@ import React from "react";
 import { Chip, Typography } from "@mui/material";
 import { FilterAlt } from "@mui/icons-material";
 
+import type { ModelVersion } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
 import { AddedModel, Models } from "./common";
+
+function getTokens(modelVersion: ModelVersion) {
+  return modelVersion.trainedWords || [];
+}
 
 export default function LoRAs({
   setLoraWeights,
@@ -15,6 +20,21 @@ export default function LoRAs({
 }) {
   setLoraWeights;
   const [added, setAdded] = React.useState<AddedModel[]>([]);
+
+  React.useEffect(() => {
+    const loraWeights = added.map(({ model, versionIndex }) => {
+      const modelVersion = model.modelVersions[versionIndex];
+
+      let file;
+      for (const f of modelVersion.files) if (f.primary) file = f;
+      if (!file) file = modelVersion.files[0];
+
+      return file.downloadUrl + "#fname=" + file.name;
+    });
+
+    console.log(loraWeights);
+    setLoraWeights(loraWeights);
+  }, [added, setLoraWeights]);
 
   return (
     <div>
@@ -33,11 +53,19 @@ export default function LoRAs({
         added={added}
         setAdded={setAdded}
         inputs={inputs}
-        requiredType="TextualInversion"
-        Additional={() => null}
+        requiredType="LORA"
+        getTokens={getTokens}
+        maxLength={1}
       />
 
-      <p>Working on this next!</p>
+      <p style={{ fontSize: "70%" }}>
+        Note: currently, only one LoRA can be used at a time (tracked upstream
+        at{" "}
+        <a href="https://github.com/huggingface/diffusers/issues/2613">
+          diffusers#2613
+        </a>
+        ).
+      </p>
     </div>
   );
 }

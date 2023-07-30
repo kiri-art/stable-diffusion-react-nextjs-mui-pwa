@@ -5,6 +5,7 @@ import { t } from "@lingui/macro";
 import {
   Box,
   Button,
+  Chip,
   CircularProgress,
   IconButton,
   Stack,
@@ -22,7 +23,7 @@ import {
 
 import models from "../../../src/config/models";
 import { fetchModel, modelIdFromIdOrUrlOrHash } from "../../lib/civitai";
-import type { Model, ModelVersionFile } from "../../lib/civitai";
+import type { Model, ModelVersion, ModelVersionFile } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
 
 export interface AddedModel {
@@ -64,13 +65,15 @@ export function Models({
   setAdded,
   inputs,
   requiredType,
-  Additional,
+  getTokens,
+  maxLength,
 }: {
   added: AddedModel[];
   setAdded: React.Dispatch<React.SetStateAction<AddedModel[]>>;
   inputs: ModelState;
   requiredType: typeof added[0]["model"]["type"];
-  Additional: React.ComponentType<{ model: Model; versionIndex: number }>;
+  getTokens: (modelVersion: ModelVersion) => string[];
+  maxLength?: number;
 }) {
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -102,7 +105,7 @@ export function Models({
 
     console.log(model);
 
-    if (model.type !== "TextualInversion") {
+    if (model.type !== requiredType) {
       setLoading(false);
       const type = model.type;
       toast(t`Model must be a "${requiredType}", not a "${type}".`);
@@ -149,12 +152,6 @@ export function Models({
   async function removeIndex(i: number) {
     const newAdded = added.filter((_, j) => j !== i);
     setAdded(newAdded);
-    /*
-    setTextualInversions(
-      // @ts-expect-error: 'file' is possibly 'undefined'
-      newAdded.map((_model) => file.downloadUrl + "#fname=" + file.name)
-    );
-    */
   }
 
   return (
@@ -178,17 +175,6 @@ export function Models({
               {model.creator.username}
             </a>{" "}
             (CivitAI)
-            <br />
-            <ModelVersionSelector
-              model={model}
-              versionIndex={versionIndex}
-              setVersionIndex={(index) => {
-                const newAdded = [...added];
-                newAdded[i] = { ...newAdded[i], versionIndex: index };
-                setAdded(newAdded);
-              }}
-            />
-            <Additional model={model} versionIndex={versionIndex} />
             {(function () {
               // https://github.com/civitai/civitai/blob/main/src/components/PermissionIndicator/PermissionIndicator.tsx
               const permissions = model;
@@ -236,6 +222,42 @@ export function Models({
             <IconButton onClick={() => removeIndex(i)}>
               <Delete />
             </IconButton>
+            <br />
+            <ModelVersionSelector
+              model={model}
+              versionIndex={versionIndex}
+              setVersionIndex={(index) => {
+                const newAdded = [...added];
+                newAdded[i] = { ...newAdded[i], versionIndex: index };
+                setAdded(newAdded);
+              }}
+            />
+            {getTokens(model.modelVersions[versionIndex]).map((token) => (
+              <Chip
+                key={token}
+                label={token}
+                sx={{
+                  "& .MuiChip-label:not(.copied)::after": {
+                    content: '"📋"',
+                  },
+                  "& .MuiChip-label.copied::after": {
+                    content: '"✅"',
+                  },
+                }}
+                onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
+                  try {
+                    const target = event.target as HTMLSpanElement;
+                    await navigator.clipboard.writeText(token);
+                    target.classList.add("copied");
+                    setTimeout(() => {
+                      target.classList.remove("copied");
+                    }, 1000);
+                  } catch (error) {
+                    toast(t`Failed to copy to clipboard`);
+                  }
+                }}
+              />
+            ))}
             {model.modelVersions[versionIndex].baseModel !==
               models[inputs.MODEL_ID.value].baseModel && (
               <div style={{ color: "#a00" }}>
@@ -247,24 +269,26 @@ export function Models({
           </li>
         ))}
       </ol>
-      <form>
-        <Box>Model hash or CivitAI ID / URL:</Box>
-        <Stack direction="row">
-          <TextField
-            sx={{ mx: 1 }}
-            size="small"
-            value={value}
-            onChange={(error) => setValue(error.target.value)}
-          />
-          <Button onClick={add} disabled={loading} type="submit">
-            {loading ? (
-              <CircularProgress size="1.5em" />
-            ) : (
-              <KeyboardReturn fontSize="small" />
-            )}
-          </Button>
-        </Stack>
-      </form>{" "}
+      {maxLength && added.length < maxLength && (
+        <form>
+          <Box>Model hash or CivitAI ID / URL:</Box>
+          <Stack direction="row">
+            <TextField
+              sx={{ mx: 1 }}
+              size="small"
+              value={value}
+              onChange={(error) => setValue(error.target.value)}
+            />
+            <Button onClick={add} disabled={loading} type="submit">
+              {loading ? (
+                <CircularProgress size="1.5em" />
+              ) : (
+                <KeyboardReturn fontSize="small" />
+              )}
+            </Button>
+          </Stack>
+        </form>
+      )}
     </>
   );
 }

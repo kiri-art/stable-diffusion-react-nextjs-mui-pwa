@@ -1,11 +1,9 @@
 import React from "react";
-import { toast } from "react-toastify";
-import { t } from "@lingui/macro";
 
 import { Chip, Typography } from "@mui/material";
 import { FilterAlt } from "@mui/icons-material";
 
-import type { Model, ModelVersion } from "../../lib/civitai";
+import type { ModelVersion } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
 import { AddedModel, Models } from "./common";
 
@@ -18,47 +16,7 @@ function getTokenFromModelVersion(modelVersion: ModelVersion) {
   if (!file) file = modelVersion.files[0];
 
   const token = file.name.replace(/\..*$/, "");
-  return token;
-}
-
-function TextualInversionAdditional({
-  model,
-  versionIndex,
-}: {
-  model: Model;
-  versionIndex: number;
-}) {
-  return (
-    <Chip
-      key={getTokenFromModelVersion(model.modelVersions[versionIndex])}
-      label={getTokenFromModelVersion(model.modelVersions[versionIndex])}
-      sx={{
-        "& .MuiChip-label:not(.copied)::after": {
-          content: '"📋"',
-        },
-        "& .MuiChip-label.copied::after": {
-          content: '"✅"',
-        },
-      }}
-      onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
-        try {
-          const target = event.target as HTMLSpanElement;
-          await navigator.clipboard.writeText(
-            getTokenFromModelVersion(model.modelVersions[versionIndex])
-          );
-          target.classList.add("copied");
-          // const innerHTML = target.innerHTML;
-          // target.innerHTML = t`Copied!`;
-          setTimeout(() => {
-            target.classList.remove("copied");
-            // target.innerHTML = innerHTML;
-          }, 1000);
-        } catch (error) {
-          toast(t`Failed to copy to clipboard`);
-        }
-      }}
-    />
-  );
+  return [token];
 }
 
 export default function TextualInversion({
@@ -111,7 +69,7 @@ export default function TextualInversion({
         setAdded={setAdded}
         inputs={inputs}
         requiredType="TextualInversion"
-        Additional={TextualInversionAdditional}
+        getTokens={getTokenFromModelVersion}
       />
       <p style={{ fontSize: "70%" }}>
         Note: currently, once a token has been added to a model by any user, it
