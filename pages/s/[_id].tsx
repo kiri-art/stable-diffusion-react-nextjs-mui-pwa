@@ -15,6 +15,7 @@ import { editItem } from "../history";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import { toast } from "react-toastify";
 import Star from "../../src/schemas/star";
+import { ddaCallInputs, ddaModelInputs } from "../../src/schemas";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -98,8 +99,8 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   if (!item) return <div>Loading...</div>;
   if (typeof item.date === "string") item.date = new Date(item.date);
 
-  const modelInputs = item.modelInputs;
-  const callInputs = item.callInputs;
+  const modelInputs = item.modelInputs as ddaModelInputs;
+  const callInputs = item.callInputs as ddaCallInputs;
 
   // TODO, need to store w/h in result for other pipelines that don't specify.
   const aspectRatio =
@@ -150,6 +151,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
       toast("Sharing failed");
     }
   }
+  console.log({ callInputs, modelInputs });
 
   return (
     <Box>
@@ -202,6 +204,29 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
         <p>
           <Trans>Model</Trans>: {callInputs.MODEL_ID}
         </p>
+
+        {callInputs.textual_inversions &&
+          callInputs.textual_inversions.length > 0 && (
+            <div>
+              <p>Textual Inversions:</p>
+              <ul>
+                {callInputs.textual_inversions.map((ti) => (
+                  <li key={ti}>{ti}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+        {callInputs.lora_weights && callInputs.lora_weights.length > 0 && (
+          <div>
+            <p>Textual Inversions:</p>
+            <ul>
+              {callInputs.lora_weights.map((lw) => (
+                <li key={lw}>{lw}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <p>
           <Trans>Prompt</Trans>: {modelInputs.prompt}

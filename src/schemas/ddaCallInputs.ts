@@ -40,6 +40,11 @@ const ddaCallInputsSchema = object({
       /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/
     )
   ),
+  lora_weights: array().of(
+    string().matches(
+      /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)/
+    )
+  ),
 });
 
 type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;
