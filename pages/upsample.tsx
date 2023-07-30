@@ -203,6 +203,9 @@ export default function Upsample() {
       const share = sendQueue.get();
       console.log(share);
       if (!share) return;
+      setValidImageLoaded(true);
+      setInvalidImageReason("");
+
       readFile(share.files[0]);
       toast(t`Image Loaded`);
     }
