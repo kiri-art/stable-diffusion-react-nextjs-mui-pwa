@@ -20,21 +20,49 @@ export default function LoRAs({
 }) {
   setLoraWeights;
   const [added, setAdded] = React.useState<AddedModel[]>([]);
+  const [promptLoras, setPromptLoras] = React.useState<
+    Record<string, { scale: number; str: string }>
+  >({});
 
   React.useEffect(() => {
-    const loraWeights = added.map(({ model, versionIndex }) => {
-      const modelVersion = model.modelVersions[versionIndex];
+    const loraWeights = added
+      .filter(({ model }) => model.type === "LORA")
+      // @ts-expect-error: scale totally exists after the filter
+      .map(({ model, versionIndex, scale }) => {
+        const modelVersion = model.modelVersions[versionIndex];
 
-      let file;
-      for (const f of modelVersion.files) if (f.primary) file = f;
-      if (!file) file = modelVersion.files[0];
+        let file;
+        for (const f of modelVersion.files) if (f.primary) file = f;
+        if (!file) file = modelVersion.files[0];
+        const part = file.name.replace(/\.(safetensors|pt)$/, "");
 
-      return file.downloadUrl + "#fname=" + file.name;
-    });
+        return (
+          file.downloadUrl +
+          "#fname=" +
+          file.name +
+          "&scale=" +
+          (promptLoras[part] ? promptLoras[part].scale : scale)
+        );
+      });
 
     console.log(loraWeights);
     setLoraWeights(loraWeights);
-  }, [added, setLoraWeights]);
+  }, [added, setLoraWeights, promptLoras]);
+
+  React.useEffect(() => {
+    const loras: Record<string, { scale: number; str: string }> = {};
+    const matches = inputs.prompt.value.matchAll(
+      /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g
+    );
+    for (const match of matches) {
+      if (!match.groups) continue;
+      const lora = match.groups.lora;
+      const scale = parseFloat(match.groups.scale);
+      const str = match[0];
+      loras[lora] = { scale, str };
+    }
+    setPromptLoras(loras);
+  }, [inputs.prompt.value]);
 
   return (
     <div>
@@ -56,6 +84,7 @@ export default function LoRAs({
         requiredType="LORA"
         getTokens={getTokens}
         maxLength={1}
+        promptLoras={promptLoras}
       />
 
       <p style={{ fontSize: "70%" }}>

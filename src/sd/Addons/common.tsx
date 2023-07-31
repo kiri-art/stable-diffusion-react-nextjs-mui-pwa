@@ -1,13 +1,15 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { t } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
 
 import {
   Box,
   Button,
   Chip,
   CircularProgress,
+  Grid,
   IconButton,
+  Slider,
   Stack,
   TextField,
   Tooltip,
@@ -20,15 +22,107 @@ import {
   RemoveShoppingCart,
   Delete,
 } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
+import MuiInput from "@mui/material/Input";
 
 import models from "../../../src/config/models";
 import { fetchModel, modelIdFromIdOrUrlOrHash } from "../../lib/civitai";
 import type { Model, ModelVersion, ModelVersionFile } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
 
-export interface AddedModel {
+export type AddedModel = {
   model: Model;
   versionIndex: number;
+} & (
+  | { type: "LORA"; scale: number; lora: string }
+  | { type: "TextualInversion" }
+);
+
+const Input = styled(MuiInput)`
+  width: 55px;
+`;
+
+export default function InputSlider({
+  onChange,
+}: {
+  onChange: (value: number) => void;
+}) {
+  const [value, _setValue] = React.useState<
+    number | string | Array<number | string>
+  >(1);
+
+  const setValue = (newValue: number | string | Array<number | string>) => {
+    _setValue(newValue);
+    if (Array.isArray(newValue))
+      onChange(
+        typeof newValue[0] === "string" ? parseFloat(newValue[0]) : newValue[0]
+      );
+    else
+      onChange(typeof newValue === "string" ? parseFloat(newValue) : newValue);
+  };
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value === "" ? "" : Number(event.target.value));
+  };
+
+  const handleBlur = () => {
+    const f = Array.isArray(value)
+      ? typeof value[0] === "string"
+        ? parseFloat(value[0])
+        : value[0]
+      : typeof value === "string"
+      ? parseFloat(value)
+      : value;
+    if (f < 0) {
+      setValue(0);
+    } else if (f > 1) {
+      setValue(1);
+    }
+  };
+
+  return (
+    <Box sx={{ my: 1 }}>
+      {/*
+      <Typography id="input-slider" gutterBottom>
+        <Trans>Scale</Trans>
+      </Typography>
+      */}
+      <Grid container spacing={2} alignItems="center">
+        <Grid item>
+          <Trans>Scale</Trans>
+        </Grid>
+        <Grid item xs>
+          <Slider
+            value={typeof value === "number" ? value : 0}
+            onChange={handleSliderChange}
+            aria-labelledby="input-slider"
+            min={0}
+            max={1}
+            step={0.05}
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            value={value}
+            size="small"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            inputProps={{
+              step: 0.05,
+              min: 0,
+              max: 1,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }
 
 function ModelVersionSelector({
@@ -67,6 +161,7 @@ export function Models({
   requiredType,
   getTokens,
   maxLength,
+  promptLoras,
 }: {
   added: AddedModel[];
   setAdded: React.Dispatch<React.SetStateAction<AddedModel[]>>;
@@ -74,6 +169,7 @@ export function Models({
   requiredType: typeof added[0]["model"]["type"];
   getTokens: (modelVersion: ModelVersion) => string[];
   maxLength?: number;
+  promptLoras?: Record<string, { scale: number; str: string }>;
 }) {
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -120,8 +216,6 @@ export function Models({
       }
 
     const versionIndex = 0;
-    const newAdded = [...added, { model, versionIndex }];
-    setAdded(newAdded);
 
     let file: ModelVersionFile | undefined;
     const modelVersion = model.modelVersions[versionIndex];
@@ -134,6 +228,20 @@ export function Models({
       setLoading(false);
       return;
     }
+
+    const newModel =
+      model.type === "LORA"
+        ? {
+            type: "LORA" as const,
+            model,
+            versionIndex,
+            scale: 1,
+            lora: file.name.replace(/\.(safetensors|pt)$/, ""),
+          }
+        : { type: "TextualInversion" as const, model, versionIndex };
+    const newAdded = [...added, newModel];
+
+    setAdded(newAdded);
 
     const image = model.modelVersions[0].images[0];
     if (image && image.meta) {
@@ -162,7 +270,7 @@ export function Models({
             margin-bottom: 1.5em;
           }
         `}</style>
-        {added.map(({ model, versionIndex }, i) => (
+        {added.map(({ type, model, versionIndex, ...rest }, i) => (
           <li key={model.id}>
             <a target="_blank" href={`https://civitai.com/models/${model.id}`}>
               {model.name}
@@ -243,6 +351,8 @@ export function Models({
                   "& .MuiChip-label.copied::after": {
                     content: '"✅"',
                   },
+                  mx: 0.4,
+                  my: 0.5,
                 }}
                 onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
                   try {
@@ -258,6 +368,26 @@ export function Models({
                 }}
               />
             ))}
+            {type === "LORA" &&
+              // @ts-expect-error: later
+              (promptLoras && promptLoras[rest.lora] ? (
+                <div style={{ fontSize: "80%" }}>
+                  Set in prompt:{" "}
+                  {
+                    // @ts-expect-error: later
+                    promptLoras[rest.lora].str
+                  }
+                </div>
+              ) : (
+                <InputSlider
+                  onChange={(value) => {
+                    const newAdded = [...added];
+                    // @ts-expect-error: another day
+                    newAdded.splice(i, 1, { ...newAdded[i], scale: value });
+                    setAdded(newAdded);
+                  }}
+                />
+              ))}
             {model.modelVersions[versionIndex].baseModel !==
               models[inputs.MODEL_ID.value].baseModel && (
               <div style={{ color: "#a00" }}>
