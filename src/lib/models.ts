@@ -64,15 +64,15 @@ const models: Record<string, Model> = {
         if (subModel.safety_checker === false)
           callInputs.safety_checker = false;
         callInputs.compel_prompts = true;
-      }
 
-      const result = invokeaiResolver.convertAuto1111ToInvokeAI(
-        modelInputs.prompt,
-        modelInputs.negative_prompt
-      );
-      console.log(result);
-      modelInputs.prompt = result.to.positive.text;
-      modelInputs.negative_prompt = result.to.negative.text;
+        const result = invokeaiResolver.convertAuto1111ToInvokeAI(
+          modelInputs.prompt,
+          modelInputs.negative_prompt
+        );
+        console.log(result);
+        modelInputs.prompt = result.to.positive.text;
+        modelInputs.negative_prompt = result.to.negative.text;
+      }
     },
   },
   upsample: {
