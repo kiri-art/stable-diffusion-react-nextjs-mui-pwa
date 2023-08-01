@@ -51,16 +51,20 @@ export default function LoRAs({
 
   React.useEffect(() => {
     const loras: Record<string, { scale: number; str: string }> = {};
-    const matches = inputs.prompt.value.matchAll(
+    const matches1 = inputs.prompt.value.matchAll(
       /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g
     );
-    for (const match of matches) {
-      if (!match.groups) continue;
-      const lora = match.groups.lora;
-      const scale = parseFloat(match.groups.scale);
-      const str = match[0];
-      loras[lora] = { scale, str };
-    }
+    const matches2 = inputs.prompt.value.matchAll(
+      /(with|use)Lora\((?<lora>[^,]+),(?<scale>[0-9.]+)\)/g
+    );
+    for (const matches of [matches1, matches2])
+      for (const match of matches) {
+        if (!match.groups) continue;
+        const lora = match.groups.lora;
+        const scale = parseFloat(match.groups.scale);
+        const str = match[0];
+        loras[lora] = { scale, str };
+      }
     setPromptLoras(loras);
   }, [inputs.prompt.value]);
 
@@ -88,12 +92,15 @@ export default function LoRAs({
       />
 
       <p style={{ fontSize: "70%" }}>
-        Note: currently, only one LoRA can be used at a time (tracked upstream
-        at{" "}
+        Notes: 1) Currently, only one LoRA can be used at a time (tracked
+        upstream at{" "}
         <a href="https://github.com/huggingface/diffusers/issues/2613">
           diffusers#2613
         </a>
-        ).
+        ). 2) LoRAs work best on the same model they were trained on; results
+        can appear very garbled otherwise. We hope that moving forwards, the
+        community will move away from fine-tuned models and we&apos;ll simply
+        have many LoRAs for the original SDXL base. Let&apos;s see.
       </p>
     </div>
   );

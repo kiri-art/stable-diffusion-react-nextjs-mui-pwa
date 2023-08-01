@@ -45,6 +45,7 @@ const ddaCallInputsSchema = object({
       /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)/
     )
   ),
+  compel_prompts: boolean(),
 });
 
 type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;

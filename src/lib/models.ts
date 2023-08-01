@@ -5,6 +5,9 @@ import ddaModelInputsSchema, {
 import upsampleCallInputsSchema from "../schemas/upsampleCallInputs";
 import upsampleModelInputsSchema from "../schemas/upsampleModelInputs";
 import SubModels from "../config/models";
+import InvokeAIPromptResolver from "../sd/converter_standalone";
+
+const invokeaiResolver = new InvokeAIPromptResolver();
 
 export interface Model {
   id: string;
@@ -58,7 +61,18 @@ const models: Record<string, Model> = {
         callInputs.MODEL_URL = subModel.MODEL_URL ?? "s3://";
         if (subModel.CHECKPOINT_URL)
           callInputs.CHECKPOINT_URL = subModel.CHECKPOINT_URL;
+        if (subModel.safety_checker === false)
+          callInputs.safety_checker = false;
+        callInputs.compel_prompts = true;
       }
+
+      const result = invokeaiResolver.convertAuto1111ToInvokeAI(
+        modelInputs.prompt,
+        modelInputs.negative_prompt
+      );
+      console.log(result);
+      modelInputs.prompt = result.to.positive.text;
+      modelInputs.negative_prompt = result.to.negative.text;
     },
   },
   upsample: {

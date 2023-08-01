@@ -18,9 +18,52 @@ export interface Model {
 }
 
 const models: Record<string, Model> = {
+  "stabilityai/stable-diffusion-xl-base-1.0": {
+    MODEL_ID: "stabilityai/stable-diffusion-xl-base-1.0",
+    MODEL_REVISION: "",
+    MODEL_PRECISION: "fp16",
+    description: "Latest Stable Diffusion, SDXL 1.0. (1024x1024)",
+    randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
+    baseModel: "SDXL 1.0",
+    dateAdded: new Date("2023-07-30"),
+    defaults: {
+      width: 768,
+      height: 768,
+    },
+    notes: (
+      <span>
+        <a href="https://stability.ai/blog/stable-diffusion-sdxl-1-announcement">
+          SDXL 1.0 Announcement
+        </a>
+        . Refiner access coming soon.
+      </span>
+    ),
+  },
+  /*
+  "stabilityai/stable-diffusion-xl-refiner-1.0": {
+    MODEL_ID: "stabilityai/stable-diffusion-xl-refiner-1.0",
+    MODEL_REVISION: "",
+    MODEL_PRECISION: "fp16",
+    description: "Latest Stable Diffusion, SDXL 1.0. (1024x1024)",
+    randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
+    safety_checker: false,
+    baseModel: "SDXL 1.0",
+    dateAdded: new Date("2023-07-30"),
+    defaults: {
+      width: 768,
+      height: 768,
+    },
+    notes: (
+      <a href="https://stability.ai/blog/stable-diffusion-sdxl-1-announcement">
+        SDXL 1.0 Announcement
+      </a>
+    ),
+  },
+  */
   "stabilityai/stable-diffusion-2-1-base": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1-base",
-    description: "Latest Stable Diffusion, SD 2.1. (512x512)",
+    description: "Stable Diffusion v2.1, SD 2.1. (512x512)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
     baseModel: "SD 2.1",
@@ -28,7 +71,7 @@ const models: Record<string, Model> = {
   },
   "stabilityai/stable-diffusion-2-1": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1",
-    description: "Latest Stable Diffusion, SD 2.1. (768x768)",
+    description: "Stable Diffusion v2.1, SD 2.1. (768x768)",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     safety_checker: false,
     defaults: {

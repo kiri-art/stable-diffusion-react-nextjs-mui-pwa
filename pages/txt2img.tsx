@@ -96,8 +96,9 @@ export default function Txt2Img() {
         seed,
       },
       {
-        PIPELINE: "lpw_stable_diffusion",
-        custom_pipeline_method: "text2img",
+        PIPELINE: "AutoPipelineForText2Image",
+        // PIPELINE: "lpw_stable_diffusion",
+        // custom_pipeline_method: "text2img",
         SCHEDULER: modelInputs.sampler,
         ...callInputs,
       },

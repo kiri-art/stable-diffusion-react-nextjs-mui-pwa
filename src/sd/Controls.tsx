@@ -84,59 +84,76 @@ function Prompt({
     }
 
     return (
-      <TextField
-        // dir="ltr"
-        // lang="en"
-        label={t`Prompt`}
-        fullWidth
-        multiline
-        onKeyDown={promptKeyDown}
-        value={value}
-        placeholder={placeholder}
-        InputLabelProps={{ shrink: true }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value);
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setValue("")} edge="end">
-                <Clear />
-              </IconButton>
-              <IconButton onClick={() => setValue(getRandomPrompt())}>
-                <SettingsBackupRestore />
-              </IconButton>
-              <Tooltip
-                title={
-                  <Box>
-                    <Trans>
-                      Description / caption of your desired image. May include
-                      art styles like &apos;impressionist&apos;, &apos;digital
-                      art&apos;, photographic styles and lenses, and other
-                      hints.
-                    </Trans>{" "}
-                    <Trans>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc"
-                      >
-                        Learn more
-                      </a>
-                    </Trans>
-                  </Box>
-                }
-                enterDelay={0}
-                enterTouchDelay={0}
-                leaveDelay={0}
-                leaveTouchDelay={4000}
-              >
-                <Help />
-              </Tooltip>
-            </InputAdornment>
-          ),
-        }}
-      />
+      <>
+        <TextField
+          // dir="ltr"
+          // lang="en"
+          label={t`Prompt`}
+          fullWidth
+          multiline
+          onKeyDown={promptKeyDown}
+          value={value}
+          placeholder={placeholder}
+          InputLabelProps={{ shrink: true }}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setValue(event.target.value);
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setValue("")} edge="end">
+                  <Clear />
+                </IconButton>
+                <IconButton onClick={() => setValue(getRandomPrompt())}>
+                  <SettingsBackupRestore />
+                </IconButton>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Description / caption of your desired image. May include
+                        art styles like &apos;impressionist&apos;, &apos;digital
+                        art&apos;, photographic styles and lenses, and other
+                        hints.
+                      </Trans>{" "}
+                      <Trans>
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc"
+                        >
+                          Learn more
+                        </a>
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={4000}
+                >
+                  <Help />
+                </Tooltip>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <div style={{ marginTop: "5px", fontSize: "70%" }}>
+          Note: we now use{" "}
+          <a
+            target="_blank"
+            href="https://github.com/damian0815/compel/blob/main/doc/syntax.md"
+          >
+            compel syntax
+          </a>{" "}
+          for prompt weights (like InvokeAI). A111-style weights are still
+          supported and converted automatically with{" "}
+          <a href="https://github.com/basharast/A2IPrompt/tree/main">
+            A2IPrompt
+          </a>
+          .
+        </div>
+      </>
     );
   }, [value, setValue, placeholder, getRandomPrompt]);
 }

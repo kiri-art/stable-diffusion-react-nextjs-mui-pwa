@@ -461,12 +461,14 @@ export default function Inpainting() {
     };
 
     if (inputs.MODEL_ID.value.match(/[Ii]npaint/)) {
-      callInputs.PIPELINE = "StableDiffusionInpaintPipeline";
+      // callInputs.PIPELINE = "StableDiffusionInpaintPipeline";
+      callInputs.PIPELINE = "AutoPipelineForInpainting";
       modelInputs.width = dims.width;
       modelInputs.height = dims.height;
     } else {
-      callInputs.PIPELINE = "lpw_stable_diffusion";
-      callInputs.custom_pipeline_method = "inpaint";
+      callInputs.PIPELINE = "AutoPipelineForInpainting";
+      // callInputs.PIPELINE = "lpw_stable_diffusion";
+      // callInputs.custom_pipeline_method = "inpaint";
     }
 
     // return;

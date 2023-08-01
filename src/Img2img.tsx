@@ -607,8 +607,9 @@ export default function Img2img() {
     };
 
     const callInputs = {
-      PIPELINE: "lpw_stable_diffusion",
-      custom_pipeline_method: "img2img",
+      PIPELINE: "AutoPipelineForImage2Image",
+      // PIPELINE: "lpw_stable_diffusion",
+      // custom_pipeline_method: "img2img",
       // @ts-expect-error: TODO
       SCHEDULER: modelInputs.sampler,
     };
