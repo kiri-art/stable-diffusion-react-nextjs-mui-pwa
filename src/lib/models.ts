@@ -5,9 +5,10 @@ import ddaModelInputsSchema, {
 import upsampleCallInputsSchema from "../schemas/upsampleCallInputs";
 import upsampleModelInputsSchema from "../schemas/upsampleModelInputs";
 import SubModels from "../config/models";
-import InvokeAIPromptResolver from "../sd/converter_standalone";
+import { prompt_a111_to_compel } from "../sd/utils";
+// import InvokeAIPromptResolver from "../sd/converter_standalone";
 
-const invokeaiResolver = new InvokeAIPromptResolver();
+// const invokeaiResolver = new InvokeAIPromptResolver();
 
 export interface Model {
   id: string;
@@ -65,6 +66,7 @@ const models: Record<string, Model> = {
           callInputs.safety_checker = false;
         callInputs.compel_prompts = true;
 
+        /*
         const result = invokeaiResolver.convertAuto1111ToInvokeAI(
           modelInputs.prompt,
           modelInputs.negative_prompt
@@ -72,6 +74,12 @@ const models: Record<string, Model> = {
         console.log(result);
         modelInputs.prompt = result.to.positive.text;
         modelInputs.negative_prompt = result.to.negative.text;
+        */
+
+        modelInputs.prompt = prompt_a111_to_compel(modelInputs.prompt || "");
+        modelInputs.negative_prompt = prompt_a111_to_compel(
+          modelInputs.negative_prompt || ""
+        );
       }
     },
   },

@@ -146,12 +146,14 @@ function Prompt({
           >
             compel syntax
           </a>{" "}
-          for prompt weights (like InvokeAI). A111-style weights are still
+          for prompt weights (like InvokeAI). Simple A1111-style weights will be
+          converted automatically.
+          {/* A111-style weights are still
           supported and converted automatically with{" "}
           <a href="https://github.com/basharast/A2IPrompt/tree/main">
             A2IPrompt
-          </a>
-          .
+          </a>.
+          */}
         </div>
       </>
     );
