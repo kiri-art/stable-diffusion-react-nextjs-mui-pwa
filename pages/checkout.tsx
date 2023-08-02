@@ -53,6 +53,7 @@ export default function Checkout() {
   const options = {
     // passing the client secret obtained from the server
     clientSecret,
+    loader: "auto" as const,
   };
 
   return (

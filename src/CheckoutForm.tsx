@@ -2,16 +2,29 @@ import {
   useStripe,
   useElements,
   PaymentElement,
+  LinkAuthenticationElement,
 } from "@stripe/react-stripe-js";
 import React, { SyntheticEvent } from "react";
 import { Trans } from "@lingui/macro";
 
 import { Box, Button } from "@mui/material";
+import {
+  useGongoOne,
+  useGongoUserId,
+  useGongoIsPopulated,
+} from "gongo-client-react";
 
 export default function CheckoutForm({ orderId }: { orderId: string }) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = React.useState(false);
+  const isPopulated = useGongoIsPopulated();
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const userEmail =
+    user && user.emails && user.emails.length > 0 && user.emails[0].value;
 
   const handleSubmit = async (event: SyntheticEvent) => {
     // We don't want to let default form submission happen here,
@@ -46,8 +59,19 @@ export default function CheckoutForm({ orderId }: { orderId: string }) {
     }
   };
 
+  if (!isPopulated) return <div>Loading...</div>;
+
   return (
     <form onSubmit={handleSubmit}>
+      <LinkAuthenticationElement
+        // Optional prop for prefilling customer information
+        options={{
+          defaultValues: {
+            email: userEmail || "",
+          },
+        }}
+      />
+      <br />
       <PaymentElement />
       <Button
         type="submit"
