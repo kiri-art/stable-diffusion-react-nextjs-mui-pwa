@@ -141,6 +141,17 @@ export class ProviderFetchRequestBase {
     this.id = id || uuidv4();
   }
 
+  async checkInputs() {
+    if (this.inputs.callInputs) {
+      const schema = this.model.callInputsSchema;
+      if (schema) await schema.validate(this.inputs.callInputs);
+    }
+    if (this.inputs.modelInputs) {
+      const schema = this.model.modelInputsSchema;
+      if (schema) await schema.validate(this.inputs.modelInputs);
+    }
+  }
+
   apiInfo() {
     return apiInfo[this.provider.api];
   }
@@ -220,6 +231,8 @@ export class ProviderFetchRequestBase {
   }
 
   async fetchSingle(callback?: (result: Record<string, unknown>) => void) {
+    await this.checkInputs();
+
     const { url, payload } = this.prepareStart();
 
     const response = await fetch(url, {
@@ -513,6 +526,9 @@ export class ProviderFetchServerless {
       const request = ProviderFetchRequestBase.fromObject(
         req.body.requestObject
       );
+
+      await request.checkInputs();
+
       const extraInfo = req.body.extraInfo;
       // console.log("req.body", req.body);
       // console.log("request", request);
@@ -583,7 +599,7 @@ export default async function providerFetch(
         if (error instanceof Error) {
           return {
             message: "error",
-            error: {
+            $error: {
               name: error.name,
               message: error.message,
               stack: error.stack,
