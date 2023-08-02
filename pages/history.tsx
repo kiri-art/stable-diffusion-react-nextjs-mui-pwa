@@ -76,7 +76,7 @@ export async function editItem(
   });
 
   let page = "/txt2img";
-  if (item.callInputs.PIPELINE.match(/Img2Img/)) page = "/img2img";
+  if (item.callInputs.PIPELINE.match(/Img2Img|Image2Image/)) page = "/img2img";
   else if (item.callInputs.PIPELINE.match(/Inpaint/)) page = "/inpaint";
   params.delete("PIPELINE");
   params.delete("SCHEDULER");
