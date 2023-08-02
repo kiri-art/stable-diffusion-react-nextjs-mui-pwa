@@ -19,7 +19,7 @@ import Star from "./schemas/star";
 
 db.extend("auth", GongoAuth);
 db.extend("transport", HTTPTransport, {
-  pollInterval: 5 * 1000,
+  pollInterval: 60 /*5*/ * 1000,
   pollWhenIdle: false,
   idleTimeout: 60 * 1000,
 });

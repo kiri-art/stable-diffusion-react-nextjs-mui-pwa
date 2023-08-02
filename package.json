@@ -12,7 +12,8 @@
     "i18n:extract": "NODE_ENV=development lingui extract",
     "i18n:compile": "lingui compile",
     "docker": "docker run -it -p 8000:8000 --gpus all --rm diffusers-api",
-    "test": "jest"
+    "test": "jest",
+    "stripe-dev": "stripe listen --forward-to localhost:3000/api/stripe"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
