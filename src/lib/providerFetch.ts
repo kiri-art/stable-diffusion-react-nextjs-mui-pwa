@@ -142,12 +142,22 @@ export class ProviderFetchRequestBase {
   }
 
   async checkInputs() {
+    let model = this.model;
+
     if (this.inputs.callInputs) {
-      const schema = this.model.callInputsSchema;
+      const use_extra =
+        // @ts-expect-error: ok
+        this.model.id === "dda" && this.inputs.callInputs.use_extra;
+      if (use_extra) {
+        const maybeModel = getModel(use_extra);
+        if (maybeModel) model = maybeModel;
+      }
+
+      const schema = model.callInputsSchema;
       if (schema) await schema.validate(this.inputs.callInputs);
     }
     if (this.inputs.modelInputs) {
-      const schema = this.model.modelInputsSchema;
+      const schema = model.modelInputsSchema;
       if (schema) await schema.validate(this.inputs.modelInputs);
     }
   }
