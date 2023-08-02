@@ -9,5 +9,11 @@ describe("utils", () => {
       expect(f("a (blue:1.5) deer")).toBe("a (blue)1.5 deer");
       expect(f("<lora:name:1.5>")).toBe("withLora(name,1.5)");
     });
+
+    it("skips compel", () => {
+      const g = (input: string) => expect(f(input)).toBe(input);
+      g("a blue+ (blue)1.2 deer");
+      g("(something, something).verb(args)");
+    });
   });
 });

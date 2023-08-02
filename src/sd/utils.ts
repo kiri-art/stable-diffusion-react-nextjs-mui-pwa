@@ -1,4 +1,8 @@
 function prompt_a111_to_compel(input: string) {
+  // Check if already compel
+  if (input.match(/\b[+-]+/)) return input;
+  if (input.match(/\)\.\w+\(/)) return input;
+
   let output = input.replaceAll(
     /([(\[]{1,6})([^():]+?)([)\]]{1,6})/g,
     (match, p1, p2, p3, _offset, _string, _groups) => {
