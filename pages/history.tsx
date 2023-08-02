@@ -32,6 +32,7 @@ import useBreakPoint from "../src/lib/useBreakPoint";
 import { destar } from "../src/Starred";
 import asyncConfirm from "../src/asyncConfirm";
 import StarType from "../src/schemas/star";
+import { toast } from "react-toastify";
 
 const MAX_HISTORY = 250;
 
@@ -140,21 +141,46 @@ function Item({ item }: { item: HistoryItem }) {
   }
 
   async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
-    // Duplicated in OutputImage
+    // Duplicated in OutputImage, TODO, refactor
     if (starId) return (await destar(starId)) && setStarId("");
     setStarring(true);
     console.log(item);
-    const response = await fetch("/api/starItem", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        auth: db?.auth?.authInfoToSend(),
-        item,
-      }),
-    });
-    const result = await response.json();
+
+    let response;
+    try {
+      response = await fetch("/api/starItem", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          auth: db?.auth?.authInfoToSend(),
+          item,
+        }),
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast(error.constructor.name + ": " + error.message);
+        setStarring(false);
+        return;
+      }
+    }
+    if (!response) return;
+
+    let result;
+    try {
+      result = await response.json();
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast(error.constructor.name + ": " + error.message);
+        setStarring(false);
+        return;
+      }
+    }
+    if (!result) return;
+
     setStarring(false);
     console.log(result);
     db.collection("stars")._insert(result);

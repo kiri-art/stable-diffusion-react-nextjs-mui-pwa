@@ -171,6 +171,7 @@ export default function OutputImage({
       .to(target);
   }
 
+  // similar code in history.tsx, TODO, refactor
   async function starItem(_event: React.MouseEvent<HTMLButtonElement>) {
     // Unique to OutputImage
     const item = historyId && db.collection("history").findOne(historyId);
@@ -179,17 +180,42 @@ export default function OutputImage({
     if (starId) return (await destar(starId)) && setStarId("");
     setStarring(true);
     console.log(item);
-    const response = await fetch("/api/starItem", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        auth: db?.auth?.authInfoToSend(),
-        item,
-      }),
-    });
-    const result = await response.json();
+
+    let response;
+    try {
+      response = await fetch("/api/starItem", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          auth: db?.auth?.authInfoToSend(),
+          item,
+        }),
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast(error.constructor.name + ": " + error.message);
+        setStarring(false);
+        return;
+      }
+    }
+    if (!response) return;
+
+    let result;
+    try {
+      result = await response.json();
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast(error.constructor.name + ": " + error.message);
+        setStarring(false);
+        return;
+      }
+    }
+    if (!result) return;
+
     setStarring(false);
     console.log(result);
     db.collection("stars")._insert(result);
