@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-const Inpaint = dynamic(() => import("../src/Img2img"), {
+const Img2Img = dynamic(() => import("../src/Img2img"), {
   ssr: false,
 });
 
@@ -16,7 +16,7 @@ export default function Img2img() {
     <>
       <MyAppBar title={t`Image to Image`} />
       <Container maxWidth="lg" sx={{ my: 2 }}>
-        <Inpaint />
+        <Img2Img />
       </Container>
     </>
   );
