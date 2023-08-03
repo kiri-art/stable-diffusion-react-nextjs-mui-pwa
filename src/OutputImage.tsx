@@ -17,6 +17,7 @@ import {
 
 import sendQueue from "./lib/sendQueue";
 import { destar } from "./Starred";
+import NewBadge from "./NewBadge";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -346,6 +347,13 @@ export default function OutputImage({
                 horizontal: "center",
               }}
             >
+              <MenuItem onClick={() => sendTo("/ipix2pix")}>
+                <Trans>Instruct Pix2Pix</Trans>
+                <span>
+                  <NewBadge />
+                </span>
+              </MenuItem>
+
               <MenuItem onClick={() => sendTo("/inpaint")}>
                 <Trans>Inpaint</Trans>
               </MenuItem>

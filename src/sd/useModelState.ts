@@ -3,12 +3,17 @@ import React from "react";
 
 import defaults from "./defaults";
 
-function useSdState<T>(initialValue: T, type: "call" | "model" = "model") {
+function useSdState<T>(
+  initialValue: T,
+  type: "call" | "model" = "model",
+  opts: ModelStateIdConfig = { id: "" }
+) {
   const state = React.useState<T>(initialValue);
   return {
     value: state[0],
     setValue: state[1],
     type,
+    opts,
   };
 }
 
@@ -39,6 +44,8 @@ export function modelStateCallInputs(modelState: ModelState) {
 type ValueSetValue<T> = {
   value: T;
   setValue: React.Dispatch<React.SetStateAction<T>>;
+  type?: "call" | "model";
+  opts: ModelStateIdConfig;
 };
 
 export interface ModelState {
@@ -46,6 +53,7 @@ export interface ModelState {
   negative_prompt: ValueSetValue<string>;
   num_inference_steps: ValueSetValue<string | number>;
   guidance_scale: ValueSetValue<string | number>;
+  image_guidance_scale: ValueSetValue<string | number>;
   width: ValueSetValue<string | number>;
   height: ValueSetValue<string | number>;
   strength: ValueSetValue<string | number>;
@@ -60,13 +68,22 @@ export interface ModelState {
   textual_inversions: ValueSetValue<string[]>;
 }
 
-export default function useModelState(inputs?: string[]): ModelState {
+export interface ModelStateIdConfig {
+  id: string;
+  hidden?: boolean;
+  default?: unknown;
+}
+
+export default function useModelState(
+  _inputs?: Array<string | ModelStateIdConfig>
+): ModelState {
   const router = useRouter();
   const query = router.query as {
     prompt?: string;
     negative_prompt?: string;
     num_inference_steps?: string;
     guidance_scale?: string;
+    image_guidance_scale?: string;
     width?: string;
     height?: string;
     strength?: string;
@@ -80,6 +97,13 @@ export default function useModelState(inputs?: string[]): ModelState {
     lora_weights?: string[];
     textual_inversions?: string[];
   };
+  const inputs = _inputs?.map((x) => (typeof x === "string" ? x : x.id));
+  const opts = Object.fromEntries(
+    _inputs
+      ?.filter((x): x is ModelStateIdConfig => typeof x !== "string")
+      .map((x) => [x.id, x]) ?? []
+  );
+
   for (const v of ["randomizeSeed", "shareInputs", "safety_checker"] as const)
     if (query[v]) query[v] = query[v] === "true";
 
@@ -92,10 +116,17 @@ export default function useModelState(inputs?: string[]): ModelState {
     guidance_scale: useSdState<number | string>(
       query.guidance_scale ?? defaults.guidance_scale
     ),
+    image_guidance_scale: useSdState<number | string>(
+      query.image_guidance_scale ?? defaults.image_guidance_scale
+    ),
     width: useSdState<number | string>(query.width ?? defaults.width),
     height: useSdState<number | string>(query.height ?? defaults.height),
     strength: useSdState<number | string>(query.strength ?? defaults.strength),
-    MODEL_ID: useSdState<string>(query.MODEL_ID ?? defaults.MODEL_ID),
+    MODEL_ID: useSdState<string>(
+      (opts.MODEL_ID?.default as string) ?? query.MODEL_ID ?? defaults.MODEL_ID,
+      "model",
+      opts.MODEL_ID
+    ),
     PROVIDER_ID: useSdState<string>(query.PROVIDER_ID ?? defaults.PROVIDER_ID),
     seed: useSdState<number | string>(query.seed ?? defaults.seed()),
     randomizeSeed: useSdState<boolean>(
@@ -108,8 +139,12 @@ export default function useModelState(inputs?: string[]): ModelState {
       (query.safety_checker as boolean) ?? defaults.safety_checker
     ),
     sampler: useSdState<string>(defaults.sampler),
-    lora_weights: useSdState<string[]>([], "call"),
-    textual_inversions: useSdState<string[]>([], "call"),
+    lora_weights: useSdState<string[]>([], "call", opts.lora_weights),
+    textual_inversions: useSdState<string[]>(
+      [],
+      "call",
+      opts.textual_inversions
+    ),
   };
 
   const ref = React.useRef(allStates);

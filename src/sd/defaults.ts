@@ -2,6 +2,7 @@ export const MAX_SEED_VALUE = 4294967295;
 
 const defaults = {
   guidance_scale: 7.5,
+  image_guidance_scale: 1.5,
   num_inference_steps: 50,
   width: 512,
   height: 512,

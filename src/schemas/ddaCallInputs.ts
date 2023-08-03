@@ -21,6 +21,7 @@ const ddaCallInputsSchema = object({
     "StableDiffusionXLPipeline",
     "StableDiffusionXLImg2ImgPipeline",
     "StableDiffusionXLInpaintPipeline",
+    "StableDiffusionInstructPix2PixPipeline",
     "JapaneseStableDiffusionPipeline",
     "JapaneseStableDiffusionImg2ImgPipeline",
     "JapaneseStableDiffusionInpaintPipeline",

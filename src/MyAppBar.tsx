@@ -42,6 +42,7 @@ import {
 import Link from "../src/Link";
 import locales from "../src/lib/locales";
 import { creditsStrOrFalse } from "../pages/credits";
+import NewBadge from "./NewBadge";
 
 const drawerWidth = 260;
 
@@ -176,6 +177,22 @@ export default function MyAppBar({ title }: { title: string }) {
               </ListItemText>
             </ListItemButton>
           </ListItem>{" "}
+          <ListItem disablePadding>
+            <ListItemButton component={Link} href="/ipix2pix">
+              <ListItemIcon>
+                <Image
+                  alt="iPix2Pix"
+                  src="/img/pages/img2img.png"
+                  width={25}
+                  height={25}
+                />
+              </ListItemIcon>
+              <ListItemText>
+                <Trans>Instruct Pix2Pix</Trans>
+                <NewBadge />
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
           <Divider />
           <ListItem disablePadding>
             <ListItemButton component={Link} href="/credits">

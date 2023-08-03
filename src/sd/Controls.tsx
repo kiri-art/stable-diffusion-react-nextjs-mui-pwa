@@ -333,6 +333,44 @@ function CFS_Grid_Slider({
   );
 }
 
+function Image_Guidance_Grid_Slider({
+  value,
+  setValue,
+  defaultValue,
+}: {
+  value: ModelState["image_guidance_scale"]["value"];
+  setValue: ModelState["image_guidance_scale"]["setValue"];
+  defaultValue: typeof globalDefaults.image_guidance_scale;
+}) {
+  return useMemo(
+    () => (
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <InputSlider
+          label={t`Image Guidance Scale`}
+          value={value}
+          setValue={setValue}
+          defaultValue={defaultValue}
+          tooltip={
+            <Box>
+              <Trans>
+                Push the generated image towards the inital image. Higher image
+                guidance scale encourages generated images that are closely
+                linked to the source image, usually at the expense of lower
+                image quality.
+              </Trans>
+            </Box>
+          }
+          icon={<Scale />}
+          min={1}
+          max={50}
+          step={0.1}
+        />
+      </Grid>
+    ),
+    [value, setValue, defaultValue]
+  );
+}
+
 function Steps_Grid_Slider({
   value,
   setValue,
@@ -910,22 +948,7 @@ export function ProviderSelect({
   return useMemo(
     () => (
       <Grid item xs={6} sm={3} md={2} lg={1}>
-        Provider
-        {/*
-        <span
-          style={{
-            position: "relative",
-            top: "5px",
-            marginLeft: "2px",
-            verticalAlign: "top",
-            background: "#dada88",
-            borderRadius: "3px",
-            fontSize: "30%",
-            padding: "2px 5px 2px 5px",
-          }}
-        >
-          NEW
-        </span>*/}{" "}
+        Provider{" "}
         <ToggleButtonGroup
           value={value}
           exclusive
@@ -1114,11 +1137,13 @@ export default function SDControls({
           setValue={inputs.PROVIDER_ID.setValue}
           // defaultValue={defaults.PROVIDER_ID}
         />
-        <ModelSelect
-          value={inputs.MODEL_ID.value}
-          setValue={inputs.MODEL_ID.setValue}
-          defaultValue={globalDefaults.MODEL_ID}
-        />
+        {inputs.MODEL_ID && !inputs.MODEL_ID.opts.hidden && (
+          <ModelSelect
+            value={inputs.MODEL_ID.value}
+            setValue={inputs.MODEL_ID.setValue}
+            defaultValue={globalDefaults.MODEL_ID}
+          />
+        )}
         {inputs.MODEL_ID.value !== "rinna/japanese-stable-diffusion" && (
           <NegativePrompt
             value={inputs.negative_prompt.value}
@@ -1142,6 +1167,13 @@ export default function SDControls({
             setValue={inputs.guidance_scale.setValue}
             defaultValue={defaults.guidance_scale}
           />
+          {inputs.image_guidance_scale && (
+            <Image_Guidance_Grid_Slider
+              value={inputs.image_guidance_scale.value}
+              setValue={inputs.image_guidance_scale.setValue}
+              defaultValue={defaults.image_guidance_scale}
+            />
+          )}
           <Steps_Grid_Slider
             value={inputs.num_inference_steps.value}
             setValue={inputs.num_inference_steps.setValue}

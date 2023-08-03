@@ -40,7 +40,11 @@ export default async function fetchToOutput(
   }
 ) {
   try {
-    console.log({ model_inputs, call_inputs });
+    if (0)
+      console.log(
+        "pre-cast",
+        JSON.parse(JSON.stringify({ model_inputs, call_inputs }))
+      );
 
     const model = getModel(MODEL_ID);
     const modelInputs = model.modelInputsSchema
@@ -50,8 +54,21 @@ export default async function fetchToOutput(
       ? model.callInputsSchema.cast(call_inputs)
       : call_inputs;
 
+    if (0)
+      console.log(
+        "post-cast",
+        JSON.parse(JSON.stringify({ modelInputs, callInputs }))
+      );
+
     // @ts-expect-error: TODO
     if (model.prepareInputs) model.prepareInputs(callInputs, modelInputs);
+
+    if (0)
+      console.log(
+        "post-prepare",
+        JSON.parse(JSON.stringify({ callInputs, modelInputs }))
+      );
+
     /*
   const modelInputs = { ...model_inputs };
   const callInputs = { ...call_inputs };

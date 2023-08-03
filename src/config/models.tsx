@@ -773,6 +773,21 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
   },
+  "timbrooks/instruct-pix2pix": {
+    MODEL_ID: "timbrooks/instruct-pix2pix",
+    MODEL_PRECISION: "fp16",
+    MODEL_REVISION: "fp16",
+    description: "Used in Instruct Pix2Pix tab",
+    baseModel: "N/A",
+    randomPrompts: [
+      "give her blue hair",
+      "make her smile",
+      "make her look older",
+      "make her look younger",
+      "remove the background and replace it with the universe",
+      "make the dog a cat",
+    ],
+  },
 };
 
 export default models;
