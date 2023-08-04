@@ -3,7 +3,7 @@ function prompt_a111_to_compel(input: string) {
   if (input.match(/\b[+-]+/)) return input;
   if (input.match(/\)\.\w+\(/)) return input;
 
-  let output = input.replaceAll(
+  let output = input.replace(
     /([(\[]{1,6})([^():]+?)([)\]]{1,6})/g,
     (match, p1, p2, p3, _offset, _string, _groups) => {
       if (p1.length !== p3.length) return match;
@@ -13,14 +13,14 @@ function prompt_a111_to_compel(input: string) {
     }
   );
 
-  output = output.replaceAll(
+  output = output.replace(
     /\(([^)]+):([0-9\.]+)\)/g,
     (match, p1, p2, _offset, _string, _groups) => {
       return "(" + p1 + ")" + p2;
     }
   );
 
-  output = output.replaceAll(
+  output = output.replace(
     /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g,
     (match, p1, p2, _offset, _string, groups) => {
       return `withLora(${groups.lora},${groups.scale})`;
