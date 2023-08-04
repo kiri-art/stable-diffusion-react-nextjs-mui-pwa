@@ -88,7 +88,7 @@ msgstr ""
 msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 msgstr ""
 
-#: pages/start.tsx:175
+#: pages/start.tsx:193
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) השימוש הוא על אחריותך בלבד, איננו אחראים להשלכות שימושכם בפרויקט זה (או שימוש בלתי הולם בו). 2) כל שימוש באתר או בפרויקט זה מהווה הסכמה לתנאים ולכללים שלו, כולל כללי \"גילוי אחריות\" כמפורט למעלה, <0>רישיון {LRM}CreativeML Open RAIL-M</0> וגם <1>רישיון {LRM}MIT</1> של פרויקט זה."
 
@@ -96,7 +96,7 @@ msgstr "1) השימוש הוא על אחריותך בלבד, איננו אחרא
 msgid "A black image will be shown instead."
 msgstr ""
 
-#: src/workboxStuff.tsx:54
+#: src/workboxStuff.tsx:74
 msgid "A newer version of this web app is available, reload to update?"
 msgstr "קיימת גרסה חדשה של יישום רשת זה. האם לטעון מחדש כדי לעדכן?"
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Back to Credits"
 msgstr "חזרה לנקודות קרדיט"
 
-#: pages/start.tsx:104
+#: pages/start.tsx:122
 msgid "Be Responsible"
 msgstr "גילוי אחריות"
 
@@ -206,6 +206,10 @@ msgstr ""
 #: pages/credits.tsx:246
 msgid "Checkout"
 msgstr "השלמת קנייה"
+
+#: pages/share_target.tsx:20
+msgid "Choose Share Target"
+msgstr ""
 
 #: src/sd/Controls.tsx:303
 msgid "Classifier-Free Guidance (Scale)"
@@ -272,7 +276,7 @@ msgstr "תיאור / כתובית לתמונה הרצויה. יכולים לכל
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr ""
 
-#: pages/start.tsx:108
+#: pages/start.tsx:126
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "אין לייצר תוכן פוגעני (גזעני, מסית וכד')."
 
@@ -371,7 +375,7 @@ msgid "History is kept on your <0>local device only</0>. It is not backed up to 
 msgstr ""
 
 #: pages/index.tsx:205
-#: pages/start.tsx:51
+#: pages/start.tsx:104
 #: src/MyAppBar.tsx:116
 msgid "Home"
 msgstr "דף הבית"
@@ -390,7 +394,7 @@ msgid "Image Loaded"
 msgstr ""
 
 #: pages/img2img.tsx:17
-#: pages/start.tsx:30
+#: pages/start.tsx:27
 #: src/MyAppBar.tsx:146
 msgid "Image to Image"
 msgstr "תמונה לתמונה"
@@ -416,7 +420,7 @@ msgid "Inpaint"
 msgstr ""
 
 #: pages/inpaint.tsx:17
-#: pages/start.tsx:36
+#: pages/start.tsx:33
 #: src/MyAppBar.tsx:161
 #: src/OutputImage.tsx:428
 msgid "Inpainting"
@@ -571,7 +575,7 @@ msgstr ""
 msgid "Next credits on:"
 msgstr "נקודות הקרדיט הבאות ב-:"
 
-#: pages/start.tsx:113
+#: pages/start.tsx:131
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr "דיפ-פייק אסור, פרט למה שעומד בכללי שימוש הוגן (למשל הומור, חינוך, ללא תכנים מטעים או פוליטיים)."
 
@@ -608,7 +612,7 @@ msgstr ""
 msgid "Only show stars with matching prompts. More advanced filters coming soon. Separate multiple terms with a pipe (\"|\") character."
 msgstr ""
 
-#: pages/start.tsx:144
+#: pages/start.tsx:162
 msgid "Open Source, developer friendly."
 msgstr ""
 
@@ -664,7 +668,7 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: pages/start.tsx:128
+#: pages/start.tsx:146
 msgid "Project Goals"
 msgstr ""
 
@@ -705,7 +709,7 @@ msgstr ""
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr ""
 
-#: pages/start.tsx:190
+#: pages/start.tsx:208
 msgid "Read the full Terms of Service below."
 msgstr ""
 
@@ -838,16 +842,16 @@ msgstr ""
 msgid "Successfully redeemed {0} credits."
 msgstr "{0} נקודות קרדיט מומשו בהצלחה."
 
-#: pages/start.tsx:133
+#: pages/start.tsx:151
 msgid "Super simple, easy to share."
 msgstr ""
 
-#: pages/start.tsx:172
+#: pages/start.tsx:190
 #: src/Copyright.tsx:24
 msgid "Terms of Service"
 msgstr "תנאי השירות"
 
-#: pages/start.tsx:24
+#: pages/start.tsx:21
 #: pages/txt2img.tsx:132
 #: src/MyAppBar.tsx:131
 msgid "Text to Image"
@@ -867,7 +871,7 @@ msgstr ""
 msgid "This cannot be undone.  All likes will be lost."
 msgstr ""
 
-#: pages/start.tsx:163
+#: pages/start.tsx:181
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "פרויקט זה מבוסס על תוכנה חינמית עם קוד פתוח. ניתן להפעיל אותה במחשב האישי שלך בחינם (אם יש לך מעבד גרפי מתאים, או עם חשבון עיבוד גרפי Banana משלך ללא שרת). רוצה להשתתף? ראה את הדף <0>אודות</0>."
 
@@ -900,7 +904,7 @@ msgstr ""
 msgid "Total Users"
 msgstr ""
 
-#: pages/start.tsx:146
+#: pages/start.tsx:164
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr ""
 
@@ -917,7 +921,7 @@ msgstr ""
 msgid "Upsample"
 msgstr ""
 
-#: pages/start.tsx:42
+#: pages/start.tsx:39
 #: pages/upsample.tsx:339
 #: src/MyAppBar.tsx:176
 msgid "Upsampling"
@@ -973,7 +977,7 @@ msgstr "רוחב תמונת הפלט"
 msgid "You have already redeemed this code before."
 msgstr "כבר מימשת קוד זה בעבר."
 
-#: pages/start.tsx:119
+#: pages/start.tsx:137
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr "חובה להבהיר בכל תוכן אותו משתפים בכל מקום אחר כי התמונה הזו נוצרה באמצעות מחשב."
 
@@ -989,6 +993,6 @@ msgstr ""
 #~ msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr "נקודות הקרדיט הניתנות בחינם מתווספות בכל חודש. הן מנוצלות לפני ניצול הנקודות בתשלום. נקודות קרדיט שלא נוצלו אינן מועברות."
 
-#: pages/start.tsx:135
+#: pages/start.tsx:153
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 msgstr ""
