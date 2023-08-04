@@ -182,7 +182,7 @@ export default function MyAppBar({ title }: { title: string }) {
               <ListItemIcon>
                 <Image
                   alt="iPix2Pix"
-                  src="/img/pages/img2img.png"
+                  src="/img/pages/ipix2pix.png"
                   width={25}
                   height={25}
                 />

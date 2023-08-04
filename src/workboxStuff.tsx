@@ -1,5 +1,6 @@
 import { t } from "@lingui/macro";
 import asyncConfirm from "./asyncConfirm";
+import sendQueue from "./lib/sendQueue";
 
 if (typeof navigator === "object" && "serviceWorker" in navigator) {
   navigator.serviceWorker.ready.then(function (registration) {
@@ -21,6 +22,25 @@ export default function workboxStuff() {
   ) {
     // @ts-expect-error: blah
     const wb = window.workbox;
+
+    // NON-WORKBOX EXTRA SERVICEWORKER STUFF
+    navigator.serviceWorker.addEventListener("message", (event) => {
+      console.log("workBoxStuff", "message", event);
+
+      const file = event.data.image;
+      console.log(file);
+
+      sendQueue.add({
+        title: "",
+        text: "",
+        files: [file],
+      });
+    });
+
+    // See worker/index.ts for the message handler
+    // wb.messageSW({ type: "wbs-loaded" });
+    navigator.serviceWorker.controller?.postMessage("wbs-loaded");
+
     // add event listeners to handle any of PWA lifecycle event
     // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-window.Workbox#events
     // @ts-expect-error: blah
@@ -72,11 +92,11 @@ export default function workboxStuff() {
 
     // ISSUE - this is not working as expected, why?
     // I could only make message event listenser work when I manually add this listenser into sw.js file
-    // @ts-expect-error: blah
-    wb.addEventListener("message", (event) => {
-      console.log(`Event ${event.type} is triggered.`);
-      console.log(event);
-    });
+    // @ ts-expect-error: blah
+    // wb.addEventListener("message", (event) => {
+    //  console.log(`Event ${event.type} is triggered.`);
+    //  console.log(event);
+    // });
 
     /*
     wb.addEventListener('redundant', event => {
