@@ -39,7 +39,7 @@ function Canvas({
           // top: 0,
           // left: 0,
           // disable scroll if we're drawing (i.e. no file)
-          touchAction: "none", // file ? undefined : "none",
+          // touchAction: "none", // file ? undefined : "none",
           // border: DRAW_BORDERS ? "1px solid red" : undefined,
           // Canvas is cropped image size, browser will scale to fill window
           width: "100%",
