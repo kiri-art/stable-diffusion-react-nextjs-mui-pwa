@@ -68,10 +68,10 @@ function MaskCanvas({
       canvas && canvas.getContext("2d" /* { alpha: false } */));
 
     if (ctx) {
-      ctx.lineWidth = 30;
+      ctx.lineWidth = canvas.width * 0.06;
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "yellow";
     }
 
     function mouseDown(_event: MouseEvent | TouchEvent) {
@@ -203,6 +203,7 @@ function MaskCanvas({
           // Canvas is cropped image size, browser will scale to fill window
           width: "100%",
           height: "100%",
+          opacity: 0.4,
         }}
         ref={maskImageCanvasRef}
       />
