@@ -306,10 +306,11 @@ export default function Inpainting() {
           height = image.height;
         }
 
-        console.log(`Original Image: ${image.width}x${image.height}`);
-        console.log(`  Scaled Image: ${width}x${height}`);
+        console.log(` Original Image: ${image.width}x${image.height}`);
+        console.log(`   Scaled Image: ${width}x${height}`);
 
-        const aspectRatio = width / height;
+        let aspectRatio = width / height;
+        console.log("Original aspect: " + aspectRatio);
 
         // Must be a multple of 64.  Scale for now, crop in future.
         if (width % 64 !== 0) {
@@ -321,7 +322,10 @@ export default function Inpainting() {
           width = Math.floor(height * aspectRatio);
           if (width % 64 !== 0) width -= width % 64;
         }
-        console.log(`   Fixed Image: ${width}x${height}`);
+
+        aspectRatio = width / height;
+        console.log(`    Fixed Image: ${width}x${height}`);
+        console.log(`   Fixed Aspect: ${aspectRatio}`);
 
         const parent = canvas.parentNode as HTMLDivElement;
         parent.style.aspectRatio = aspectRatio.toString();
@@ -448,6 +452,8 @@ export default function Inpainting() {
       ...modelStateValues(inputs),
       prompt: inputs.prompt.value,
       image: await blobToBase64(init_image_blob),
+      width: initImageCanvasRef.current.width,
+      height: initImageCanvasRef.current.height,
       mask_image: await blobToBase64(mask_image_blob),
       strength:
         typeof inputs.strength.value === "number"
