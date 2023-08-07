@@ -18,31 +18,31 @@ import { useRouter } from "next/router";
 
 export const itemData = [
   {
-    title: t`Text to Image`,
+    title: () => t`Text to Image`,
     href: "/txt2img",
     img: "/img/pages/txt2img.png",
     alt: "txt2img example",
   },
   {
-    title: t`Image to Image`,
+    title: () => t`Image to Image`,
     href: "/img2img",
     img: "/img/pages/img2img.png",
     alt: "img2img example",
   },
   {
-    title: t`Inpainting`,
+    title: () => t`Inpainting`,
     href: "/inpaint",
     img: "/img/pages/inpaint.png",
     alt: "inpaint example",
   },
   {
-    title: t`Upsampling`,
+    title: () => t`Upsampling`,
     href: "/upsample",
     img: "/img/pages/upsample.png",
     alt: "upsample example",
   },
   {
-    title: `Instr. Pix2Pix`,
+    title: () => `Instr. Pix2Pix`,
     href: "/ipix2pix",
     img: "/img/pages/ipix2pix.png",
     alt: "instruct pix2pix example",
@@ -58,40 +58,44 @@ export function ItemGrid({
 }) {
   return (
     <Grid container spacing={2} width="100%">
-      {items.map((item) => (
-        <Grid key={item.href} xs={6} sm={4} md={3} lg={3} xl={3}>
-          <Box
-            sx={{
-              p: 0,
-              m: 0,
-              background: "#eee",
-              border: "1px solid #aaa",
-              borderRadius: "12px",
-              cursor: "pointer",
-              textAlign: "center",
-            }}
-            onClick={() => router.push(item.href)}
-          >
-            <Image
-              layout="responsive"
-              width={150}
-              height={150}
-              src={item.img}
-              alt={item.title}
-            />
-          </Box>
+      {items.map((item) => {
+        const title =
+          typeof item.title === "function" ? item.title() : item.title;
+        return (
+          <Grid key={item.href} xs={6} sm={4} md={3} lg={3} xl={3}>
+            <Box
+              sx={{
+                p: 0,
+                m: 0,
+                background: "#eee",
+                border: "1px solid #aaa",
+                borderRadius: "12px",
+                cursor: "pointer",
+                textAlign: "center",
+              }}
+              onClick={() => router.push(item.href)}
+            >
+              <Image
+                layout="responsive"
+                width={150}
+                height={150}
+                src={item.img}
+                alt={title}
+              />
+            </Box>
 
-          <Button
-            fullWidth
-            component={Link}
-            href={item.href}
-            variant="contained"
-            sx={{ my: 1 }}
-          >
-            {item.title}
-          </Button>
-        </Grid>
-      ))}
+            <Button
+              fullWidth
+              component={Link}
+              href={item.href}
+              variant="contained"
+              sx={{ my: 1 }}
+            >
+              {title}
+            </Button>
+          </Grid>
+        );
+      })}
     </Grid>
   );
 }
