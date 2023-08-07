@@ -13,7 +13,7 @@ const ddaCallInputsSchema = object({
   PIPELINE: string().oneOf([
     "AutoPipelineForText2Image",
     "AutoPipelineForImage2Image",
-    "AutoPipelineForImageInpainting",
+    "AutoPipelineForInpainting",
     "StableDiffusionPipeline",
     "StableDiffusionImg2ImgPipeline",
     "StableDiffusionInpaintPipeline",
