@@ -382,63 +382,66 @@ export default function Inpainting() {
     setRequestEndTime(Date.now());
   }
 
-  function CanvasAdjacent() {
-    return (
-      <>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            padding: "20px",
-            display: initImageLoaded ? "none" : "block",
-            direction: "ltr",
-            width: "100%",
-            height: "100%",
-            overflow: "auto",
-          }}
-        >
-          <b>
-            <Trans>Quick Start</Trans>
-          </b>
+  const CanvasAdjacent = React.useCallback(
+    function CanvasAdjacent() {
+      return (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              padding: "20px",
+              display: initImageLoaded ? "none" : "block",
+              direction: "ltr",
+              width: "100%",
+              height: "100%",
+              overflow: "auto",
+            }}
+          >
+            <b>
+              <Trans>Quick Start</Trans>
+            </b>
 
-          <ol>
-            <li>
-              <Trans>Upload an image with button below</Trans>
-              <br />
-              <Trans>(drag &amp; drop, sharing coming soon)</Trans>
-            </li>
-            <li>
-              <Trans>Use mouse / finger to draw mask over it</Trans>
-            </li>
-            <li>
-              <Trans>Adjust prompt and GO</Trans>
-            </li>
-          </ol>
-
-          <div style={{ fontSize: "85%" }}>
-            <p>
-              <Trans>Roadmap</Trans> / <Trans>Notes</Trans> /{" "}
-              <Trans>Coming Soon</Trans>
-            </p>
-
-            <ul>
+            <ol>
               <li>
-                <Trans>Image will be down scaled to max 1024x1024.</Trans>
+                <Trans>Upload an image with button below</Trans>
+                <br />
+                <Trans>(drag &amp; drop, sharing coming soon)</Trans>
               </li>
-            </ul>
+              <li>
+                <Trans>Use mouse / finger to draw mask over it</Trans>
+              </li>
+              <li>
+                <Trans>Adjust prompt and GO</Trans>
+              </li>
+            </ol>
+
+            <div style={{ fontSize: "85%" }}>
+              <p>
+                <Trans>Roadmap</Trans> / <Trans>Notes</Trans> /{" "}
+                <Trans>Coming Soon</Trans>
+              </p>
+
+              <ul>
+                <li>
+                  <Trans>Image will be down scaled to max 1024x1024.</Trans>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        {initImageLoaded && (
-          <MaskCanvas
-            file={file}
-            initImageCanvasRef={initImageCanvasRef}
-            maskImageCanvasRef={maskImageCanvasRef}
-          />
-        )}
-      </>
-    );
-  }
+          {initImageLoaded && (
+            <MaskCanvas
+              file={file}
+              initImageCanvasRef={initImageCanvasRef}
+              maskImageCanvasRef={maskImageCanvasRef}
+            />
+          )}
+        </>
+      );
+    },
+    [initImageLoaded, file, initImageCanvasRef]
+  );
 
   return (
     <>
