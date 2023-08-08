@@ -55,6 +55,7 @@ function Canvas({
   opsIndexRef,
   inputFile,
   fileChange,
+  initImageLoaded,
 }: {
   // file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
@@ -67,6 +68,7 @@ function Canvas({
   opsIndexRef: React.MutableRefObject<number>;
   inputFile: React.MutableRefObject<HTMLInputElement | null>;
   fileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  initImageLoaded: boolean;
 }) {
   const isDrawing = React.useRef(false);
   const lastRef = React.useRef<{ x: number; y: number } | null>(null);
@@ -78,6 +80,9 @@ function Canvas({
 
     const initImageCanvas = initImageCanvasRef.current;
     if (!initImageCanvas) throw new Error("No initImageCanvas");
+
+    // If we loaded an initImage, stop here so drawing is disabled.
+    if (initImageLoaded) return;
 
     // console.log({ file });
     // if (file) return;
@@ -226,6 +231,7 @@ function Canvas({
     opsIndexRef,
     setOpsCount,
     setOpsIndex,
+    initImageLoaded,
     /*, file */
     ,
   ]);
@@ -250,12 +256,14 @@ function Paint({
   imageRef,
   fileChange,
   inputFile,
+  initImageLoaded,
 }: {
   // file: File | null;
   initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   imageRef: React.MutableRefObject<HTMLImageElement | null>;
   fileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   inputFile: React.MutableRefObject<HTMLInputElement | null>;
+  initImageLoaded: boolean;
 }) {
   //const [drawing, setDrawing] = React.useState(false);
   // const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -341,9 +349,10 @@ function Paint({
         opsIndexRef={opsIndexRef}
         inputFile={inputFile}
         fileChange={fileChange}
+        initImageLoaded={initImageLoaded}
       />
-      {
-        /*!file &&*/ <div style={{ textAlign: "center" }}>
+      {!initImageLoaded && (
+        <div style={{ textAlign: "center" }}>
           <IconButton onClick={clearOps}>
             <Clear />
           </IconButton>
@@ -408,7 +417,7 @@ function Paint({
             ))}
           </ToggleButtonGroup>
         </div>
-      }
+      )}
     </>
   );
 }
@@ -435,9 +444,10 @@ export default function Img2img() {
   // const fileIsLoading = React.useRef(false);
 
   const [imgSrc, setImgSrc] = React.useState<string>("");
-  const { initImageCanvasRef, inputFile, fileChange } = useInputImage({
-    setImgSrc,
-  });
+  const { initImageCanvasRef, inputFile, initImageLoaded, fileChange } =
+    useInputImage({
+      setImgSrc,
+    });
 
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
@@ -545,6 +555,7 @@ export default function Img2img() {
         imageRef={imageRef}
         fileChange={fileChange}
         inputFile={inputFile}
+        initImageLoaded={initImageLoaded}
       />
       {imgSrc && (
         <OutputImage
