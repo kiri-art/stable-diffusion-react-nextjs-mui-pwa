@@ -30,13 +30,12 @@ import {
   Menu as MenuIcon,
   Language as LanguageIcon,
   Home,
-  Newspaper,
   GitHub,
   Info,
   AdminPanelSettings,
-  Bookmarks,
-  ConfirmationNumber,
   ShowChart,
+  Forum,
+  Quiz,
 } from "@mui/icons-material";
 
 import Link from "../src/Link";
@@ -195,32 +194,25 @@ export default function MyAppBar({ title }: { title: string }) {
           </ListItem>
           <Divider />
           <ListItem disablePadding>
-            <ListItemButton component={Link} href="/credits">
+            <ListItemButton component={Link} href="/faq">
               <ListItemIcon>
-                <ConfirmationNumber />
+                <Quiz />
               </ListItemIcon>
               <ListItemText>
-                <Trans>Credits:</Trans> {userCredits}
+                <Trans>FAQ</Trans>
               </ListItemText>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} href="/resources">
+            <ListItemButton
+              target="_blank"
+              href="https://forums.kiri.art/c/app/17"
+            >
               <ListItemIcon>
-                <Bookmarks />
+                <Forum />
               </ListItemIcon>
               <ListItemText>
-                <Trans>Resources</Trans>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} href="/news">
-              <ListItemIcon>
-                <Newspaper />
-              </ListItemIcon>
-              <ListItemText>
-                <Trans>News</Trans>
+                <Trans>Forums</Trans>
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -272,7 +264,7 @@ export default function MyAppBar({ title }: { title: string }) {
         </List>
       </Box>
     ),
-    [isAdmin, userCredits, toggleDrawer]
+    [isAdmin, toggleDrawer]
   );
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
