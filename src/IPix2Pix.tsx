@@ -1,7 +1,6 @@
 import React from "react";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import { Trans } from "@lingui/macro";
 import NextImage from "next/image";
 
@@ -14,47 +13,9 @@ import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 import blobToBase64 from "./lib/blobToBase64";
-import sendQueue, { outputImageQueue } from "./lib/sendQueue";
+import { outputImageQueue } from "./lib/sendQueue";
 import fetchToOutput from "./lib/fetchToOutput";
-
-function Canvas({
-  initImageCanvasRef,
-}: {
-  // file: File | null;
-  initImageCanvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
-}) {
-  return (
-    <div
-      style={{
-        maxWidth: 512,
-        // maxHeight: 512,
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
-      <canvas
-        id="initImageCanvas"
-        style={{
-          // position: "absolute",
-          // top: 0,
-          // left: 0,
-          // disable scroll if we're drawing (i.e. no file)
-          // touchAction: "none", // file ? undefined : "none",
-          // border: DRAW_BORDERS ? "1px solid red" : undefined,
-          // Canvas is cropped image size, browser will scale to fill window
-          width: "100%",
-          maxWidth: 512,
-          // maxHeight: 512,
-          aspectRatio: "1",
-          border: "1px solid black",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-        ref={initImageCanvasRef}
-      />
-    </div>
-  );
-}
+import InputImage, { useInputImage } from "./InputImage";
 
 const ipix2pixState = [
   "prompt",
@@ -187,14 +148,15 @@ function WhatIsThis() {
 }
 
 export default function IPix2Pix() {
-  const inputFile = React.useRef<HTMLInputElement>(null);
-  const initImageCanvasRef = React.useRef<HTMLCanvasElement>(null);
-  const imageRef = React.useRef<HTMLImageElement | null>(null);
   // const [initImageLoaded, setInImgLoaded] = React.useState(false);
   // const [file, setFile] = React.useState<File | null>(null);
   // const fileIsLoading = React.useRef(false);
 
   const [imgSrc, setImgSrc] = React.useState<string>("");
+  const { initImageCanvasRef, inputFile, fileChange } = useInputImage({
+    setImgSrc,
+  });
+
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
   const [dest, setDest] = React.useState(
@@ -212,104 +174,6 @@ export default function IPix2Pix() {
 
   const inputs = useModelState(ipix2pixState);
   const sharedInputs = sharedInputTextFromInputs(inputs);
-
-  function readFile(file: File) {
-    const fileReader = new FileReader();
-    // fileIsLoading.current = true;
-    fileReader.onload = function (readerEvent) {
-      //event.target.result
-      // const result = event.target.result;
-      //const result = fileReader.result;
-
-      console.log("initImage loaded from disk");
-      const image = (imageRef.current = new Image());
-      image.onload = function (_imageEvent) {
-        console.log("initImage loaded to image");
-        const canvas = initImageCanvasRef.current;
-        if (!canvas) throw new Error("no canvas");
-
-        // Later we could get fancy and clip around just the mask at send time.
-        let width, height;
-        // const SD_MAX = [1024, 768]; // can also be 768x1024
-        const SD_MAX = [1024, 1024];
-
-        if (image.width >= image.height && image.width > SD_MAX[0]) {
-          width = SD_MAX[0];
-          height = Math.floor((image.height / image.width) * SD_MAX[0]);
-          if (height > SD_MAX[1]) height = SD_MAX[1];
-        } else if (image.height > image.width && image.height > SD_MAX[0]) {
-          height = SD_MAX[0];
-          width = Math.floor((image.width / image.height) * SD_MAX[0]);
-          if (width > SD_MAX[1]) width = SD_MAX[1];
-        } else {
-          width = image.width;
-          height = image.height;
-        }
-
-        console.log(`Original Image: ${image.width}x${image.height}`);
-        console.log(`  Scaled Image: ${width}x${height}`);
-
-        const aspectRatio = width / height;
-
-        // Must be a multple of 64.  Scale for now, crop in future.
-        if (width % 64 !== 0) {
-          width = width - (width % 64);
-          height = Math.floor(width / aspectRatio);
-          if (height % 64 !== 0) height -= height % 64;
-        } else if (height % 64 !== 0) {
-          height = height - (height % 64);
-          width = Math.floor(height * aspectRatio);
-          if (width % 64 !== 0) width -= width % 64;
-        }
-        console.log(`   Fixed Image: ${width}x${height}`);
-
-        //const parent = canvas.parentNode as HTMLDivElement;
-        canvas.style.aspectRatio = aspectRatio.toString();
-
-        canvas.width = width;
-        canvas.height = height;
-        canvas.style.display = "block";
-
-        const ctx = canvas.getContext("2d" /*, { alpha: false } */);
-        if (!ctx) throw new Error("no 2d contxt from canvas");
-
-        ctx.drawImage(image, 0, 0, width, height);
-        //setInImgLoaded(true);
-        //setFile(file);
-      };
-
-      if (!readerEvent) throw new Error("no readerEevent");
-      if (!readerEvent.target) throw new Error("no readerEevent.target");
-
-      const result = readerEvent.target.result;
-      const sample = "data:image/jpeg;base64,/9j/4Ty6RXhpZgA....FyyDbU//2Q==";
-      if (typeof result !== "string")
-        throw new Error(
-          `readerEvent.target.result is not a string, expected "${sample}" but got: ` +
-            JSON.stringify(result)
-        );
-
-      image.src = result;
-      // fileIsLoading.current = false;
-    };
-    fileReader.readAsDataURL(file);
-  }
-
-  function fileChange(event: React.SyntheticEvent) {
-    const target = event.target as HTMLInputElement;
-    if (!(target instanceof HTMLInputElement))
-      throw new Error("Event target is not an HTMLInputElement");
-
-    // @ts-expect-error: I can't be any clearer, typescript
-    const file = target.files[0];
-
-    console.log(file);
-    if (!file.type.match(/^image\//)) return toast("Not an image");
-
-    setImgSrc("");
-
-    readFile(file);
-  }
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -376,15 +240,6 @@ export default function IPix2Pix() {
   }
 
   React.useEffect(() => {
-    if (sendQueue.has()) {
-      const share = sendQueue.get();
-      console.log(share);
-      if (!share) return;
-      readFile(share.files[0]);
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (outputImageQueue.has()) {
       const share = outputImageQueue.get();
       console.log(share);
@@ -401,10 +256,11 @@ export default function IPix2Pix() {
   return (
     <>
       <WhatIsThis />
-      <Canvas initImageCanvasRef={initImageCanvasRef} />
-      <div style={{ textAlign: "center" }}>
-        <input type="file" ref={inputFile} onChange={fileChange}></input>
-      </div>
+      <InputImage
+        initImageCanvasRef={initImageCanvasRef}
+        inputFile={inputFile}
+        fileChange={fileChange}
+      />
       {imgSrc && (
         <OutputImage
           text={sharedInputs}
