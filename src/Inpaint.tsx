@@ -312,7 +312,16 @@ export default function Inpainting() {
         let aspectRatio = width / height;
         console.log("Original aspect: " + aspectRatio);
 
-        // Must be a multple of 64.  Scale for now, crop in future.
+        // Must be a multple of 64.
+        const extraHeight = height % 64;
+        const extraWidth = width % 64;
+        const adjustHeight = Math.floor(extraHeight / 2);
+        const adjustWidth = Math.floor(extraWidth / 2);
+        width -= extraWidth;
+        height -= extraHeight;
+
+        /*
+        // Before we did the crop code, we just scaled:
         if (width % 64 !== 0) {
           width = width - (width % 64);
           height = Math.floor(width / aspectRatio);
@@ -322,6 +331,7 @@ export default function Inpainting() {
           width = Math.floor(height * aspectRatio);
           if (width % 64 !== 0) width -= width % 64;
         }
+        */
 
         aspectRatio = width / height;
         console.log(`    Fixed Image: ${width}x${height}`);
@@ -337,7 +347,19 @@ export default function Inpainting() {
         const ctx = canvas.getContext("2d" /*, { alpha: false } */);
         if (!ctx) throw new Error("no 2d contxt from canvas");
 
-        ctx.drawImage(image, 0, 0, width, height);
+        // ctx.drawImage(image, 0, 0, width, height);
+        ctx.drawImage(
+          image,
+          /*      sx: */ adjustWidth,
+          /*      sy: */ adjustHeight,
+          /*  sWidth: */ image.width - adjustWidth,
+          /* sHeight: */ image.height - adjustHeight,
+          /*      dx: */ 0,
+          /*      dy: */ 0,
+          /*  dWidth: */ width,
+          /* dHeight: */ height
+        );
+
         setInImgLoaded(true);
         setFile(file);
         setDims({ width, height });
