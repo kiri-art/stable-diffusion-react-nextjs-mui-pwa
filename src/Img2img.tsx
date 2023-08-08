@@ -109,7 +109,8 @@ function Canvas({
       if (!ctx) throw new Error("no context");
 
       ctx.strokeStyle = ds.color;
-      if (ds.brush !== "fill") ctx.lineWidth = brushes[ds.brush];
+      if (ds.brush !== "fill")
+        ctx.lineWidth = brushes[ds.brush] * canvas.width * 0.002;
 
       //setDrawing(true);
       console.log({
@@ -300,7 +301,7 @@ function Paint({
         continue;
       }
 
-      ctx.lineWidth = brushes[op.drawState.brush];
+      ctx.lineWidth = brushes[op.drawState.brush] * canvas.width * 0.002;
       ctx.strokeStyle = op.drawState.color;
       const steps = op.steps;
       for (let j = 1; j < steps.length; j++) {
