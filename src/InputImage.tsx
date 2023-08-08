@@ -170,7 +170,7 @@ export default function InputImage({
 }: {
   initImageCanvasRef: React.RefObject<HTMLCanvasElement>;
   inputFile: React.RefObject<HTMLInputElement>;
-  fileChange: (event: React.SyntheticEvent) => void;
+  fileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   CanvasAdjacent?: () => JSX.Element;
 }) {
   return (
@@ -192,11 +192,14 @@ export default function InputImage({
         <canvas
           id="initImageCanvas"
           style={{
+            // disable scroll if we're drawing (i.e. no file)
+            touchAction: "none", // file ? undefined : "none",
+
             border: DRAW_BORDERS ? "1px solid green" : undefined,
             position: "absolute",
             top: 0,
             left: 0,
-            display: "none",
+            // display: "none",  (was for Inpaint, not for img2img)
             // Canvas is cropped image size, browser will scale to fill window
             width: "100%",
             height: "100%",
