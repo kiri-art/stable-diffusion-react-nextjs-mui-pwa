@@ -198,7 +198,32 @@ const Home: NextPage = () => {
     });
   }, [items, filter]);
 
-  useGongoSub("stars");
+  const starsFiltered = useGongoSub(
+    "stars",
+    { nsfw: false },
+    { sort: ["date", "desc"], limit: 20 }
+  );
+  const starsNSFW = useGongoSub(
+    nsfwFilter === false && "stars",
+    { nsfw: true },
+    { sort: ["date", "desc"], limit: 20 }
+  );
+
+  function loadMore() {
+    // console.log("loadMore");
+    if (
+      starsFiltered.sub &&
+      starsFiltered.sub.lastSortedValue &&
+      starsFiltered.sub.lastSortedValue !== "__END__"
+    )
+      starsFiltered.loadMore();
+    if (
+      starsNSFW.sub &&
+      starsNSFW.sub.lastSortedValue &&
+      starsNSFW.sub.lastSortedValue !== "__END__"
+    )
+      starsNSFW.loadMore();
+  }
 
   return (
     <>
@@ -296,7 +321,11 @@ const Home: NextPage = () => {
         <Box sx={{ textAlign: "center" }}>
           <TextFieldDebounced currentValue={filter} onChange={setFilter} />
         </Box>
-        <Starred items={filteredItems} cols={useGrid ? undefined : 1} />
+        <Starred
+          items={filteredItems}
+          cols={useGrid ? undefined : 1}
+          loadMore={loadMore}
+        />
         <Copyright />
       </Container>
     </>

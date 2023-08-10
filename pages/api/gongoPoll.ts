@@ -40,25 +40,27 @@ gs.publish("csends", async (db) => {
   if (!user || !user.admin) return [];
   */
 
-  return db
-    .collection("csends")
-    .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } })
-    .sort("__updatedAt", "asc")
-    .limit(200);
+  return db.collection("csends").find();
+  //  .find({ date: { $gt: new Date(Date.now() - 86400000 * 2) } });
+  // .sort("__updatedAt", "asc")
+  // .limit(200);
 });
 
 gs.publish("bananaRequests", async (db) => {
-  return db
-    .collection("bananaRequests")
-    .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } })
-    .sort("__updatedAt", "asc")
-    .project({
-      "modelInputs.image": 0,
-      "modelInputs.init_image": 0,
-      "modelInputs.mask_image": 0,
-      "modelInputs.input_image": 0,
-    })
-    .limit(200);
+  return (
+    db
+      .collection("bananaRequests")
+      .find()
+      // .find({ createdAt: { $gt: new Date(Date.now() - 86400000 * 2) } })
+      // .sort("__updatedAt", "asc")
+      .project({
+        "modelInputs.image": 0,
+        "modelInputs.init_image": 0,
+        "modelInputs.mask_image": 0,
+        "modelInputs.input_image": 0,
+      })
+  );
+  // .limit(200);
 });
 
 gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
@@ -89,43 +91,72 @@ gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
   ];
 });
 
-gs.publish("stars", async (db, { userId, username } = {}, { updatedAt }) => {
-  const query: Record<string, unknown> = {};
-  if (username && !userId) {
-    const user = await db.collection("users").findOne({ username });
-    if (!user) return [];
-    query.userId = user._id;
-  } else if (userId) query.userId = new ObjectId(userId);
-  if (updatedAt.stars) query.__updatedAt = { $gt: updatedAt.stars };
+gs.publish(
+  "stars",
+  async (
+    db,
+    { userId, username, nsfw = false } = {},
+    { updatedAt, limit, sort, lastSortedValue }
+  ) => {
+    const query: Record<string, unknown> = {};
+    if (username && !userId) {
+      const user = await db.collection("users").findOne({ username });
+      if (!user) return [];
+      query.userId = user._id;
+    } else if (userId) query.userId = new ObjectId(userId);
 
-  const stars = await db
-    .collection("stars")
-    .find(query)
-    .sort("__updatedAt", "asc")
-    .limit(200)
-    .toArray();
+    if (nsfw) query["callInputs.safety_checker"] = false;
+    else
+      query.$or = [
+        { "callInputs.safety_checker": true },
+        { "callInputs.safety_checker": { $exists: false } },
+      ];
 
-  const upQuery: Record<string, unknown> = {};
-  if (updatedAt.userProfiles)
-    upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+    if (updatedAt && updatedAt.stars) {
+      query.__updatedAt = { $gt: updatedAt.stars };
+    } else {
+      if (lastSortedValue) {
+        if (!sort) throw new Error("lastSortedValue requires sort");
+        query[sort[0]] = {
+          [sort[1] === "asc" ? "$gt" : "$lt"]: lastSortedValue,
+        };
+      }
+    }
 
-  const uids = Array.from(new Set(stars.map((s) => s.userId)));
-  // if (profile with no stars), still return userProfile
-  if (query.userId && uids.length === 0) uids.push(query.userId);
-  upQuery._id = { $in: uids };
+    const cursor = db.collection("stars").find(query);
 
-  const userProfiles = await (await db.collection("users").getReal())
-    .find(upQuery)
-    .project({ username: 1 })
-    .toArray();
+    if (updatedAt && updatedAt.stars) {
+      cursor.sort("__updatedAt", "asc");
+      cursor.limit(200);
+    } else {
+      if (sort) cursor.sort(sort[0], sort[1]);
+      if (limit) cursor.limit(limit);
+    }
 
-  if (stars.length || userProfiles.length)
-    return [
-      { coll: "stars", entries: stars },
-      { coll: "userProfiles", entries: userProfiles },
-    ];
-  else return [];
-});
+    const stars = await cursor.toArray();
+
+    const upQuery: Record<string, unknown> = {};
+    if (updatedAt && updatedAt.userProfiles)
+      upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+
+    const uids = Array.from(new Set(stars.map((s) => s.userId)));
+    // if (profile with no stars), still return userProfile
+    if (query.userId && uids.length === 0) uids.push(query.userId);
+    upQuery._id = { $in: uids };
+
+    const userProfiles = await (await db.collection("users").getReal())
+      .find(upQuery)
+      .project({ username: 1 })
+      .toArray();
+
+    if (stars.length || userProfiles.length)
+      return [
+        { coll: "stars", entries: stars },
+        { coll: "userProfiles", entries: userProfiles },
+      ];
+    else return [];
+  }
+);
 
 /*
 gs.publish("order", async (db, { orderId }, { auth, updatedAt }) => {

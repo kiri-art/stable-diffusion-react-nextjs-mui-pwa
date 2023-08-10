@@ -407,7 +407,17 @@ function RequestRow({
 }
 
 function Requests() {
-  useGongoSub("bananaRequests");
+  const bananaRequestsSub = useGongoSub(
+    "bananaRequests",
+    {},
+    {
+      sort: ["createdAt", "desc"],
+      limit: 50,
+      minInterval: 500,
+      maxInterval: 1000,
+    }
+  );
+
   // @ts-expect-error: ok
   const user = db.collection("users").findOne({ _id: db.auth.userId });
   const isAdmin = !!user?.admin;
@@ -415,9 +425,10 @@ function Requests() {
   const requests = useGongoLive((db) =>
     db
       .collection("bananaRequests")
-      .find({
-        createdAt: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
-      })
+      .find()
+      // .find({
+      //  createdAt: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
+      // })
       .sort("createdAt", "desc")
   );
 
@@ -451,17 +462,23 @@ function Requests() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Button onClick={() => bananaRequestsSub.loadMore()}>Load More</Button>
     </Box>
   );
 }
 
 const Logs: NextPage = () => {
-  useGongoSub("csends");
+  const csendsSub = useGongoSub(
+    "csends",
+    {},
+    { sort: ["date", "desc"], limit: 50 }
+  );
 
   const csends = useGongoLive((db) =>
     db
       .collection("csends")
-      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) } })
+      .find()
+      // .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) } })
       .sort("date", "desc")
   );
 
@@ -497,6 +514,10 @@ const Logs: NextPage = () => {
           <ContainerEvents csends={csends} />
         </TabPanel>
         */}
+        <Button onClick={() => csendsSub && csendsSub.loadMore()}>
+          Load more CSends
+        </Button>
+        <br />
         <Button onClick={removeAll}>Clear Log Database and Archive</Button>
       </Container>
     </>

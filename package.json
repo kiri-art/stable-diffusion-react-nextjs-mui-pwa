@@ -13,7 +13,8 @@
     "i18n:compile": "lingui compile",
     "docker": "docker run -it -p 8000:8000 --gpus all --rm diffusers-api",
     "test": "jest",
-    "stripe-dev": "stripe listen --forward-to localhost:3000/api/stripe"
+    "stripe-dev": "stripe listen --forward-to localhost:3000/api/stripe",
+    "gongo-update": "yarn add --exact gongo-client@latest gongo-client-react@latest gongo-server@latest gongo-server-db-mongo@latest"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
@@ -31,10 +32,10 @@
     "aws-sdk": "^2.1231.0",
     "date-fns": "^2.29.2",
     "file-type": "^18.0.0",
-    "gongo-client": "2.5.4",
-    "gongo-client-react": "0.2.4",
-    "gongo-server": "3.1.0",
-    "gongo-server-db-mongo": "2.6.0",
+    "gongo-client": "2.6.1",
+    "gongo-client-react": "0.3.0",
+    "gongo-server": "3.2.0",
+    "gongo-server-db-mongo": "2.7.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
     "ipdata": "^2.2.4",

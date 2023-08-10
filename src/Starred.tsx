@@ -16,6 +16,7 @@ import useBreakPoint from "./lib/useBreakPoint";
 import asyncConfirm from "./asyncConfirm";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "./lib/constants";
 import StarredItem from "../pages/s/[_id]";
+import { useInfiniteLoader } from "masonic";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -82,10 +83,12 @@ export function useLike(item: Star) {
 }
 
 function Item({
+  index,
   item,
   itemOpen: _itemOpen,
   showReported,
 }: {
+  index: number;
   item: Star;
   showReported: boolean;
   itemOpen: (event: React.SyntheticEvent, item: Star) => void;
@@ -128,6 +131,7 @@ function Item({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <Image
+          priority={index < 4}
           alt={alt}
           src={
             (typeof window !== "undefined" ? window.origin : "") +
@@ -220,6 +224,7 @@ function Item({
   }, [
     aspectRatio,
     item,
+    index,
     like,
     likedByUser,
     ownedByUser,
@@ -231,9 +236,11 @@ function Item({
 export default function Starred({
   items,
   cols,
+  loadMore,
 }: {
   items: Star[];
   cols?: number;
+  loadMore?: () => void;
 }) {
   const router = useRouter();
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
@@ -270,9 +277,10 @@ export default function Starred({
 
   const MasonryItem = React.useMemo(() => {
     // @ts-expect-error: ok
-    return function MasonryItem({ data }) {
+    return function MasonryItem({ data, index }) {
       return (
         <Item
+          index={index}
           item={data}
           showReported={!!router.query.showReported}
           itemOpen={itemOpen}
@@ -280,6 +288,13 @@ export default function Starred({
       );
     };
   }, [itemOpen, router.query.showReported]);
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const maybeLoadMore = useInfiniteLoader(loadMore || (() => {}), {
+    isItemLoaded: (index, items) => !!items[index],
+    minimumBatchSize: 20,
+    threshold: 10,
+  });
 
   return (
     <>
@@ -323,6 +338,7 @@ export default function Starred({
         columnCount={cols || _cols}
         columnGutter={10}
         rowGutter={10}
+        onRender={maybeLoadMore}
       />
     </>
   );
