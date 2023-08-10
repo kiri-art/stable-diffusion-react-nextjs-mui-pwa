@@ -41,7 +41,7 @@ const ddaCallInputsSchema = object({
     "DPMSolverMultistepScheduler",
   ]), // .default("DDIM"),
   startRequestId: string(),
-  safety_checker: boolean(),
+  safety_checker: boolean().optional().nullable(),
   textual_inversions: array().of(
     string().matches(
       /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/

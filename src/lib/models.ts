@@ -62,8 +62,7 @@ const models: Record<string, Model> = {
         callInputs.MODEL_URL = subModel.MODEL_URL ?? "s3://";
         if (subModel.CHECKPOINT_URL)
           callInputs.CHECKPOINT_URL = subModel.CHECKPOINT_URL;
-        if (subModel.safety_checker === false)
-          callInputs.safety_checker = false;
+        if (subModel.safety_checker === false) callInputs.safety_checker = null;
         callInputs.compel_prompts = true;
 
         /*

@@ -110,6 +110,7 @@ gs.publish(
       query.$or = [
         { "callInputs.safety_checker": true },
         { "callInputs.safety_checker": { $exists: false } },
+        { "callInputs.safety_checker": null },
       ];
 
     if (updatedAt && updatedAt.stars) {

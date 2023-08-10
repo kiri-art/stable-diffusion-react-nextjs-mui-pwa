@@ -177,7 +177,13 @@ const Home: NextPage = () => {
       { reports: { $lt: NUM_REPORTS_UNTIL_REMOVAL } },
     ];
   const sortField = show === "recent" ? "date" : "likes";
-  if (nsfwFilter) query["callInputs.safety_checker"] = true;
+  if (nsfwFilter)
+    query.$or = [
+      { "callInputs.safety_checker": true },
+      { "callInputs.safety_checker": { $exists: false } },
+      { "callInputs.safety_checker": null },
+    ];
+
   if (!nsfwFilter && !explicit)
     query["modelInputs.prompt"] = {
       $not: /tits|cum|dick|pussy|loli|sex|ejaculation|vagina|penis/i,
