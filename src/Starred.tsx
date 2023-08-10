@@ -2,12 +2,13 @@ import React from "react";
 import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import { Box, Button } from "@mui/material";
 import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
-// import Masonry from "@mui/lab/Masonry";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
-import MyMasonry from "./MyMasonry";
+// import MyMasonry from "./MyMasonry";
+// import Masonry from "@mui/lab/Masonry";
+import { Masonry } from "masonic";
 
 import Link from "./Link";
 import Star from "./schemas/star";
@@ -82,17 +83,18 @@ export function useLike(item: Star) {
   return { userId, userLike, likedByUser, like };
 }
 
-function Item({
+const Item = React.memo(function Item({
   index,
   item,
-  itemOpen: _itemOpen,
   showReported,
+  itemOpen: _itemOpen,
 }: {
   index: number;
   item: Star;
   showReported: boolean;
   itemOpen: (event: React.SyntheticEvent, item: Star) => void;
 }) {
+  // console.log([index, item, _itemOpen, showReported]);
   const alt = "TODO";
   const userId = useGongoUserId();
   const { likedByUser, like } = useLike(item);
@@ -101,137 +103,126 @@ function Item({
     ? item.modelInputs.width + "/" + item.modelInputs.height
     : "1";
 
-  return React.useMemo(() => {
-    async function itemDestar(event: React.SyntheticEvent) {
-      event.preventDefault();
-      event.stopPropagation();
-      console.log(event.target);
-      destar(item._id);
-    }
+  async function itemDestar(event: React.SyntheticEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(event.target);
+    destar(item._id);
+  }
 
-    async function itemReport(event: React.SyntheticEvent) {
-      event.preventDefault();
-      event.stopPropagation();
-      report(item._id);
-    }
+  async function itemReport(event: React.SyntheticEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    report(item._id);
+  }
 
-    async function itemOpen(event: React.SyntheticEvent) {
-      _itemOpen(event, item);
-    }
+  async function itemOpen(event: React.SyntheticEvent) {
+    _itemOpen(event, item);
+  }
 
-    return (
-      <Link
-        style={{
-          position: "relative",
-          aspectRatio,
-          display: "block",
-        }}
-        href={"/s/" + item._id}
-        onClick={itemOpen}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <Image
-          priority={index < 4}
-          alt={alt}
-          src={
-            (typeof window !== "undefined" ? window.origin : "") +
-            "/api/file?id=" +
-            strObjectId(item.files.output)
-          }
-          layout="fill"
-          objectFit="contain"
-          sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
-        (max-width: 1536) 33vw, 16vw"
-        />
-        {ownedByUser && false ? (
-          <Button
-            onClick={itemDestar}
-            sx={{
-              position: "absolute",
-              right: 0,
-              top: 0,
-              m: 0,
-              p: 1,
-              minWidth: 0,
-              color: "rgba(200,200,200,0.45)",
-              "& :hover": {
-                color: "red",
-              },
-            }}
-          >
-            <Delete />
-          </Button>
-        ) : (
-          <Button
-            onClick={itemReport}
-            sx={{
-              position: "absolute",
-              right: 0,
-              top: 0,
-              m: 0,
-              p: 1,
-              minWidth: 0,
-              color:
-                showReported &&
-                (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
-                  ? "red"
-                  : "rgba(200,200,200,0.45)",
-              "& :hover": {
-                color: "red",
-              },
-            }}
-          >
-            <>
-              {showReported && item.reports}
-              <Report />
-            </>
-          </Button>
-        )}
+  return (
+    <Link
+      style={{
+        position: "relative",
+        aspectRatio,
+        display: "block",
+      }}
+      href={"/s/" + item._id}
+      onClick={itemOpen}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <Image
+        priority={index < 4}
+        alt={alt}
+        src={
+          (typeof window !== "undefined" ? window.origin : "") +
+          "/api/file?id=" +
+          strObjectId(item.files.output)
+        }
+        layout="fill"
+        objectFit="contain"
+        sizes="(max-width: 600px) 50vw, (max-width: 900) 33vw, (max-width: 1200) 25vw,
+      (max-width: 1536) 33vw, 16vw"
+      />
+      {ownedByUser && false ? (
         <Button
-          onClick={like}
+          onClick={itemDestar}
           sx={{
             position: "absolute",
-            left: 0,
+            right: 0,
             top: 0,
             m: 0,
             p: 1,
             minWidth: 0,
+            color: "rgba(200,200,200,0.45)",
+            "& :hover": {
+              color: "red",
+            },
           }}
         >
-          <span
-            style={{
-              color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
-            }}
-          >
-            {likedByUser ? <Favorite /> : <FavoriteBorder />}
-          </span>
-          <span
-            style={{
-              color: likedByUser ? "#333" : "rgba(200,200,200,0.5)",
-              position: "relative",
-              top: "-3px",
-              marginLeft: "3px",
-              textShadow: likedByUser
-                ? "0 0 2px rgba(255,255,255,0.8)"
-                : undefined,
-            }}
-          >
-            {item.likes}
-          </span>
+          <Delete />
         </Button>
-      </Link>
-    );
-  }, [
-    aspectRatio,
-    item,
-    index,
-    like,
-    likedByUser,
-    ownedByUser,
-    _itemOpen,
-    showReported,
-  ]);
-}
+      ) : (
+        <Button
+          onClick={itemReport}
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            m: 0,
+            p: 1,
+            minWidth: 0,
+            color:
+              showReported &&
+              (item.reports as number) >= NUM_REPORTS_UNTIL_REMOVAL
+                ? "red"
+                : "rgba(200,200,200,0.45)",
+            "& :hover": {
+              color: "red",
+            },
+          }}
+        >
+          <>
+            {showReported && item.reports}
+            <Report />
+          </>
+        </Button>
+      )}
+      <Button
+        onClick={like}
+        sx={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          m: 0,
+          p: 1,
+          minWidth: 0,
+        }}
+      >
+        <span
+          style={{
+            color: likedByUser ? "red" : "rgba(200,200,200,0.5)",
+          }}
+        >
+          {likedByUser ? <Favorite /> : <FavoriteBorder />}
+        </span>
+        <span
+          style={{
+            color: likedByUser ? "#333" : "rgba(200,200,200,0.5)",
+            position: "relative",
+            top: "-3px",
+            marginLeft: "3px",
+            textShadow: likedByUser
+              ? "0 0 2px rgba(255,255,255,0.8)"
+              : undefined,
+          }}
+        >
+          {item.likes}
+        </span>
+      </Button>
+    </Link>
+  );
+});
 
 export default function Starred({
   items,
@@ -277,7 +268,8 @@ export default function Starred({
 
   const MasonryItem = React.useMemo(() => {
     // @ts-expect-error: ok
-    return function MasonryItem({ data, index }) {
+    return React.memo(function MasonryItem({ data, index }) {
+      // console.log(index, width, data);
       return (
         <Item
           index={index}
@@ -286,14 +278,14 @@ export default function Starred({
           itemOpen={itemOpen}
         />
       );
-    };
+    });
   }, [itemOpen, router.query.showReported]);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const maybeLoadMore = useInfiniteLoader(loadMore || (() => {}), {
     isItemLoaded: (index, items) => !!items[index],
-    minimumBatchSize: 20,
-    threshold: 10,
+    minimumBatchSize: (cols || _cols) * 4,
+    threshold: (cols || _cols) * 4,
   });
 
   return (
@@ -332,7 +324,7 @@ export default function Starred({
       )}
       */}
       <div style={{ height: "10px" }} />
-      <MyMasonry
+      <Masonry
         items={items}
         render={MasonryItem}
         columnCount={cols || _cols}

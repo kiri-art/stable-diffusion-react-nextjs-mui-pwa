@@ -41,8 +41,10 @@ export function Masonry<Item>(props: MasonryProps<Item>) {
     // eslint-disable-next-line
   ) as any;
   nextProps.positioner = usePositioner(
-    nextProps,
-    [props.items] // kiri
+    nextProps
+    // can't remember why i did this but it caused a lot of flicker and
+    // doesn't seem to be necessary
+    // [props.items] // kiri
   );
   nextProps.resizeObserver = useResizeObserver(nextProps.positioner);
   const scrollToIndex = useScrollToIndex(nextProps.positioner, {
