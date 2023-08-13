@@ -70,8 +70,8 @@ const Providers: Provider[] = [
 ];
 
 if (process.env.NODE_ENV === "production") {
-  Providers.splice(0, 1); // direct
-  Providers.splice(2, 2); // kiri-local + runpod
+  Providers.splice(0, 2); // direct + banana
+  Providers.splice(1, 2); // kiri-local + runpod
 }
 
 export default Providers;

@@ -1132,11 +1132,13 @@ export default function SDControls({
           // setDest={uiState.dest.set}
           credits={inputs.PROVIDER_ID.value === "banana" ? 1 : 0.25}
         />
-        <ProviderSelect
-          value={inputs.PROVIDER_ID.value}
-          setValue={inputs.PROVIDER_ID.setValue}
-          // defaultValue={defaults.PROVIDER_ID}
-        />
+        {Providers.length > 1 && (
+          <ProviderSelect
+            value={inputs.PROVIDER_ID.value}
+            setValue={inputs.PROVIDER_ID.setValue}
+            // defaultValue={defaults.PROVIDER_ID}
+          />
+        )}
         {inputs.MODEL_ID && !inputs.MODEL_ID.opts.hidden && (
           <ModelSelect
             value={inputs.MODEL_ID.value}
