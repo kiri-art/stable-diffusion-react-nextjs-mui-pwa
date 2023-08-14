@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useRouter } from "next/router";
-import { Trans } from "@lingui/macro";
+import { Plural, Trans } from "@lingui/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import Image from "next/legacy/image";
+import useNews from "./useNews";
 
 import {
   AppBar,
@@ -24,7 +25,7 @@ import {
   SwipeableDrawer,
   Slide,
   useScrollTrigger,
-  Container,
+  Alert,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -70,6 +71,8 @@ export default function MyAppBar({ title }: { title: string }) {
   const userCredits = creditsStrOrFalse(user);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const [news, dismissNews] = useNews();
 
   /*
   const handleDrawerToggle = () => {
@@ -455,11 +458,30 @@ export default function MyAppBar({ title }: { title: string }) {
           </Box>
         </Box>
 
-        <Container sx={{ p: 2, textAlign: "center" }}>
-          Kiri ❤️ 🇮🇷 & artech.cafe 🙏
-          <br />
-          Sorry for the issues, more details coming soon.
-        </Container>
+        {news.length > 0 && (
+          <Alert
+            severity="info"
+            onClose={dismissNews}
+            sx={{ textAlign: "center", mt: 1 }}
+          >
+            {news.length === 1 ? (
+              <a
+                target="_blank"
+                href={`https://forums.kiri.art/t/${news[0].slug}/${news[0].id}`}
+              >
+                {news[0].title}
+              </a>
+            ) : (
+              <a target="_blank" href="https://forums.kiri.art/c/app/17">
+                <Plural
+                  value={news.length}
+                  one="There us one unread news update."
+                  other="There are # unread news updates."
+                />
+              </a>
+            )}
+          </Alert>
+        )}
       </>
     ),
     [
@@ -478,6 +500,8 @@ export default function MyAppBar({ title }: { title: string }) {
       handleOpenUserMenu,
       handleCloseUserMenu,
       userCredits,
+      dismissNews,
+      news,
     ]
   );
 }

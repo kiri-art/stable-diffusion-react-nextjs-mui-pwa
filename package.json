@@ -31,6 +31,7 @@
     "@stripe/stripe-js": "^1.35.0",
     "aws-sdk": "^2.1231.0",
     "date-fns": "^2.29.2",
+    "discourse2": "1.1.0",
     "file-type": "^18.0.0",
     "gongo-client": "2.6.1",
     "gongo-client-react": "0.3.0",
