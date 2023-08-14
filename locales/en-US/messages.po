@@ -29,6 +29,10 @@ msgstr "(drag & drop, sharing coming soon)"
 #~ msgid "{0, plural, one {# Credit} other {# Credits}}"
 #~ msgstr "{0, plural, one {# Credit} other {# Credits}}"
 
+#: src/MyAppBar.tsx:476
+msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
+msgstr "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
+
 #: src/sd/Controls.tsx:480
 #~ msgid "{0} Credit"
 #~ msgstr "{0} Credit"
@@ -101,7 +105,7 @@ msgid "A newer version of this web app is available, reload to update?"
 msgstr ""
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:248
+#: src/MyAppBar.tsx:251
 msgid "About"
 msgstr ""
 
@@ -122,7 +126,7 @@ msgid "Adjust prompt and GO"
 msgstr "Adjust prompt and GO"
 
 #: pages/admin.tsx:227
-#: src/MyAppBar.tsx:259
+#: src/MyAppBar.tsx:262
 msgid "Admin"
 msgstr ""
 
@@ -251,7 +255,7 @@ msgstr "Created images may not be sold."
 msgid "Credits"
 msgstr "Credits"
 
-#: src/MyAppBar.tsx:405
+#: src/MyAppBar.tsx:408
 msgid "Credits:"
 msgstr ""
 
@@ -303,7 +307,7 @@ msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 msgid "Failed to copy to clipboard"
 msgstr "Failed to copy to clipboard"
 
-#: src/MyAppBar.tsx:202
+#: src/MyAppBar.tsx:205
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -327,7 +331,7 @@ msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropr
 #~ msgid "Fine-tuned SD; Best for Inpainting"
 #~ msgstr "Fine-tuned SD; Best for Inpainting"
 
-#: src/MyAppBar.tsx:215
+#: src/MyAppBar.tsx:218
 msgid "Forums"
 msgstr "Forums"
 
@@ -352,7 +356,7 @@ msgid "Get More Credits"
 msgstr ""
 
 #: pages/login.tsx:56
-#: src/MyAppBar.tsx:238
+#: src/MyAppBar.tsx:241
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -369,7 +373,7 @@ msgid "Height"
 msgstr ""
 
 #: pages/history.tsx:287
-#: src/MyAppBar.tsx:402
+#: src/MyAppBar.tsx:405
 msgid "History"
 msgstr "History"
 
@@ -387,7 +391,7 @@ msgstr "History is kept on your <0>local device only</0>. It is not backed up to
 
 #: pages/index.tsx:236
 #: pages/start.tsx:108
-#: src/MyAppBar.tsx:115
+#: src/MyAppBar.tsx:118
 msgid "Home"
 msgstr ""
 
@@ -410,7 +414,7 @@ msgstr "Image Loaded"
 
 #: pages/img2img.tsx:17
 #: pages/start.tsx:27
-#: src/MyAppBar.tsx:145
+#: src/MyAppBar.tsx:148
 msgid "Image to Image"
 msgstr ""
 
@@ -436,13 +440,13 @@ msgstr "Inpaint"
 
 #: pages/inpaint.tsx:17
 #: pages/start.tsx:33
-#: src/MyAppBar.tsx:160
+#: src/MyAppBar.tsx:163
 #: src/OutputImage.tsx:428
 msgid "Inpainting"
 msgstr "Inpainting"
 
 #: pages/ipix2pix.tsx:17
-#: src/MyAppBar.tsx:190
+#: src/MyAppBar.tsx:193
 #: src/OutputImage.tsx:351
 msgid "Instruct Pix2Pix"
 msgstr "Instruct Pix2Pix"
@@ -511,11 +515,11 @@ msgid "Loading..."
 msgstr ""
 
 #: src/GoButton.tsx:44
-#: src/MyAppBar.tsx:426
+#: src/MyAppBar.tsx:429
 msgid "Login"
 msgstr ""
 
-#: src/MyAppBar.tsx:415
+#: src/MyAppBar.tsx:418
 msgid "Logout"
 msgstr ""
 
@@ -682,7 +686,7 @@ msgstr "Potential NSFW content detected. A black image was returned instead. Try
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
-#: src/MyAppBar.tsx:399
+#: src/MyAppBar.tsx:402
 msgid "Profile"
 msgstr "Profile"
 
@@ -839,7 +843,7 @@ msgid "Start Creating"
 msgstr "Start Creating"
 
 #: pages/stats.tsx:104
-#: src/MyAppBar.tsx:225
+#: src/MyAppBar.tsx:228
 msgid "Stats"
 msgstr "Stats"
 
@@ -870,7 +874,7 @@ msgstr ""
 
 #: pages/start.tsx:21
 #: pages/txt2img.tsx:132
-#: src/MyAppBar.tsx:130
+#: src/MyAppBar.tsx:133
 msgid "Text to Image"
 msgstr ""
 
@@ -940,7 +944,7 @@ msgstr "Upsample"
 
 #: pages/start.tsx:39
 #: pages/upsample.tsx:339
-#: src/MyAppBar.tsx:175
+#: src/MyAppBar.tsx:178
 msgid "Upsampling"
 msgstr "Upsampling"
 

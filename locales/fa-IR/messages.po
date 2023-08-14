@@ -25,6 +25,10 @@ msgstr "قدرت (کاهش نویز)"
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(کشیدن و رها کردن، اشتراک‌گذاری به زودی)"
 
+#: src/MyAppBar.tsx:476
+msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
+msgstr ""
+
 #: src/GoButton.tsx:48
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
 msgstr "{credits, plural, one {# اعتبار} other {# اعتبار}}"
@@ -85,7 +89,7 @@ msgid "A newer version of this web app is available, reload to update?"
 msgstr "نسخه جدیدتری از این برنامه تحت وب موجود است، برای به‌روزرسانی مجدداً بارگیری شود؟"
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:248
+#: src/MyAppBar.tsx:251
 msgid "About"
 msgstr "درباره"
 
@@ -106,7 +110,7 @@ msgid "Adjust prompt and GO"
 msgstr "دستور را تنظیم کنید و ادامه دهید"
 
 #: pages/admin.tsx:227
-#: src/MyAppBar.tsx:259
+#: src/MyAppBar.tsx:262
 msgid "Admin"
 msgstr "مدیر"
 
@@ -215,7 +219,7 @@ msgstr ""
 msgid "Credits"
 msgstr "طراحان"
 
-#: src/MyAppBar.tsx:405
+#: src/MyAppBar.tsx:408
 msgid "Credits:"
 msgstr "طراحان:"
 
@@ -267,7 +271,7 @@ msgstr "ترمیم صورت. خوب برای تصاویر واقعی، بد بر
 msgid "Failed to copy to clipboard"
 msgstr ""
 
-#: src/MyAppBar.tsx:202
+#: src/MyAppBar.tsx:205
 msgid "FAQ"
 msgstr ""
 
@@ -287,7 +291,7 @@ msgstr "فیلتر"
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "تصاویری را که ممکن است NSFW (\"غیر ایمن برای کار\") و برای افراد زیر 18 سال نامناسب باشند، فیلتر کن."
 
-#: src/MyAppBar.tsx:215
+#: src/MyAppBar.tsx:218
 msgid "Forums"
 msgstr ""
 
@@ -308,7 +312,7 @@ msgid "Get More Credits"
 msgstr "اعتبار بیشتری دریافت کنید"
 
 #: pages/login.tsx:56
-#: src/MyAppBar.tsx:238
+#: src/MyAppBar.tsx:241
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -325,7 +329,7 @@ msgid "Height"
 msgstr "ارتفاع"
 
 #: pages/history.tsx:287
-#: src/MyAppBar.tsx:402
+#: src/MyAppBar.tsx:405
 msgid "History"
 msgstr "تاریخچه"
 
@@ -335,7 +339,7 @@ msgstr "سابقه <0>فقط در دستگاه محلی</0> شما نگهدار�
 
 #: pages/index.tsx:236
 #: pages/start.tsx:108
-#: src/MyAppBar.tsx:115
+#: src/MyAppBar.tsx:118
 msgid "Home"
 msgstr "صفحه اصلی"
 
@@ -354,7 +358,7 @@ msgstr "تصویر بارگذاری شد"
 
 #: pages/img2img.tsx:17
 #: pages/start.tsx:27
-#: src/MyAppBar.tsx:145
+#: src/MyAppBar.tsx:148
 msgid "Image to Image"
 msgstr "تصویر به تصویر"
 
@@ -376,13 +380,13 @@ msgstr "Inpaint"
 
 #: pages/inpaint.tsx:17
 #: pages/start.tsx:33
-#: src/MyAppBar.tsx:160
+#: src/MyAppBar.tsx:163
 #: src/OutputImage.tsx:428
 msgid "Inpainting"
 msgstr "Inpainting"
 
 #: pages/ipix2pix.tsx:17
-#: src/MyAppBar.tsx:190
+#: src/MyAppBar.tsx:193
 #: src/OutputImage.tsx:351
 msgid "Instruct Pix2Pix"
 msgstr ""
@@ -431,11 +435,11 @@ msgid "Loading..."
 msgstr "در حال بارگذاری..."
 
 #: src/GoButton.tsx:44
-#: src/MyAppBar.tsx:426
+#: src/MyAppBar.tsx:429
 msgid "Login"
 msgstr "ورود"
 
-#: src/MyAppBar.tsx:415
+#: src/MyAppBar.tsx:418
 msgid "Logout"
 msgstr "خروج"
 
@@ -594,7 +598,7 @@ msgstr "محتوای بالقوه NSFW شناسایی شد. به جای آن ی�
 msgid "Privacy Policy"
 msgstr "سیاست حفظ حریم خصوصی"
 
-#: src/MyAppBar.tsx:399
+#: src/MyAppBar.tsx:402
 msgid "Profile"
 msgstr "پروفایل"
 
@@ -730,7 +734,7 @@ msgid "Start Creating"
 msgstr "آفریدن را آغاز کنید"
 
 #: pages/stats.tsx:104
-#: src/MyAppBar.tsx:225
+#: src/MyAppBar.tsx:228
 msgid "Stats"
 msgstr "آمار"
 
@@ -757,7 +761,7 @@ msgstr "شرایط استفاده از خدمات"
 
 #: pages/start.tsx:21
 #: pages/txt2img.tsx:132
-#: src/MyAppBar.tsx:130
+#: src/MyAppBar.tsx:133
 msgid "Text to Image"
 msgstr "متن به تصویر"
 
@@ -818,7 +822,7 @@ msgstr " نمونه‌برداری افزایشی"
 
 #: pages/start.tsx:39
 #: pages/upsample.tsx:339
-#: src/MyAppBar.tsx:175
+#: src/MyAppBar.tsx:178
 msgid "Upsampling"
 msgstr " نمونه افزایی"
 

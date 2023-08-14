@@ -29,6 +29,10 @@ msgstr ""
 #~ msgid "{0, plural, one {# Credit} other {# Credits}}"
 #~ msgstr ""
 
+#: src/MyAppBar.tsx:476
+msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
+msgstr ""
+
 #: src/sd/Controls.tsx:480
 #~ msgid "{0} Credit"
 #~ msgstr ""
@@ -101,7 +105,7 @@ msgid "A newer version of this web app is available, reload to update?"
 msgstr "קיימת גרסה חדשה של יישום רשת זה. האם לטעון מחדש כדי לעדכן?"
 
 #: pages/about.tsx:16
-#: src/MyAppBar.tsx:248
+#: src/MyAppBar.tsx:251
 msgid "About"
 msgstr "אודות"
 
@@ -122,7 +126,7 @@ msgid "Adjust prompt and GO"
 msgstr ""
 
 #: pages/admin.tsx:227
-#: src/MyAppBar.tsx:259
+#: src/MyAppBar.tsx:262
 msgid "Admin"
 msgstr "מנהל"
 
@@ -251,7 +255,7 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: src/MyAppBar.tsx:405
+#: src/MyAppBar.tsx:408
 msgid "Credits:"
 msgstr "נקודות קרדיט:"
 
@@ -303,7 +307,7 @@ msgstr ""
 msgid "Failed to copy to clipboard"
 msgstr ""
 
-#: src/MyAppBar.tsx:202
+#: src/MyAppBar.tsx:205
 msgid "FAQ"
 msgstr ""
 
@@ -327,7 +331,7 @@ msgstr ""
 #~ msgid "Fine-tuned SD; Best for Inpainting"
 #~ msgstr ""
 
-#: src/MyAppBar.tsx:215
+#: src/MyAppBar.tsx:218
 msgid "Forums"
 msgstr ""
 
@@ -352,7 +356,7 @@ msgid "Get More Credits"
 msgstr "קבל עוד נקודות קרדיט"
 
 #: pages/login.tsx:56
-#: src/MyAppBar.tsx:238
+#: src/MyAppBar.tsx:241
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -369,7 +373,7 @@ msgid "Height"
 msgstr "גובה"
 
 #: pages/history.tsx:287
-#: src/MyAppBar.tsx:402
+#: src/MyAppBar.tsx:405
 msgid "History"
 msgstr ""
 
@@ -387,7 +391,7 @@ msgstr ""
 
 #: pages/index.tsx:236
 #: pages/start.tsx:108
-#: src/MyAppBar.tsx:115
+#: src/MyAppBar.tsx:118
 msgid "Home"
 msgstr "דף הבית"
 
@@ -406,7 +410,7 @@ msgstr ""
 
 #: pages/img2img.tsx:17
 #: pages/start.tsx:27
-#: src/MyAppBar.tsx:145
+#: src/MyAppBar.tsx:148
 msgid "Image to Image"
 msgstr "תמונה לתמונה"
 
@@ -432,13 +436,13 @@ msgstr ""
 
 #: pages/inpaint.tsx:17
 #: pages/start.tsx:33
-#: src/MyAppBar.tsx:160
+#: src/MyAppBar.tsx:163
 #: src/OutputImage.tsx:428
 msgid "Inpainting"
 msgstr "תיקון תמונה"
 
 #: pages/ipix2pix.tsx:17
-#: src/MyAppBar.tsx:190
+#: src/MyAppBar.tsx:193
 #: src/OutputImage.tsx:351
 msgid "Instruct Pix2Pix"
 msgstr ""
@@ -507,11 +511,11 @@ msgid "Loading..."
 msgstr "טוען..."
 
 #: src/GoButton.tsx:44
-#: src/MyAppBar.tsx:426
+#: src/MyAppBar.tsx:429
 msgid "Login"
 msgstr "התחברות"
 
-#: src/MyAppBar.tsx:415
+#: src/MyAppBar.tsx:418
 msgid "Logout"
 msgstr "ציאה"
 
@@ -674,7 +678,7 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: src/MyAppBar.tsx:399
+#: src/MyAppBar.tsx:402
 msgid "Profile"
 msgstr ""
 
@@ -831,7 +835,7 @@ msgid "Start Creating"
 msgstr ""
 
 #: pages/stats.tsx:104
-#: src/MyAppBar.tsx:225
+#: src/MyAppBar.tsx:228
 msgid "Stats"
 msgstr ""
 
@@ -862,7 +866,7 @@ msgstr "תנאי השירות"
 
 #: pages/start.tsx:21
 #: pages/txt2img.tsx:132
-#: src/MyAppBar.tsx:130
+#: src/MyAppBar.tsx:133
 msgid "Text to Image"
 msgstr "טקסט לתמונה"
 
@@ -932,7 +936,7 @@ msgstr ""
 
 #: pages/start.tsx:39
 #: pages/upsample.tsx:339
-#: src/MyAppBar.tsx:175
+#: src/MyAppBar.tsx:178
 msgid "Upsampling"
 msgstr ""
 
