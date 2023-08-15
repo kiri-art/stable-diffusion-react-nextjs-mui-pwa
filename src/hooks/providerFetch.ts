@@ -3,6 +3,7 @@ import { db } from "gongo-client-react";
 import { BananaRequest } from "../schemas";
 import { ipPass, ipFromReq } from "../api-lib/ipCheck";
 import { ProviderFetchRequestBase } from "../lib/providerFetch";
+import calculateCredits from "../calculateCredits";
 
 hooks.register("providerFetch.browser.extraInfoToSend");
 hooks.register("providerFetch.server.preStart");
@@ -87,11 +88,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   const chargedCredits = { credits: 0, paid: false };
 
-  let CREDIT_COST = 1;
-  if (request.model.id === "upsample")
-    // Also in upsample.tsx
-    CREDIT_COST = callInputs.PROVIDER_ID === "kiri" ? 0.1 : 5;
-  else if (callInputs.PROVIDER_ID === "kiri") CREDIT_COST = 0.25;
+  const CREDIT_COST = calculateCredits(callInputs, modelInputs);
 
   if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
     return res.status(403).send("Out of credits");

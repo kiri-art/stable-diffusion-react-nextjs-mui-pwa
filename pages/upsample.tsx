@@ -34,6 +34,7 @@ import blobToBase64 from "../src/lib/blobToBase64";
 import sendQueue from "../src/lib/sendQueue";
 import fetchToOutput from "../src/lib/fetchToOutput";
 import { ProviderSelect } from "../src/sd/Controls";
+import calculateCredits from "../src/calculateCredits";
 
 const maxSizeText = "3.2MB";
 
@@ -193,10 +194,10 @@ export default function Upsample() {
   );
   const router = useRouter();
 
-  // Also in hooks/providerFetch
-  const CREDIT_COST = ["kiri", "0", "kiri-local"].includes(PROVIDER_ID)
-    ? 0.1
-    : 5;
+  const CREDIT_COST = calculateCredits(
+    { MODEL_ID: modelId, use_extra: "upsample" },
+    {}
+  );
 
   React.useEffect(() => {
     if (sendQueue.has()) {
@@ -388,12 +389,6 @@ export default function Upsample() {
           />
         )}
         <form onSubmit={go}>
-          <GoButton
-            disabled={!validImageLoaded}
-            // dest={dest}
-            // setDest={setDest}
-            credits={CREDIT_COST}
-          />
           <Container sx={{ py: 1, textAlign: "center" }}>
             <ProviderSelect value={PROVIDER_ID} setValue={setPROVIDER_ID} />
           </Container>
@@ -409,6 +404,12 @@ export default function Upsample() {
               disabled={modelId.match(/anime/) !== null}
             />
           </Grid>
+          <GoButton
+            disabled={!validImageLoaded}
+            // dest={dest}
+            // setDest={setDest}
+            credits={CREDIT_COST}
+          />
         </form>
       </Container>
     </>

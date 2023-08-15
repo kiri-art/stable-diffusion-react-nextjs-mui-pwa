@@ -40,6 +40,7 @@ import ddaModelInputsSchema from "../schemas/ddaModelInputs";
 import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
 import useOver18 from "../lib/useOver18";
+import calculateCredits from "../calculateCredits";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -1117,6 +1118,12 @@ export default function SDControls({
     ]
   );
 
+  const values = Object.fromEntries(
+    // @ts-expect-error: TODO
+    Object.keys(inputs).map((key) => [key, inputs[key].value])
+  );
+  const creditCost = calculateCredits(values, values);
+
   return (
     <Box sx={{ my: 2 }}>
       <form onSubmit={go}>
@@ -1125,12 +1132,6 @@ export default function SDControls({
           setValue={inputs.prompt.setValue}
           placeholder={randomPrompt}
           getRandomPrompt={getRandomPromptForModel}
-        />
-        <GoButton
-          disabled={!!(requestStartTime && !requestEndTime)}
-          // dest={uiState.dest.value}
-          // setDest={uiState.dest.set}
-          credits={inputs.PROVIDER_ID.value === "banana" ? 1 : 0.25}
         />
         {Providers.length > 1 && (
           <ProviderSelect
@@ -1230,6 +1231,12 @@ export default function SDControls({
             defaultValue={defaults.sampler}
           />
         </Grid>
+        <GoButton
+          disabled={!!(requestStartTime && !requestEndTime)}
+          // dest={uiState.dest.value}
+          // setDest={uiState.dest.set}
+          credits={creditCost}
+        />
       </form>
     </Box>
   );
