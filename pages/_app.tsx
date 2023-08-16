@@ -28,6 +28,21 @@ const csEmotionCache = {
   rtl: createEmotionCache("rtl"),
 };
 
+if (typeof document === "object") {
+  document.addEventListener("readystatechange", () => {
+    if (document.readyState === "complete") {
+      const match = location.hash.match(/[#&]ref=(?<ref>[^&]+)/);
+      const ref = match && match.groups && match.groups.ref;
+      if (ref && match.index !== undefined) {
+        localStorage.setItem("ref", ref);
+        location.hash =
+          location.hash.substring(0, match.index) +
+          location.hash.substring(match.index + match[0].length);
+      }
+    }
+  });
+}
+
 export default function MyApp(props: MyAppProps) {
   // const isPopulated = useGongoIsPopulated();
   // const isServer = typeof document === "undefined";
