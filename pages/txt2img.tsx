@@ -2,7 +2,7 @@ import { t } from "@lingui/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 
-import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
+import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, {
   modelStateCallInputs,
   modelStateModelInputs,
@@ -42,9 +42,6 @@ export default function Txt2Img() {
   const [imgSrc, setImgSrc] = React.useState<string>("");
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
-  const [dest, setDest] = React.useState(
-    isDev ? "banana-local" : "banana-remote"
-  );
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
     null
   );
@@ -58,9 +55,6 @@ export default function Txt2Img() {
     db.collection("users").find({ _id: userId })
   );
   const router = useRouter();
-
-  // TODO, move stuff to here
-  const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(txt2imgState);
   const sharedInputs = sharedInputTextFromInputs(inputs);
@@ -144,7 +138,6 @@ export default function Txt2Img() {
           go={go}
           inputs={inputs}
           randomPrompt={randomPrompt}
-          uiState={uiState}
           requestStartTime={requestStartTime}
           requestEndTime={requestEndTime}
         />

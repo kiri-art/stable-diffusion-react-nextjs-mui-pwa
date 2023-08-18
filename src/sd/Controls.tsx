@@ -1002,20 +1002,15 @@ export default function SDControls({
   inputs,
   go,
   randomPrompt,
-  uiState,
   requestStartTime,
   requestEndTime,
 }: {
   inputs: ModelState;
   go: (event: React.SyntheticEvent) => void;
   randomPrompt?: string;
-  uiState: {
-    // dest: { value: string; set: React.Dispatch<React.SetStateAction<string>> };
-  };
   requestStartTime: number | null;
   requestEndTime: number | null;
 }) {
-  console.log({ uiState });
   const sharedInputs = sharedInputTextFromInputs(inputs, true);
   const getRandomPromptForModel = getRandomPrompt.bind(
     null,
@@ -1245,8 +1240,6 @@ export default function SDControls({
         </Grid>
         <GoButton
           disabled={!!(requestStartTime && !requestEndTime)}
-          // dest={uiState.dest.value}
-          // setDest={uiState.dest.set}
           credits={creditCost}
         />
       </form>

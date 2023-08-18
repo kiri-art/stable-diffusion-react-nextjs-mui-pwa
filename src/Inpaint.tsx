@@ -6,7 +6,7 @@ import { Trans } from "@lingui/macro";
 import { IconButton } from "@mui/material";
 import { Clear, Redo, Undo } from "@mui/icons-material";
 
-import { isDev, REQUIRE_REGISTRATION } from "../src/lib/client-env";
+import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
@@ -257,9 +257,6 @@ export default function Inpainting() {
   } = useInputImage({ setImgSrc });
 
   const [log, setLog] = React.useState([] as Array<string>);
-  const [dest, setDest] = React.useState(
-    isDev ? "banana-local" : "banana-remote"
-  );
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
     null
   );
@@ -267,8 +264,6 @@ export default function Inpainting() {
     null
   );
   const [historyId, setHistoryId] = React.useState("");
-
-  const uiState = { dest: { value: dest, set: setDest } };
 
   const inputs = useModelState(inpaintState);
   const sharedInputs = sharedInputTextFromInputs(inputs);
@@ -467,7 +462,6 @@ export default function Inpainting() {
       <Controls
         go={go}
         inputs={inputs}
-        uiState={uiState}
         requestStartTime={requestStartTime}
         requestEndTime={requestEndTime}
       />
