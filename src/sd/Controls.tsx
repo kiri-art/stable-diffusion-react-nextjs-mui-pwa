@@ -41,6 +41,7 @@ import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
 import useOver18 from "../lib/useOver18";
 import calculateCredits from "../calculateCredits";
+import ModelSelect2 from "./ModelSelect";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -797,6 +798,7 @@ function SafetyChecker({
   }, [value, setValue, confirmDob, over18, user]);
 }
 
+/*
 function ModelMenuItem({ value, desc }: { value: string; desc: string }) {
   return (
     <Box sx={{ textAlign: "center", width: "100%" }}>
@@ -851,6 +853,7 @@ function ModelSelect({
     [value, setValue, defaultValue]
   );
 }
+*/
 
 function Sampler({
   value,
@@ -1140,11 +1143,20 @@ export default function SDControls({
             // defaultValue={defaults.PROVIDER_ID}
           />
         )}
+        {/*
         {inputs.MODEL_ID && !inputs.MODEL_ID.opts.hidden && (
           <ModelSelect
             value={inputs.MODEL_ID.value}
             setValue={inputs.MODEL_ID.setValue}
             defaultValue={globalDefaults.MODEL_ID}
+          />
+        )}
+        */}
+        {inputs.MODEL_ID && !inputs.MODEL_ID.opts.hidden && (
+          <ModelSelect2
+            value={inputs.MODEL_ID.value}
+            setValue={inputs.MODEL_ID.setValue}
+            // defaultValue={globalDefaults.MODEL_ID}
           />
         )}
         {inputs.MODEL_ID.value !== "rinna/japanese-stable-diffusion" && (
