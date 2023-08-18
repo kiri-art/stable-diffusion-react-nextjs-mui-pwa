@@ -21,6 +21,8 @@ export default function useNews() {
   );
 
   React.useEffect(() => {
+    if (process.env.NODE_ENV === "development") return;
+
     async function checkNews() {
       console.log("Checking forums for news");
       let result;
