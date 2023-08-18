@@ -38,7 +38,17 @@ export default async function bananaUpdate(
     return new Date();
   })();
 
-  const $set = { ["steps." + step.name]: { date, value: step.value } };
+  const $set: {
+    [key: string]:
+      | { date: Date; value: number }
+      | boolean
+      | Date
+      | number
+      | undefined;
+    finished?: boolean;
+    finishedTime?: Date;
+    totalTime?: number;
+  } = { ["steps." + step.name]: { date, value: step.value } };
   const update = { $set };
 
   if (step.name === "finished") {
@@ -48,20 +58,9 @@ export default async function bananaUpdate(
     console.log(existing);
     if (!existing) return res.status(200).end("OK");
 
-    // @ts-expect-error: TODO
     $set.finished = true;
-
-    /*
-    let finishedTime;
-    if (typeof step.date === "number") finishedTime = new Date(step.date);
-    else if (typeof step.date === "string") finishedTime = new Date(step.date);
-    else finishedTime = new Date();
-    */
-
-    // @ts-expect-error: TODO
     $set.finishedTime = date;
-    // @ts-expect-error: TODO
-    $set.totalTime = finishedTime - existing.createdAt;
+    $set.totalTime = date.getTime() - existing.createdAt.getTime();
   }
 
   console.log(update);
