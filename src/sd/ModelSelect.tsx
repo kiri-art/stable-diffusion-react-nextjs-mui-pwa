@@ -60,158 +60,168 @@ const sorts = {
   date: (a: Model, b: Model) => b.dateAdded.getTime() - a.dateAdded.getTime(),
 };
 
-function ModelSelectModalContents({
-  open,
-  setOpen,
-  value,
-  setValue,
-}: {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-  value: string;
-  setValue: (value: string) => void;
-}) {
-  const [baseModelFilter, setBaseModelFilter] = React.useState("all");
-  const [modelOriginFilter, setModelOriginFilter] = React.useState("all");
-  const [inpaintFilter, setInpaintFilter] = React.useState(true);
-  const [tagFilter, setTagFilter] = React.useState("");
-  const inInpaint = location.pathname === "/inpaint";
-  const [sort, setSort] = React.useState<"alpha" | "date">("alpha");
+const ModelSelectModalContents = React.forwardRef(
+  function ModelSelectModalContents(
+    {
+      open,
+      setOpen,
+      value,
+      setValue,
+    }: {
+      open: boolean;
+      setOpen: (value: boolean) => void;
+      value: string;
+      setValue: (value: string) => void;
+    },
+    ref: React.ForwardedRef<HTMLInputElement>
+  ) {
+    const [baseModelFilter, setBaseModelFilter] = React.useState("all");
+    const [modelOriginFilter, setModelOriginFilter] = React.useState("all");
+    const [inpaintFilter, setInpaintFilter] = React.useState(true);
+    const [tagFilter, setTagFilter] = React.useState("");
+    const inInpaint = location.pathname === "/inpaint";
+    const [sort, setSort] = React.useState<"alpha" | "date">("alpha");
 
-  const filteredModels = React.useMemo(() => {
-    const filteredModels = Object.values(models).filter(
-      (model) =>
-        !model.hidden &&
-        (modelOriginFilter === "all" ||
-          model.ogModel === (modelOriginFilter === "og" ? true : false)) &&
-        (baseModelFilter === "all" || model.baseModel === baseModelFilter) &&
-        ((!inInpaint && !model.MODEL_ID.match(/[Ii]npaint/)) ||
-          (inInpaint &&
-            (!inpaintFilter ||
-              (inpaintFilter && model.MODEL_ID.match(/[Ii]npaint/))))) &&
-        (tagFilter === "" || model.tags?.includes(tagFilter))
+    const filteredModels = React.useMemo(() => {
+      const filteredModels = Object.values(models).filter(
+        (model) =>
+          !model.hidden &&
+          (modelOriginFilter === "all" ||
+            model.ogModel === (modelOriginFilter === "og" ? true : false)) &&
+          (baseModelFilter === "all" || model.baseModel === baseModelFilter) &&
+          ((!inInpaint && !model.MODEL_ID.match(/[Ii]npaint/)) ||
+            (inInpaint &&
+              (!inpaintFilter ||
+                (inpaintFilter && model.MODEL_ID.match(/[Ii]npaint/))))) &&
+          (tagFilter === "" || model.tags?.includes(tagFilter))
+      );
+      return filteredModels;
+    }, [
+      modelOriginFilter,
+      baseModelFilter,
+      inpaintFilter,
+      inInpaint,
+      tagFilter,
+    ]);
+
+    const sortedModels = React.useMemo(() => {
+      return filteredModels.sort(sorts[sort]);
+    }, [filteredModels, sort]);
+
+    const baseModels = React.useMemo(
+      () => {
+        const baseModels = new Set<string>();
+        for (const model of Object.values(models)) {
+          baseModels.add(model.baseModel);
+        }
+        return Array.from(baseModels);
+      },
+      [
+        /* models */
+      ]
     );
-    return filteredModels;
-  }, [modelOriginFilter, baseModelFilter, inpaintFilter, inInpaint, tagFilter]);
 
-  const sortedModels = React.useMemo(() => {
-    return filteredModels.sort(sorts[sort]);
-  }, [filteredModels, sort]);
+    const allTags = React.useMemo(
+      () => {
+        const allTags = new Set<string>();
+        for (const model of Object.values(models)) {
+          if (model.tags)
+            for (const tag of model.tags) {
+              allTags.add(tag);
+            }
+        }
 
-  const baseModels = React.useMemo(
-    () => {
-      const baseModels = new Set<string>();
-      for (const model of Object.values(models)) {
-        baseModels.add(model.baseModel);
-      }
-      return Array.from(baseModels);
-    },
-    [
-      /* models */
-    ]
-  );
+        return Array.from(allTags).sort();
+      },
+      [
+        /* models */
+      ]
+    );
 
-  const allTags = React.useMemo(
-    () => {
-      const allTags = new Set<string>();
-      for (const model of Object.values(models)) {
-        if (model.tags)
-          for (const tag of model.tags) {
-            allTags.add(tag);
-          }
-      }
-
-      return Array.from(allTags).sort();
-    },
-    [
-      /* models */
-    ]
-  );
-
-  return (
-    <Fade in={open}>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-45%, -50%)",
-
-          width: "100%",
-          // maxWidth: 500,
-          bgcolor: "background.paper",
-          border: "2px solid #000",
-          boxShadow: 24,
-          p: 2,
-        }}
-      >
-        <select
-          value={baseModelFilter}
-          onChange={(e) => setBaseModelFilter(e.target.value)}
-        >
-          <option value="all">All Bases</option>
-          {baseModels.map((baseModel) => (
-            <option key={baseModel} value={baseModel}>
-              {baseModel}
-            </option>
-          ))}
-        </select>{" "}
-        <select
-          value={modelOriginFilter}
-          onChange={(e) => setModelOriginFilter(e.target.value)}
-        >
-          <option value="all">All Origins</option>
-          <option value="og">Original</option>
-          <option value="community">Community</option>
-        </select>{" "}
-        <select
-          value={tagFilter}
-          onChange={(e) => setTagFilter(e.target.value)}
-        >
-          <option value="">All Tags</option>
-          {allTags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>{" "}
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value as "alpha" | "date")}
-        >
-          <option value="alpha">Alphabetical</option>
-          <option value="date">Date Added</option>
-        </select>{" "}
-        {inInpaint && (
-          <label style={{ whiteSpace: "nowrap" }}>
-            <input
-              type="checkbox"
-              checked={inpaintFilter}
-              onChange={() => setInpaintFilter(!inpaintFilter)}
-            />{" "}
-            Inpainting
-          </label>
-        )}
+    return (
+      <Fade in={open}>
         <Box
           sx={{
-            maxHeight: "70vh",
-            overflow: "auto",
-            border: "1px solid #aaa",
-            mt: 1,
-            mb: 2,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-45%, -50%)",
+
+            width: "100%",
+            // maxWidth: 500,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
           }}
         >
-          {sortedModels.map((model) => (
-            <SelectRow
-              key={model.MODEL_ID}
-              value={model.MODEL_ID}
-              setValue={setValue}
-              selected={model.MODEL_ID === value}
-              setOpen={setOpen}
-            />
-          ))}
-        </Box>
-        {/*
+          <select
+            value={baseModelFilter}
+            onChange={(e) => setBaseModelFilter(e.target.value)}
+          >
+            <option value="all">All Bases</option>
+            {baseModels.map((baseModel) => (
+              <option key={baseModel} value={baseModel}>
+                {baseModel}
+              </option>
+            ))}
+          </select>{" "}
+          <select
+            value={modelOriginFilter}
+            onChange={(e) => setModelOriginFilter(e.target.value)}
+          >
+            <option value="all">All Origins</option>
+            <option value="og">Original</option>
+            <option value="community">Community</option>
+          </select>{" "}
+          <select
+            value={tagFilter}
+            onChange={(e) => setTagFilter(e.target.value)}
+          >
+            <option value="">All Tags</option>
+            {allTags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>{" "}
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as "alpha" | "date")}
+          >
+            <option value="alpha">Alphabetical</option>
+            <option value="date">Date Added</option>
+          </select>{" "}
+          {inInpaint && (
+            <label style={{ whiteSpace: "nowrap" }}>
+              <input
+                type="checkbox"
+                checked={inpaintFilter}
+                onChange={() => setInpaintFilter(!inpaintFilter)}
+              />{" "}
+              Inpainting
+            </label>
+          )}
+          <Box
+            sx={{
+              maxHeight: "70vh",
+              overflow: "auto",
+              border: "1px solid #aaa",
+              mt: 1,
+              mb: 2,
+            }}
+          >
+            {sortedModels.map((model) => (
+              <SelectRow
+                key={model.MODEL_ID}
+                value={model.MODEL_ID}
+                setValue={setValue}
+                selected={model.MODEL_ID === value}
+                setOpen={setOpen}
+              />
+            ))}
+          </Box>
+          {/*
       <Stack direction="row" justifyContent="flex-end">
         <Button variant="outlined" onClick={() => setOpen(false)}>
           <Trans>Cancel</Trans>
@@ -222,22 +232,27 @@ function ModelSelectModalContents({
         </Button>
       </Stack>
         */}
-      </Box>
-    </Fade>
-  );
-}
+          <input type="hidden" ref={ref} tabIndex={-1} />
+        </Box>
+      </Fade>
+    );
+  }
+);
 
-function ModelSelectSelect({
-  value,
-  setValue,
-  open,
-  setOpen,
-}: {
-  value: string;
-  setValue: (value: string) => void;
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}) {
+const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
+  {
+    value,
+    setValue,
+    open,
+    setOpen,
+  }: {
+    value: string;
+    setValue: (value: string) => void;
+    open: boolean;
+    setOpen: (value: boolean) => void;
+  },
+  ref: React.ForwardedRef<HTMLInputElement>
+) {
   const model = models[value];
 
   return (
@@ -278,11 +293,12 @@ function ModelSelectSelect({
           value={value}
           setValue={setValue}
           setOpen={setOpen}
+          ref={ref}
         />
       </Modal>
     </div>
   );
-}
+});
 
 const ModelSelectInputComponent: FunctionComponent<InputBaseComponentProps> =
   React.forwardRef(function ModelSelectInputComponent(props, ref) {
@@ -291,14 +307,14 @@ const ModelSelectInputComponent: FunctionComponent<InputBaseComponentProps> =
     // implement `InputElement` interface
     React.useImperativeHandle(ref, () => ({
       focus: () => {
-        console.log("focus called");
+        console.log("ModelSelectInputComponent focus called");
         // logic to focus the rendered component from 3rd party belongs here
       },
       // hiding the value e.g. react-stripe-elements
     }));
 
     // `Component` will be your `SomeThirdPartyComponent` from below
-    return <Component {...other} />;
+    return <Component {...other} ref={ref} />;
   });
 
 export default React.memo(function ModelSelect({
