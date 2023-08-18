@@ -2,9 +2,10 @@ import React, { FunctionComponent } from "react";
 import { Trans, t } from "@lingui/macro";
 import EventListener from "react-event-listener";
 
-import { ArrowDropDown } from "@mui/icons-material";
+import { AccessTime, ArrowDropDown, SortByAlpha } from "@mui/icons-material";
 import {
   Box,
+  Container,
   Fade,
   FormControl,
   InputBaseComponentProps,
@@ -42,16 +43,20 @@ const SelectRow = React.memo(function SelectRow({
       <style jsx>{`
         .SelectRow {
           padding: 5px 10px 5px 10px;
-          marginbottom: 5px;
           background: ${selected && "#eef"};
           text-align: center;
+          user-select: none;
         }
         .SelectRow:hover {
           background: ${selected ? "#ddf" : "#eee"};
         }
       `}</style>
       <div style={{ fontWeight: "bold" }}>{model.MODEL_ID}</div>
-      <div>{model.description}</div>
+      <div
+        style={{ fontSize: "85%", whiteSpace: "nowrap", overflow: "hidden" }}
+      >
+        {model.description}
+      </div>
     </div>
   );
 });
@@ -146,14 +151,13 @@ const ModelSelectModalContents = React.forwardRef(
             position: "absolute",
             top: "50%",
             left: "50%",
-            transform: "translate(-45%, -50%)",
+            transform: "translate(-46%, -50%)",
 
-            width: "100%",
+            width: "101%",
             // maxWidth: 500,
             bgcolor: "background.paper",
             border: "2px solid #000",
             boxShadow: 24,
-            p: 2,
           }}
         >
           <EventListener
@@ -162,60 +166,71 @@ const ModelSelectModalContents = React.forwardRef(
               if (event.key === "Escape") setOpen(false);
             }}
           />
-          <select
-            value={baseModelFilter}
-            onChange={(e) => setBaseModelFilter(e.target.value)}
-          >
-            <option value="all">All Bases</option>
-            {baseModels.map((baseModel) => (
-              <option key={baseModel} value={baseModel}>
-                {baseModel}
-              </option>
-            ))}
-          </select>{" "}
-          <select
-            value={modelOriginFilter}
-            onChange={(e) => setModelOriginFilter(e.target.value)}
-          >
-            <option value="all">All Origins</option>
-            <option value="og">Original</option>
-            <option value="community">Community</option>
-          </select>{" "}
-          <select
-            value={tagFilter}
-            onChange={(e) => setTagFilter(e.target.value)}
-          >
-            <option value="">All Tags</option>
-            {allTags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>{" "}
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as "alpha" | "date")}
-          >
-            <option value="alpha">Alphabetical</option>
-            <option value="date">Date Added</option>
-          </select>{" "}
-          {inInpaint && (
-            <label style={{ whiteSpace: "nowrap" }}>
-              <input
-                type="checkbox"
-                checked={inpaintFilter}
-                onChange={() => setInpaintFilter(!inpaintFilter)}
-              />{" "}
-              Inpainting
-            </label>
-          )}
+          <Container sx={{ p: 2, textAlign: "center" }}>
+            <select
+              value={baseModelFilter}
+              onChange={(e) => setBaseModelFilter(e.target.value)}
+              style={{ maxWidth: 75 }}
+            >
+              <option value="all">Bases</option>
+              {baseModels.map((baseModel) => (
+                <option key={baseModel} value={baseModel}>
+                  {baseModel}
+                </option>
+              ))}
+            </select>{" "}
+            <select
+              value={modelOriginFilter}
+              onChange={(e) => setModelOriginFilter(e.target.value)}
+              style={{ maxWidth: 75 }}
+            >
+              <option value="all">Source</option>
+              <option value="og">Official</option>
+              <option value="community">Community</option>
+            </select>{" "}
+            <select
+              value={tagFilter}
+              onChange={(e) => setTagFilter(e.target.value)}
+              style={{ maxWidth: 75 }}
+            >
+              <option value="">Tags</option>
+              {allTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>{" "}
+            <span
+              style={{ verticalAlign: "top", position: "relative", top: 2 }}
+              onClick={() => setSort(sort === "alpha" ? "date" : "alpha")}
+            >
+              <SortByAlpha
+                fontSize="small"
+                style={{ color: sort === "alpha" ? "red" : undefined }}
+              />
+              <AccessTime
+                fontSize="small"
+                style={{ color: sort === "date" ? "red" : undefined }}
+              />
+            </span>{" "}
+            {inInpaint && (
+              <label style={{ whiteSpace: "nowrap" }}>
+                <input
+                  type="checkbox"
+                  checked={inpaintFilter}
+                  onChange={() => setInpaintFilter(!inpaintFilter)}
+                />{" "}
+                Inpainting
+              </label>
+            )}
+          </Container>
           <Box
             sx={{
               maxHeight: "70vh",
               overflow: "auto",
-              border: "1px solid #aaa",
-              mt: 1,
-              mb: 2,
+              // border: "1px solid #aaa",
+              // mt: 1,
+              // mb: 2,
             }}
           >
             {sortedModels.map((model) => (
