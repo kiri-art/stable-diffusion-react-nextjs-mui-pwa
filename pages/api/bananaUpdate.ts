@@ -19,7 +19,25 @@ export default async function bananaUpdate(
   if (!callID) throw new Error("No callID provided");
   if (!step) throw new Error("No callID provided");
 
-  const date = step.date ? new Date(step.date * 1000) : new Date();
+  // Try use client time if it seems reasonable, otherwise use our time.
+  const date = (function () {
+    let date;
+    if (typeof step.date === "number" || typeof step.date === "string") {
+      const now = new Date();
+      date = new Date(step.date);
+      if (isNaN(date.getTime())) return now;
+
+      // Disallow dates in the future
+      if (date.getTime() > now.getTime()) return now;
+
+      // Only allow dates in the past 5 seconds
+      if (now.getTime() - date.getTime() > 5_000) return now;
+
+      return date;
+    }
+    return new Date();
+  })();
+
   const $set = { ["steps." + step.name]: { date, value: step.value } };
   const update = { $set };
 
@@ -33,13 +51,15 @@ export default async function bananaUpdate(
     // @ts-expect-error: TODO
     $set.finished = true;
 
+    /*
     let finishedTime;
     if (typeof step.date === "number") finishedTime = new Date(step.date);
     else if (typeof step.date === "string") finishedTime = new Date(step.date);
     else finishedTime = new Date();
+    */
 
     // @ts-expect-error: TODO
-    $set.finishedTime = finishedTime;
+    $set.finishedTime = date;
     // @ts-expect-error: TODO
     $set.totalTime = finishedTime - existing.createdAt;
   }
