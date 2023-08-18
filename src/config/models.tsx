@@ -14,8 +14,9 @@ export interface Model {
   };
   tags?: string[];
   baseModel: string;
-  dateAdded?: Date;
+  dateAdded: Date;
   ogModel: boolean;
+  hidden?: boolean;
 }
 
 const models: Record<string, Model> = {
@@ -146,6 +147,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-01-10"),
   },
   "ICBINP-v7": {
     MODEL_ID: "ICBINP-v7",
@@ -186,6 +188,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-05-25"),
   },
   "ICBINP-Final": {
     MODEL_ID: "ICBINP-Final",
@@ -228,6 +231,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "ICBINP-Final-Inpainting": {
     MODEL_ID: "ICBINP-Final-Inpainting",
@@ -271,6 +275,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "ICBINP-Afterburn": {
     MODEL_ID: "ICBINP-Afterburn",
@@ -313,6 +318,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "ICBINP-Afterburn-Inpainting": {
     MODEL_ID: "ICBINP-Afterburn-Inpainting",
@@ -356,6 +362,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "A-Zovya_Photoreal_V1": {
     MODEL_ID: "A-Zovya_Photoreal_V1",
@@ -392,6 +399,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-05-25"),
   },
   dreamshaper_7: {
     MODEL_ID: "dreamshaper_7",
@@ -440,6 +448,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "dreamshaper_7-inpainting": {
     MODEL_ID: "dreamshaper_7-inpainting",
@@ -489,6 +498,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   epicrealism_pureEvolutionV3: {
     MODEL_ID: "epicrealism_pureEvolutionV3",
@@ -529,6 +539,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "epicrealism_pureEvolutionV3-inpainting": {
     MODEL_ID: "epicrealism_pureEvolutionV3-inpainting",
@@ -570,6 +581,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-07-14"),
   },
   "hakurei/wd-1-5-illusion-beta3": {
     MODEL_ID: "hakurei/wd-1-5-illusion-beta3",
@@ -592,6 +604,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 2.1 768",
     ogModel: false,
+    dateAdded: new Date("2023-05-24"),
   },
   "hakurei/wd-1-5-ink-beta3": {
     MODEL_ID: "hakurei/wd-1-5-ink-beta3",
@@ -614,6 +627,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 2.1 768",
     ogModel: false,
+    dateAdded: new Date("2023-05-24"),
   },
   "hakurei/wd-1-5-mofu-beta3": {
     MODEL_ID: "hakurei/wd-1-5-mofu-beta3",
@@ -637,6 +651,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 2.1 768",
     ogModel: false,
+    dateAdded: new Date("2023-05-24"),
   },
   "hakurei/wd-1-5-radiance-beta3": {
     MODEL_ID: "hakurei/wd-1-5-radiance-beta3",
@@ -660,6 +675,7 @@ const models: Record<string, Model> = {
     },
     baseModel: "SD 2.1 768",
     ogModel: false,
+    dateAdded: new Date("2023-05-24"),
   },
 
   "wd-1-4-anime_e1": {
@@ -684,6 +700,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 2.0",
     ogModel: false,
+    dateAdded: new Date("2023-01-01"),
   },
   "hakurei/waifu-diffusion-v1-3": {
     MODEL_ID: "hakurei/waifu-diffusion-v1-3",
@@ -702,6 +719,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2022-10-01"),
   },
   "Linaqruf/anything-v3.0": {
     MODEL_ID: "Linaqruf/anything-v3.0",
@@ -720,6 +738,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-01-02"),
   },
   "CompVis/stable-diffusion-v1-4": {
     MODEL_ID: "CompVis/stable-diffusion-v1-4",
@@ -732,6 +751,7 @@ const models: Record<string, Model> = {
     ],
     baseModel: "SD 1.4",
     ogModel: true,
+    dateAdded: new Date("2022-08-31"),
   },
   "hakurei/waifu-diffusion": {
     MODEL_ID: "hakurei/waifu-diffusion",
@@ -746,6 +766,7 @@ const models: Record<string, Model> = {
     ],
     baseModel: "SD 1.4",
     ogModel: false,
+    dateAdded: new Date("2022-09-31"),
   },
   "rinna/japanese-stable-diffusion": {
     MODEL_ID: "rinna/japanese-stable-diffusion",
@@ -761,6 +782,7 @@ const models: Record<string, Model> = {
     ],
     baseModel: "SD 1.4",
     ogModel: false,
+    dateAdded: new Date("2022-09-15"),
   },
   "OrangeMix/AbyssOrangeMix2": {
     MODEL_ID: "OrangeMix/AbyssOrangeMix2",
@@ -797,6 +819,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-01-27"),
   },
   "OrangeMix/ElyOrangeMix": {
     MODEL_ID: "OrangeMix/ElyOrangeMix",
@@ -810,6 +833,7 @@ const models: Record<string, Model> = {
     ),
     baseModel: "SD 1.5",
     ogModel: false,
+    dateAdded: new Date("2023-01-27"),
   },
   "OrangeMix/EerieOrangeMix": {
     MODEL_ID: "OrangeMix/EerieOrangeMix",
@@ -846,6 +870,7 @@ const models: Record<string, Model> = {
       "hentai",
       "portraits",
     ],
+    dateAdded: new Date("2023-01-27"),
   },
   "OrangeMix/BloodOrangeMix": {
     MODEL_ID: "OrangeMix/BloodOrangeMix",
@@ -878,6 +903,7 @@ const models: Record<string, Model> = {
       "hentai",
       "portraits",
     ],
+    dateAdded: new Date("2023-01-27"),
   },
   "timbrooks/instruct-pix2pix": {
     MODEL_ID: "timbrooks/instruct-pix2pix",
@@ -894,6 +920,8 @@ const models: Record<string, Model> = {
       "make the dog a cat",
     ],
     ogModel: false,
+    dateAdded: new Date("2023-08-03"),
+    hidden: true,
   },
 };
 

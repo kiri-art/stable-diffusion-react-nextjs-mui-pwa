@@ -14,6 +14,7 @@ import {
 
 import { ModelState } from "./useModelState";
 import models from "../config/models";
+import type { Model } from "../config/models";
 
 const SelectRow = React.memo(function SelectRow({
   value,
@@ -54,6 +55,11 @@ const SelectRow = React.memo(function SelectRow({
   );
 });
 
+const sorts = {
+  alpha: (a: Model, b: Model) => a.MODEL_ID.localeCompare(b.MODEL_ID),
+  date: (a: Model, b: Model) => b.dateAdded.getTime() - a.dateAdded.getTime(),
+};
+
 function ModelSelectModalContents({
   open,
   setOpen,
@@ -70,10 +76,12 @@ function ModelSelectModalContents({
   const [inpaintFilter, setInpaintFilter] = React.useState(true);
   const [tagFilter, setTagFilter] = React.useState("");
   const inInpaint = location.pathname === "/inpaint";
+  const [sort, setSort] = React.useState<"alpha" | "date">("alpha");
 
   const filteredModels = React.useMemo(() => {
     const filteredModels = Object.values(models).filter(
       (model) =>
+        !model.hidden &&
         (modelOriginFilter === "all" ||
           model.ogModel === (modelOriginFilter === "og" ? true : false)) &&
         (baseModelFilter === "all" || model.baseModel === baseModelFilter) &&
@@ -87,8 +95,8 @@ function ModelSelectModalContents({
   }, [modelOriginFilter, baseModelFilter, inpaintFilter, inInpaint, tagFilter]);
 
   const sortedModels = React.useMemo(() => {
-    return filteredModels.sort((a, b) => a.MODEL_ID.localeCompare(b.MODEL_ID));
-  }, [filteredModels]);
+    return filteredModels.sort(sorts[sort]);
+  }, [filteredModels, sort]);
 
   const baseModels = React.useMemo(
     () => {
@@ -166,6 +174,13 @@ function ModelSelectModalContents({
               {tag}
             </option>
           ))}
+        </select>{" "}
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as "alpha" | "date")}
+        >
+          <option value="alpha">Alphabetical</option>
+          <option value="date">Date Added</option>
         </select>{" "}
         {inInpaint && (
           <label style={{ whiteSpace: "nowrap" }}>
