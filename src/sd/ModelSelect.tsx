@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Trans, t } from "@lingui/macro";
+import EventListener from "react-event-listener";
 
 import { ArrowDropDown } from "@mui/icons-material";
 import {
@@ -155,6 +156,12 @@ const ModelSelectModalContents = React.forwardRef(
             p: 2,
           }}
         >
+          <EventListener
+            target="window"
+            onKeyUp={(event: KeyboardEvent) => {
+              if (event.key === "Escape") setOpen(false);
+            }}
+          />
           <select
             value={baseModelFilter}
             onChange={(e) => setBaseModelFilter(e.target.value)}
