@@ -241,6 +241,7 @@ function Canvas({
       initImageCanvasRef={initImageCanvasRef}
       inputFile={inputFile}
       fileChange={fileChange}
+      touchAction={initImageLoaded ? undefined : "none"}
     />
   );
 }

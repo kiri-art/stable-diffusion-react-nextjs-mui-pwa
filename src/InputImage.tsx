@@ -167,11 +167,13 @@ export default function InputImage({
   inputFile,
   fileChange,
   CanvasAdjacent,
+  touchAction,
 }: {
   initImageCanvasRef: React.RefObject<HTMLCanvasElement>;
   inputFile: React.RefObject<HTMLInputElement>;
   fileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   CanvasAdjacent?: () => JSX.Element;
+  touchAction?: string;
 }) {
   return (
     <>
@@ -192,8 +194,12 @@ export default function InputImage({
         <canvas
           id="initImageCanvas"
           style={{
+            // img2img
             // disable scroll if we're drawing (i.e. no file)
-            touchAction: "none", // file ? undefined : "none",
+            // touchAction: "none", // file ? undefined : "none",
+            // inpaint - always
+            // everything else - never
+            touchAction: touchAction,
 
             border: DRAW_BORDERS ? "1px solid green" : undefined,
             position: "absolute",

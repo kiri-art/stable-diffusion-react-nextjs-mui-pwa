@@ -450,6 +450,7 @@ export default function Inpainting() {
         inputFile={inputFile}
         fileChange={fileChange}
         CanvasAdjacent={CanvasAdjacent}
+        touchAction="none"
       />
       {imgSrc && (
         <OutputImage
