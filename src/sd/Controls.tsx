@@ -950,48 +950,50 @@ export function ProviderSelect({
   // defaultValue: typeof globalDefaults.PROVIDER_ID;
 }) {
   return useMemo(
-    () => (
-      <Grid item xs={6} sm={3} md={2} lg={1}>
-        Provider{" "}
-        <ToggleButtonGroup
-          value={value}
-          exclusive
-          onChange={(_, provider_id) => provider_id && setValue(provider_id)}
-          aria-label="provider"
-          size="small"
-        >
-          {Providers.map((provider) => (
-            <ToggleButton
-              key={provider.id}
-              value={provider.id}
-              aria-label={provider.id}
-            >
-              {provider.label}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>{" "}
-        <Trans>Speed, stability, cost</Trans>{" "}
-        <Tooltip
-          title={
-            <Box>
-              <Trans>
-                Provider 1 is our original, historic provider. Provider 2 is a
-                new, additional provider - with generations costing 0.25 credits
-                each - temporarily - while we&apos;re still working on this.
-              </Trans>{" "}
-            </Box>
-          }
-          enterDelay={0}
-          enterTouchDelay={0}
-          leaveDelay={0}
-          leaveTouchDelay={4000}
-        >
-          <IconButton>
-            <Help />
-          </IconButton>
-        </Tooltip>
-      </Grid>
-    ),
+    () =>
+      Providers.length > 1 ? (
+        <Grid item xs={6} sm={3} md={2} lg={1}>
+          Provider{" "}
+          <ToggleButtonGroup
+            value={value}
+            exclusive
+            onChange={(_, provider_id) => provider_id && setValue(provider_id)}
+            aria-label="provider"
+            size="small"
+          >
+            {Providers.map((provider) => (
+              <ToggleButton
+                key={provider.id}
+                value={provider.id}
+                aria-label={provider.id}
+              >
+                {provider.label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>{" "}
+          <Trans>Speed, stability, cost</Trans>{" "}
+          <Tooltip
+            title={
+              <Box>
+                <Trans>
+                  Provider 1 is our original, historic provider. Provider 2 is a
+                  new, additional provider - with generations costing 0.25
+                  credits each - temporarily - while we&apos;re still working on
+                  this.
+                </Trans>{" "}
+              </Box>
+            }
+            enterDelay={0}
+            enterTouchDelay={0}
+            leaveDelay={0}
+            leaveTouchDelay={4000}
+          >
+            <IconButton>
+              <Help />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      ) : null,
     [value, setValue /* , defaultValue */]
   );
 }
@@ -1136,13 +1138,11 @@ export default function SDControls({
           placeholder={randomPrompt}
           getRandomPrompt={getRandomPromptForModel}
         />
-        {Providers.length > 1 && (
-          <ProviderSelect
-            value={inputs.PROVIDER_ID.value}
-            setValue={inputs.PROVIDER_ID.setValue}
-            // defaultValue={defaults.PROVIDER_ID}
-          />
-        )}
+        <ProviderSelect
+          value={inputs.PROVIDER_ID.value}
+          setValue={inputs.PROVIDER_ID.setValue}
+          // defaultValue={defaults.PROVIDER_ID}
+        />
         {/*
         {inputs.MODEL_ID && !inputs.MODEL_ID.opts.hidden && (
           <ModelSelect
