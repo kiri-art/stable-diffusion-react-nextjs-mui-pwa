@@ -129,6 +129,8 @@ export class ProviderFetchRequestBase {
   modelOutputs?: Record<string, unknown>[] | null = null;
   message = "";
 
+  $extra: Record<string, unknown> | undefined;
+
   constructor(
     provider: Provider,
     model: Model,
@@ -343,6 +345,9 @@ export class ProviderFetchRequestBase {
       this.modelOutputs = result.modelOutputs;
       this.message = result.message;
       this.finished = result.finished;
+      this.$extra = result.$extra;
+
+      await hooks.exec("providerFetch.browser.postStart", { request: this });
       return result;
     } else {
       return await this.fetchStart();
@@ -420,6 +425,7 @@ export class ProviderFetchRequestBase {
       finished: this.finished,
       modelOutputs: this.modelOutputs,
       message: this.message,
+      $extra: this.$extra,
     } as ProviderFetchRequestObject;
   }
 
@@ -564,6 +570,11 @@ export class ProviderFetchServerless {
           | undefined
           | Record<string, unknown>;
         if ($error) return res.status(200).end({ $error });
+
+        const $extra = preStartResult.$extra as
+          | Record<string, unknown>
+          | undefined;
+        if ($extra) request.$extra = $extra;
 
         // try/catch?  handle non-200?
         // startResult: { statusCode: 413, code: 'FST_ERR_CTP_BODY_TOO_LARGE', error: 'Payload Too Large', message: 'Request body is too large' }

@@ -8,6 +8,7 @@ import calculateCredits from "../calculateCredits";
 hooks.register("providerFetch.browser.extraInfoToSend");
 hooks.register("providerFetch.server.preStart");
 hooks.register("providerFetch.server.postStart");
+hooks.register("providerFetch.browser.postStart");
 
 hooks.on("providerFetch.browser.extraInfoToSend", (data, result) => {
   // @ts-expect-error: TODO
@@ -133,8 +134,10 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   await gs.dba.collection("userRequests").insertOne(userRequest);
 
-  hookResult.credits = user.credits;
-  hookResult.chargedCredits = chargedCredits;
+  hookResult.$extra = {
+    credits: user.credits,
+    chargedCredits: chargedCredits,
+  };
 });
 
 hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
@@ -172,4 +175,17 @@ hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
 
   if (gs && gs.dba)
     await gs.dba.collection("bananaRequests").insertOne(bananaRequest);
+});
+
+hooks.on("providerFetch.browser.postStart", async (data) => {
+  if (typeof data === "object") {
+    // @ts-expect-error: TODO
+    const { request } = data;
+    const existing = db.collection("users").findOne({ _id: db?.auth?.userId });
+    if (existing)
+      db.collection("users")._update(db?.auth?.userId, {
+        ...existing,
+        credits: request.$extra.credits,
+      });
+  }
 });
