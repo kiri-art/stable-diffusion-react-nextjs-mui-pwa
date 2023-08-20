@@ -29,6 +29,8 @@ import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
 import type { User } from "../src/schemas";
 
+const MIN_PAID_CREDITS = 5;
+
 function intOrFixedOneStr(num: number) {
   if (num && !Number.isInteger(num)) return num.toFixed(1);
   return num.toString();
@@ -205,7 +207,35 @@ export default function Credits() {
         <Trans>
           Purchased credits are used after you run out of free credits that
           month, and don&apos;t expire.
-        </Trans>
+        </Trans>{" "}
+        <Trans>Paid credits help you jump the queue!</Trans>
+        <Box sx={{ my: 2 }}>
+          <details>
+            <summary>
+              <Trans>Tell me more?</Trans>
+            </summary>
+            <Trans>There are 3 queue priorites, served in this order:</Trans>
+            <ul>
+              <li>
+                <b>1st Class</b>: <Trans>those using paid credits.</Trans>
+              </li>
+              <li>
+                <Trans>
+                  <b>2nd Class</b>: using free credits but have a balance of at
+                  least {MIN_PAID_CREDITS} paid credits.
+                </Trans>
+              </li>
+              <li>
+                <b>3rd Class</b>:{" "}
+                <Trans>
+                  those using free credits, and have {MIN_PAID_CREDITS} or less
+                  paid credits.
+                </Trans>
+              </li>
+            </ul>
+            <Trans>So, just owning {MIN_PAID_CREDITS} paid credits </Trans>
+          </details>
+        </Box>
         <Box>
           <form>
             <FormControl>
