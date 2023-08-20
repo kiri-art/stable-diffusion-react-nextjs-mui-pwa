@@ -100,6 +100,8 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
     await gs.dba
       .collection("users")
       .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
+    // Higher priority if they have a good paid credit balance (if if using free)
+    hookResult.queuePriority = user.credits.paid > 5 ? 1 : 2;
   } else {
     user.credits.paid -= CREDIT_COST;
     chargedCredits.credits = CREDIT_COST;
@@ -107,6 +109,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
     await gs.dba
       .collection("users")
       .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
+    hookResult.queuePriority = 0;
   }
 
   // --- SAVE REQUESTS --- //

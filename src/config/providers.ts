@@ -82,23 +82,27 @@ export const apiInfo = {
     startViaServer: false,
     checkViaServer: false,
     streamable: true,
+    priorityQueues: false,
   },
   banana: {
     oneshot: false,
     startViaServer: true,
     checkViaServer: false,
     streamable: false,
+    priorityQueues: false,
   },
   "banana+kiri": {
     oneshot: false,
     startViaServer: true,
     checkViaServer: false,
     streamable: true,
+    priorityQueues: true,
   },
   runpod: {
     oneshot: false,
     startViaServer: true,
     checkViaServer: true,
     streamable: false,
+    priorityQueues: false,
   },
 };

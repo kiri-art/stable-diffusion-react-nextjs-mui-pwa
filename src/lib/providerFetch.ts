@@ -130,6 +130,7 @@ export class ProviderFetchRequestBase {
   message = "";
 
   $extra: Record<string, unknown> | undefined;
+  queuePriority = 2;
 
   constructor(
     provider: Provider,
@@ -426,6 +427,7 @@ export class ProviderFetchRequestBase {
       modelOutputs: this.modelOutputs,
       message: this.message,
       $extra: this.$extra,
+      queuePriority: this.queuePriority,
     } as ProviderFetchRequestObject;
   }
 
@@ -486,7 +488,7 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
       return process.env[key] || oldBananaKeys(this) || this.model.id;
     })();
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       id: this.id,
       created: Math.floor(Date.now() / 1000),
       apiKey,
@@ -494,6 +496,9 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
       modelInputs: this.inputs,
       startOnly: true,
     };
+
+    if (this.apiInfo().priorityQueues)
+      payload.queuePriority = this.queuePriority;
 
     return { url, payload };
   }
@@ -575,6 +580,9 @@ export class ProviderFetchServerless {
           | Record<string, unknown>
           | undefined;
         if ($extra) request.$extra = $extra;
+
+        if (typeof preStartResult.queuePriority === "number")
+          request.queuePriority = preStartResult.queuePriority;
 
         // try/catch?  handle non-200?
         // startResult: { statusCode: 413, code: 'FST_ERR_CTP_BODY_TOO_LARGE', error: 'Payload Too Large', message: 'Request body is too large' }
