@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/sd/Controls.tsx:673
+#: src/sd/Controls.tsx:675
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 
-#: src/sd/Controls.tsx:275
+#: src/sd/Controls.tsx:277
 msgid "(Denoising) Strength"
 msgstr "(Denoising) Strength"
 
-#: src/Inpaint.tsx:410
+#: src/Inpaint.tsx:405
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(drag & drop, sharing coming soon)"
 
@@ -41,7 +41,7 @@ msgstr "{0, plural, one {There us one unread news update.} other {There are # un
 #~ msgid "{credits, plural, one {# credit remaining} other {# credits remaining}}"
 #~ msgstr "{credits, plural, one {# credit remaining} other {# credits remaining}}"
 
-#: src/GoButton.tsx:48
+#: src/GoButton.tsx:53
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
 msgstr "{credits, plural, one {# Credit} other {# Credits}}"
 
@@ -53,7 +53,7 @@ msgstr "{credits, plural, one {# Credit} other {# Credits}}"
 msgid "{numCredits} credits"
 msgstr "{numCredits} credits"
 
-#: src/GoButton.tsx:62
+#: src/GoButton.tsx:66
 msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 msgstr "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 
@@ -61,9 +61,13 @@ msgstr "{userCredits, plural, one {# credit remaining} other {# credits remainin
 msgid "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 msgstr "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 
-#: pages/credits.tsx:186
+#: pages/credits.tsx:189
 msgid "<0>*</0>May change at any time."
 msgstr "<0>*</0>May change at any time."
+
+#: pages/credits.tsx:224
+msgid "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
+msgstr "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
 
 #: pages/about.tsx:123
 msgid "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
@@ -77,10 +81,10 @@ msgstr "<0>KIRI.ART</0> (\"SD-MUI\") is a WEB UI frontend for <1>Stability.AI</1
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 
-#: src/sd/Controls.tsx:119
-#: src/sd/Controls.tsx:220
-#: src/sd/Controls.tsx:314
-#: src/sd/Controls.tsx:403
+#: src/sd/Controls.tsx:121
+#: src/sd/Controls.tsx:222
+#: src/sd/Controls.tsx:316
+#: src/sd/Controls.tsx:405
 msgid "<0>Learn more</0>"
 msgstr ""
 
@@ -96,7 +100,7 @@ msgstr "<0>Star images from your <1>history</1></0> <2>and have them appear here
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr ""
 
-#: src/sd/Controls.tsx:772
+#: src/sd/Controls.tsx:774
 msgid "A black image will be shown instead."
 msgstr "A black image will be shown instead."
 
@@ -121,7 +125,7 @@ msgstr "Acknowledements and Thanks"
 #~ msgid "Add"
 #~ msgstr "Add"
 
-#: src/Inpaint.tsx:416
+#: src/Inpaint.tsx:411
 msgid "Adjust prompt and GO"
 msgstr "Adjust prompt and GO"
 
@@ -168,7 +172,7 @@ msgstr ""
 msgid "Be Responsible"
 msgstr ""
 
-#: pages/upsample.tsx:90
+#: pages/upsample.tsx:91
 msgid "Best for Anime"
 msgstr "Best for Anime"
 
@@ -207,7 +211,7 @@ msgstr "Check out this user page on kiri.art"
 
 #: pages/checkout.tsx:61
 #: pages/checkout.tsx:64
-#: pages/credits.tsx:246
+#: pages/credits.tsx:277
 msgid "Checkout"
 msgstr ""
 
@@ -215,7 +219,7 @@ msgstr ""
 msgid "Choose Share Target"
 msgstr "Choose Share Target"
 
-#: src/sd/Controls.tsx:303
+#: src/sd/Controls.tsx:305
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
@@ -223,11 +227,11 @@ msgstr ""
 msgid "Clear History"
 msgstr "Clear History"
 
-#: pages/credits.tsx:63
+#: pages/credits.tsx:66
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
-#: src/Inpaint.tsx:423
+#: src/Inpaint.tsx:418
 msgid "Coming Soon"
 msgstr ""
 
@@ -235,7 +239,7 @@ msgstr ""
 msgid "Community"
 msgstr "Community"
 
-#: src/sd/Controls.tsx:790
+#: src/sd/Controls.tsx:792
 msgid "Confirm Date of Birth"
 msgstr "Confirm Date of Birth"
 
@@ -271,11 +275,11 @@ msgstr ""
 msgid "Delete this star?"
 msgstr "Delete this star?"
 
-#: src/sd/Controls.tsx:113
+#: src/sd/Controls.tsx:115
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr ""
 
-#: src/sd/Controls.tsx:212
+#: src/sd/Controls.tsx:214
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 
@@ -283,7 +287,7 @@ msgstr "Description of all the things you <0>don't want</0> in the output image,
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
-#: pages/credits.tsx:197
+#: pages/credits.tsx:200
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr ""
 
@@ -295,11 +299,11 @@ msgstr "Event Log"
 msgid "Explicit"
 msgstr "Explicit"
 
-#: pages/upsample.tsx:140
+#: pages/upsample.tsx:141
 msgid "Face Enhance"
 msgstr "Face Enhance"
 
-#: pages/upsample.tsx:148
+#: pages/upsample.tsx:149
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 
@@ -311,11 +315,11 @@ msgstr "Failed to copy to clipboard"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/upsample.tsx:260
+#: pages/upsample.tsx:261
 msgid "File is not a valid image."
 msgstr "File is not a valid image."
 
-#: pages/upsample.tsx:266
+#: pages/upsample.tsx:267
 msgid "File is too large; {maxSizeText} max."
 msgstr "File is too large; {maxSizeText} max."
 
@@ -323,7 +327,7 @@ msgstr "File is too large; {maxSizeText} max."
 msgid "Filter"
 msgstr "Filter"
 
-#: src/sd/Controls.tsx:768
+#: src/sd/Controls.tsx:770
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 
@@ -335,7 +339,7 @@ msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropr
 msgid "Forums"
 msgstr "Forums"
 
-#: pages/credits.tsx:177
+#: pages/credits.tsx:180
 msgid "Free Credits"
 msgstr ""
 
@@ -347,11 +351,11 @@ msgstr "Frequently Asked Questions (FAQ)"
 #~ msgid "Full precision, slower, sometimes better."
 #~ msgstr "Full precision, slower, sometimes better."
 
-#: pages/upsample.tsx:100
+#: pages/upsample.tsx:101
 msgid "General - v3"
 msgstr "General - v3"
 
-#: src/GoButton.tsx:46
+#: src/GoButton.tsx:52
 msgid "Get More Credits"
 msgstr ""
 
@@ -360,7 +364,7 @@ msgstr ""
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/GoButton.tsx:43
+#: src/GoButton.tsx:49
 msgid "Go"
 msgstr ""
 
@@ -368,7 +372,7 @@ msgstr ""
 msgid "Google"
 msgstr "Google"
 
-#: src/sd/Controls.tsx:480
+#: src/sd/Controls.tsx:482
 msgid "Height"
 msgstr ""
 
@@ -395,7 +399,7 @@ msgstr "History is kept on your <0>local device only</0>. It is not backed up to
 msgid "Home"
 msgstr ""
 
-#: src/sd/Controls.tsx:309
+#: src/sd/Controls.tsx:311
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr ""
 
@@ -403,11 +407,11 @@ msgstr ""
 #~ msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best. <0>Learn more</0>"
 #~ msgstr ""
 
-#: src/sd/Controls.tsx:349
+#: src/sd/Controls.tsx:351
 msgid "Image Guidance Scale"
 msgstr "Image Guidance Scale"
 
-#: pages/upsample.tsx:210
+#: pages/upsample.tsx:211
 #: src/InputImage.tsx:28
 msgid "Image Loaded"
 msgstr "Image Loaded"
@@ -418,7 +422,7 @@ msgstr "Image Loaded"
 msgid "Image to Image"
 msgstr ""
 
-#: src/Inpaint.tsx:428
+#: src/Inpaint.tsx:423
 msgid "Image will be down scaled to max 1024x1024."
 msgstr "Image will be down scaled to max 1024x1024."
 
@@ -426,7 +430,7 @@ msgstr "Image will be down scaled to max 1024x1024."
 #~ msgid "Image will be scaled to max 512x512 (for now)"
 #~ msgstr "Image will be scaled to max 512x512 (for now)"
 
-#: pages/upsample.tsx:377
+#: pages/upsample.tsx:378
 msgid "Images should be max {maxSizeText}."
 msgstr "Images should be max {maxSizeText}."
 
@@ -510,11 +514,11 @@ msgstr "Last 24 hours"
 #~ msgstr "Latest Stable Diffusion, Oct 20th!"
 
 #: pages/[_id].tsx:198
-#: pages/credits.tsx:108
+#: pages/credits.tsx:111
 msgid "Loading..."
 msgstr ""
 
-#: src/GoButton.tsx:44
+#: src/GoButton.tsx:50
 #: src/MyAppBar.tsx:429
 msgid "Login"
 msgstr ""
@@ -523,7 +527,7 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: src/sd/Controls.tsx:492
+#: src/sd/Controls.tsx:494
 msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Maximum size is 1024x768 or 768x1024 because of memory limits."
 
@@ -532,10 +536,10 @@ msgid "May only be used with free credits."
 msgstr "May only be used with free credits."
 
 #: pages/s/[_id].tsx:205
-#: pages/upsample.tsx:62
-#: pages/upsample.tsx:66
-#: src/sd/Controls.tsx:821
-#: src/sd/Controls.tsx:825
+#: pages/upsample.tsx:63
+#: pages/upsample.tsx:67
+#: src/sd/ModelSelect.tsx:371
+#: src/sd/ModelSelect.tsx:383
 msgid "Model"
 msgstr "Model"
 
@@ -559,7 +563,7 @@ msgstr "Most Popular"
 msgid "Most Recent"
 msgstr "Most Recent"
 
-#: src/sd/Controls.tsx:454
+#: src/sd/Controls.tsx:456
 msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
 
@@ -567,12 +571,12 @@ msgstr "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 bec
 msgid "Must credit the model creator."
 msgstr "Must credit the model creator."
 
-#: pages/credits.tsx:165
+#: pages/credits.tsx:168
 msgid "My Credits"
 msgstr ""
 
 #: pages/s/[_id].tsx:236
-#: src/sd/Controls.tsx:189
+#: src/sd/Controls.tsx:191
 msgid "Negative Prompt"
 msgstr "Negative Prompt"
 
@@ -585,11 +589,10 @@ msgid "New Users"
 msgstr "New Users"
 
 #: pages/news.tsx:12
-#: src/sd/Footer.tsx:27
 msgid "News"
 msgstr "News"
 
-#: pages/credits.tsx:191
+#: pages/credits.tsx:194
 msgid "Next credits on:"
 msgstr ""
 
@@ -597,7 +600,7 @@ msgstr ""
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr ""
 
-#: pages/credits.tsx:60
+#: pages/credits.tsx:63
 msgid "No such code exists."
 msgstr ""
 
@@ -605,16 +608,16 @@ msgstr ""
 msgid "No valid model ID, URL, or hash found."
 msgstr "No valid model ID, URL, or hash found."
 
-#: src/Inpaint.tsx:422
+#: src/Inpaint.tsx:417
 msgid "Notes"
 msgstr "Notes"
 
 #: pages/index.tsx:271
-#: src/sd/Controls.tsx:760
+#: src/sd/Controls.tsx:762
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
 
-#: src/sd/Controls.tsx:398
+#: src/sd/Controls.tsx:400
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr ""
 
@@ -622,7 +625,7 @@ msgstr ""
 #~ msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results. <0>Learn more</0>"
 #~ msgstr ""
 
-#: src/sd/Controls.tsx:389
+#: src/sd/Controls.tsx:391
 msgid "Number of Inference Steps"
 msgstr ""
 
@@ -642,7 +645,7 @@ msgstr "Open Source, developer friendly."
 msgid "Order {_id}"
 msgstr ""
 
-#: pages/credits.tsx:264
+#: pages/credits.tsx:295
 #: pages/order/[_id].tsx:78
 msgid "Order History"
 msgstr ""
@@ -656,7 +659,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: pages/upsample.tsx:80
+#: pages/upsample.tsx:81
 msgid "Original model, best for most cases."
 msgstr "Original model, best for most cases."
 
@@ -664,15 +667,19 @@ msgstr "Original model, best for most cases."
 msgid "Our <0>event logs</0> are also available."
 msgstr "Our <0>event logs</0> are also available."
 
+#: pages/credits.tsx:212
+msgid "Paid credits help you jump the queue!"
+msgstr "Paid credits help you jump the queue!"
+
 #: src/CheckoutForm.tsx:82
 msgid "Pay"
 msgstr ""
 
-#: src/sd/Controls.tsx:531
+#: src/sd/Controls.tsx:533
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "Please enter a valid seed or turn \"Randomize\" back on."
 
-#: pages/credits.tsx:244
+#: pages/credits.tsx:275
 #: src/CheckoutForm.tsx:82
 msgid "Please wait..."
 msgstr ""
@@ -695,39 +702,39 @@ msgid "Project Goals"
 msgstr "Project Goals"
 
 #: pages/s/[_id].tsx:232
-#: src/sd/Controls.tsx:91
+#: src/sd/Controls.tsx:93
 msgid "Prompt"
 msgstr "Prompt"
 
-#: src/sd/Controls.tsx:973
+#: src/sd/Controls.tsx:978
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 
-#: pages/credits.tsx:169
+#: pages/credits.tsx:172
 msgid "Purchase Successful!"
 msgstr ""
 
-#: pages/credits.tsx:202
+#: pages/credits.tsx:205
 msgid "Purchased Credits"
 msgstr ""
 
-#: pages/credits.tsx:205
+#: pages/credits.tsx:208
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr ""
 
-#: src/sd/Controls.tsx:355
+#: src/sd/Controls.tsx:357
 msgid "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
 msgstr "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
 
-#: src/Inpaint.tsx:403
+#: src/Inpaint.tsx:398
 msgid "Quick Start"
 msgstr "Quick Start"
 
-#: src/sd/Controls.tsx:604
+#: src/sd/Controls.tsx:606
 msgid "Randomize"
 msgstr "Randomize"
 
-#: src/sd/Controls.tsx:612
+#: src/sd/Controls.tsx:614
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 
@@ -739,15 +746,15 @@ msgstr "Read the full Terms of Service below."
 msgid "Reason"
 msgstr ""
 
-#: pages/credits.tsx:108
+#: pages/credits.tsx:111
 msgid "Redeem"
 msgstr ""
 
-#: pages/credits.tsx:99
+#: pages/credits.tsx:102
 msgid "Redeem Credit Code"
 msgstr ""
 
-#: pages/credits.tsx:267
+#: pages/credits.tsx:298
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr ""
 
@@ -766,16 +773,15 @@ msgid "Requests"
 msgstr "Requests"
 
 #: pages/resources.tsx:11
-#: src/sd/Footer.tsx:18
 msgid "Resources"
 msgstr "Resources"
 
-#: src/Inpaint.tsx:422
+#: src/Inpaint.tsx:417
 msgid "Roadmap"
 msgstr "Roadmap"
 
-#: src/sd/Controls.tsx:868
 #: src/sd/Controls.tsx:872
+#: src/sd/Controls.tsx:876
 msgid "Sampler"
 msgstr "Sampler"
 
@@ -805,7 +811,7 @@ msgid "See my Kiri.Art creation!"
 msgstr "See my Kiri.Art creation!"
 
 #: pages/s/[_id].tsx:250
-#: src/sd/Controls.tsx:521
+#: src/sd/Controls.tsx:523
 msgid "Seed"
 msgstr "Seed"
 
@@ -813,7 +819,7 @@ msgstr "Seed"
 msgid "SEND IMAGE TO"
 msgstr "SEND IMAGE TO"
 
-#: src/sd/Controls.tsx:665
+#: src/sd/Controls.tsx:667
 msgid "Share Inputs"
 msgstr "Share Inputs"
 
@@ -825,7 +831,11 @@ msgstr "Share Inputs"
 msgid "Sheduler"
 msgstr "Sheduler"
 
-#: src/sd/Controls.tsx:969
+#: pages/credits.tsx:237
+msgid "So, just owning {MIN_PAID_CREDITS} paid credits"
+msgstr "So, just owning {MIN_PAID_CREDITS} paid credits"
+
+#: src/sd/Controls.tsx:974
 msgid "Speed, stability, cost"
 msgstr "Speed, stability, cost"
 
@@ -859,7 +869,7 @@ msgstr ""
 msgid "Steps"
 msgstr "Steps"
 
-#: pages/credits.tsx:90
+#: pages/credits.tsx:93
 msgid "Successfully redeemed {0} credits."
 msgstr ""
 
@@ -867,18 +877,22 @@ msgstr ""
 msgid "Super simple, easy to share."
 msgstr "Super simple, easy to share."
 
+#: pages/credits.tsx:216
+msgid "Tell me more?"
+msgstr "Tell me more?"
+
 #: pages/start.tsx:194
 #: src/Copyright.tsx:24
 msgid "Terms of Service"
 msgstr ""
 
 #: pages/start.tsx:21
-#: pages/txt2img.tsx:132
+#: pages/txt2img.tsx:126
 #: src/MyAppBar.tsx:133
 msgid "Text to Image"
 msgstr ""
 
-#: pages/credits.tsx:252
+#: pages/credits.tsx:283
 #: src/CheckoutForm.tsx:86
 msgid "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 msgstr "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
@@ -888,6 +902,10 @@ msgstr "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 #~ msgid "The charge will appear from \"Wastelands Networking\" or \"Wastelands* SD-MUI\"."
 #~ msgstr ""
 
+#: pages/credits.tsx:218
+msgid "There are 3 queue priorites, served in this order:"
+msgstr "There are 3 queue priorites, served in this order:"
+
 #: src/Starred.tsx:25
 msgid "This cannot be undone.  All likes will be lost."
 msgstr "This cannot be undone.  All likes will be lost."
@@ -896,7 +914,7 @@ msgstr "This cannot be undone.  All likes will be lost."
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
-#: pages/credits.tsx:258
+#: pages/credits.tsx:289
 msgid "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 msgstr "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 
@@ -904,15 +922,23 @@ msgstr "This project is community run by volunteers in our spare time. We make n
 #~ msgid "This project is community run by volunteers in our spare time. We make no guarantees. It could stop working at any time, and no refunds will be provided. To that end, it is only possible to buy $1 worth of credits at a time."
 #~ msgstr ""
 
+#: pages/credits.tsx:231
+msgid "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
+msgstr "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
+
+#: pages/credits.tsx:221
+msgid "those using paid credits."
+msgstr "those using paid credits."
+
 #: pages/checkout.tsx:73
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: pages/credits.tsx:173
+#: pages/credits.tsx:176
 msgid "Total Credits"
 msgstr ""
 
-#: pages/credits.tsx:175
+#: pages/credits.tsx:178
 msgid "Total credits available for immediate use."
 msgstr ""
 
@@ -933,7 +959,7 @@ msgstr "Transparent development and easy for developers to get involved. Especia
 msgid "Twitter"
 msgstr "Twitter"
 
-#: src/Inpaint.tsx:408
+#: src/Inpaint.tsx:403
 msgid "Upload an image with button below"
 msgstr "Upload an image with button below"
 
@@ -943,7 +969,7 @@ msgid "Upsample"
 msgstr "Upsample"
 
 #: pages/start.tsx:39
-#: pages/upsample.tsx:339
+#: pages/upsample.tsx:340
 #: src/MyAppBar.tsx:178
 msgid "Upsampling"
 msgstr "Upsampling"
@@ -952,7 +978,7 @@ msgstr "Upsampling"
 msgid "USD"
 msgstr "USD"
 
-#: src/Inpaint.tsx:413
+#: src/Inpaint.tsx:408
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
@@ -969,7 +995,7 @@ msgstr "Username not available."
 msgid "Users"
 msgstr "Users"
 
-#: src/sd/Controls.tsx:542
+#: src/sd/Controls.tsx:544
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 
@@ -981,12 +1007,12 @@ msgstr "We cannot overstate our thanks, appreciation and gratitude towards the f
 msgid "What is this?"
 msgstr "What is this?"
 
-#: src/sd/Controls.tsx:442
+#: src/sd/Controls.tsx:444
 msgid "Width"
 msgstr ""
 
-#: src/sd/Controls.tsx:453
-#: src/sd/Controls.tsx:491
+#: src/sd/Controls.tsx:455
+#: src/sd/Controls.tsx:493
 msgid "Width of output image."
 msgstr "Width of output image."
 
@@ -994,7 +1020,7 @@ msgstr "Width of output image."
 #~ msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
 #~ msgstr ""
 
-#: pages/credits.tsx:66
+#: pages/credits.tsx:69
 msgid "You have already redeemed this code before."
 msgstr ""
 
@@ -1006,9 +1032,13 @@ msgstr ""
 #~ msgid "You receive free credits every month. They are used before your paid credits. Unused credits don't carry over."
 #~ msgstr ""
 
-#: pages/credits.tsx:179
-msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
-msgstr "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+#: pages/credits.tsx:181
+#~ msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+#~ msgstr "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+
+#: pages/credits.tsx:182
+msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+msgstr "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
 
 #: pages/starred.tsx:32
 #~ msgid "Your <0>starred</0> items are public and appear on your profile."
