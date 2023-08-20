@@ -17,6 +17,19 @@ import {
 import { ModelState } from "./useModelState";
 import models from "../config/models";
 import type { Model } from "../config/models";
+import useOver18 from "../lib/useOver18";
+
+const nsfwTags = [
+  "abyssorangemix2_hard",
+  "aom2_hard",
+  "hard",
+  "hardcore",
+  "hentai",
+  "nudity",
+  "porn",
+  "sex",
+  "sexy",
+];
 
 const SelectRow = React.memo(function SelectRow({
   value,
@@ -87,6 +100,7 @@ const ModelSelectModalContents = React.forwardRef(
     const [tagFilter, setTagFilter] = React.useState("");
     const inInpaint = location.pathname === "/inpaint";
     const [sort, setSort] = React.useState<"alpha" | "date">("alpha");
+    const over18 = useOver18();
 
     const filteredModels = React.useMemo(() => {
       const filteredModels = Object.values(models).filter(
@@ -127,22 +141,20 @@ const ModelSelectModalContents = React.forwardRef(
       ]
     );
 
-    const allTags = React.useMemo(
-      () => {
-        const allTags = new Set<string>();
-        for (const model of Object.values(models)) {
-          if (model.tags)
-            for (const tag of model.tags) {
-              allTags.add(tag);
-            }
-        }
+    const allTags = React.useMemo(() => {
+      const allTags = new Set<string>();
+      for (const model of Object.values(models)) {
+        if (model.tags)
+          for (const tag of model.tags) {
+            if (over18 || !nsfwTags.includes(tag)) allTags.add(tag);
+          }
+      }
 
-        return Array.from(allTags).sort();
-      },
-      [
-        /* models */
-      ]
-    );
+      return Array.from(allTags).sort();
+    }, [
+      /* models, */
+      over18,
+    ]);
 
     return (
       <Fade in={open}>
