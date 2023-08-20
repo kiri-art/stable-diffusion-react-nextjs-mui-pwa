@@ -30,6 +30,7 @@ import Link from "../src/Link";
 import type { User } from "../src/schemas";
 
 const MIN_PAID_CREDITS = 5;
+const DAILY_FREE_CREDITS = 20;
 
 function intOrFixedOneStr(num: number) {
   if (num && !Number.isInteger(num)) return num.toFixed(1);
@@ -179,7 +180,7 @@ export default function Credits() {
           <Trans>Free Credits</Trans>: {intOrFixedOneStr(user.credits.free)}
         </Typography>
         <Trans>
-          Your <b>{20}</b>
+          Your <b>{DAILY_FREE_CREDITS}</b>
           <sup>*</sup> free credits are topped up every <b>day</b>
           <sup>*</sup>. They are used before your paid credits. Unused credits
           don&apos;t carry over.
