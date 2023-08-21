@@ -232,7 +232,7 @@ const inpaintState = [
   "strength",
   "num_inference_steps",
   "guidance_scale",
-  "MODEL_ID",
+  { id: "MODEL_ID", default: "ICBINP-Final-Inpainting" },
   "PROVIDER_ID",
   "negative_prompt",
   "seed",
