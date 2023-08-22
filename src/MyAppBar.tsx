@@ -407,6 +407,9 @@ export default function MyAppBar({ title }: { title: string }) {
                       <MenuItem component={Link} href="/credits">
                         <Trans>Credits:</Trans> {userCredits}
                       </MenuItem>
+                      <MenuItem component={Link} href="/account/data">
+                        <Trans>My Data</Trans>
+                      </MenuItem>
                       <MenuItem
                         onClick={() => {
                           handleCloseUserMenu();
