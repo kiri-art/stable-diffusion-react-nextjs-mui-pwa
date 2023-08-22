@@ -142,6 +142,7 @@ function ByContainerRow({
   );
 }
 
+/*
 function ByContainer({ csends }: { csends: CSend[] }) {
   const [byContainer, initInfo] = React.useMemo(() => {
     const byContainer: Record<string, CSend[]> = {};
@@ -166,6 +167,7 @@ function ByContainer({ csends }: { csends: CSend[] }) {
     </div>
   );
 }
+*/
 
 function _ContainerEvents({ csends }: { csends: CSend[] }) {
   return (
@@ -269,12 +271,14 @@ function RequestRowContainer({ request }: { request: BananaRequest }) {
   );
 }
 
+/*
 function removeAll() {
   const Requests = db.collection("bananaRequests");
   const docs = Requests.find().toArraySync();
   for (const { _id } of docs) Requests._remove(_id);
   alert("done");
 }
+*/
 
 function RequestRow({
   request,
