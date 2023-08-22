@@ -29,6 +29,7 @@
     "@projectfunction/async-busboy": "^1.0.4",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
+    "@vercel/analytics": "1.0.2",
     "aws-sdk": "^2.1231.0",
     "date-fns": "^2.29.2",
     "discourse2": "1.1.1",

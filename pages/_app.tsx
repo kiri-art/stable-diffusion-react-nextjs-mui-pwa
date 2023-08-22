@@ -1,6 +1,7 @@
 import * as React from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
+import { Analytics } from "@vercel/analytics/react";
 import { useRouter } from "next/router";
 // import { useGongoIsPopulated } from "gongo-client-react";
 import { ToastContainer } from "react-toastify";
@@ -84,6 +85,7 @@ export default function MyApp(props: MyAppProps) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
+          <Analytics />
         </ThemeProvider>
       </I18nProvider>
       <ToastContainer
