@@ -1,6 +1,4 @@
-import Stream, { TransformCallback } from "stream";
 import { NextApiRequest, NextApiResponse } from "next";
-import { WithId, Document } from "mongodb";
 
 import gs from "../../src/api-lib/db";
 
