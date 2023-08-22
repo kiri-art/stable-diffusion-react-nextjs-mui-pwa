@@ -25,7 +25,7 @@ msgstr "قدرت (کاهش نویز)"
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(کشیدن و رها کردن، اشتراک‌گذاری به زودی)"
 
-#: src/MyAppBar.tsx:476
+#: src/MyAppBar.tsx:479
 msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
 msgstr ""
 
@@ -235,6 +235,10 @@ msgstr "واحد پول"
 msgid "Date"
 msgstr "تاریخ"
 
+#: pages/account/data.tsx:81
+msgid "Delete My Account"
+msgstr ""
+
 #: src/Starred.tsx:24
 msgid "Delete this star?"
 msgstr "این ستاره حذف شود؟"
@@ -247,15 +251,27 @@ msgstr "توضیحات / شرح تصویر مورد نظر شما. می‌توا
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "شرح همه چیزهایی که در تصویر خروجی <0>نمی‌خواهید</0>، به‌عنوان مثال دستور: \"دسته گل رز\"، دستور منفی: \"رز قرمز\". همچنین می‌توانید درخواست کنید که مصنوعات دیفیوژن رایج مانند «دست‌های تغییر شکل یافته» حذف شوند. برای برخی از پیش‌فرض‌های رایج، روی آیکن\"تنظیم مجدد\" کلیک کنید."
 
+#: pages/account/data.tsx:132
+msgid "Destroy my Data"
+msgstr ""
+
+#: pages/account/data.tsx:134
+msgid "Destroying..."
+msgstr ""
+
 #: pages/start.tsx:130
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "هیچ محتوای مضر (نژادپرستانه، تحریک‌آمیز و غیره) ایجاد نکنید."
+
+#: pages/account/data.tsx:136
+msgid "Done!"
+msgstr ""
 
 #: pages/credits.tsx:200
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "با مشارکت در پروژه در GitHub اعتبار رایگان کسب کنید!"
 
-#: pages/logs.tsx:492
+#: pages/logs.tsx:508
 msgid "Event Log"
 msgstr "گزارش رویداد"
 
@@ -439,11 +455,11 @@ msgid "Loading..."
 msgstr "در حال بارگذاری..."
 
 #: src/GoButton.tsx:50
-#: src/MyAppBar.tsx:429
+#: src/MyAppBar.tsx:432
 msgid "Login"
 msgstr "ورود"
 
-#: src/MyAppBar.tsx:418
+#: src/MyAppBar.tsx:421
 msgid "Logout"
 msgstr "خروج"
 
@@ -495,6 +511,11 @@ msgstr ""
 msgid "My Credits"
 msgstr "اعتبارهای من"
 
+#: pages/account/data.tsx:26
+#: src/MyAppBar.tsx:411
+msgid "My Data"
+msgstr ""
+
 #: pages/s/[_id].tsx:236
 #: src/sd/Controls.tsx:191
 msgid "Negative Prompt"
@@ -522,6 +543,10 @@ msgstr "چنین کدی وجود ندارد."
 
 #: src/sd/Addons/common.tsx:182
 msgid "No valid model ID, URL, or hash found."
+msgstr ""
+
+#: pages/account/data.tsx:143
+msgid "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
 msgstr ""
 
 #: src/Inpaint.tsx:417
@@ -599,6 +624,10 @@ msgstr "لطفاً صبر کنید "
 #: src/OutputImage.tsx:411
 msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 msgstr "محتوای بالقوه NSFW شناسایی شد. به جای آن یک تصویر سیاه برگردانده شد. دوباره با یک دستور و/یا عدد آغازین دیگر امتحان کنید."
+
+#: pages/account/data.tsx:29
+msgid "Privacy"
+msgstr ""
 
 #: pages/privacy.tsx:14
 #: src/Copyright.tsx:28
@@ -708,6 +737,10 @@ msgstr "پرداخت ایمن از طریق Stripe.com و شرکا."
 #: pages/s/[_id].tsx:134
 msgid "See all inputs and remix at {url}"
 msgstr "مشاهده همه ورودی‌ها و ریمیکس در {url}"
+
+#: pages/account/data.tsx:60
+msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
+msgstr ""
 
 #: pages/s/[_id].tsx:137
 #: src/OutputImage.tsx:143
@@ -837,6 +870,10 @@ msgstr "توسعه شفاف و امکان مشارکت آسان برای توس�
 msgid "Twitter"
 msgstr "توئیتر"
 
+#: pages/account/data.tsx:94
+msgid "Type the text in the box below to enable this service."
+msgstr ""
+
 #: src/Inpaint.tsx:403
 msgid "Upload an image with button below"
 msgstr "یک تصویر را با دکمه زیر بارگذاری کنید"
@@ -860,6 +897,10 @@ msgstr "دلار"
 msgid "Use mouse / finger to draw mask over it"
 msgstr "از ماوس / انگشت برای ترسیم ماسک روی آن استفاده کنید"
 
+#: pages/account/data.tsx:90
+msgid "Use the button below to <0>irreversably</0> delete your account and all associated data."
+msgstr ""
+
 #: pages/[_id].tsx:187
 #: pages/[_id].tsx:199
 msgid "User not found"
@@ -881,6 +922,10 @@ msgstr "استفاده از یک عدد آغازین یکسان با گزینه�
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "ما نمی‌توانیم آنگونه که شایسته است مراتب تشکر، قدردانی و سپاس خود را نسبت به محققان، سازمان‌ها و شرکت‌های زیر به خاطر نقشی که در کمک به <0>دموکراتیک‌سازی هوش مصنوعی</0> داشتند، بیان کنیم."
 
+#: pages/account/data.tsx:47
+msgid "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
+msgstr ""
+
 #: src/IPix2Pix.tsx:49
 msgid "What is this?"
 msgstr ""
@@ -893,6 +938,10 @@ msgstr "عرض"
 #: src/sd/Controls.tsx:493
 msgid "Width of output image."
 msgstr "عرض تصویر خروجی."
+
+#: pages/account/data.tsx:67
+msgid "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
+msgstr ""
 
 #: pages/credits.tsx:69
 msgid "You have already redeemed this code before."
@@ -908,6 +957,18 @@ msgstr "شما باید در هر محتوایی که در جاهای دیگر �
 
 #: pages/credits.tsx:182
 msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
+msgstr ""
+
+#: pages/account/data.tsx:43
+msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
+msgstr ""
+
+#: pages/account/data.tsx:54
+msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
+msgstr ""
+
+#: pages/account/data.tsx:38
+msgid "Your data is stored in our database in <0>Paris, France</0>."
 msgstr ""
 
 #: pages/start.tsx:157

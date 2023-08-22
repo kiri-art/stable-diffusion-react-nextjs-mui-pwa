@@ -29,7 +29,7 @@ msgstr ""
 #~ msgid "{0, plural, one {# Credit} other {# Credits}}"
 #~ msgstr ""
 
-#: src/MyAppBar.tsx:476
+#: src/MyAppBar.tsx:479
 msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
 msgstr ""
 
@@ -271,6 +271,10 @@ msgstr "מטבע"
 msgid "Date"
 msgstr "תאריך"
 
+#: pages/account/data.tsx:81
+msgid "Delete My Account"
+msgstr ""
+
 #: src/Starred.tsx:24
 msgid "Delete this star?"
 msgstr ""
@@ -283,15 +287,27 @@ msgstr "תיאור / כתובית לתמונה הרצויה. יכולים לכל
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr ""
 
+#: pages/account/data.tsx:132
+msgid "Destroy my Data"
+msgstr ""
+
+#: pages/account/data.tsx:134
+msgid "Destroying..."
+msgstr ""
+
 #: pages/start.tsx:130
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "אין לייצר תוכן פוגעני (גזעני, מסית וכד')."
+
+#: pages/account/data.tsx:136
+msgid "Done!"
+msgstr ""
 
 #: pages/credits.tsx:200
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "צבור נקודות קרדיט בחינם על-ידי תרומה לפרויקט ב-GitHub!"
 
-#: pages/logs.tsx:492
+#: pages/logs.tsx:508
 msgid "Event Log"
 msgstr ""
 
@@ -515,11 +531,11 @@ msgid "Loading..."
 msgstr "טוען..."
 
 #: src/GoButton.tsx:50
-#: src/MyAppBar.tsx:429
+#: src/MyAppBar.tsx:432
 msgid "Login"
 msgstr "התחברות"
 
-#: src/MyAppBar.tsx:418
+#: src/MyAppBar.tsx:421
 msgid "Logout"
 msgstr "ציאה"
 
@@ -571,6 +587,11 @@ msgstr ""
 msgid "My Credits"
 msgstr "הקרדיט שלי"
 
+#: pages/account/data.tsx:26
+#: src/MyAppBar.tsx:411
+msgid "My Data"
+msgstr ""
+
 #: pages/s/[_id].tsx:236
 #: src/sd/Controls.tsx:191
 msgid "Negative Prompt"
@@ -602,6 +623,10 @@ msgstr "אין קוד כזה"
 
 #: src/sd/Addons/common.tsx:182
 msgid "No valid model ID, URL, or hash found."
+msgstr ""
+
+#: pages/account/data.tsx:143
+msgid "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
 msgstr ""
 
 #: src/Inpaint.tsx:417
@@ -678,6 +703,10 @@ msgstr "נא להמתין..."
 
 #: src/OutputImage.tsx:411
 msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
+msgstr ""
+
+#: pages/account/data.tsx:29
+msgid "Privacy"
 msgstr ""
 
 #: pages/privacy.tsx:14
@@ -795,6 +824,10 @@ msgstr ""
 
 #: pages/s/[_id].tsx:134
 msgid "See all inputs and remix at {url}"
+msgstr ""
+
+#: pages/account/data.tsx:60
+msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr ""
 
 #: pages/s/[_id].tsx:137
@@ -951,6 +984,10 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
+#: pages/account/data.tsx:94
+msgid "Type the text in the box below to enable this service."
+msgstr ""
+
 #: src/Inpaint.tsx:403
 msgid "Upload an image with button below"
 msgstr ""
@@ -974,6 +1011,10 @@ msgstr ""
 msgid "Use mouse / finger to draw mask over it"
 msgstr ""
 
+#: pages/account/data.tsx:90
+msgid "Use the button below to <0>irreversably</0> delete your account and all associated data."
+msgstr ""
+
 #: pages/[_id].tsx:187
 #: pages/[_id].tsx:199
 msgid "User not found"
@@ -995,6 +1036,10 @@ msgstr ""
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr ""
 
+#: pages/account/data.tsx:47
+msgid "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
+msgstr ""
+
 #: src/IPix2Pix.tsx:49
 msgid "What is this?"
 msgstr ""
@@ -1007,6 +1052,10 @@ msgstr "רוחב"
 #: src/sd/Controls.tsx:493
 msgid "Width of output image."
 msgstr "רוחב תמונת הפלט"
+
+#: pages/account/data.tsx:67
+msgid "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
+msgstr ""
 
 #: pages/about.tsx:44
 #~ msgid "You can run it for free on your own computer (if you have a suitable GPU) or very cheaply via <0>Banana.Dev</0>'s serverless GPU cloud. Get involved in our <1>GitHub project</1> and let's build something awesome together."
@@ -1028,9 +1077,21 @@ msgstr "חובה להבהיר בכל תוכן אותו משתפים בכל מק�
 msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
 msgstr ""
 
+#: pages/account/data.tsx:43
+msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
+msgstr ""
+
+#: pages/account/data.tsx:54
+msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
+msgstr ""
+
 #: pages/starred.tsx:32
 #~ msgid "Your <0>starred</0> items are public and appear on your profile."
 #~ msgstr ""
+
+#: pages/account/data.tsx:38
+msgid "Your data is stored in our database in <0>Paris, France</0>."
+msgstr ""
 
 #: pages/credits.tsx:147
 #~ msgid "Your free credits are topped up every month. They are used before your paid credits. Unused credits don't carry over."
