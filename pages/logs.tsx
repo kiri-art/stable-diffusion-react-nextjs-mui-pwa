@@ -415,6 +415,7 @@ function Requests() {
       limit: 50,
       minInterval: 500,
       maxInterval: 1000,
+      persist: false,
     }
   );
 
@@ -431,6 +432,15 @@ function Requests() {
       // })
       .sort("createdAt", "desc")
   );
+
+  React.useEffect(() => {
+    // @ts-expect-error: todo
+    const pollInterval = db.transport.options.pollInterval;
+    // @ts-expect-error: todo
+    db.transport.options.pollInterval = 1000;
+    // @ts-expect-error: todo
+    return () => (db.transport.options.pollInterval = pollInterval);
+  }, []);
 
   return (
     <Box>
@@ -468,6 +478,7 @@ function Requests() {
 }
 
 const Logs: NextPage = () => {
+  /*
   const csendsSub = useGongoSub(
     "csends",
     {},
@@ -481,6 +492,7 @@ const Logs: NextPage = () => {
       // .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) } })
       .sort("date", "desc")
   );
+  */
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -499,26 +511,26 @@ const Logs: NextPage = () => {
             aria-label="basic tabs example"
           >
             <Tab label="Requests" />
-            <Tab label="Containers" />
+            {/* <Tab label="Containers" /> */}
             {/* <Tab label="C_Events" /> */}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <Requests />
         </TabPanel>
+        {/*
         <TabPanel value={value} index={1}>
           <ByContainer csends={csends} />
         </TabPanel>
-        {/*
         <TabPanel value={value} index={1}>
           <ContainerEvents csends={csends} />
         </TabPanel>
-        */}
         <Button onClick={() => csendsSub && csendsSub.loadMore()}>
           Load more CSends
         </Button>
         <br />
         <Button onClick={removeAll}>Clear Log Database and Archive</Button>
+        */}
       </Container>
     </>
   );

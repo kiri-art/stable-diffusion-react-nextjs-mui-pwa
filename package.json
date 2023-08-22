@@ -33,7 +33,7 @@
     "date-fns": "^2.29.2",
     "discourse2": "1.1.1",
     "file-type": "^18.0.0",
-    "gongo-client": "2.6.1",
+    "gongo-client": "2.7.0",
     "gongo-client-react": "0.3.0",
     "gongo-server": "3.2.0",
     "gongo-server-db-mongo": "2.7.0",
