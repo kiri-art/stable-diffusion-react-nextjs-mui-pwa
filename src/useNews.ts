@@ -37,7 +37,7 @@ export default function useNews() {
 
       const topics = result.topic_list.topics.filter((topic) => {
         const time = new Date(topic.created_at).getTime();
-        console.log(topic);
+        // console.log(topic);
         return (
           topic.posters[0].user_id === 1 &&
           topic.title.startsWith("[News]") &&
