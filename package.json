@@ -35,7 +35,7 @@
     "discourse2": "1.1.1",
     "file-type": "^18.0.0",
     "gongo-client": "2.7.0",
-    "gongo-client-react": "0.3.0",
+    "gongo-client-react": "0.3.1",
     "gongo-server": "3.2.0",
     "gongo-server-db-mongo": "2.7.1",
     "highcharts": "^10.2.1",
