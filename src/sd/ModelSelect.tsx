@@ -319,6 +319,7 @@ const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
         open={open}
         onClose={() => setOpen(false)}
         closeAfterTransition
+        keepMounted
         sx={{ maxWidth: "90%" }}
         // hideBackdrop
       >
