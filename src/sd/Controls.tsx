@@ -1118,6 +1118,14 @@ export default function SDControls({
     ]
   );
 
+  React.useEffect(() => {
+    inputs.num_inference_steps.setValue(defaults.num_inference_steps);
+  }, [defaults.num_inference_steps]);
+
+  React.useEffect(() => {
+    inputs.sampler.setValue(defaults.sampler);
+  }, [defaults.sampler]);
+
   const values = Object.fromEntries(
     // @ts-expect-error: TODO
     Object.keys(inputs).map((key) => [key, inputs[key].value])

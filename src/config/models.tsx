@@ -33,6 +33,8 @@ const models: Record<string, Model> = {
     defaults: {
       width: 768,
       height: 768,
+      sampler: "EulerAncestralDiscreteScheduler",
+      num_inference_steps: 30,
     },
     notes: (
       <span>
