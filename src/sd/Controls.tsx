@@ -454,8 +454,9 @@ function Width_Grid_Slider({
             <Box>
               <Trans>Width of output image.</Trans>{" "}
               <Trans>
-                Must be a multiple of 64. Maximum image size is 1024x768 or
-                768x1024 because of memory limits.
+                Must be a multiple of 64. Maximum size is 1024x1024 because of
+                memory limits (but you can upsample to 4x resolution
+                afterwards).
               </Trans>
             </Box>
           }
@@ -492,7 +493,9 @@ function Height_Grid_Slider({
             <Box>
               <Trans>Width of output image.</Trans>{" "}
               <Trans>
-                Maximum size is 1024x768 or 768x1024 because of memory limits.
+                Must be a multiple of 64. Maximum size is 1024x1024 because of
+                memory limits (but you can upsample to 4x resolution
+                afterwards).
               </Trans>
             </Box>
           }
@@ -1022,12 +1025,13 @@ export default function SDControls({
     height: number | string,
     which: string
   ) {
+    // logic allows for one max of 1024x768 or 768x1024 but now we support 1024x1024
     if (width > height) {
-      if ((typeof height === "string" ? parseInt(height) : height) > 768)
-        height = 768;
+      if ((typeof height === "string" ? parseInt(height) : height) > 1024)
+        height = 1024;
     } else {
-      if ((typeof width === "string" ? parseInt(width) : width) > 768)
-        width = 768;
+      if ((typeof width === "string" ? parseInt(width) : width) > 1024)
+        width = 1024;
     }
 
     if (width !== inputs.width.value) inputs.width.setValue(width);
