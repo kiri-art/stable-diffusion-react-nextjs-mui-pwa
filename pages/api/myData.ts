@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { WithId, Document } from "mongodb";
 import JSZip from "jszip";
 
-import gs from "../../src/api-lib/db";
+import gs from "../../src/api-lib/db-full";
 
 class ToJSON extends Stream.Transform {
   sentFirst = false;

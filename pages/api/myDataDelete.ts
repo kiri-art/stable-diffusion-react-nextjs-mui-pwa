@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import gs from "../../src/api-lib/db";
+import gs from "../../src/api-lib/db-full";
 
 export default async function myDataDelete(
   req: NextApiRequest,

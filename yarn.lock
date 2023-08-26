@@ -1646,6 +1646,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@deno/shim-deno-test@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno-test/-/shim-deno-test-0.4.0.tgz#2ff56821854c51323c0cd08a4a56d668f84367ba"
+  integrity sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==
+
+"@deno/shim-deno@~0.16.1":
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno/-/shim-deno-0.16.1.tgz#f7d3925745c74337c83818de7d6435557c816c60"
+  integrity sha512-s9v0kzF5bm/o9TgdwvsraHx6QNllYrXXmKzgOG2lh4LFXnVMr2gpjK/c/ve6EflQn1MqImcWmVD8HAv5ahuuZQ==
+  dependencies:
+    "@deno/shim-deno-test" "^0.4.0"
+    which "^2.0.2"
+
 "@emotion/babel-plugin@^11.10.0":
   version "11.10.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.2.tgz#879db80ba622b3f6076917a1e6f648b1c7d008c7"
@@ -5746,10 +5759,10 @@ gongo-client@2.7.0:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.7.0.tgz#0e1bebe0872b19e03c242108864ef114e67ee496"
-  integrity sha512-aEzXxkMtyR9vgGKzzn5rwqB2/srJRCT5mwhVnw+Yj+NA6jTG4twNKar+3tknEdzeGMmX97jFhCxaTYrqrDOpDQ==
+gongo-server-db-mongo@2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.7.1.tgz#deda00d67152399aa1a73cbe2b7fc7ce9ff973e4"
+  integrity sha512-P9Lxz+mFI5e1xQORPEgfRADSZIRLa+RHSAxYsd6qAJh63yucfhKsmGeuEgecO6S2dwFXB+k1Xj58KbLT2cuUsA==
   dependencies:
     fast-json-patch "^3.1.1"
     json-pointer "^0.6.2"
@@ -7286,6 +7299,14 @@ mongodb-connection-string-url@^2.5.4:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
+mongodb-rest-relay@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/mongodb-rest-relay/-/mongodb-rest-relay-1.2.1.tgz#905927be12e91a85dd3c448517dfb032e4788b11"
+  integrity sha512-fKuURR6BBnHcEZcBr6HnlM8CkSohJU0f9D5SaG7Phra5+g9js2w0fPeoLtK5eSfJ1K5YLzv170cIc04yP/3t/A==
+  dependencies:
+    debug "^4.3.4"
+    o-son "1.0.2"
+
 mongodb@4.16.0:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.16.0.tgz#8b0043de7b577c6a7e0ce44a2ca7315b9c0a7927"
@@ -7446,6 +7467,13 @@ nwsapi@^2.2.2:
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.7.tgz#738e0707d3128cb750dddcfe90e4610482df0f30"
   integrity sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ==
+
+o-son@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/o-son/-/o-son-1.0.2.tgz#ded30db31c732f1089693b8900a7090da71d3686"
+  integrity sha512-wWHDKHHL2+U6E9HoNc9GqZ14h4l8k8BK565bGk8P4jKqPRDlS/gSsyIP3Atq55CfJY9w7bg+Jyp0LIQv0g4aEg==
+  dependencies:
+    "@deno/shim-deno" "~0.16.1"
 
 oauth@0.9.x:
   version "0.9.15"
@@ -9586,7 +9614,7 @@ which-typed-array@^1.1.2:
     has-tostringtag "^1.0.0"
     is-typed-array "^1.1.9"
 
-which@^2.0.1:
+which@^2.0.1, which@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==

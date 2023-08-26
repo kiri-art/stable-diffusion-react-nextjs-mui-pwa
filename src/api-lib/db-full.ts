@@ -2,24 +2,14 @@ import GongoServer from "gongo-server/lib/serverless";
 import MongoDBA from "gongo-server-db-mongo";
 import Auth from "gongo-server/lib/auth-class";
 import Database, { /* Collection, */ ObjectId } from "gongo-server-db-mongo";
-import MongoClient from "mongodb-rest-relay/lib/client";
 
-import type { User, Order, CreditCode } from "../../src/schemas";
+import type { User, Order, CreditCode } from "../schemas";
 
-// const env = process.env;
-// const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
-
-const MONGO_URL =
-  "http" +
-  (process.env.NODE_ENV === "production"
-    ? "s://kiri.art"
-    : "://localhost:3000") +
-  "/api/mongoRelay";
+const env = process.env;
+const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
 
 const gs = new GongoServer({
-  // dba: new MongoDBA(MONGO_URL, "sd-mui"),
-  // @ts-expect-error: ok
-  dba: new MongoDBA(MONGO_URL, "sd-mui", MongoClient),
+  dba: new MongoDBA(MONGO_URL, "sd-mui"),
 });
 
 const db = gs.dba;
