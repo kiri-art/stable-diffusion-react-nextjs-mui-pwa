@@ -1,14 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import GongoServer from "gongo-server/lib/serverless";
-import Database /* ObjectID */ from "gongo-server-db-mongo";
 import crypto from "crypto";
+
+import gs from "../../src/api-lib/db-full";
 import { CSend, BananaRequest } from "../../src/schemas";
-
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
-
-const gs = new GongoServer({
-  dba: new Database(MONGO_URL, "sd-mui"),
-});
 
 const csends = gs.dba && gs.dba.collection("csends");
 const bananaRequests = gs.dba && gs.dba.collection("bananaRequests");

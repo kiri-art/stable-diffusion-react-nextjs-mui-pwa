@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { addDays, endOfDay, startOfDay } from "date-fns";
 
-import gs from "../../src/api-lib/db";
+import gs from "../../src/api-lib/db-full";
 
 const db = gs.dba;
 
