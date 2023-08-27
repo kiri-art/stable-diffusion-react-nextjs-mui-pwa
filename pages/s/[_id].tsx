@@ -23,7 +23,7 @@ import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import { toast } from "react-toastify";
 import Star from "../../src/schemas/star";
 import { ddaCallInputs, ddaModelInputs } from "../../src/schemas";
-import { fetchModel } from "../../src/lib/civitai";
+import { fetchModel, fetchModelVersion } from "../../src/lib/civitai";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -197,14 +197,17 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
           "(CivitAI)",
         ];
       } else {
-        fetchModel(id).then((model) => {
-          setCachedModels((prev) => ({ ...prev, [id]: model }));
+        fetchModelVersion(id).then((modelVersion) => {
+          fetchModel(modelVersion.modelId).then((model) => {
+            setCachedModels((prev) => ({ ...prev, [id]: model }));
+          });
         });
 
         children.push("Loading CivitAI data...");
       }
 
       children.push(
+        " ",
         <Chip
           key="chip"
           label={id}
