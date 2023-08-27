@@ -297,7 +297,7 @@ export function Models({
       <ol>
         <style jsx>{`
           li {
-            margin-bottom: 1.5em;
+            // margin-bottom: 1.5em;
           }
         `}</style>
         {added.map(({ type, model, versionIndex, ...rest }, i) => (
@@ -425,10 +425,21 @@ export function Models({
               ))}
             {model.modelVersions[versionIndex].baseModel !==
               models[inputs.MODEL_ID.value].baseModel && (
-              <div style={{ color: "#a00" }}>
+              <div style={{ color: "#a00", fontSize: "80%" }}>
                 Requires {model.modelVersions[versionIndex].baseModel} but you
                 selected a {models[inputs.MODEL_ID.value].baseModel} base model
                 above.
+                <Button
+                  onClick={() => {
+                    // @ts-expect-error: later
+                    inputs.MODEL_ID.forceBaseModel =
+                      model.modelVersions[versionIndex].baseModel;
+                    // @ts-expect-error: later
+                    inputs.MODEL_ID.setOpen(true);
+                  }}
+                >
+                  Change
+                </Button>
               </div>
             )}
           </li>

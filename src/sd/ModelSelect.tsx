@@ -86,21 +86,33 @@ const ModelSelectModalContents = React.forwardRef(
       setOpen,
       value,
       setValue,
+      input,
     }: {
       open: boolean;
       setOpen: (value: boolean) => void;
       value: string;
       setValue: (value: string) => void;
+      input: HackyModelIdModelState;
     },
     ref: React.ForwardedRef<HTMLInputElement>
   ) {
-    const [baseModelFilter, setBaseModelFilter] = React.useState("all");
+    const [baseModelFilter, setBaseModelFilter] = React.useState(
+      input.forceBaseModel || "all"
+    );
     const [modelOriginFilter, setModelOriginFilter] = React.useState("all");
     const [inpaintFilter, setInpaintFilter] = React.useState(true);
     const [tagFilter, setTagFilter] = React.useState("");
     const inInpaint = location.pathname === "/inpaint";
     const [sort, setSort] = React.useState<"alpha" | "date">("alpha");
     const over18 = useOver18();
+
+    React.useEffect(() => {
+      setBaseModelFilter(input.forceBaseModel || "all");
+    }, [input.forceBaseModel]);
+
+    React.useEffect(() => {
+      input.forceBaseModel = undefined;
+    }, [input, baseModelFilter]);
 
     const filteredModels = React.useMemo(() => {
       const filteredModels = Object.values(models).filter(
@@ -293,11 +305,13 @@ const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
     setValue,
     open,
     setOpen,
+    input,
   }: {
     value: string;
     setValue: (value: string) => void;
     open: boolean;
     setOpen: (value: boolean) => void;
+    input: HackyModelIdModelState;
   },
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
@@ -342,6 +356,7 @@ const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
           value={value}
           setValue={setValue}
           setOpen={setOpen}
+          input={input}
           ref={ref}
         />
       </Modal>
@@ -366,14 +381,22 @@ const ModelSelectInputComponent: FunctionComponent<InputBaseComponentProps> =
     return <Component {...other} ref={ref} />;
   });
 
+type HackyModelIdModelState = ModelState["MODEL_ID"] & {
+  setOpen?: (value: boolean) => void;
+  forceBaseModel?: string;
+};
+
 export default React.memo(function ModelSelect({
   value,
   setValue,
+  input,
 }: {
   value: ModelState["MODEL_ID"]["value"];
   setValue: ModelState["MODEL_ID"]["setValue"];
+  input: HackyModelIdModelState;
 }) {
   const [open, setOpen] = React.useState(false);
+  input.setOpen = setOpen;
 
   return (
     <FormControl
@@ -394,6 +417,7 @@ export default React.memo(function ModelSelect({
           value,
           setValue,
           component: ModelSelectSelect,
+          input,
         }}
         label={t`Model`}
         value={value}

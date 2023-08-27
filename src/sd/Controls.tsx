@@ -1163,6 +1163,7 @@ export default function SDControls({
           <ModelSelect2
             value={inputs.MODEL_ID.value}
             setValue={inputs.MODEL_ID.setValue}
+            input={inputs.MODEL_ID}
             // defaultValue={globalDefaults.MODEL_ID}
           />
         )}
