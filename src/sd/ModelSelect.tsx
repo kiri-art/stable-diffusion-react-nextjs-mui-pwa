@@ -251,11 +251,11 @@ const ModelSelectModalContents = React.forwardRef(
                 /* Shadow Cover BOTTOM */
                 "linear-gradient(rgba(255, 255, 255, 0), white 70%) center bottom, " +
                 /* Shadow TOP */
-                "radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) center top, " +
+                "radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center top, " +
                 /* Shadow BOTTOM */
-                "radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) center bottom",
+                "radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center bottom",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 40px, 100% 40px, 100% 14px, 100% 14px",
+              backgroundSize: "100% 40px, 100% 40px, 100% 18px, 100% 18px",
               backgroundAttachment: "local, local, scroll, scroll",
             }}
           >
