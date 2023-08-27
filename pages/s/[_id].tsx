@@ -1,21 +1,29 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useGongoOne, useGongoSub } from "gongo-client-react";
-import { Box, Container, IconButton } from "@mui/material";
 import { t, Trans } from "@lingui/macro";
 // import { GetServerSideProps } from "next";
+
+import { Box, Chip, Container, IconButton } from "@mui/material";
+import {
+  FavoriteBorder,
+  Share,
+  Edit,
+  Favorite,
+  Link as LinkIcon,
+} from "@mui/icons-material";
 
 import MyAppBar from "../../src/MyAppBar";
 import Link from "../../src/Link";
 import strObjectId from "../../src/lib/strObjectId";
 // import { db as serverDb, ObjectId } from "../../src/api-lib/db";
-import { FavoriteBorder, Share, Edit, Favorite } from "@mui/icons-material";
 import { useLike } from "../../src/Starred";
 import { editItem } from "../history";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import { toast } from "react-toastify";
 import Star from "../../src/schemas/star";
 import { ddaCallInputs, ddaModelInputs } from "../../src/schemas";
+import { fetchModel } from "../../src/lib/civitai";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -79,6 +87,10 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   useGongoSub(_id && "star", { starId: _id });
 
   const { like, likedByUser } = useLike(item);
+
+  const [cachedModels, setCachedModels] = React.useState<
+    Record<string, Awaited<ReturnType<typeof fetchModel>>>
+  >({});
 
   // console.log({ _id, item, userProfile, like, likedByUser });
 
@@ -153,6 +165,79 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   }
   console.log({ callInputs, modelInputs });
 
+  function formatCivitAiLinks(url: string) {
+    const match = url.match(
+      /https:\/\/civitai\.com\/api\/download\/models\/(?<id>[\d]+)/
+    );
+    if (match && match.groups && match.groups.id) {
+      const id = match.groups.id;
+      const model = cachedModels[id];
+      let children: React.ReactNode[] = [];
+
+      if (model) {
+        children = [
+          <a key={0} target="_blank" href={"https://civitai.com/models/" + id}>
+            {model.name}
+          </a>,
+          " ",
+          <LinkIcon
+            key={1}
+            sx={{ verticalAlign: "middle" }}
+            fontSize="small"
+          />,
+          " ",
+          <a
+            key={2}
+            target="_blank"
+            href={"https://civitai.com/user/" + model.creator.username}
+          >
+            {model.creator.username}
+          </a>,
+          " ",
+          "(CivitAI)",
+        ];
+      } else {
+        fetchModel(id).then((model) => {
+          setCachedModels((prev) => ({ ...prev, [id]: model }));
+        });
+
+        children.push("Loading CivitAI data...");
+      }
+
+      children.push(
+        <Chip
+          key="chip"
+          label={id}
+          sx={{
+            "& .MuiChip-label:not(.copied)::after": {
+              content: '"📋"',
+            },
+            "& .MuiChip-label.copied::after": {
+              content: '"✅"',
+            },
+            mx: 0.4,
+            my: 0.5,
+          }}
+          onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
+            try {
+              const target = event.target as HTMLSpanElement;
+              await navigator.clipboard.writeText(id);
+              target.classList.add("copied");
+              setTimeout(() => {
+                target.classList.remove("copied");
+              }, 1000);
+            } catch (error) {
+              toast(t`Failed to copy to clipboard`);
+            }
+          }}
+        />
+      );
+      return children;
+    }
+
+    return url;
+  }
+
   return (
     <Box>
       <MyAppBar title="Starred Item" />
@@ -211,7 +296,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
               <p>Textual Inversions:</p>
               <ul>
                 {callInputs.textual_inversions.map((ti) => (
-                  <li key={ti}>{ti}</li>
+                  <li key={ti}>{formatCivitAiLinks(ti)}</li>
                 ))}
               </ul>
             </div>
@@ -222,7 +307,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
             <p>Textual Inversions:</p>
             <ul>
               {callInputs.lora_weights.map((lw) => (
-                <li key={lw}>{lw}</li>
+                <li key={lw}>{formatCivitAiLinks(lw)}</li>
               ))}
             </ul>
           </div>

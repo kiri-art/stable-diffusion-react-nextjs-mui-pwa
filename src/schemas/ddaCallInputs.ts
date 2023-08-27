@@ -43,14 +43,16 @@ const ddaCallInputsSchema = object({
   startRequestId: string(),
   safety_checker: boolean().optional().nullable(),
   textual_inversions: array().of(
-    string().matches(
-      /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/
-    )
+    string()
+      .matches(
+        /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/
+      )
+      .required()
   ),
   lora_weights: array().of(
-    string().matches(
-      /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)/
-    )
+    string()
+      .matches(/https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)/)
+      .required()
   ),
   compel_prompts: boolean(),
 });
