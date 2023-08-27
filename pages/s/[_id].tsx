@@ -293,23 +293,23 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
         {callInputs.textual_inversions &&
           callInputs.textual_inversions.length > 0 && (
             <div>
-              <p>Textual Inversions:</p>
-              <ul>
+              <div style={{ marginBottom: "5px" }}>Textual Inversions:</div>
+              <ol style={{ margin: 0 }}>
                 {callInputs.textual_inversions.map((ti) => (
                   <li key={ti}>{formatCivitAiLinks(ti)}</li>
                 ))}
-              </ul>
+              </ol>
             </div>
           )}
 
         {callInputs.lora_weights && callInputs.lora_weights.length > 0 && (
           <div>
-            <p>Textual Inversions:</p>
-            <ul>
+            <div style={{ marginBottom: "5px" }}>LoRAs:</div>
+            <ol style={{ margin: 0 }}>
               {callInputs.lora_weights.map((lw) => (
                 <li key={lw}>{formatCivitAiLinks(lw)}</li>
               ))}
-            </ul>
+            </ol>
           </div>
         )}
 
@@ -331,6 +331,15 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
         <p>
           <Trans>Steps</Trans>: {modelInputs.num_inference_steps}
         </p>
+
+        <p>
+          <Trans>Width</Trans>: {modelInputs.width}
+        </p>
+
+        <p>
+          <Trans>Height</Trans>: {modelInputs.height}
+        </p>
+
         <p>
           <Trans>Seed</Trans>: {modelInputs.seed}
         </p>
