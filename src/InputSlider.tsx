@@ -74,9 +74,12 @@ export default function InputSlider({
   };
 
   const handleBlur = () => {
-    if (min && value < min) {
+    if (min && (typeof value === "string" ? parseFloat(value) : value) < min) {
       setValue(min);
-    } else if (max && value > max) {
+    } else if (
+      max &&
+      (typeof value === "string" ? parseFloat(value) : value) > max
+    ) {
       setValue(max);
     }
   };
