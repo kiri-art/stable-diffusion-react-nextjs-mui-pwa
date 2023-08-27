@@ -1,55 +1,21 @@
-import React from "react";
-
-import { Chip, Typography } from "@mui/material";
-import { FilterAlt } from "@mui/icons-material";
-
 import type { ModelVersion } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
-import { AddedModel, Models } from "./common";
+import { AddedModel } from "./common";
 
-function getTokens(modelVersion: ModelVersion) {
+export function getTokensFromModelVersion(modelVersion: ModelVersion) {
   return modelVersion.trainedWords || [];
 }
 
-export default function LoRAs({
-  setLoraWeights,
-  inputs,
-}: {
-  setLoraWeights: React.Dispatch<React.SetStateAction<string[]>>;
-  inputs: ModelState;
-}) {
-  setLoraWeights;
-  const [added, setAdded] = React.useState<AddedModel[]>([]);
-  const [promptLoras, setPromptLoras] = React.useState<
-    Record<string, { scale: number; str: string }>
-  >({});
+export const MAX_LENGTH = 1;
 
-  React.useEffect(() => {
-    const loraWeights = added
-      .filter(({ model }) => model.type === "LORA")
-      // @ts-expect-error: scale totally exists after the filter
-      .map(({ model, versionIndex, scale }) => {
-        const modelVersion = model.modelVersions[versionIndex];
-
-        let file;
-        for (const f of modelVersion.files) if (f.primary) file = f;
-        if (!file) file = modelVersion.files[0];
-        const part = file.name.replace(/\.(safetensors|pt)$/, "");
-
-        return (
-          file.downloadUrl +
-          "#fname=" +
-          file.name +
-          "&scale=" +
-          (promptLoras[part] ? promptLoras[part].scale : scale)
-        );
-      });
-
-    console.log(loraWeights);
-    setLoraWeights(loraWeights);
-  }, [added, setLoraWeights, promptLoras]);
-
-  React.useEffect(() => {
+export function onChange(
+  added: AddedModel[],
+  inputs: ModelState,
+  setPromptLoras: (
+    loras: Record<string, { scale: number; str: string }>
+  ) => void
+) {
+  const promptLoras = (function () {
     const loras: Record<string, { scale: number; str: string }> = {};
     const matches1 = inputs.prompt.value.matchAll(
       /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g
@@ -65,43 +31,34 @@ export default function LoRAs({
         const str = match[0];
         loras[lora] = { scale, str };
       }
-    setPromptLoras(loras);
-  }, [inputs.prompt.value]);
+    return loras;
+  })();
+  setPromptLoras(promptLoras);
 
-  return (
-    <div>
-      <Typography variant="h6">LoRAs</Typography>
+  const loraWeights = added
+    .filter(({ model }) => model.type === "LORA")
+    // @ts-expect-error: scale totally exists after the filter
+    .map(({ model, versionIndex, scale }) => {
+      const modelVersion = model.modelVersions[versionIndex];
 
-      <p style={{ fontSize: "80%" }}>
-        Browse <a href="https://civitai.com/">CivitAI</a> and{" "}
-        <FilterAlt
-          sx={{ verticalAlign: "middle", color: "#888" }}
-          fontSize="small"
-        />{" "}
-        filter for <Chip size="small" sx={{ fontSize: "80%" }} label="LoRA" />{" "}
-        models.
-      </p>
-      <Models
-        added={added}
-        setAdded={setAdded}
-        inputs={inputs}
-        requiredType="LORA"
-        getTokens={getTokens}
-        maxLength={1}
-        promptLoras={promptLoras}
-      />
+      let file;
+      for (const f of modelVersion.files) if (f.primary) file = f;
+      if (!file) file = modelVersion.files[0];
+      const part = file.name.replace(/\.(safetensors|pt)$/, "");
 
-      <p style={{ fontSize: "70%" }}>
-        Notes: 1) Currently, only one LoRA can be used at a time (tracked
-        upstream at{" "}
-        <a href="https://github.com/huggingface/diffusers/issues/2613">
-          diffusers#2613
-        </a>
-        ). 2) LoRAs work best on the same model they were trained on; results
-        can appear very garbled otherwise. We hope that moving forwards, the
-        community will move away from fine-tuned models and we&apos;ll simply
-        have many LoRAs for the original SDXL base. Let&apos;s see.
-      </p>
-    </div>
-  );
+      return (
+        file.downloadUrl +
+        "#fname=" +
+        file.name +
+        "&scale=" +
+        (promptLoras[part] ? promptLoras[part].scale : scale)
+      );
+    });
+
+  if (
+    JSON.stringify(loraWeights) !== JSON.stringify(inputs.lora_weights.value)
+  ) {
+    console.log(loraWeights);
+    inputs.lora_weights.setValue(loraWeights);
+  }
 }

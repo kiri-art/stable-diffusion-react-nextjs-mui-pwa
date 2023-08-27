@@ -27,8 +27,12 @@ import MuiInput from "@mui/material/Input";
 
 import models from "../../../src/config/models";
 import { fetchModel, modelIdFromIdOrUrlOrHash } from "../../lib/civitai";
-import type { Model, ModelVersion, ModelVersionFile } from "../../lib/civitai";
+import type { Model, ModelVersionFile } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
+import * as LORA from "./LoRAs";
+import * as TextualInversion from "./TextualInversions";
+
+const addons = { LORA, TextualInversion };
 
 export type AddedModel = {
   model: Model;
@@ -158,21 +162,28 @@ export function Models({
   added,
   setAdded,
   inputs,
-  requiredType,
-  getTokens,
-  maxLength,
-  promptLoras,
+  allowedTypes,
 }: {
   added: AddedModel[];
   setAdded: React.Dispatch<React.SetStateAction<AddedModel[]>>;
   inputs: ModelState;
-  requiredType: typeof added[0]["model"]["type"];
-  getTokens: (modelVersion: ModelVersion) => string[];
-  maxLength?: number;
-  promptLoras?: Record<string, { scale: number; str: string }>;
+  allowedTypes: typeof added[0]["model"]["type"][];
 }) {
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const [promptLoras, setPromptLoras] = React.useState<
+    Record<string, { scale: number; str: string }> | undefined
+  >();
+
+  React.useEffect(() => {
+    // When loading changes from true->false, clear the input.
+    if (loading === false) setValue("");
+  }, [loading]);
+
+  React.useEffect(() => {
+    addons.LORA.onChange(added, inputs, setPromptLoras);
+    addons.TextualInversion.onChange(added, inputs);
+  }, [added, inputs]);
 
   async function add(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -201,11 +212,30 @@ export function Models({
 
     console.log(model);
 
-    if (model.type !== requiredType) {
+    if (!allowedTypes.includes(model.type)) {
       setLoading(false);
       const type = model.type;
-      toast(t`Model must be a "${requiredType}", not a "${type}".`);
+      toast(
+        t`Model must be a "${allowedTypes.join('", "')}", not a "${type}".`
+      );
       return;
+    }
+
+    const addon = addons[model.type as "LORA" | "TextualInversion"];
+
+    if (addon.MAX_LENGTH) {
+      const currentLength = added.filter(
+        (model) => model.type === model.type
+      ).length;
+      if (currentLength == addon.MAX_LENGTH) {
+        setLoading(false);
+        toast(
+          `You can only add ${addon.MAX_LENGTH} ${model.type} model${
+            addon.MAX_LENGTH > 1 ? "s" : ""
+          }.`
+        );
+        return;
+      }
     }
 
     for (const { model: m } of added)
@@ -272,6 +302,9 @@ export function Models({
         `}</style>
         {added.map(({ type, model, versionIndex, ...rest }, i) => (
           <li key={model.id}>
+            {/*
+            <Chip label={type} />{" "}
+            */}
             <a target="_blank" href={`https://civitai.com/models/${model.id}`}>
               {model.name}
             </a>{" "}
@@ -340,34 +373,36 @@ export function Models({
                 setAdded(newAdded);
               }}
             />
-            {getTokens(model.modelVersions[versionIndex]).map((token) => (
-              <Chip
-                key={token}
-                label={token}
-                sx={{
-                  "& .MuiChip-label:not(.copied)::after": {
-                    content: '"📋"',
-                  },
-                  "& .MuiChip-label.copied::after": {
-                    content: '"✅"',
-                  },
-                  mx: 0.4,
-                  my: 0.5,
-                }}
-                onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
-                  try {
-                    const target = event.target as HTMLSpanElement;
-                    await navigator.clipboard.writeText(token);
-                    target.classList.add("copied");
-                    setTimeout(() => {
-                      target.classList.remove("copied");
-                    }, 1000);
-                  } catch (error) {
-                    toast(t`Failed to copy to clipboard`);
-                  }
-                }}
-              />
-            ))}
+            {addons[model.type as "LORA" | "TextualInversion"]
+              .getTokensFromModelVersion(model.modelVersions[versionIndex])
+              .map((token) => (
+                <Chip
+                  key={token}
+                  label={token}
+                  sx={{
+                    "& .MuiChip-label:not(.copied)::after": {
+                      content: '"📋"',
+                    },
+                    "& .MuiChip-label.copied::after": {
+                      content: '"✅"',
+                    },
+                    mx: 0.4,
+                    my: 0.5,
+                  }}
+                  onClick={async (event: React.MouseEvent<HTMLSpanElement>) => {
+                    try {
+                      const target = event.target as HTMLSpanElement;
+                      await navigator.clipboard.writeText(token);
+                      target.classList.add("copied");
+                      setTimeout(() => {
+                        target.classList.remove("copied");
+                      }, 1000);
+                    } catch (error) {
+                      toast(t`Failed to copy to clipboard`);
+                    }
+                  }}
+                />
+              ))}
             {type === "LORA" &&
               // @ts-expect-error: later
               (promptLoras && promptLoras[rest.lora] ? (
@@ -399,26 +434,27 @@ export function Models({
           </li>
         ))}
       </ol>
-      {(!maxLength || added.length < maxLength) && (
-        <form>
-          <Box>Model hash or CivitAI ID / URL:</Box>
-          <Stack direction="row">
-            <TextField
-              sx={{ mx: 1 }}
-              size="small"
-              value={value}
-              onChange={(error) => setValue(error.target.value)}
-            />
-            <Button onClick={add} disabled={loading} type="submit">
-              {loading ? (
-                <CircularProgress size="1.5em" />
-              ) : (
-                <KeyboardReturn fontSize="small" />
-              )}
-            </Button>
-          </Stack>
-        </form>
-      )}
+      <form>
+        <Stack direction="row" spacing={0}>
+          <TextField
+            sx={{
+              // mx: 1
+              width: 300,
+            }}
+            size="small"
+            value={value}
+            onChange={(error) => setValue(error.target.value)}
+            placeholder="Model hash or CivitAI ID / URL"
+          />
+          <Button onClick={add} disabled={loading} type="submit">
+            {loading ? (
+              <CircularProgress size="1.5em" />
+            ) : (
+              <KeyboardReturn fontSize="small" />
+            )}
+          </Button>
+        </Stack>
+      </form>
     </>
   );
 }
