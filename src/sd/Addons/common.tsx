@@ -195,17 +195,28 @@ export function Models({
     }
 
     setLoading(true);
-    let model;
-    try {
-      model = await fetchModel(id);
-    } catch (error) {
-      if (error instanceof Error) toast(error.message);
-      setLoading(false);
-      return;
-    }
 
-    if (typeof model === "string") {
-      toast(model);
+    const model = await (async function () {
+      let model;
+      try {
+        model = await fetchModel(id);
+      } catch (error) {
+        if (error instanceof Error) toast(error.message);
+        setLoading(false);
+        return;
+      }
+
+      if (typeof model === "string") {
+        toast(model);
+        setLoading(false);
+        return;
+      }
+
+      return model;
+    })();
+
+    if (!model) {
+      toast("Error loading model");
       setLoading(false);
       return;
     }
@@ -224,9 +235,8 @@ export function Models({
     const addon = addons[model.type as "LORA" | "TextualInversion"];
 
     if (addon.MAX_LENGTH) {
-      const currentLength = added.filter(
-        (model) => model.type === model.type
-      ).length;
+      const currentLength = added.filter((m) => m.type === model.type).length;
+      console.log({ currentLength }, addon);
       if (currentLength == addon.MAX_LENGTH) {
         setLoading(false);
         toast(
