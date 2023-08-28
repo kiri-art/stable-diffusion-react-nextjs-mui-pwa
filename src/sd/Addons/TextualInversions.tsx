@@ -17,22 +17,24 @@ export function getTokensFromModelVersion(modelVersion: ModelVersion) {
 }
 
 export function onChange(added: AddedModel[], inputs: ModelState) {
-  const textualInversions = added.map(({ model, versionIndex }) => {
-    const modelVersion = model.modelVersions[versionIndex];
+  const textualInversions = added
+    .filter(({ model }) => model.type === "TextualInversion")
+    .map(({ model, versionIndex }) => {
+      const modelVersion = model.modelVersions[versionIndex];
 
-    let file;
-    for (const f of modelVersion.files) if (f.primary) file = f;
-    if (!file) file = modelVersion.files[0];
+      let file;
+      for (const f of modelVersion.files) if (f.primary) file = f;
+      if (!file) file = modelVersion.files[0];
 
-    return (
-      file.downloadUrl +
-      "#fname=" +
-      file.name +
-      "&token=" +
-      getTokensFromModelVersion(model.modelVersions[versionIndex])
-    );
-    // modelVersion.trainedWords?.[0]
-  });
+      return (
+        file.downloadUrl +
+        "#fname=" +
+        file.name +
+        "&token=" +
+        getTokensFromModelVersion(model.modelVersions[versionIndex])
+      );
+      // modelVersion.trainedWords?.[0]
+    });
 
   if (
     JSON.stringify(textualInversions) !==
