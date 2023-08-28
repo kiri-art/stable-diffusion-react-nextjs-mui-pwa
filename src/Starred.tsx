@@ -49,6 +49,19 @@ export async function report(starId: string) {
   const result = await db.call("reportStar", { starId });
   console.log(result);
 
+  if (existing) {
+    // Workaround previous result coming in same request
+    // It will be finalized in next request, but in meantime,
+    // fix the value locally.
+    setTimeout(() => {
+      db.collection("stars")._update(starId, {
+        ...existing,
+        reports: result.NUM_REPORTS as number,
+      });
+      console.log("finally", db.collection("stars").findOne(starId));
+    }, 0);
+  }
+
   if (result.status !== "OK")
     return toast(t`An error occured: ` + result.status + " " + result.message);
 
