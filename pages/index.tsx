@@ -171,18 +171,29 @@ const Home: NextPage = () => {
 
   const query: Record<string, unknown> = {};
   if (!router.query.showDeleted) query.deleted = { $ne: true };
-  if (!router.query.showReported)
-    query.$or = [
-      { reports: { $exists: false } },
-      { reports: { $lt: NUM_REPORTS_UNTIL_REMOVAL } },
-    ];
+  if (!router.query.showReported) {
+    if (!query.$and) query.$and = [];
+    // @ts-expect-error: ok
+    query.$and.push({
+      $or: [
+        { reports: { $exists: false } },
+        { reports: { $lt: NUM_REPORTS_UNTIL_REMOVAL } },
+      ],
+    });
+  }
+
   const sortField = show === "recent" ? "date" : "likes";
-  if (nsfwFilter)
-    query.$or = [
-      { "callInputs.safety_checker": true },
-      { "callInputs.safety_checker": { $exists: false } },
-      { "callInputs.safety_checker": null },
-    ];
+  if (nsfwFilter) {
+    if (!query.$and) query.$and = [];
+    // @ts-expect-error: ok
+    query.$and.push({
+      $or: [
+        { "callInputs.safety_checker": true },
+        { "callInputs.safety_checker": { $exists: false } },
+        { "callInputs.safety_checker": null },
+      ],
+    });
+  }
 
   if (!nsfwFilter && !explicit)
     query["modelInputs.prompt"] = {
