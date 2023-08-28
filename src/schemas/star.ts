@@ -16,4 +16,5 @@ export default interface Star {
   // stars: number;
   // starredBy: string[];
   likes: number;
+  reports?: number;
 }

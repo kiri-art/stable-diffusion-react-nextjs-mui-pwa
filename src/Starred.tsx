@@ -38,6 +38,14 @@ export async function report(starId: string) {
 
   if (!ok) return false;
 
+  const existing = db.collection("stars").findOne(starId);
+  if (existing) {
+    db.collection("stars")._update(starId, {
+      ...existing,
+      reports: existing.reports ? existing.reports + 1 : 1,
+    });
+  }
+
   const result = await db.call("reportStar", { starId });
   console.log(result);
 
