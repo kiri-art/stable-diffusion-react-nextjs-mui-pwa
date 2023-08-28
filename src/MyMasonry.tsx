@@ -41,10 +41,13 @@ export function Masonry<Item>(props: MasonryProps<Item>) {
     // eslint-disable-next-line
   ) as any;
   nextProps.positioner = usePositioner(
-    nextProps
+    nextProps,
     // can't remember why i did this but it caused a lot of flicker and
     // doesn't seem to be necessary
     // [props.items] // kiri
+    // ok maybe i wanted this: (re-render if items.length changes)
+    [props.items.length]
+    // see also https://github.com/jaredLunde/masonic/issues/12
   );
   nextProps.resizeObserver = useResizeObserver(nextProps.positioner);
   const scrollToIndex = useScrollToIndex(nextProps.positioner, {

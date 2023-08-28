@@ -6,9 +6,9 @@ import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
-// import MyMasonry from "./MyMasonry";
 // import Masonry from "@mui/lab/Masonry";
-import { Masonry } from "masonic";
+// import { Masonry } from "masonic";
+import Masonry from "./MyMasonry";
 
 import Link from "./Link";
 import Star from "./schemas/star";
