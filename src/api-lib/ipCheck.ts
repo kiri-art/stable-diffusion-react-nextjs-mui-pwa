@@ -14,6 +14,7 @@ if (typeof window !== "object") {
 // taken from gongo;
 // TODO: export a method like this from gongo-server, that accepts x-fw number.
 function ipFromReq(req: NextApiRequest) {
+  // TODO, doesn't work on edge.
   let ip;
   if (req.headers["x-forwarded-for"]) {
     if (typeof req.headers["x-forwarded-for"] === "string")

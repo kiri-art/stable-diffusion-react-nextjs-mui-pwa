@@ -2,7 +2,7 @@
 import GongoAuth from "gongo-server/lib/auth";
 import { MongoDbaUser } from "gongo-server-db-mongo";
 import gs from "../../src/api-lib/db-full";
-import { ipPass, ipFromReq } from "../../src/api-lib/ipCheck";
+// import { ipPass, ipFromReq } from "../../src/api-lib/ipCheck";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
@@ -102,6 +102,7 @@ if (gs.dba) {
 // TODO Sure we can move this all into gongo-server.
 // @ts-expect-error: any
 export default async function handler(req, res) {
+  /*
   if (
     process.env.NODE_ENV === "production" &&
     !(await ipPass(ipFromReq(req)))
@@ -109,6 +110,7 @@ export default async function handler(req, res) {
     res.status(403).end("Forbidden; IP not allowed");
     return;
   }
+  */
 
   if (req.query.type === "setup") {
     gongoAuth.ensureDbStrategyData().then(() => res.end("OK"));

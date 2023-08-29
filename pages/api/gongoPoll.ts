@@ -9,7 +9,7 @@ import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
 import { addDays } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
+// import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
 import { ObjectId } from "bson";
 
 export const config = {
@@ -431,6 +431,7 @@ if (gs.dba) {
 const gsExpressPost =
   config.runtime === "edge" ? gs.vercelEdgePost() : gs.expressPost();
 async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
+  /*
   if (
     process.env.NODE_ENV === "production" &&
     !(await ipPass(ipFromReq(req)))
@@ -438,6 +439,7 @@ async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
     res.status(403).end("IP not allowed");
     return;
   }
+  */
 
   // @ts-expect-error: TODO
   return gsExpressPost(req, res);

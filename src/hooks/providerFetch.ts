@@ -1,7 +1,7 @@
 import hooks from "../../src/lib/hooks";
 import { db } from "gongo-client-react";
 import { BananaRequest } from "../schemas";
-import { ipPass, ipFromReq } from "../api-lib/ipCheck";
+// import { ipPass, ipFromReq } from "../api-lib/ipCheck";
 import { ProviderFetchRequestBase } from "../lib/providerFetch";
 import calculateCredits from "../calculateCredits";
 
@@ -19,7 +19,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   console.log("providerFetch.server.preStart"); // , data, hookResult);
   // console.log({ data });
   // @ts-expect-error: TODO
-  const { extraInfo, deps, req } = data;
+  const { extraInfo, deps /*, req */ } = data;
   // @ts-expect-error: TODO
   const { request }: { request: ProviderFetchRequestBase } = data;
   const { gs, Auth } = deps;
@@ -77,6 +77,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
       );
   */
 
+  /*
   if (
     process.env.NODE_ENV === "production" &&
     !(await ipPass(ipFromReq(req)))
@@ -84,6 +85,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
     res.status(403).end("Forbidden; IP not allowed");
     return;
   }
+  */
 
   // --- CHECK AND MODIFY CREDITS --- //
 
