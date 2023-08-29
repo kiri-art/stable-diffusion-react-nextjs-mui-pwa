@@ -185,6 +185,16 @@ export function Models({
     addons.TextualInversion.onChange(added, inputs);
   }, [added, inputs]);
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  React.useEffect(() => {
+    const current = inputRef.current;
+    function keydown(event: KeyboardEvent) {
+      if (event.key === "Enter") add(event as unknown as React.SyntheticEvent);
+    }
+    current?.addEventListener("keydown", keydown);
+    return () => current?.removeEventListener("keydown", keydown);
+  });
+
   async function add(event: React.SyntheticEvent) {
     event.preventDefault();
 
@@ -455,27 +465,26 @@ export function Models({
           </li>
         ))}
       </ol>
-      <form>
-        <Stack direction="row" spacing={0}>
-          <TextField
-            sx={{
-              // mx: 1
-              width: 300,
-            }}
-            size="small"
-            value={value}
-            onChange={(error) => setValue(error.target.value)}
-            placeholder="Model hash or CivitAI ID / URL"
-          />
-          <Button onClick={add} disabled={loading} type="submit">
-            {loading ? (
-              <CircularProgress size="1.5em" />
-            ) : (
-              <KeyboardReturn fontSize="small" />
-            )}
-          </Button>
-        </Stack>
-      </form>
+
+      <Stack direction="row" spacing={0}>
+        <TextField
+          sx={{
+            // mx: 1
+            width: 300,
+          }}
+          size="small"
+          value={value}
+          onChange={(error) => setValue(error.target.value)}
+          placeholder="Model hash or CivitAI ID / URL"
+        />
+        <Button onClick={add} disabled={loading} type="submit">
+          {loading ? (
+            <CircularProgress size="1.5em" />
+          ) : (
+            <KeyboardReturn fontSize="small" />
+          )}
+        </Button>
+      </Stack>
     </>
   );
 }
