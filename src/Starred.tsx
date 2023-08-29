@@ -49,6 +49,8 @@ export async function report(starId: string) {
   const result = await db.call("reportStar", { starId });
   console.log(result);
 
+  /*
+  gongo now runs subs after other calls, so this is not needed.
   if (existing) {
     // Workaround previous result coming in same request
     // It will be finalized in next request, but in meantime,
@@ -61,6 +63,7 @@ export async function report(starId: string) {
       console.log("finally", db.collection("stars").findOne(starId));
     }, 0);
   }
+  */
 
   if (result.status !== "OK")
     return toast(t`An error occured: ` + result.status + " " + result.message);
