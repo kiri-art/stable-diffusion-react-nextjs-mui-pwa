@@ -300,19 +300,14 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
     // @ts-expect-error: i don't have time for you typescript
     query.__updatedAt = { $gt: updatedAt.users };
 
-  return await db
-    .collection("users")
-    .find(query)
-    .project({
-      projection: {
-        _id: true,
-        emails: true,
-        displayName: true,
-        credits: true,
-        admin: true,
-        __updatedAt: true,
-      },
-    });
+  return await db.collection("users").find(query).project({
+    _id: true,
+    emails: true,
+    displayName: true,
+    credits: true,
+    admin: true,
+    __updatedAt: true,
+  });
 });
 
 gs.method(
