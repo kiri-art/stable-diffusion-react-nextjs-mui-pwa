@@ -4978,10 +4978,10 @@ gongo-client@2.7.0:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.0.0.tgz#152e4f5ec1bc7ac6a3b4ea732a6b1aa8168ebc07"
-  integrity sha512-N0kmil6nqYNpocYHmOAJmQmMdt6vKXqlc4nNX5bB6impBWg5kFnrtm3nvBarADJ9veAtiYeqKZcy7xAlqU9+Mg==
+gongo-server-db-mongo@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.0.1.tgz#a76c000ad4ce068695dba584b29817515a07e387"
+  integrity sha512-ubAwrixDCrJ7a9/xBBabvS+RSfM1ZLroLtKTPNVCKtyOF2Y/GQNK3IXWpKLOrFav0+uLx6zH7zz/9dJKhhPhZw==
   dependencies:
     fast-json-patch "^3.1.1"
     json-pointer "^0.6.2"

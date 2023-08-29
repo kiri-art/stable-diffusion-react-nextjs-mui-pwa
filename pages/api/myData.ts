@@ -48,7 +48,10 @@ export default async function myData(
 
   const db = await gs.dba.dbPromise;
 
+  // @ts-expect-error: note, sessionId is a string.  this is a bug in gongo
+  // that uses string ids for sessions.
   const session = await db.collection("sessions").findOne({ _id: sessionId });
+
   if (!session) return res.status(401).send("Session not found");
 
   const user = await db.collection("users").findOne({ _id: session.userId });

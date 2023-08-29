@@ -22,8 +22,6 @@ AWS.config.update({
 
 if (!gs.dba) throw new Error("gs.dba not set");
 
-const Files = gs.dba.collection("files");
-
 interface FileEntry {
   [key: string]: unknown;
   // _id: string | ObjectId;
@@ -41,6 +39,8 @@ interface FileEntry {
     height?: number;
   };
 }
+
+const Files = gs.dba.collection<FileEntry>("files");
 
 async function createFileFromBuffer(
   buffer: Buffer,
@@ -104,9 +104,8 @@ async function createFileFromBuffer(
 
   if (existingId) {
     const $set = (({ _id, ...rest }) => rest)(entry);
-    await Files.updateOne({ _id: existingId }, { $set });
+    await Files.updateOne({ _id: new ObjectId(existingId) }, { $set });
   } else {
-    // @ts-expect-error: version mismatch... todo
     await Files.insertOne(entry);
   }
 

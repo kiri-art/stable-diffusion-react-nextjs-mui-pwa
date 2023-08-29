@@ -1,12 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import GongoServer from "gongo-server/lib/serverless";
-import Database /* ObjectID */ from "gongo-server-db-mongo";
-
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
-
-const gs = new GongoServer({
-  dba: new Database(MONGO_URL, "sd-mui"),
-});
+import gs from "../../src/api-lib/db-full";
 
 export default async function bananaUpdate(
   req: NextApiRequest,

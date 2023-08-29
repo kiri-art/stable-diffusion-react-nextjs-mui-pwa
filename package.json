@@ -37,7 +37,7 @@
     "gongo-client": "2.7.0",
     "gongo-client-react": "0.3.1",
     "gongo-server": "3.3.1",
-    "gongo-server-db-mongo": "3.0.0",
+    "gongo-server-db-mongo": "3.0.1",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
     "ipdata": "^2.2.4",

@@ -413,7 +413,9 @@ if (gs.dba) {
     for (const update of entries as ChangeSetUpdate[]) {
       console.log(update);
       const likeId = update._id;
-      const like = await db.collection("likes").findOne({ _id: likeId });
+      const like = await db
+        .collection("likes")
+        .findOne({ _id: new ObjectId(likeId) });
       if (!like) return;
       await db
         .collection("stars")

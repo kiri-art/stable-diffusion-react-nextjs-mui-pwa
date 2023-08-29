@@ -1,7 +1,7 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
-import GongoServer from "gongo-server/lib/serverless";
 import GongoAuth from "gongo-server/lib/auth";
-import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
+import { MongoDbaUser } from "gongo-server-db-mongo";
+import gs from "../../src/api-lib/db-full";
 import { ipPass, ipFromReq } from "../../src/api-lib/ipCheck";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -13,7 +13,6 @@ const GithubStrategy = require("passport-github2").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
 
 const env = process.env;
-const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
 const ROOT_URL = (
   env.ROOT_URL ||
   "http" +
@@ -29,10 +28,6 @@ console.log({
   CHOSEN_ROOT_URL: ROOT_URL,
 });
 */
-
-const gs = new GongoServer({
-  dba: new MongoDBA(MONGO_URL, "sd-mui"),
-});
 
 const gongoAuth = new GongoAuth(gs, passport);
 // gs.db.Users.ensureAdmin('dragon@wastelands.net', 'initialPassword');
