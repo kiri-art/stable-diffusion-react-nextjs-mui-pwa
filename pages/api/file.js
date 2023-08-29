@@ -4,7 +4,8 @@ const crypto = require("crypto");
 const GongoServer = require("gongo-server/lib/serverless").default;
 const Auth = require("gongo-server/lib/auth-class").default;
 const Database = require("gongo-server-db-mongo").default;
-const ObjectID = require("gongo-server-db-mongo").ObjectId;
+const ObjectId = require("bson").ObjectId;
+const { MongoClient } = require("mongodb");
 const fetch = require("node-fetch");
 const sharp = require("sharp");
 
@@ -26,7 +27,7 @@ AWS.config.update({
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
 
 const gs = new GongoServer({
-  dba: new Database(MONGO_URL, "sd-mui"),
+  dba: new Database(MONGO_URL, "sd-mui", MongoClient),
 });
 
 const db = gs.dba;
@@ -58,7 +59,7 @@ async function createFromBuffer(
   const now = new Date();
 
   const entry = {
-    _id: existingId || new ObjectID(),
+    _id: existingId || new ObjectId(),
     filename,
     sha256,
     size: size,
@@ -173,7 +174,7 @@ async function fileRoute(req, res) {
     throw new Error("Need an id or sourceUrl");
 
   const dbQuery = {};
-  if (query.id) dbQuery._id = ObjectID(req.query.id);
+  if (query.id) dbQuery._id = new ObjectId(req.query.id);
   if (query.sourceUrl) dbQuery.sourceUrl = query.sourceUrl;
 
   let buffer;

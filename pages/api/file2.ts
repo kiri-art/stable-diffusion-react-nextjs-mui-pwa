@@ -3,7 +3,8 @@ import crypto from "crypto";
 import sharp from "sharp";
 import { fileTypeFromBuffer } from "file-type";
 
-import gs, { /* Auth, User, Order, */ ObjectId } from "../../src/api-lib/db";
+import { ObjectId } from "bson";
+import gs /* Auth, User, Order,  ObjectId */ from "../../src/api-lib/db";
 // import { format } from 'date-fns';
 
 const AWS_S3_BUCKET = "kiri-art";
@@ -105,6 +106,7 @@ async function createFileFromBuffer(
     const $set = (({ _id, ...rest }) => rest)(entry);
     await Files.updateOne({ _id: existingId }, { $set });
   } else {
+    // @ts-expect-error: version mismatch... todo
     await Files.insertOne(entry);
   }
 

@@ -1,4 +1,4 @@
-import gs, { CreditCode, ObjectId, User } from "../../src/api-lib/db";
+import gs, { CreditCode, User } from "../../src/api-lib/db";
 import {
   GongoDocument,
   CollectionEventProps,
@@ -10,9 +10,14 @@ import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
 import { addDays } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
+import { ObjectId } from "bson";
+
+export const config = {
+  runtime: "edge",
+  // regions: ['iad1'],
+};
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
-
 gs.publish("accounts", (db) => db.collection("accounts").find());
 
 gs.publish("orders", async (db, {}, { auth }) => {
@@ -421,7 +426,8 @@ if (gs.dba) {
 }
 
 // module.exports = gs.expressPost();
-const gsExpressPost = gs.expressPost();
+const gsExpressPost =
+  config.runtime === "edge" ? gs.vercelEdgePost() : gs.expressPost();
 async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
   if (
     process.env.NODE_ENV === "production" &&
