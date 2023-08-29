@@ -4978,19 +4978,19 @@ gongo-client@2.7.0:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.0.1.tgz#a76c000ad4ce068695dba584b29817515a07e387"
-  integrity sha512-ubAwrixDCrJ7a9/xBBabvS+RSfM1ZLroLtKTPNVCKtyOF2Y/GQNK3IXWpKLOrFav0+uLx6zH7zz/9dJKhhPhZw==
+gongo-server-db-mongo@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.0.2.tgz#c6f74ef1d2c9e3503885a7d5612b0ac99af8ffac"
+  integrity sha512-DqgieJRDRLPCeKRDvoOe8fvQ+2golaU7mTAO1T3cHIYKQlwW80VLxPYpS5p8XjR+NVQT1tet2lwa/a+DUjpOqg==
   dependencies:
     fast-json-patch "^3.1.1"
     json-pointer "^0.6.2"
     jsonpatch-to-mongodb "^1.0.0"
 
-gongo-server@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/gongo-server/-/gongo-server-3.3.1.tgz#822a29ed57de923991925d555b86c3a10a01ce75"
-  integrity sha512-fAvJBhe729wwzdHUP1EWXsWffx8XhjBDlJcFlWuf3fvaL9FbzWjNZ6SympBvjFls9eIZTk51V806yJkEQVxDfw==
+gongo-server@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/gongo-server/-/gongo-server-3.4.0.tgz#f95bdf08a3820ffca62bf0bf8928923bd4e4752d"
+  integrity sha512-C/yaObXw+q9BrmLNM90sEM2V/ioPzNTme4/srhAqrmBj1GqHkZlvQcBVsEofXkJ12JKAHFBnV9RU1K9SSr7E3g==
   dependencies:
     "@types/passport" "^1.0.8"
     "@types/passport-oauth2" "^1.4.11"

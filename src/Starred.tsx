@@ -88,17 +88,30 @@ export function useLike(item: Star) {
 
     if (!userId) return alert("log in first");
 
-    if (userLike)
+    let count = 0;
+    if (userLike) {
+      count = likedByUser ? -1 : 1;
       db.collection("likes").update(userLike._id, {
         $set: { liked: !likedByUser },
       });
-    else
+    } else {
+      count++;
       db.collection("likes").insert({
         userId,
         starId: item._id,
         liked: true,
         __ObjectIDs: ["userId", "starId"],
       });
+    }
+
+    // Optimistc update.
+    const star = db.collection("stars").findOne(item._id);
+    if (star) {
+      db.collection("stars")._update(item._id, {
+        ...star,
+        likes: star.likes + count,
+      });
+    }
   }
 
   return { userId, userLike, likedByUser, like };
