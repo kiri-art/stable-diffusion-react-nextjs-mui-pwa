@@ -300,9 +300,10 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
     // @ts-expect-error: i don't have time for you typescript
     query.__updatedAt = { $gt: updatedAt.users };
 
-  const realUsers = await db.collection("users").getReal();
-  const users = await realUsers
-    .find(query, {
+  return await db
+    .collection("users")
+    .find(query)
+    .project({
       projection: {
         _id: true,
         emails: true,
@@ -311,17 +312,7 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
         admin: true,
         __updatedAt: true,
       },
-    })
-    .toArray();
-
-  return users.length
-    ? [
-        {
-          coll: "users",
-          entries: users,
-        },
-      ]
-    : [];
+    });
 });
 
 gs.method(
