@@ -1104,15 +1104,13 @@ export default function SDControls({
         );
       }
       */
-
-      if (inputs.sampler.value == "DPMSolverMultistepScheduler") {
-        inputs.num_inference_steps.setValue(20);
-      }
     },
     /* eslint-disable */
     [
       inputs.MODEL_ID.value,
       inputs.sampler.value,
+      defaults.width,
+      defaults.height,
       // The following lines really are exactly and intentionally what we
       // want.  Maybe eslint doesn't check 3 levels deep?
       inputs.sampler.setValue,
@@ -1123,8 +1121,12 @@ export default function SDControls({
   );
 
   React.useEffect(() => {
-    inputs.num_inference_steps.setValue(defaults.num_inference_steps);
-  }, [defaults.num_inference_steps]);
+    inputs.num_inference_steps.setValue(
+      inputs.sampler.value == "DPMSolverMultistepScheduler"
+        ? 20
+        : defaults.num_inference_steps
+    );
+  }, [defaults.num_inference_steps, inputs.sampler.value]);
 
   React.useEffect(() => {
     inputs.sampler.setValue(defaults.sampler);
