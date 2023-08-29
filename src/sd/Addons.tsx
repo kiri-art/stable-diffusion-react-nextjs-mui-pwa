@@ -38,7 +38,7 @@ export default function Addons({ inputs }: { inputs: ModelState }) {
       >
         Addons
       </span>
-      <p style={{ fontSize: "80%" }}>
+      <div style={{ fontSize: "80%", marginTop: "10px" }}>
         Browse <a href="https://civitai.com/">CivitAI</a> and{" "}
         <FilterAlt
           sx={{ verticalAlign: "middle", color: "#888" }}
@@ -69,7 +69,7 @@ export default function Addons({ inputs }: { inputs: ModelState }) {
           </>
         )}
         .
-      </p>
+      </div>
       <Models
         added={added}
         setAdded={setAdded}
