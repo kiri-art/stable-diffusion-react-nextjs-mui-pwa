@@ -116,6 +116,7 @@ function Username({
               onChange={(event) => setNewUsername(event.target.value)}
             />
             <button
+              type="button"
               onClick={() => {
                 setEditable(false);
                 setNewUsername(username);
