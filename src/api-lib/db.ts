@@ -1,7 +1,7 @@
 import GongoServer from "gongo-server/lib/serverless";
 import MongoDBA from "gongo-server-db-mongo";
 import Auth from "gongo-server/lib/auth-class";
-import Database, { Collection /*, ObjectId */ } from "gongo-server-db-mongo";
+import Database /*, ObjectId */ from "gongo-server-db-mongo";
 import MongoClient from "mongodb-rest-relay/lib/client";
 import { ObjectId } from "bson";
 
@@ -42,12 +42,6 @@ const gs = new GongoServer({
 
 const db = gs.dba;
 const dba = gs.dba;
-
-declare module "gongo-server" {
-  class Database {
-    collection(name: "users"): Collection<User>;
-  }
-}
 
 export type { User, Order, CreditCode };
 export { db, dba, Auth, Database };

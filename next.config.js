@@ -39,4 +39,13 @@ module.exports = withPWA({
       ],
     ],
   },
+  webpack: (config) => {
+    if (process.env.NODE_ENV === "development") {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "next-auth/react": require.resolve("next-auth/react"),
+      };
+    }
+    return config;
+  },
 });

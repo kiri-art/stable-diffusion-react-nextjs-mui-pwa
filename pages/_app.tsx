@@ -3,6 +3,7 @@ import Head from "next/head";
 import { AppProps } from "next/app";
 import { Analytics } from "@vercel/analytics/react";
 import { useRouter } from "next/router";
+import { SessionProvider } from "next-auth/react";
 // import { useGongoIsPopulated } from "gongo-client-react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,7 +51,11 @@ export default function MyApp(props: MyAppProps) {
   const router = useRouter();
   const locale = locales[router.locale || defaultLocale];
   const dir = locale.dir as "ltr" | "rtl";
-  const { Component, emotionCache = csEmotionCache[dir], pageProps } = props;
+  const {
+    Component,
+    emotionCache = csEmotionCache[dir],
+    pageProps: { session, ...pageProps },
+  } = props;
 
   React.useEffect(() => {
     // Initially set on server-rendered _document.js
@@ -82,9 +87,11 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <I18nProvider i18n={i18n}>
         <ThemeProvider theme={themes[dir]}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
+          <SessionProvider session={session}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </SessionProvider>
           <Analytics />
         </ThemeProvider>
       </I18nProvider>

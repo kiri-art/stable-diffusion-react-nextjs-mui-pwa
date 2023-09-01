@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import { Plural, Trans } from "@lingui/macro";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
+import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import Image from "next/legacy/image";
 import useNews from "./useNews";
+import { signIn, signOut } from "next-auth/react";
 
 import {
   AppBar,
@@ -64,6 +65,9 @@ export default function MyAppBar({ title }: { title: string }) {
   );
 
   const userId = useGongoUserId();
+  // const session = useSession();
+  // const userId = session?.data?.user?.id;
+
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
@@ -415,6 +419,7 @@ export default function MyAppBar({ title }: { title: string }) {
                           handleCloseUserMenu();
                           /* @ts-expect-error: TODO */
                           db.auth.clear();
+                          signOut();
                         }}
                       >
                         <Typography textAlign="center">
@@ -426,8 +431,9 @@ export default function MyAppBar({ title }: { title: string }) {
                 ) : (
                   <Button
                     color="inherit"
-                    component={Link}
-                    href={"/login?from=" + location.pathname + location.search}
+                    // component={Link}
+                    // href={"/login?from=" + location.pathname + location.search}
+                    onClick={() => signIn()}
                   >
                     <Trans>Login</Trans>
                   </Button>

@@ -16,13 +16,5 @@ const gs = new GongoServer({
 const db = gs.dba;
 const dba = gs.dba;
 
-/*
-declare module "gongo-server" {
-  class Database {
-    collection(name: "users"): Collection<User>;
-  }
-}
-*/
-
 export { db, dba, Auth, Database, ObjectId, User, Order, CreditCode };
 export default gs;
