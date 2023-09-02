@@ -7,8 +7,9 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
 // import Masonry from "@mui/lab/Masonry";
-// import { Masonry } from "masonic";
-import Masonry from "./MyMasonry";
+
+import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
+// import Masonry from "./MyMasonry"; // <-- flickers in production?  why?
 
 import Link from "./Link";
 import Star from "./schemas/star";
