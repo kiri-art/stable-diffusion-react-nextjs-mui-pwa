@@ -193,6 +193,10 @@ const Home: NextPage = () => {
         { "callInputs.safety_checker": null },
       ],
     });
+    query["modelInputs.prompt"] = {
+      // For models that don't have a safety checker.
+      $not: /naked|nude|topless|exposed|pussy|vagina|dick|penis/i,
+    };
   }
 
   if (!nsfwFilter && !explicit)
