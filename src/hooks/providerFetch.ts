@@ -19,7 +19,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   console.log("providerFetch.server.preStart"); // , data, hookResult);
   // console.log({ data });
   // @ts-expect-error: TODO
-  const { extraInfo, deps /*, req */ } = data;
+  const { extraInfo, deps, req } = data;
   // @ts-expect-error: TODO
   const { request }: { request: ProviderFetchRequestBase } = data;
   const { gs, Auth } = deps;
@@ -52,6 +52,16 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   };
 
   // --- LOAD USER --- //
+
+  const cookie = req.headers.get
+    ? req.headers.get("cookie")
+    : req.headers.cookie;
+  const nextAuthSessionToken = (function () {
+    // next-auth.session-token=45df020e-1424-4d13-8bd5-5bd59851c774
+    const match = cookie && cookie.match(/\bnext-auth\.session-token=([^;]+)/);
+    return match && match[1];
+  })();
+  extraInfo.auth.nextAuthSessionToken = nextAuthSessionToken;
 
   const auth = new Auth(gs.dba, extraInfo.auth);
   console.log({ sessionData: await auth.getSessionData() });
