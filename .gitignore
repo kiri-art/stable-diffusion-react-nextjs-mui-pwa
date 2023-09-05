@@ -11,3 +11,4 @@ tsconfig.tsbuildinfo
 **/public/workbox-*
 .swc
 **/public/worker-development.js
+.env.local
