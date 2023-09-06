@@ -229,6 +229,20 @@ const Home: NextPage = () => {
     { sort: [sortField, "desc"], limit: 50 }
   );
 
+  // 2023-09-06 temporary mitigation for old gongo-client version
+  React.useEffect(() => {
+    const count = db.collection("stars").find().count();
+    if (count > 0 && count < 100) {
+      for (const sub of [starsFiltered, starsNSFW]) {
+        if (sub && sub.sub && sub.sub.lastSortedValue === "__END__") {
+          console.log("repairing", sub);
+          sub.sub.lastSortedValue = new Date(0);
+          sub.loadMore();
+        }
+      }
+    }
+  }, [starsFiltered, starsNSFW]);
+
   function loadMore() {
     // console.log("loadMore");
     if (

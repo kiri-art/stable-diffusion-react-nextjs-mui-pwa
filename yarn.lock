@@ -4963,10 +4963,10 @@ gongo-client-react@0.4.0:
   dependencies:
     next-auth "^4.23.1"
 
-gongo-client@2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.7.0.tgz#c3088522c6f980057b0385df447a38863ae7b776"
-  integrity sha512-wZlLl/c+S8E4fFsKGN9erKbKbYEnfSd8ym6FrQYiRm1igr1mtodx5ppjhboPaQyV2E3VooUhVghobUjZGadlkg==
+gongo-client@2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.7.1.tgz#8715ce544f09ed6e2f461f79b991ca2764ba2fcc"
+  integrity sha512-bt44O0Yq7BugLgHKif8jyGy0A2hyZ73Um5Uy7O8que4nS+J/spuFrbBl4uFnVjDPfBvovQrUlGeNLyGq5SXHIA==
   dependencies:
     arson "^0.2.6"
     bson-objectid "^2.0.3"
