@@ -41,7 +41,6 @@ function TextFieldDebounced({
 
   React.useEffect(() => {
     if (value !== currentValue) {
-      console.log(1);
       if (timeout.current) {
         clearTimeout(timeout.current);
         timeout.current = null;

@@ -362,14 +362,17 @@ export default function Starred({
       )}
       */}
       <div style={{ height: "10px" }} />
-      <Masonry
-        items={items}
-        render={MasonryItem}
-        columnCount={cols || _cols}
-        columnGutter={10}
-        rowGutter={10}
-        onRender={maybeLoadMore}
-      />
+      {items.length > 0 && (
+        <Masonry
+          items={items}
+          itemKey={(item) => item._id}
+          render={MasonryItem}
+          columnCount={cols || _cols}
+          columnGutter={10}
+          rowGutter={10}
+          onRender={maybeLoadMore}
+        />
+      )}
     </>
   );
 }
