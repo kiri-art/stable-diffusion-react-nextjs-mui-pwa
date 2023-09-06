@@ -2,8 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import gs from "../../src/api-lib/db";
-
-const DAILY_FREE_CREDITS = 20;
+import { DAILY_FREE_CREDITS } from "../../src/config/constants";
 
 const db = gs.dba;
 

@@ -6,7 +6,7 @@ import {
   userIdMatches,
 } from "gongo-server-db-mongo/lib/collection";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
-import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/lib/constants";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/config/constants";
 import { addDays } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
 // import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";

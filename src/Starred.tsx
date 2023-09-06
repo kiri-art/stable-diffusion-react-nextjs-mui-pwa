@@ -16,7 +16,7 @@ import Star from "./schemas/star";
 import strObjectId from "./lib/strObjectId";
 import useBreakPoint from "./lib/useBreakPoint";
 import asyncConfirm from "./asyncConfirm";
-import { NUM_REPORTS_UNTIL_REMOVAL } from "./lib/constants";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "./config/constants";
 import StarredItem from "../pages/s/[_id]";
 import { useInfiniteLoader } from "masonic";
 

@@ -27,7 +27,7 @@ import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
 import { useRouter } from "next/router";
 import { Clear, GridView, Help, Splitscreen } from "@mui/icons-material";
-import { NUM_REPORTS_UNTIL_REMOVAL } from "../src/lib/constants";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "../src/config/constants";
 
 function TextFieldDebounced({
   currentValue,

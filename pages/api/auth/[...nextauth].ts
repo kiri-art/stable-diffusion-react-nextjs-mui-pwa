@@ -17,6 +17,7 @@ import GongoAuthAdapter, {
 } from "../../../src/api-lib/gongoAuthAdapter";
 import { ipFromReq } from "../../../src/api-lib/ipCheck";
 import { ObjectId } from "bson";
+import { DAILY_FREE_CREDITS } from "../../../src/config/constants";
 
 interface Service {
   service: string;
@@ -35,7 +36,7 @@ interface Service {
   };
 }
 
-function fromService<T extends Record<string, unknown>>(
+function newUserFromService<T extends Record<string, unknown>>(
   service: Service,
   overrides: T = {} as T
 ) {
@@ -51,6 +52,8 @@ function fromService<T extends Record<string, unknown>>(
     photos: service.profile.photos,
     image: service.profile.photos[0].value,
     services: [service],
+    credits: { free: DAILY_FREE_CREDITS, paid: 0 },
+    createdAt: new Date(),
     ...overrides,
   };
 }
@@ -93,7 +96,7 @@ export const authOptions = {
           },
         };
 
-        return fromService(service, {
+        return newUserFromService(service, {
           name: profile.name, // <-- full name in one string
         });
       },
@@ -121,7 +124,7 @@ export const authOptions = {
           },
         };
 
-        return fromService(service, {
+        return newUserFromService(service, {
           name: profile.name, // <-- full name in one string
         });
       },
@@ -148,7 +151,7 @@ export const authOptions = {
           },
         };
 
-        return fromService(service, {
+        return newUserFromService(service, {
           name: profile.name, // <-- full name in one string
         });
       },

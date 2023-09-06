@@ -12,3 +12,4 @@ tsconfig.tsbuildinfo
 .swc
 **/public/worker-development.js
 .env.local
+.env*.local

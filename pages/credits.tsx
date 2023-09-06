@@ -28,9 +28,7 @@ import {
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
 import type { User } from "../src/schemas";
-
-const MIN_PAID_CREDITS = 5;
-const DAILY_FREE_CREDITS = 20;
+import { DAILY_FREE_CREDITS, MIN_PAID_CREDITS } from "../src/config/constants";
 
 function intOrFixedOneStr(num: number) {
   if (num && !Number.isInteger(num)) return num.toFixed(1);
