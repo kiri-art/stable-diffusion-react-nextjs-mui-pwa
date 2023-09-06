@@ -232,11 +232,17 @@ const Home: NextPage = () => {
   // 2023-09-06 temporary mitigation for old gongo-client version
   React.useEffect(() => {
     const count = db.collection("stars").find().count();
-    if (count > 0 && count < 100) {
+    if (count > 0 && count < 80) {
       for (const sub of [starsFiltered, starsNSFW]) {
-        if (sub && sub.sub && sub.sub.lastSortedValue === "__END__") {
-          console.log("repairing", sub);
-          sub.sub.lastSortedValue = new Date(0);
+        if (
+          sub &&
+          sub.sub &&
+          sub.sub.lastSortedValue &&
+          (sub.sub.lastSortedValue === "__END__" ||
+            (sub.sub.lastSortedValue as Date).getTime() === 0)
+        ) {
+          console.log("repairing", sub, sub.sub.lastSortedValue);
+          sub.sub.lastSortedValue = new Date();
           sub.loadMore();
         }
       }
