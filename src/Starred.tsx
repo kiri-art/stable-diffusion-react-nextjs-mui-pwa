@@ -322,8 +322,8 @@ export default function Starred({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const maybeLoadMore = useInfiniteLoader(loadMore || (() => {}), {
     isItemLoaded: (index, items) => !!items[index],
-    minimumBatchSize: (cols || _cols) * 4,
-    threshold: (cols || _cols) * 4,
+    minimumBatchSize: (cols || _cols) * 6,
+    threshold: (cols || _cols) * 6,
   });
 
   return (

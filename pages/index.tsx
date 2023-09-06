@@ -221,12 +221,12 @@ const Home: NextPage = () => {
   const starsFiltered = useGongoSub(
     "stars",
     { nsfw: false },
-    { sort: [sortField, "desc"], limit: 20 }
+    { sort: [sortField, "desc"], limit: 50 }
   );
   const starsNSFW = useGongoSub(
     nsfwFilter === false && "stars",
     { nsfw: true },
-    { sort: [sortField, "desc"], limit: 20 }
+    { sort: [sortField, "desc"], limit: 50 }
   );
 
   function loadMore() {
