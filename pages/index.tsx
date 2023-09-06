@@ -232,7 +232,7 @@ const Home: NextPage = () => {
   // 2023-09-06 temporary mitigation for old gongo-client version
   React.useEffect(() => {
     if (process.env.NODE_ENV === "development") return;
-    const count = db.collection("stars").find().count();
+    const count = items.length;
     if (count > 0 && count < 80) {
       for (const sub of [starsFiltered, starsNSFW]) {
         if (
@@ -248,7 +248,7 @@ const Home: NextPage = () => {
         }
       }
     }
-  }, [starsFiltered, starsNSFW]);
+  }, [starsFiltered, starsNSFW, items.length]);
 
   function loadMore() {
     // console.log("loadMore");
