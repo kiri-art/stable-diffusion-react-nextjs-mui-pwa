@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 import { t } from "@lingui/macro";
 // import Masonry from "@mui/lab/Masonry";
 
-import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
-// import Masonry from "./MyMasonry"; // <-- flickers in production?  why?
+// import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
+import Masonry from "./MyMasonry"; // <-- flickers in production?  why?
 
 import Link from "./Link";
 import Star from "./schemas/star";
@@ -326,6 +326,8 @@ export default function Starred({
     threshold: (cols || _cols) * 6,
   });
 
+  // console.log("items", items);
+
   return (
     <>
       <Box
@@ -362,17 +364,15 @@ export default function Starred({
       )}
       */}
       <div style={{ height: "10px" }} />
-      {items.length > 0 && (
-        <Masonry
-          items={items}
-          itemKey={(item) => item._id}
-          render={MasonryItem}
-          columnCount={cols || _cols}
-          columnGutter={10}
-          rowGutter={10}
-          onRender={maybeLoadMore}
-        />
-      )}
+      <Masonry
+        items={items}
+        itemKey={(item, index) => item?._id ?? index}
+        render={MasonryItem}
+        columnCount={cols || _cols}
+        columnGutter={10}
+        rowGutter={10}
+        onRender={maybeLoadMore}
+      />
     </>
   );
 }

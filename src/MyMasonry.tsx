@@ -1,4 +1,5 @@
 // Copy of https://github.com/jaredLunde/masonic/blob/main/src/masonry.tsx
+// commmit dbec4ff86e869b303d7648bebb3e28faa7adc7b3
 // with a few additions (marked with "kiri").
 
 import { useWindowSize } from "@react-hook/window-size";
@@ -40,13 +41,23 @@ export function Masonry<Item>(props: MasonryProps<Item>) {
     props
     // eslint-disable-next-line
   ) as any;
+
+  // kiri
+  const itemCounter = React.useRef<number>(props.items.length);
+  let shrunk = false;
+  if (props.items.length !== itemCounter.current) {
+    if (props.items.length < itemCounter.current) shrunk = true;
+    itemCounter.current = props.items.length;
+  }
+
   nextProps.positioner = usePositioner(
     nextProps,
     // can't remember why i did this but it caused a lot of flicker and
     // doesn't seem to be necessary
     // [props.items] // kiri
     // ok maybe i wanted this: (re-render if items.length changes)
-    [props.items.length]
+    // [props.items.length]
+    [shrunk && Math.random()]
     // see also https://github.com/jaredLunde/masonic/issues/12
   );
   nextProps.resizeObserver = useResizeObserver(nextProps.positioner);
