@@ -290,7 +290,7 @@ export default async function fetchToOutput(
     */
 
     // if (isBlackImgBase64(imgBase64)) {
-    if (output1.nsfw_content_detected) {
+    if (output1.nsfw_content_detected && output1.nsfw_content_detected[0]) {
       console.log("NSFW");
       // result.$success._NSFW = true;
       setNsfw(true);
