@@ -253,12 +253,23 @@ export default async function fetchToOutput(
     let type = isJxl ? "image/jxl" : "image/png";
     console.log({ isJxl, jxlSupport });
 
-    if (isJxl && !jxlSupport) {
+    // if (isJxl && !jxlSupport) {
+    if (isJxl) {
       const start = Date.now();
-      buffer = await encodePNG(await decodeJXL(buffer));
+      const buffer2 = await encodePNG(await decodeJXL(buffer));
       console.log("Converted JXL to PNG in", Date.now() - start, "ms");
       type = "image/png";
+      if (!jxlSupport) buffer = buffer2;
+
+      // :((( until we have an easy way to get jxl in precompiled lipvips in sharp
+      // https://github.com/lovell/sharp/issues/2731#issuecomment-1361717579
+      let binary = "";
+      const bytes = new Uint8Array(buffer2);
+      const len = bytes.length;
+      for (let i = 0; i < len; i++) binary += String.fromCharCode(bytes[i]);
+      output1.image_base64 = window.btoa(binary);
     }
+
     const blob = new Blob([buffer], { type });
     const objectURL = URL.createObjectURL(blob);
     setImgSrc(objectURL);
