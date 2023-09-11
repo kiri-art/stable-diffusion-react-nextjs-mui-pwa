@@ -55,6 +55,7 @@ const ddaCallInputsSchema = object({
       .required()
   ),
   compel_prompts: boolean(),
+  image_format: string().oneOf(["PNG", "JXL"]),
 });
 
 type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;

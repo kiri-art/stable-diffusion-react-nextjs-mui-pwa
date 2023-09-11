@@ -22,6 +22,8 @@
     "@emotion/react": "11.10.4",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.4",
+    "@jsquash/jxl": "^1.0.3",
+    "@jsquash/png": "^2.1.4",
     "@lingui/react": "4.3.0",
     "@mui/icons-material": "5.10.3",
     "@mui/lab": "5.0.0-alpha.104",

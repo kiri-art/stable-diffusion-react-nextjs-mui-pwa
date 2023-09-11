@@ -10,6 +10,15 @@ import providerFetch from "./providerFetch";
 import { db } from "gongo-client-react";
 import isBlackImgBase64 from "./isBlackImgBase64";
 import { getModel } from "./models";
+import { decode as decodeJXL } from "@jsquash/jxl";
+import { encode as encodePNG } from "@jsquash/png";
+
+let jxlSupport: boolean | null = null;
+const jxlTest = new Image();
+jxlTest.src =
+  "data:image/jxl;base64,/woIELASCAgQAFwASxLFgkWAHL0xqnCBCV0qDp901Te/5QM=";
+jxlTest.onload = () => (jxlSupport = true);
+jxlTest.onerror = () => (jxlSupport = false);
 
 const History = typeof window === "object" && db.collection("history");
 
@@ -53,6 +62,11 @@ export default async function fetchToOutput(
     const callInputs = model.callInputsSchema
       ? model.callInputsSchema.cast(call_inputs)
       : call_inputs;
+
+    if (model.id === "dda") {
+      // @ts-expect-error: it's a ddaCallInputsSchema
+      callInputs.image_format = "JXL";
+    }
 
     if (0)
       console.log(
@@ -229,8 +243,18 @@ export default async function fetchToOutput(
       return;
     }
 
-    const buffer = Buffer.from(imgBase64, "base64");
-    const blob = new Blob([buffer], { type: "image/png" });
+    let buffer: Buffer | ArrayBuffer = Buffer.from(imgBase64, "base64");
+    const isJxl = buffer.slice(0, 7).toString() === "\x00\x00\x00\fJXL";
+    let type = isJxl ? "image/jxl" : "image/png";
+    console.log({ isJxl, jxlSupport });
+
+    if (isJxl && !jxlSupport) {
+      const start = Date.now();
+      buffer = await encodePNG(await decodeJXL(buffer));
+      console.log("Converted JXL to PNG in", Date.now() - start, "ms");
+      type = "image/png";
+    }
+    const blob = new Blob([buffer], { type });
     const objectURL = URL.createObjectURL(blob);
     setImgSrc(objectURL);
     setLog([]);

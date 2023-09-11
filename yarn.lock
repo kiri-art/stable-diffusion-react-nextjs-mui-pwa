@@ -1766,6 +1766,18 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@jsquash/jxl@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@jsquash/jxl/-/jxl-1.0.3.tgz#58a36c4827f2ca5832b361e3fb03ca11a5da4e57"
+  integrity sha512-oMoN8xaCdBMRC1FN76E7BKwsGnO+cDRprVVVd3TAxwHwuF+wd1krzsFPyqc9Hxaop5bArCeYlaxvGgUj+dr8Zw==
+  dependencies:
+    wasm-feature-detect "^1.5.1"
+
+"@jsquash/png@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@jsquash/png/-/png-2.1.4.tgz#2cd627ae9d66b9374556a4af2f14e0f68da90c9b"
+  integrity sha512-WXq40XtEeYxbJLpYgVIUJPVqy3nrFPlnlE9KXLMbtM6YPYyfpO4df0sy/sqk4OThK0+qTmz0VB9+kYjMA5XOjQ==
+
 "@juggle/resize-observer@^3.3.1":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
@@ -8757,6 +8769,11 @@ warning@^4.0.1:
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
+
+wasm-feature-detect@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/wasm-feature-detect/-/wasm-feature-detect-1.5.1.tgz#0db57a7d7f8c26b743dde85386215ae2b135e78a"
+  integrity sha512-GHr23qmuehNXHY4902/hJ6EV5sUANIJC3R/yMfQ7hWDg3nfhlcJfnIL96R2ohpIwa62araN6aN4bLzzzq5GXkg==
 
 watchpack@2.4.0:
   version "2.4.0"
