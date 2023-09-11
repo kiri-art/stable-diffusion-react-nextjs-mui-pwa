@@ -293,7 +293,7 @@ export default function OutputImage({
           </div>
           <Log log={log} />
         </Box>{" "}
-        {(FORCE_MOUSEOVER || mouseOver) && log.length === 0 && (
+        {(FORCE_MOUSEOVER || mouseOver) && log.length === 0 && !nsfw && (
           <Box
             sx={{
               position: "absolute",
