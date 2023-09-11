@@ -408,7 +408,11 @@ export default function OutputImage({
             }}
           >
             <Tooltip
-              title={t`Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed.`}
+              title={
+                t`Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed.` +
+                " " +
+                t`Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first).`
+              }
             >
               <span>🔞{imgSrc}</span>
             </Tooltip>

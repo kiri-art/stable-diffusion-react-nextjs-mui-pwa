@@ -8,17 +8,22 @@
 
 import providerFetch from "./providerFetch";
 import { db } from "gongo-client-react";
-import isBlackImgBase64 from "./isBlackImgBase64";
+// import isBlackImgBase64 from "./isBlackImgBase64";
 import { getModel } from "./models";
-import { decode as decodeJXL } from "@jsquash/jxl";
-import { encode as encodePNG } from "@jsquash/png";
+
+import decodeJXL from "@jsquash/jxl/decode";
+// import { decode as decodeJXL } from "@jsquash/jxl";
+import encodePNG from "@jsquash/png/encode";
+// import { encode as encodePNG } from "@jsquash/png";
 
 let jxlSupport: boolean | null = null;
-const jxlTest = new Image();
-jxlTest.src =
-  "data:image/jxl;base64,/woIELASCAgQAFwASxLFgkWAHL0xqnCBCV0qDp901Te/5QM=";
-jxlTest.onload = () => (jxlSupport = true);
-jxlTest.onerror = () => (jxlSupport = false);
+if (typeof window === "object") {
+  const jxlTest = new Image();
+  jxlTest.src =
+    "data:image/jxl;base64,/woIELASCAgQAFwASxLFgkWAHL0xqnCBCV0qDp901Te/5QM=";
+  jxlTest.onload = () => (jxlSupport = true);
+  jxlTest.onerror = () => (jxlSupport = false);
+}
 
 const History = typeof window === "object" && db.collection("history");
 
@@ -273,7 +278,8 @@ export default async function fetchToOutput(
     }
     */
 
-    if (isBlackImgBase64(imgBase64)) {
+    // if (isBlackImgBase64(imgBase64)) {
+    if (output1.nsfw_content_detected) {
       console.log("NSFW");
       // result.$success._NSFW = true;
       setNsfw(true);
