@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
-import gs, { Auth, User, Order } from "../../src/api-lib/db";
+import gs, { User, Order } from "../../src/api-lib/db";
+import { AuthFromReq } from "../../src/api-lib/auth";
 
 if (!process.env.STRIPE_SECRET_KEY)
   throw new Error("STRIPE_SECRET_KEY not defined");
@@ -19,7 +20,7 @@ export default async function craeateStripePaymentIntent(
   if (typeof req.body !== "object") throw new Error("Body not decoded");
   if (!gs.dba) throw new Error("gs.dba not defined");
 
-  const auth = new Auth(gs.dba, req.body.auth);
+  const auth = AuthFromReq(req);
   const userId = await auth.userId();
   const numCredits = req.body.numCredits;
 

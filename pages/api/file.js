@@ -3,6 +3,7 @@
 const crypto = require("crypto");
 const GongoServer = require("gongo-server/lib/serverless").default;
 const Auth = require("gongo-server/lib/auth-class").default;
+const { AuthFromReq } = require("../../src/api-lib/auth");
 const Database = require("gongo-server-db-mongo").default;
 const ObjectId = require("bson").ObjectId;
 const { MongoClient } = require("mongodb");
@@ -129,8 +130,13 @@ async function PostRequest(req, res) {
     }
   }
 
-  const auth = new Auth(gs.dba, authData || {});
-  const userId = await auth.userId();
+  let auth = new Auth(gs.dba, authData || {});
+  let userId = await auth.userId();
+
+  if (!userId) {
+    auth = AuthFromReq(req);
+    userId = await auth.userId();
+  }
 
   if (!userId) {
     res.status(403).send("Forbidden");

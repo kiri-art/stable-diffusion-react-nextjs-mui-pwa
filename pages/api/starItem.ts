@@ -10,7 +10,8 @@ import {
   // bananaRequestSchema,
 } from "../../src/schemas";
 import { createFileFromBuffer } from "./file2";
-import gs, { Auth } from "../../src/api-lib/db";
+import gs from "../../src/api-lib/db";
+import { AuthFromReq } from "../../src/api-lib/auth";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -35,7 +36,7 @@ export default async function starItem(
   const item = req.body?.item;
   if (!gs.dba) return res.status(500).end();
 
-  const auth = new Auth(gs.dba, req.body?.auth);
+  const auth = AuthFromReq(req);
   const userId = await auth.userId();
 
   if (!userId) return res.status(401).end("Unauthorized");
