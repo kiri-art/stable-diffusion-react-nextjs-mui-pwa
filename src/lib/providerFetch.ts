@@ -462,6 +462,8 @@ export class ProviderFetchRequestBase {
 class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
   prepareStart() {
     const provider = this.provider as ProviderServerless;
+    if (!provider.apiKey)
+      console.warn("Warning, provider apiKey not set for: " + provider.id);
 
     // Present on "banana+kiri" API.
     if (this.apiInfo().streamable) {
@@ -472,9 +474,6 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
     }
 
     const url = provider.apiUrl + "/start/v4/";
-
-    const apiKey = provider.apiKey || process.env["BANANA_API_KEY"];
-    if (!apiKey) throw new Error("BANANA_API_KEY is not set");
 
     const modelKey = (() => {
       const key = "BANANA_MODEL_KEY_" + this.model.id.toUpperCase();
@@ -491,7 +490,7 @@ class ProviderFetchRequestBanana extends ProviderFetchRequestBase {
     const payload: Record<string, unknown> = {
       id: this.id,
       created: Math.floor(Date.now() / 1000),
-      apiKey,
+      apiKey: provider.apiKey,
       modelKey,
       modelInputs: this.inputs,
       startOnly: true,

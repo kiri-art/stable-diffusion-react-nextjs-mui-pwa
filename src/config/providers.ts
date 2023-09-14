@@ -43,21 +43,21 @@ const Providers: Provider[] = [
     id: "banana",
     label: "1",
     api: "banana",
-    apiKey: process.env.BANANA_API_KEY as string, // TODO
+    apiKey: process.env.BANANA_API_KEY as string,
     apiUrl: "https://api.banana.dev",
   },
   {
     id: "kiri",
     label: "2",
     api: "banana+kiri",
-    apiKey: process.env.KIRI_API_KEY as string, // TODO
+    apiKey: process.env.KIRI_API_KEY as string,
     apiUrl: "https://api-ams2.kiri.art",
   },
   {
     id: "kiri-local",
     label: "kiri-local",
     api: "banana+kiri",
-    apiKey: process.env.KIRI_API_KEY as string, // TODO
+    apiKey: process.env.KIRI_API_KEY as string,
     apiUrl: "http://localhost:5000",
   },
   {
