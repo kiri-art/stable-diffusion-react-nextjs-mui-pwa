@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Trans, t } from "@lingui/macro";
 import EventListener from "react-event-listener";
+import ScrollShadowWrapper from "../lib/ScrollShadowWrapper";
 
 import { AccessTime, ArrowDropDown, SortByAlpha } from "@mui/icons-material";
 import {
@@ -31,6 +32,29 @@ const nsfwTags = [
   "sexy",
 ];
 
+const MyChip = React.memo(function MyChip({
+  label,
+  style,
+}: {
+  label: string;
+  style?: Record<string, unknown>;
+}) {
+  return (
+    <span
+      style={{
+        fontSize: "70%",
+        padding: "2px 7px 2px 7px",
+        margin: "0px 2px 0px 2px",
+        border: "1px solid #aaa",
+        borderRadius: "10px",
+        ...style,
+      }}
+    >
+      {label}
+    </span>
+  );
+});
+
 const SelectRow = React.memo(function SelectRow({
   value,
   setValue,
@@ -43,6 +67,11 @@ const SelectRow = React.memo(function SelectRow({
   setOpen: (value: boolean) => void;
 }) {
   const model = models[value];
+  let trainedSize = model.trainedSize || "512x512";
+  if (!trainedSize) {
+    if (model.baseModel.endsWith("768")) trainedSize = "768x768";
+    else if (model.baseModel.startsWith("SDXL")) trainedSize = "1024x1024";
+  }
 
   return (
     <div
@@ -55,13 +84,15 @@ const SelectRow = React.memo(function SelectRow({
     >
       <style jsx>{`
         .SelectRow {
+          border-top: 1px solid #fff;
+          border-bottom: 1px solid #ddd;
           padding: 5px 10px 5px 10px;
-          background: ${selected && "#eef"};
+          background: ${selected ? "#e0e0ff" : "#f5f5f5"};
           text-align: center;
           user-select: none;
         }
         .SelectRow:hover {
-          background: ${selected ? "#ddf" : "#eee"};
+          background: ${selected ? "#f0f0ff" : "#fff"};
         }
       `}</style>
       <div style={{ fontWeight: "bold" }}>{model.MODEL_ID}</div>
@@ -69,6 +100,12 @@ const SelectRow = React.memo(function SelectRow({
         style={{ fontSize: "85%", whiteSpace: "nowrap", overflow: "hidden" }}
       >
         {model.description}
+      </div>
+      <div>
+        <MyChip label={model.ogModel ? "Official" : "Community"} />
+        <MyChip label={model.baseModel} />
+        <MyChip label={trainedSize} />
+        <MyChip label={model.dateAdded.toLocaleDateString()} />
       </div>
     </div>
   );
@@ -179,7 +216,8 @@ const ModelSelectModalContents = React.forwardRef(
 
             width: "101%",
             // maxWidth: 500,
-            bgcolor: "background.paper",
+            // bgcolor: "background.paper",
+            background: "#dfdfdf",
             border: "2px solid #000",
             boxShadow: 24,
           }}
@@ -248,28 +286,8 @@ const ModelSelectModalContents = React.forwardRef(
               </label>
             )}
           </Container>
-          <Box
-            sx={{
-              maxHeight: "70vh",
-              overflow: "auto",
-              // border: "1px solid #aaa",
-              // mt: 1,
-              // mb: 2,
-              position: "relative",
-              // https://css-tricks.com/books/greatest-css-tricks/scroll-shadows/
-              background:
-                /* Shadow Cover TOP */
-                "linear-gradient(white 30%, rgba(255, 255, 255, 0)) center top, " +
-                /* Shadow Cover BOTTOM */
-                "linear-gradient(rgba(255, 255, 255, 0), white 70%) center bottom, " +
-                /* Shadow TOP */
-                "radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center top, " +
-                /* Shadow BOTTOM */
-                "radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) center bottom",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 40px, 100% 40px, 100% 18px, 100% 18px",
-              backgroundAttachment: "local, local, scroll, scroll",
-            }}
+          <ScrollShadowWrapper
+            style={{ maxHeight: "90vh", background: "#f5f5f5" }}
           >
             {sortedModels.map((model) => (
               <SelectRow
@@ -280,7 +298,7 @@ const ModelSelectModalContents = React.forwardRef(
                 setOpen={setOpen}
               />
             ))}
-          </Box>
+          </ScrollShadowWrapper>
           {/*
       <Stack direction="row" justifyContent="flex-end">
         <Button variant="outlined" onClick={() => setOpen(false)}>
