@@ -18,6 +18,7 @@ import {
 import sendQueue from "./lib/sendQueue";
 import { destar } from "./Starred";
 import NewBadge from "./NewBadge";
+import { getMimeType, extensions } from "./lib/mimeTypes";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -112,18 +113,39 @@ export default function OutputImage({
 
   async function copy() {
     if (!imgResult.current) return;
-    const blob = await fetch(imgSrc).then((r) => r.blob());
-    const item = new ClipboardItem({ "image/png": blob });
+    let blob = await fetch(imgSrc).then((r) => r.blob());
+    let mimeType = await getMimeType(blob);
+    let upExt = extensions[mimeType].toUpperCase();
+
+    // No other image types supported in Chrome / Safari at time of writing
+    if (mimeType !== "image/png") {
+      const canvas = document.createElement("canvas");
+      canvas.width = imgResult.current.naturalWidth;
+      canvas.height = imgResult.current.naturalHeight;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return toast("Browser could not allocate a context, sorry");
+      ctx.drawImage(imgResult.current, 0, 0);
+      blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve as BlobCallback, "image/png")
+      );
+      mimeType = "image/png";
+      upExt = "PNG";
+    }
+
+    const item = new ClipboardItem({ [mimeType]: blob });
     await navigator.clipboard.write([item]);
-    toast("✅ PNG copied to clipboard");
+    toast("✅ " + upExt + " copied to clipboard");
   }
 
   async function download() {
     if (!imgResult.current) return;
-    //const blob = await fetch(imgResult.current.src).then(r => r.blob());
+    const blob = await fetch(imgResult.current.src).then((r) => r.blob());
+    const mimeType = await getMimeType(blob);
+    const ext = extensions[mimeType];
     const a = document.createElement("a");
-    a.setAttribute("download", sanitizeFilename(text + ".png"));
-    a.setAttribute("href-lang", "image/png");
+    console.log(imgResult);
+    a.setAttribute("download", sanitizeFilename(text + "." + ext));
+    a.setAttribute("href-lang", mimeType);
     a.setAttribute("href", imgSrc);
     a.click();
   }
@@ -139,12 +161,14 @@ export default function OutputImage({
   async function share() {
     if (!imgResult.current) return;
     const blob = await fetch(imgSrc).then((r) => r.blob());
+    const mimeType = await getMimeType(blob);
+    const ext = extensions[mimeType];
     const shareData = {
       title: t`See my Kiri.Art creation!`,
       text: text,
       files: [
-        new File([blob], text + ".png", {
-          type: "image/png",
+        new File([blob], text + "." + ext, {
+          type: mimeType,
           lastModified: new Date().getTime(),
         }),
       ],
@@ -158,13 +182,15 @@ export default function OutputImage({
 
   async function sendTo(target: string) {
     const blob = await fetch(imgSrc).then((r) => r.blob());
+    const mimeType = await getMimeType(blob);
+    const ext = extensions[mimeType];
     sendQueue
       .add({
         title: text,
         text: text,
         files: [
-          new File([blob], text + ".png", {
-            type: "image/png",
+          new File([blob], text + "." + ext, {
+            type: mimeType,
             lastModified: new Date().getTime(),
           }),
         ],

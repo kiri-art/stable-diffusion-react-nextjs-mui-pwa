@@ -12,6 +12,7 @@ import {
 import { createFileFromBuffer } from "./file2";
 import gs from "../../src/api-lib/db";
 import { AuthFromReq } from "../../src/api-lib/auth";
+import { getMimeTypeFromBuffer, extensions } from "../../src/lib/mimeTypes";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -53,8 +54,6 @@ export default async function starItem(
     seed: { value: modelInputs.seed as number },
     negative_prompt: { value: modelInputs.negative_prompt || "" },
   };
-  const sharedInputs = sharedInputTextFromInputs(simulatedModelState);
-  const filename = sanitizeFilename(sharedInputs + ".png");
 
   const images = {
     output: BufferFromBase64(result?.modelOutputs?.[0]?.image_base64),
@@ -67,6 +66,11 @@ export default async function starItem(
   delete modelInputs?.image;
   delete modelInputs?.mask_image;
 
+  const sharedInputs = sharedInputTextFromInputs(simulatedModelState);
+  const mimeType = getMimeTypeFromBuffer(images.output);
+  const ext = extensions[mimeType];
+  const filename = sanitizeFilename(sharedInputs + "." + ext);
+
   const files: Star["files"] = {
     // @ts-expect-error: objectid
     output: (await createFileFromBuffer(images.output, { filename }))._id,
@@ -75,14 +79,14 @@ export default async function starItem(
     // @ts-expect-error: objectid
     files.init = (
       await createFileFromBuffer(images.init, {
-        filename: "init_image.jpg",
+        filename: "init_image.jpg", // TODO, file ext
       })
     )._id;
   if (images.mask)
     // @ts-expect-error: objectid
     files.mask = (
       await createFileFromBuffer(images.mask, {
-        filename: "mask_image.jpg",
+        filename: "mask_image.jpg", // TODO, file ext
       })
     )._id;
 

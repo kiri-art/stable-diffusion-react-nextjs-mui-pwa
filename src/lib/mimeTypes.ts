@@ -21,6 +21,21 @@ const headers: Record<string, string> = {
   ffd8ffe8: "image/jpeg",
 };
 
+export function getMimeTypeFromBuffer(buffer: Buffer): string {
+  const arr = new Uint8Array(buffer).subarray(0, 4);
+  const header = Array.from(arr)
+    .map((x) => x.toString(16))
+    .join("");
+
+  const mimeType = headers[header];
+  if (!mimeType) {
+    throw new Error(
+      `Unknown header "${header}", returning file.type instead: "{$file.type}"`
+    );
+  }
+  return mimeType;
+}
+
 export function getMimeType(file: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
