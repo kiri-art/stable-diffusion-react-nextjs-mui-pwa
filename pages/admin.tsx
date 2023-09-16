@@ -75,6 +75,10 @@ function rowContent(_index: number, user: User) {
       db.collection("users").update(userId, query);
     };
   }
+  let free: number | string = user.credits?.free,
+    paid: number | string = user.credits?.paid;
+  free = typeof free === "number" ? free.toFixed(2) : JSON.stringify(free);
+  paid = typeof paid === "number" ? paid.toFixed(2) : JSON.stringify(paid);
 
   return (
     <React.Fragment>
@@ -89,14 +93,14 @@ function rowContent(_index: number, user: User) {
         style={{ cursor: "pointer" }}
         onClick={onClick(user._id, "credits.free", user.credits?.free)}
       >
-        {user.credits?.free?.toFixed(2)}
+        {free}
       </TableCell>
       <TableCell
         align="right"
         style={{ cursor: "pointer" }}
         onClick={onClick(user._id, "credits.paid", user.credits?.paid)}
       >
-        {user.credits?.paid?.toFixed(2)}
+        {paid}
       </TableCell>
     </React.Fragment>
   );
