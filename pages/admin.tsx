@@ -47,11 +47,20 @@ const VirtuosoTableComponents: TableComponents<User> = {
 };
 
 function fixedHeaderContent() {
+  const sx = {
+    backgroundColor: "background.paper",
+  };
   return (
     <TableRow>
-      <TableCell>User</TableCell>
-      <TableCell align="right">Free</TableCell>
-      <TableCell align="right">Paid</TableCell>
+      <TableCell sx={sx} variant="head">
+        User
+      </TableCell>
+      <TableCell sx={sx} variant="head" align="right">
+        Free
+      </TableCell>
+      <TableCell sx={sx} variant="head" align="right">
+        Paid
+      </TableCell>
     </TableRow>
   );
 }
@@ -61,7 +70,7 @@ function rowContent(_index: number, user: User) {
     return function () {
       const textValue = prompt("New Value?  Was: " + oldValue);
       if (!textValue) return alert("Invalid value");
-      const newValue = parseInt(textValue);
+      const newValue = parseFloat(textValue);
       const query = { $set: { [field]: newValue } };
       db.collection("users").update(userId, query);
     };
@@ -71,6 +80,7 @@ function rowContent(_index: number, user: User) {
     <React.Fragment>
       <TableCell component="th" scope="row">
         {user.displayName}
+        {user.username && " (" + user.username + ")"}
         <br />
         {user.emails?.[0]?.value}
       </TableCell>
@@ -79,14 +89,14 @@ function rowContent(_index: number, user: User) {
         style={{ cursor: "pointer" }}
         onClick={onClick(user._id, "credits.free", user.credits?.free)}
       >
-        {user.credits?.free}
+        {user.credits?.free?.toFixed(2)}
       </TableCell>
       <TableCell
         align="right"
         style={{ cursor: "pointer" }}
         onClick={onClick(user._id, "credits.paid", user.credits?.paid)}
       >
-        {user.credits?.paid}
+        {user.credits?.paid?.toFixed(2)}
       </TableCell>
     </React.Fragment>
   );
@@ -112,6 +122,7 @@ function Credits() {
       if (!filter) return true;
       if (re.test(user.displayName)) return true;
       for (const email of user.emails) if (re.test(email.value)) return true;
+      if (user.username && re.test(user.username)) return true;
       return false;
     });
   }, [_users, filter]);

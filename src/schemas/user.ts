@@ -18,6 +18,7 @@ interface User {
   createdAt: Date;
   stripeCustomerId: string;
   redeemedCreditCodes: string[];
+  username?: string;
 }
 
 export type { User };
