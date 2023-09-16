@@ -64,6 +64,7 @@
     "react-event-listener": "0.6.6",
     "react-hook-inview": "4.5.0",
     "react-toastify": "9.0.8",
+    "react-virtuoso": "^4.5.1",
     "sanitize-filename": "^1.6.3",
     "sharp": "^0.32.5",
     "stripe": "^10.7.0",

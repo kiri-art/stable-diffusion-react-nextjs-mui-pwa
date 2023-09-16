@@ -22,14 +22,41 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { TableVirtuoso, TableComponents } from "react-virtuoso";
 
 import MyAppBar from "../src/MyAppBar";
-import { creditCodeSchema } from "../src/schemas";
+import { creditCodeSchema, User } from "../src/schemas";
 
-function Credits() {
-  useGongoSub("usersAndCredits", {});
-  const users = useGongoLive((db) => db.collection("users").find());
+const VirtuosoTableComponents: TableComponents<User> = {
+  // eslint-disable-next-line react/display-name
+  Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
+    <TableContainer component={Paper} {...props} ref={ref} />
+  )),
+  Table: (props) => (
+    <Table
+      {...props}
+      sx={{ borderCollapse: "separate", tableLayout: "fixed" }}
+    />
+  ),
+  TableHead,
+  TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
+  // eslint-disable-next-line react/display-name
+  TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
+    <TableBody {...props} ref={ref} />
+  )),
+};
 
+function fixedHeaderContent() {
+  return (
+    <TableRow>
+      <TableCell>User</TableCell>
+      <TableCell align="right">Free</TableCell>
+      <TableCell align="right">Paid</TableCell>
+    </TableRow>
+  );
+}
+
+function rowContent(_index: number, user: User) {
   function onClick(userId: string, field: string, oldValue: number) {
     return function () {
       const textValue = prompt("New Value?  Was: " + oldValue);
@@ -41,58 +68,73 @@ function Credits() {
   }
 
   return (
+    <React.Fragment>
+      <TableCell component="th" scope="row">
+        {user.displayName}
+        <br />
+        {user.emails?.[0]?.value}
+      </TableCell>
+      <TableCell
+        align="right"
+        style={{ cursor: "pointer" }}
+        onClick={onClick(user._id, "credits.free", user.credits?.free)}
+      >
+        {user.credits?.free}
+      </TableCell>
+      <TableCell
+        align="right"
+        style={{ cursor: "pointer" }}
+        onClick={onClick(user._id, "credits.paid", user.credits?.paid)}
+      >
+        {user.credits?.paid}
+      </TableCell>
+    </React.Fragment>
+  );
+}
+
+function Credits() {
+  useGongoSub(
+    "usersAndCredits",
+    {},
+    {
+      sort: ["createdAt", "desc"],
+      limit: 50,
+      minInterval: 500,
+      maxInterval: 5000,
+      persist: false,
+    }
+  );
+  const [filter, setFilter] = React.useState("");
+  const _users = useGongoLive((db) => db.collection("users").find());
+  const users = React.useMemo(() => {
+    const re = new RegExp(filter, "i");
+    return _users.filter((user) => {
+      if (!filter) return true;
+      if (re.test(user.displayName)) return true;
+      for (const email of user.emails) if (re.test(email.value)) return true;
+      return false;
+    });
+  }, [_users, filter]);
+
+  return (
     <Box>
       <Typography variant="h6">Users and Credits</Typography>
+      <TextField
+        size="small"
+        value={filter}
+        onChange={(event) => setFilter(event.target.value)}
+      />
 
       <p>Total users: {users.length}</p>
 
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>User</TableCell>
-              <TableCell align="right">Free</TableCell>
-              <TableCell align="right">Paid</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow
-                key={user._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {user.displayName}
-                  <br />
-                  {user.emails?.[0]?.value}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  style={{ cursor: "pointer" }}
-                  onClick={onClick(
-                    user._id,
-                    "credits.free",
-                    user.credits?.free
-                  )}
-                >
-                  {user.credits?.free}
-                </TableCell>
-                <TableCell
-                  align="right"
-                  style={{ cursor: "pointer" }}
-                  onClick={onClick(
-                    user._id,
-                    "credits.paid",
-                    user.credits?.paid
-                  )}
-                >
-                  {user.credits?.paid}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Paper style={{ height: "80vh", width: "100%" }}>
+        <TableVirtuoso
+          data={users}
+          components={VirtuosoTableComponents}
+          fixedHeaderContent={fixedHeaderContent}
+          itemContent={rowContent}
+        />
+      </Paper>
     </Box>
   );
 }
@@ -214,6 +256,15 @@ export default function Admin() {
   const user = useGongoOne((db) =>
     db.collection("users").find({ _id: userId })
   );
+
+  React.useEffect(() => {
+    // @ts-expect-error: todo
+    const pollInterval = db.transport.options.pollInterval;
+    // @ts-expect-error: todo
+    db.transport.options.pollInterval = 1000;
+    // @ts-expect-error: todo
+    return () => (db.transport.options.pollInterval = pollInterval);
+  }, []);
 
   if (!(user && user.admin))
     return (
