@@ -439,6 +439,10 @@ export default function OutputImage({
                 " " +
                 t`Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first).`
               }
+              enterDelay={0}
+              enterTouchDelay={0}
+              leaveDelay={0}
+              leaveTouchDelay={4000}
             >
               <span>🔞{imgSrc}</span>
             </Tooltip>
