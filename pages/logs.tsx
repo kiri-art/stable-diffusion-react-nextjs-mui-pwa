@@ -2,7 +2,12 @@ import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import { t } from "@lingui/macro";
-import { db, useGongoSub, useGongoLive } from "gongo-client-react";
+import {
+  db,
+  useGongoSub,
+  useGongoLive,
+  useGongoUserId,
+} from "gongo-client-react";
 // import { format } from "date-fns";
 
 import {
@@ -423,8 +428,8 @@ function Requests() {
     }
   );
 
-  // @ts-expect-error: ok
-  const user = db.collection("users").findOne({ _id: db.auth.userId });
+  const userId = useGongoUserId();
+  const user = db.collection("users").findOne(userId);
   const isAdmin = !!user?.admin;
 
   const requests = useGongoLive((db) =>
