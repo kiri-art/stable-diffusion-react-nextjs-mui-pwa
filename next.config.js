@@ -40,6 +40,15 @@ module.exports = withPWA({
     ],
   },
   webpack: (config) => {
+    config.module.rules.push({
+      test: /\..*ignore/,
+      use: [
+        {
+          loader: "ignore-loader",
+        },
+      ],
+    });
+
     if (process.env.NODE_ENV === "development") {
       config.resolve.alias = {
         ...config.resolve.alias,

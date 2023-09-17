@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm .gitignore && rm .prettierignore && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
@@ -42,6 +42,7 @@
     "gongo-server-db-mongo": "3.1.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
+    "ignore-loader": "^0.1.2",
     "ipdata": "^2.2.4",
     "jest-fetch-mock": "3.0.3",
     "jszip": "3.10.1",
