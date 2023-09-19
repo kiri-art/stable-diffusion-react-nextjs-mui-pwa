@@ -1,4 +1,4 @@
-import { ProviderFetchServerless } from "../../src/lib/providerFetch";
+import createHandler from "../../src/lib/providerFetch/handlerServerless";
 import gs /* { CreditCode, ObjectId, User } */ from "../../src/api-lib/db";
 import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
@@ -12,8 +12,4 @@ export const config = {
   },
 };
 
-const serverless = new ProviderFetchServerless();
-
-const express = serverless.express({ gs, Auth, GongoServer, Database });
-
-export default express;
+export default createHandler({ gs, Auth, GongoServer, Database });

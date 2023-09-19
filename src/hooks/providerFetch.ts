@@ -2,7 +2,7 @@ import hooks from "../../src/lib/hooks";
 import { db } from "gongo-client-react";
 import { BananaRequest } from "../schemas";
 // import { ipPass, ipFromReq } from "../api-lib/ipCheck";
-import { ProviderFetchRequestBase } from "../lib/providerFetch";
+import ProviderFetchRequestBase from "../lib/providerFetch/ProviderFetchRequestBase";
 import calculateCredits from "../calculateCredits";
 
 hooks.register("providerFetch.browser.extraInfoToSend");
