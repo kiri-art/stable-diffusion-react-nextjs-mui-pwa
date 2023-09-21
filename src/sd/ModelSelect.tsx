@@ -442,7 +442,11 @@ export default React.memo(function ModelSelect({
       />
       {models[value].notes && (
         <Box sx={{ fontSize: "80%", textAlign: "center" }}>
-          {models[value].notes}
+          {models[value].notesLink ? (
+            <a href={models[value].notesLink}>{models[value].notes}</a>
+          ) : (
+            models[value].notes
+          )}
         </Box>
       )}
     </FormControl>

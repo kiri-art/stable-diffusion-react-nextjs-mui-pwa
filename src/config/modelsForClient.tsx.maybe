@@ -1,0 +1,191 @@
+"use client";
+
+import models, { Model as _Model } from "./models";
+
+export interface Model extends _Model {
+  notes?: JSX.Element;
+}
+
+const extras = {
+  "stabilityai/stable-diffusion-xl-base-1.0": {
+    notes: (
+      <span>
+        <a href="https://stability.ai/blog/stable-diffusion-sdxl-1-announcement">
+          SDXL 1.0 Announcement
+        </a>
+        . Refiner access coming soon.
+      </span>
+    ),
+  },
+
+  "runwayml/stable-diffusion-inpainting": {
+    notes: (
+      <div style={{ color: "red" }}>
+        {" "}
+        Warning! Currently breaks easily on non-standard image sizes.
+      </div>
+    ),
+  },
+  "prompthero/openjourney-v2": {
+    notes: (
+      <a href="https://huggingface.co/prompthero/openjourney-v2">
+        Openjourney by PromptHero, Model Card
+      </a>
+    ),
+  },
+  "ICBINP-v7": {
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+  },
+  "ICBINP-Final": {
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+  },
+  "ICBINP-Final-Inpainting": {
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+  },
+  "ICBINP-Afterburn": {
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+  },
+  "ICBINP-Afterburn-Inpainting": {
+    notes: (
+      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
+        ICBINP page on CivitAI
+      </a>
+    ),
+  },
+  "A-Zovya_Photoreal_V1": {
+    notes: (
+      <a href="https://civitai.com/models/57319?modelVersionId=61727">
+        A-Zovya Photoreal page on CivitAI
+      </a>
+    ),
+  },
+  dreamshaper_7: {
+    notes: (
+      <a href="https://civitai.com/models/4384/dreamshaper">
+        DreamShaper page on CivitAI
+      </a>
+    ),
+  },
+  "dreamshaper_7-inpainting": {
+    notes: (
+      <a href="https://civitai.com/models/4384/dreamshaper">
+        DreamShaper page on CivitAI
+      </a>
+    ),
+  },
+  epicrealism_pureEvolutionV3: {
+    notes: (
+      <a href="https://civitai.com/models/25694/epicrealism">
+        epiCRealism page on CivitAI
+      </a>
+    ),
+  },
+  "epicrealism_pureEvolutionV3-inpainting": {
+    notes: (
+      <a href="https://civitai.com/models/25694/epicrealism">
+        epiCRealism page on CivitAI
+      </a>
+    ),
+  },
+  "hakurei/wd-1-5-illusion-beta3": {
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "hakurei/wd-1-5-ink-beta3": {
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "hakurei/wd-1-5-mofu-beta3": {
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "hakurei/wd-1-5-radiance-beta3": {
+    notes: (
+      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
+        WD 1.5 Beta 3 - Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+
+  "wd-1-4-anime_e1": {
+    notes: (
+      <a href="https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b">
+        WD 1.4 Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "hakurei/waifu-diffusion-v1-3": {
+    notes: (
+      <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
+        WD 1.3 Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "Linaqruf/anything-v3.0": {
+    notes: (
+      <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
+        WD 1.3 Release Notes and Prompt Hints
+      </a>
+    ),
+  },
+  "OrangeMix/AbyssOrangeMix2": {
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#abyssorangemix2-aom2">
+        AbyssOrangeMix2 (AOM2) notes
+      </a>
+    ),
+  },
+  "OrangeMix/ElyOrangeMix": {
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#elyorangemix-elom">
+        ElyOrangeMix (ELOM) notes
+      </a>
+    ),
+  },
+  "OrangeMix/EerieOrangeMix": {
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#eerieorangemix-eom">
+        EerieOrangeMix (EOM) notes
+      </a>
+    ),
+  },
+  "OrangeMix/BloodOrangeMix": {
+    notes: (
+      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#bloodorangemix-bom">
+        BloodOrangeMix (BOM)
+      </a>
+    ),
+  },
+};
+
+for (const [_id, model] of Object.entries(models)) {
+  // @ts-expect-error: go home typescript
+  Object.assign(model, extras[id]);
+}
+
+export default models;

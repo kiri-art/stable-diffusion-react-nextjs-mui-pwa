@@ -1,5 +1,3 @@
-"use client";
-
 export interface Model {
   MODEL_ID: string;
   MODEL_PRECISION?: "" | "fp16";
@@ -7,7 +5,6 @@ export interface Model {
   MODEL_URL?: string;
   CHECKPOINT_URL?: string;
   description: string;
-  notes?: JSX.Element;
   defaults?: Record<string, unknown>;
   randomPrompts?: string[] | { $from: string };
   safety_checker?: boolean;
@@ -20,6 +17,8 @@ export interface Model {
   ogModel: boolean;
   hidden?: boolean;
   trainedSize?: string;
+  notes?: string;
+  notesLink?: string;
 }
 
 const models: Record<string, Model> = {
@@ -39,14 +38,8 @@ const models: Record<string, Model> = {
       sampler: "EulerAncestralDiscreteScheduler",
       num_inference_steps: 30,
     },
-    notes: (
-      <span>
-        <a href="https://stability.ai/blog/stable-diffusion-sdxl-1-announcement">
-          SDXL 1.0 Announcement
-        </a>
-        . Refiner access coming soon.
-      </span>
-    ),
+    notes: "SDXL 1.0 Announcement (Refiner in Kiri coming soon)",
+    notesLink: "https://stability.ai/blog/stable-diffusion-sdxl-1-announcement",
   },
   /*
   "stabilityai/stable-diffusion-xl-refiner-1.0": {
@@ -126,12 +119,6 @@ const models: Record<string, Model> = {
     description: "SD 1.5 fine-tuned for Inpainting.",
     randomPrompts: { $from: "CompVis/stable-diffusion-v1-4" },
     tags: ["inpainting"],
-    notes: (
-      <div style={{ color: "red" }}>
-        {" "}
-        Warning! Currently breaks easily on non-standard image sizes.
-      </div>
-    ),
     baseModel: "SD 1.5",
     dateAdded: new Date("2022-10-20"),
     ogModel: true,
@@ -145,14 +132,11 @@ const models: Record<string, Model> = {
     randomPrompts: [
       "retro serie of different cars with different colors and shapes",
     ],
-    notes: (
-      <a href="https://huggingface.co/prompthero/openjourney-v2">
-        Openjourney by PromptHero, Model Card
-      </a>
-    ),
     baseModel: "SD 1.5",
     ogModel: false,
     dateAdded: new Date("2023-01-10"),
+    notes: "Openjourney by PromptHero, Model Card",
+    notesLink: "https://huggingface.co/prompthero/openjourney-v2",
   },
   "ICBINP-v7": {
     MODEL_ID: "ICBINP-v7",
@@ -167,11 +151,9 @@ const models: Record<string, Model> = {
       "hyperrealistic character portraits",
       "photography",
     ],
-    notes: (
-      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
-        ICBINP page on CivitAI
-      </a>
-    ),
+    notes: "ICBINP page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography",
     randomPrompts: [
       "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
       "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
@@ -210,11 +192,9 @@ const models: Record<string, Model> = {
       "hyperrealistic character portraits",
       "photography",
     ],
-    notes: (
-      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
-        ICBINP page on CivitAI
-      </a>
-    ),
+    notes: "ICBINP page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography",
     randomPrompts: [
       "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
       "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
@@ -254,11 +234,9 @@ const models: Record<string, Model> = {
       "photography",
       "inpainting",
     ],
-    notes: (
-      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
-        ICBINP page on CivitAI
-      </a>
-    ),
+    notes: "ICBINP page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography",
     randomPrompts: [
       "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
       "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
@@ -297,11 +275,9 @@ const models: Record<string, Model> = {
       "hyperrealistic character portraits",
       "photography",
     ],
-    notes: (
-      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
-        ICBINP page on CivitAI
-      </a>
-    ),
+    notes: "ICBINP page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography",
     randomPrompts: [
       "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
       "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
@@ -341,11 +317,9 @@ const models: Record<string, Model> = {
       "photography",
       "inpainting",
     ],
-    notes: (
-      <a href="https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography">
-        ICBINP page on CivitAI
-      </a>
-    ),
+    notes: "ICBINP page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/28059/icbinp-i-cant-believe-its-not-photography",
     randomPrompts: [
       "dark and gloomy, 8k, a close up photo of the joker with flames behind him , lifelike texture, dynamic composition, Fujifilm XT2, 85mm F1.2, 1/80 shutter speed, (bokeh), high contrast",
       "1 woman((upper body selfie, happy)), masterpiece, best quality, ultra-detailed, solo, outdoors, (night), mountains, nature, (stars, moon) cheerful, happy, backpack, sleeping bag, camping stove, water bottle, mountain boots, gloves, sweater, hat, flashlight, forest, rocks, river, wood, smoke, shadows, contrast, clear sky, analog style (look at viewer:1.2) (skin texture) (film grain:1.3), (warm hue, warm tone) :1.2), close up, cinematic light, sidelighting, ultra high res, best shadow, RAW, upper body",
@@ -382,11 +356,9 @@ const models: Record<string, Model> = {
       "photorealism",
       "realistic",
     ],
-    notes: (
-      <a href="https://civitai.com/models/57319?modelVersionId=61727">
-        A-Zovya Photoreal page on CivitAI
-      </a>
-    ),
+    notes: "A-Zovya Photoreal page on CivitAI",
+    notesLink:
+      "https://civitai.com/models/57319?modelVersionId=61727&modelVersionId=61727",
     randomPrompts: [
       "closeup portrait of beautiful (80s cyberpunk:1.3) woman lips pressed (serious:1.2) look (bright side light rim light:1.2) deep dark shadows dramatic camera angle high contrast color grading (masterpiece:1.2) (photorealistic:1.2) (bokeh:1.2) (best quality) (detailed skin:1.3) (intricate details) (8k) (HDR) (cinematic lighting) (sharp focus)",
       "closeup zoomed in tight crop portrait beautiful woman sitting at a (table on a seaside boardwalk cafe bar drinks cocktails:1.2) wearing a (button shirt:1.3) (drinks on table:1.3) (Lighting-Gold:1.2) foreground objects background details (masterpiece:1.2) (photorealistic:1.2) (bokeh:1.2) (best quality) (color grading) (detailed skin:1.3) (intricate) (8k) (HDR) (cinematic lighting:1.3) (sharp focus)",
@@ -434,11 +406,8 @@ const models: Record<string, Model> = {
       "realistic",
       "video game",
     ],
-    notes: (
-      <a href="https://civitai.com/models/4384/dreamshaper">
-        DreamShaper page on CivitAI
-      </a>
-    ),
+    notes: "DreamShaper page on CivitAI",
+    notesLink: "https://civitai.com/models/4384/dreamshaper",
     randomPrompts: [
       "8k portrait of beautiful cyborg with brown hair, intricate, elegant, highly detailed, majestic, digital photography, art by artgerm and ruan jia and greg rutkowski surreal painting gold butterfly filigree, broken glass, (masterpiece, sidelighting, finely detailed beautiful eyes: 1.2), hdr, <lora:more_details:0.36>",
       "photo of the warrior Aragorn from Lord of the Rings, film grain",
@@ -484,11 +453,8 @@ const models: Record<string, Model> = {
       "video game",
       "inpainting",
     ],
-    notes: (
-      <a href="https://civitai.com/models/4384/dreamshaper">
-        DreamShaper page on CivitAI
-      </a>
-    ),
+    notes: "DreamShaper page on CivitAI",
+    notesLink: "https://civitai.com/models/4384/dreamshaper",
     randomPrompts: [
       "8k portrait of beautiful cyborg with brown hair, intricate, elegant, highly detailed, majestic, digital photography, art by artgerm and ruan jia and greg rutkowski surreal painting gold butterfly filigree, broken glass, (masterpiece, sidelighting, finely detailed beautiful eyes: 1.2), hdr, <lora:more_details:0.36>",
       "photo of the warrior Aragorn from Lord of the Rings, film grain",
@@ -525,11 +491,8 @@ const models: Record<string, Model> = {
       "photoshoot",
       "natural colors",
     ],
-    notes: (
-      <a href="https://civitai.com/models/25694/epicrealism">
-        epiCRealism page on CivitAI
-      </a>
-    ),
+    notes: "epiCRealism page on CivitAI",
+    notesLink: "https://civitai.com/models/25694/epicrealism",
     randomPrompts: [
       "RAW Photo, DSLR BREAK (kkw-ph1:0.9) BREAK half body portrait of a young 20yo woman, black hair, wearing a summer dress BREAK detailed, blowing bubble gum, green bubble gum <lora:Bubble Gum:0.65>, professional colorgraded",
       "High detail RAW color, (full body Photo) of an unattractive man, wide hips, wearing a ((dirty grey hoodie, sweatpants)), ((scruffy beard, balding, chubby face, wide chin, squinting, glasses)), (standing in front of a wall of monitors and computers in an office), realistic, symmetrical, highly detailed, harsh lighting, cinematic lighting, serious eyes, contrast, textured skin, cold skin pores, hasselblad, 45 degree, hard light, gigapixel, pimples, 85mm, F/4",
@@ -567,11 +530,8 @@ const models: Record<string, Model> = {
       "natural colors",
       "inpainting",
     ],
-    notes: (
-      <a href="https://civitai.com/models/25694/epicrealism">
-        epiCRealism page on CivitAI
-      </a>
-    ),
+    notes: "epiCRealism page on CivitAI",
+    notesLink: "https://civitai.com/models/25694/epicrealism",
     randomPrompts: [
       "RAW Photo, DSLR BREAK (kkw-ph1:0.9) BREAK half body portrait of a young 20yo woman, black hair, wearing a summer dress BREAK detailed, blowing bubble gum, green bubble gum <lora:Bubble Gum:0.65>, professional colorgraded",
       "High detail RAW color, (full body Photo) of an unattractive man, wide hips, wearing a ((dirty grey hoodie, sweatpants)), ((scruffy beard, balding, chubby face, wide chin, squinting, glasses)), (standing in front of a wall of monitors and computers in an office), realistic, symmetrical, highly detailed, harsh lighting, cinematic lighting, serious eyes, contrast, textured skin, cold skin pores, hasselblad, 45 degree, hard light, gigapixel, pimples, 85mm, F/4",
@@ -596,11 +556,9 @@ const models: Record<string, Model> = {
       "arknights, click (arknights), 1girl, baseball cap, black headwear, black jacket, blue eyes, grey hair, hand on headwear, hand up, hat, jacket, long sleeves, looking at viewer, open clothes, open jacket, shirt, short hair, simple background, smile, solo, upper body, white background, yellow shirt (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2)",
     ],
     tags: ["anime"],
-    notes: (
-      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
-        WD 1.5 Beta 3 - Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.5 Beta 3 - Release Notes and Prompt Hints",
+    notesLink:
+      "https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63",
     defaults: {
       width: 768,
       height: 768,
@@ -619,11 +577,9 @@ const models: Record<string, Model> = {
       "genshin impact, 1girl, aqua dress, blue hair, blunt bangs, blunt tresses, brown headwear, bug, butterfly, butterfly hair ornament, closed eyes, closed mouth, cowboy shot, dress, english text, flower, hair ornament, light blue hair, long sleeves, multicolored clothes, multicolored dress, neck tassel, official alternate costume, official alternate hairstyle, skirt basket, skirt hold, smile, solo, white dress, white flower (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
     tags: ["anime"],
-    notes: (
-      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
-        WD 1.5 Beta 3 - Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.5 Beta 3 - Release Notes and Prompt Hints",
+    notesLink:
+      "https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63",
     defaults: {
       width: 768,
       height: 768,
@@ -642,12 +598,9 @@ const models: Record<string, Model> = {
       "1girl, black shirt, black sleeves, school uniform, sailor uniform, serafuku, red neckerchief, sailor collar, collarbone, black hair, short hair, grey eyes, closed mouth, fox ears, fox girl, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime, waifu:1.2), city, village, houses, power lines, street",
     ],
     tags: ["anime"],
-
-    notes: (
-      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
-        WD 1.5 Beta 3 - Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.5 Beta 3 - Release Notes and Prompt Hints",
+    notesLink:
+      "https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63",
     defaults: {
       width: 768,
       height: 768,
@@ -666,12 +619,9 @@ const models: Record<string, Model> = {
       "1girl, arms at sides, black hair, black sailor collar, black skirt, black sleeves, city, closed eyes, closed mouth, collarbone, neckerchief, outdoors, pleated skirt, red neckerchief, sailor collar, scenery, school uniform, serafuku, short hair, short sleeves, skirt, sky, solo, split mouth, upper body, cat ears, animal ears, animal ear fluff (exceptional, best aesthetic, new, newest, best quality, masterpiece, extremely detailed, anime:1.2)",
     ],
     tags: ["anime"],
-
-    notes: (
-      <a href="https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63">
-        WD 1.5 Beta 3 - Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.5 Beta 3 - Release Notes and Prompt Hints",
+    notesLink:
+      "https://saltacc.notion.site/WD-1-5-Beta-3-Release-Notes-1e35a0ed1bb24c5b93ec79c45c217f63",
     defaults: {
       width: 768,
       height: 768,
@@ -697,12 +647,9 @@ const models: Record<string, Model> = {
       "masterpiece, best quality, high quality, scenery, japanese shrine, no humans, absurdres",
     ],
     tags: ["anime"],
-
-    notes: (
-      <a href="https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b">
-        WD 1.4 Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.4 Release Notes and Prompt Hints",
+    notesLink:
+      "https://gist.github.com/harubaru/8581e780a1cf61352a739f2ec2eef09b",
     baseModel: "SD 2.0",
     ogModel: false,
     dateAdded: new Date("2023-01-01"),
@@ -716,12 +663,9 @@ const models: Record<string, Model> = {
       "yakumo ran, arknights, 1girl, :d, animal ears, blonde hair, breasts, cowboy shot, extra ears, fox ears, fox shadow puppet, fox tail, head tilt, large breasts, looking at viewer, multiple tails, no headwear, short hair, simple background, smile, solo, tabard, tail, white background, yellow eyes",
     ],
     tags: ["anime"],
-
-    notes: (
-      <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
-        WD 1.3 Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.3 Release Notes and Prompt Hints",
+    notesLink:
+      "https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1",
     baseModel: "SD 1.5",
     ogModel: false,
     dateAdded: new Date("2022-10-01"),
@@ -735,12 +679,9 @@ const models: Record<string, Model> = {
       "scenery, shibuya tokyo, post-apocalypse, ruins, rust, sky, skyscraper, abandoned, blue sky, broken window, building, cloud, crane machine, outdoors, overgrown, pillar, sunset",
     ],
     tags: ["anime"],
-
-    notes: (
-      <a href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">
-        WD 1.3 Release Notes and Prompt Hints
-      </a>
-    ),
+    notes: "WD 1.3 Release Notes and Prompt Hints",
+    notesLink:
+      "https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1",
     baseModel: "SD 1.5",
     ogModel: false,
     dateAdded: new Date("2023-01-02"),
@@ -817,11 +758,9 @@ const models: Record<string, Model> = {
     randomPrompts: [
       "(masterpiece:1,2), best quality, masterpiece, highres, original, extremely detailed wallpaper, looking at viewer, (sitting:1.4), (A robotic girl stands in the center holding a bouquet of orange flowers.:1.4).,(1humanoid cyborg girl:1.0), (happy, closed eye smile:1.6), (mechanical hand:1.05), [[cyborg]], metallic mixture, drawing, paintbrush, beret, (glowing_eyes:0.95), (separate sleeves), silver long_hair, hair_between_eyes, sigma 135mm lens, (Lots of oldman male researchers in white coats standing aside:1.2), 👨‍💻👨‍🔬,(cowboy shot:1.2), upper body,perfect lighting,(extremely detailed CG:1.2),(8k:1.1},(happy:1.3), :d, group of male researchers surrounding a female-shaped AI cyborg, smiling and laughing. cyborg cute girl sitting in the center of the group of male human researchers.The human male researchers are all smiling and laughing, (Group photo, commemorative photo, :1.4)",
     ],
-    notes: (
-      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#abyssorangemix2-aom2">
-        AbyssOrangeMix2 (AOM2) notes
-      </a>
-    ),
+    notes: "AbyssOrangeMix2 (AOM2) notes",
+    notesLink:
+      "https://huggingface.co/WarriorMama777/OrangeMixs#abyssorangemix2-aom2",
     baseModel: "SD 1.5",
     ogModel: false,
     dateAdded: new Date("2023-01-27"),
@@ -831,11 +770,9 @@ const models: Record<string, Model> = {
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
     description: "Improves Elysium_AnimeV2; 3d thick paint style.",
-    notes: (
-      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#elyorangemix-elom">
-        ElyOrangeMix (ELOM) notes
-      </a>
-    ),
+    notes: "ElyOrangeMix (ELOM) notes",
+    notesLink:
+      "https://huggingface.co/WarriorMama777/OrangeMixs#elyorangemix-elom",
     baseModel: "SD 1.5",
     ogModel: false,
     dateAdded: new Date("2023-01-27"),
@@ -849,11 +786,9 @@ const models: Record<string, Model> = {
       "((masterpiece)), best quality, perfect anatomy, (1girl, solo focus:1.4), pov, looking at viewer, flower trim,(perspective, sideway, From directly above ,lying on water, open hand, palm, :1.3),(Accurate five-fingered hands, Reach out, hand focus, foot focus, Sole, heel, ball of the thumb:1.2), (outdoor, sunlight:1.2),(shiny skin:1.3),,(masterpiece, white border, outside border, frame:1.3), (motherhood, aged up, mature female, medium breasts:1.2), (curvy:1.1), (single side braid:1.2), (long hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), (light Ivory hair:1.2), looking at viewer, Calm, Slight smile, (anemic, dark, lake, river,puddle, Meadow, rock, stone, moss, cliff, white flower, stalactite, Godray, ruins, ancient, eternal, deep ,mystic background,sunlight,plant,lily,white flowers, Abyss, :1.2), (orange fruits, citrus fruit, citrus fruit bearing tree:1.4), volumetric lighting,good lighting,, masterpiece, best quality, highly detailed,extremely detailed cg unity 8k wallpaper,illustration,((beautiful detailed face)), best quality, (((hyper-detailed ))), high resolution illustration ,high quality, highres, sidelighting, ((illustrationbest)),highres,illustration, absurdres, hyper-detailed, intricate detail, perfect, high detailed eyes,perfect lighting, (extremely detailed CG:1.2)",
       "street, 130mm f1.4 lens, ,(shiny skin:1.3),, (teen age, school uniform:1.2), (glasses, black hair, medium hair with queue and braid, disheveled hair, hair scrunchie, tareme:1.2), looking at viewer,, Calm, Slight smile",
     ],
-    notes: (
-      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#eerieorangemix-eom">
-        EerieOrangeMix (EOM) notes
-      </a>
-    ),
+    notes: "EerieOrangeMix (EOM) notes",
+    notesLink:
+      "https://huggingface.co/WarriorMama777/OrangeMixs#eerieorangemix-eom",
     baseModel: "SD 1.5",
     ogModel: false,
     tags: [
@@ -882,11 +817,9 @@ const models: Record<string, Model> = {
     MODEL_PRECISION: "fp16",
     MODEL_REVISION: "",
     description: "Improves AnythingV3, paint style, popular in JP.",
-    notes: (
-      <a href="https://huggingface.co/WarriorMama777/OrangeMixs#bloodorangemix-bom">
-        BloodOrangeMix (BOM)
-      </a>
-    ),
+    notes: "BloodOrangeMix (BOM) notes",
+    notesLink:
+      "https://huggingface.co/WarriorMama777/OrangeMixs#bloodorangemix-bom",
     baseModel: "SD 1.5",
     ogModel: false,
 
