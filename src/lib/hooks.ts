@@ -1,4 +1,7 @@
-type HookFunction = (data: unknown, result: Record<string, unknown>) => void;
+type HookFunction = (
+  data: unknown,
+  result: Record<string, unknown>
+) => Promise<Record<string, unknown> | void> | Record<string, unknown> | void;
 
 class Hooks {
   _hooks: Map<string, HookFunction[]> = new Map();
@@ -27,10 +30,10 @@ class Hooks {
         `hooks.exec("${hookName}") called, but no such hook exists`
       );
 
-    const result = {};
+    let result = {};
     for (const hook of hooks) {
       try {
-        await hook(data, result);
+        result = { ...result, ...(await hook(data, result)) };
       } catch (error) {
         console.error(
           `hooks.exec("${hookName}"): the following hook error was caught and SKIPPED!`

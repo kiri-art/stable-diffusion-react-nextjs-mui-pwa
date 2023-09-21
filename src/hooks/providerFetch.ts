@@ -10,12 +10,11 @@ hooks.register("providerFetch.server.preStart");
 hooks.register("providerFetch.server.postStart");
 hooks.register("providerFetch.browser.postStart");
 
-hooks.on("providerFetch.browser.extraInfoToSend", (data, result) => {
-  // @ts-expect-error: TODO
-  result.auth = db.auth.authInfoToSend();
+hooks.on("providerFetch.browser.extraInfoToSend", () => {
+  return { auth: db.auth?.authInfoToSend() };
 });
 
-hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
+hooks.on("providerFetch.server.preStart", async (data) => {
   // console.log("providerFetch.server.preStart", data, hookResult);
   // @ts-expect-error: TODO
   const { extraInfo, deps, req } = data;
@@ -29,24 +28,27 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   const modelInputs =
     (request.inputs.modelInputs as Record<string, unknown>) || {};
 
+  const result: Record<string, unknown> = {};
+
   const res = {
     status(code: number) {
-      if (!hookResult.$response) hookResult.$response = {};
+      if (!result.$response) result.$response = {};
       // @ts-expect-error: TODO
-      hookResult.$response.status = code;
+      result.$response.status = code;
       return this;
     },
     send(body: string) {
-      if (!hookResult.$response) hookResult.$response = {};
+      if (!result.$response) result.$response = {};
       // @ts-expect-error: TODO
-      hookResult.$response.body = body;
+      result.$response.body = body;
       return this;
     },
     end(body: string) {
-      if (!hookResult.$response) hookResult.$response = {};
+      if (!result.$response) result.$response = {};
       // @ts-expect-error: TODO
-      hookResult.$response.body = body;
-      return this;
+      result.$response.body = body;
+      // return this;
+      return result;
     },
   };
 
@@ -112,7 +114,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
       .collection("users")
       .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
     // Higher priority if they have a good paid credit balance (if if using free)
-    hookResult.queuePriority = user.credits.paid > 5 ? 1 : 2;
+    result.queuePriority = user.credits.paid > 5 ? 1 : 2;
   } else {
     user.credits.paid -= CREDIT_COST;
     chargedCredits.credits = CREDIT_COST;
@@ -120,7 +122,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
     await gs.dba
       .collection("users")
       .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
-    hookResult.queuePriority = 0;
+    result.queuePriority = 0;
   }
 
   // --- SAVE REQUESTS --- //
@@ -148,13 +150,15 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 
   await gs.dba.collection("userRequests").insertOne(userRequest);
 
-  hookResult.$extra = {
+  result.$extra = {
     credits: user.credits,
     chargedCredits: chargedCredits,
   };
+
+  return result;
 });
 
-hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
+hooks.on("providerFetch.server.postStart", async (data) => {
   // console.log("providerFetch.server.postStart", data, hookResult);
   // @ts-expect-error: TODO
   const { request, /* extraInfo, */ deps, preStartResult, startResult } = data;
