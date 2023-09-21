@@ -6624,10 +6624,10 @@ mongodb-connection-string-url@^2.6.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb-rest-relay@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/mongodb-rest-relay/-/mongodb-rest-relay-1.3.1.tgz#e37c816d1ccd8fa148798d155a5ddb6bf861589d"
-  integrity sha512-oHcOaB5yzoci51ydbjOky0EHoZzCbFdwsGgGlfu2cJSnAAxrDLliR/RA38jCN1deEgmQwE1hYLIZrxSIHspFtQ==
+mongodb-rest-relay@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/mongodb-rest-relay/-/mongodb-rest-relay-1.9.1.tgz#a891930720556c9775c72ca1c14e00a4e291f0ec"
+  integrity sha512-LOdtldeZJwcsfJa6DQOykz703QuIgO+mlyIa3gNUl2YYu2nwh2EZADtt24Nqgn1e2LppAIzfwEgGG6iAnHZkPQ==
   dependencies:
     debug "^4.3.4"
 
