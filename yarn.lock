@@ -3377,10 +3377,10 @@ bson-objectid@^2.0.3:
   resolved "https://registry.yarnpkg.com/bson-objectid/-/bson-objectid-2.0.3.tgz#d840185172846b2f10c42ce2bcdb4a50956a9db5"
   integrity sha512-WYwVtY9yqk179EPMNuF3vcxufdrGLEo2XwqdRVbfLVe9X6jLt7WKZQgP+ObOcprakBGbHxzl76tgTaieqsH29g==
 
-bson@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-5.4.0.tgz#0eea77276d490953ad8616b483298dbff07384c6"
-  integrity sha512-WRZ5SQI5GfUuKnPTNmAYPiKIof3ORXAF4IRU5UcgmivNIon01rWQlw5RUH954dpu8yGL8T59YShVddIPaU/gFA==
+bson@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-5.5.0.tgz#a419cc69f368d2def3b8b22ea03ed1c9be40e53f"
+  integrity sha512-B+QB4YmDx9RStKv8LLSl/aVIEV3nYJc3cJNNTK2Cd1TL+7P+cNpw9mAPeCgc5K+j01Dv6sxUzcITXDx7ZU3F0w==
 
 buffer-from@^1.0.0:
   version "1.1.2"
@@ -5070,10 +5070,10 @@ gongo-client@2.7.1:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.1.0.tgz#3cbf446369caf50954d7a3e54795aeb07bfc6d97"
-  integrity sha512-upyJDCgTXHI2i9ve273TO5KWtvgetBEpUISDqW9ZF19hDuitj8PRpKP8t+HLrr4kHfvDtdoP73AnmgJS30aDfg==
+gongo-server-db-mongo@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-3.2.0.tgz#a9987eaa0be5388dda51586a93ce5f3e05fa6b50"
+  integrity sha512-L9yd00LhJ98xO/9b+CB3lT0X7Nk6UBbZp/HPeUR74bRokuB157xEp0wPlb6U4T0+rUXOe5SGrGB6j+Opk5lTzQ==
   dependencies:
     fast-json-patch "^3.1.1"
     json-pointer "^0.6.2"
@@ -6631,12 +6631,12 @@ mongodb-rest-relay@1.9.1:
   dependencies:
     debug "^4.3.4"
 
-mongodb@^5.8.1:
-  version "5.8.1"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-5.8.1.tgz#dc201adfbd6c6d73401cdcf12ebdb75f14771faf"
-  integrity sha512-wKyh4kZvm6NrCPH8AxyzXm3JBoEf4Xulo0aUWh3hCgwgYJxyQ1KLST86ZZaSWdj6/kxYUA3+YZuyADCE61CMSg==
+mongodb@5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-5.9.0.tgz#5a22065fa8cfaf1d58bf2e3c451cd2c4bfa983a2"
+  integrity sha512-g+GCMHN1CoRUA+wb1Agv0TI4YTSiWr42B5ulkiAfLLHitGK1R+PkSAf3Lr5rPZwi/3F04LiaZEW0Kxro9Fi2TA==
   dependencies:
-    bson "^5.4.0"
+    bson "^5.5.0"
     mongodb-connection-string-url "^2.6.0"
     socks "^2.7.1"
   optionalDependencies:
