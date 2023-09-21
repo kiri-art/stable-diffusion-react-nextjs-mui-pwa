@@ -16,8 +16,7 @@ hooks.on("providerFetch.browser.extraInfoToSend", (data, result) => {
 });
 
 hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
-  console.log("providerFetch.server.preStart"); // , data, hookResult);
-  // console.log({ data });
+  // console.log("providerFetch.server.preStart", data, hookResult);
   // @ts-expect-error: TODO
   const { extraInfo, deps, req } = data;
   // @ts-expect-error: TODO
@@ -64,9 +63,9 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
   extraInfo.auth.nextAuthSessionToken = nextAuthSessionToken;
 
   const auth = new Auth(gs.dba, extraInfo.auth);
-  console.log({ sessionData: await auth.getSessionData() });
+  // console.log({ sessionData: await auth.getSessionData() });
   const userId = await auth.userId();
-  console.log({ userId });
+  // console.log({ userId });
 
   if (!userId) return res.status(403).end("Forbidden, no userId");
 
@@ -156,8 +155,7 @@ hooks.on("providerFetch.server.preStart", async (data, hookResult) => {
 });
 
 hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
-  console.log("providerFetch.server.postStart", data, hookResult);
-  console.log({ data });
+  // console.log("providerFetch.server.postStart", data, hookResult);
   // @ts-expect-error: TODO
   const { request, /* extraInfo, */ deps, preStartResult, startResult } = data;
   const { gs } = deps;
@@ -193,6 +191,7 @@ hooks.on("providerFetch.server.postStart", async (data, hookResult) => {
 });
 
 hooks.on("providerFetch.browser.postStart", async (data) => {
+  console.log("providerFetch.browser.postStart", data);
   if (typeof data === "object") {
     // @ts-expect-error: TODO
     const { request } = data;

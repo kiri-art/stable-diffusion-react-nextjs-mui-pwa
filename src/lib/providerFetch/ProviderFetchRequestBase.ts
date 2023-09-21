@@ -56,7 +56,6 @@ export default class ProviderFetchRequestBase {
       }
 
       const schema = model.callInputsSchema;
-      console.log("checkInputs", model.callInputsSchema?.fields.MODEL_ID);
       if (schema) await schema.validate(this.inputs.callInputs);
     }
     if (this.inputs.modelInputs) {
@@ -240,8 +239,35 @@ export default class ProviderFetchRequestBase {
         };
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const updateThisFromResult = (result: any) => {
+        this.callID = result.callID;
+        this.modelOutputs = result.modelOutputs;
+        this.message = result.message;
+        this.finished = result.finished;
+        this.$extra = result.$extra;
+      };
+
       if (!this.apiInfo().startOnly) {
-        const result = await this.handleResponse(response, callback);
+        let isFirst = true;
+        const callbackAndFirstResponse = async (
+          result: Record<string, unknown>
+        ) => {
+          if (isFirst) {
+            isFirst = false;
+            updateThisFromResult(result);
+            await hooks.exec("providerFetch.browser.postStart", {
+              request: this,
+            });
+            return;
+          }
+          callback && callback(result);
+        };
+
+        const result = await this.handleResponse(
+          response,
+          callbackAndFirstResponse
+        );
 
         // this.callID = result.callID;  don't reset
         this.message = result.message;
@@ -256,15 +282,9 @@ export default class ProviderFetchRequestBase {
 
       const result = await response.json();
       // console.log("browserStart result", result);
-
-      this.callID = result.callID;
-      this.modelOutputs = result.modelOutputs;
-      this.message = result.message;
-      this.finished = result.finished;
-      this.$extra = result.$extra;
-
-      // XXX TODO what about in startOnly?  need to stream this back
+      updateThisFromResult(result);
       await hooks.exec("providerFetch.browser.postStart", { request: this });
+
       return result;
     } else {
       return await this.fetchStart();
