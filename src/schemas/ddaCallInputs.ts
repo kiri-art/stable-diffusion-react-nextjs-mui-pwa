@@ -1,6 +1,7 @@
 import { object, string, boolean, InferType, array } from "yup";
 import models from "../config/models";
 import Providers from "../config/providers";
+console.log(Object.keys(models));
 
 const ddaCallInputsSchema = object({
   MODEL_ID: string().oneOf(Object.keys(models)),
@@ -58,6 +59,7 @@ const ddaCallInputsSchema = object({
   image_format: string().oneOf(["PNG", "JXL", "WEBP"]),
 });
 
+console.log("ddaCallInputs init", ddaCallInputsSchema.fields.MODEL_ID);
 type ddaCallInputs = InferType<typeof ddaCallInputsSchema>;
 
 export type { ddaCallInputs };

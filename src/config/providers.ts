@@ -80,6 +80,7 @@ export const apiInfo = {
   direct: {
     oneshot: true,
     startViaServer: false,
+    startOnly: true,
     checkViaServer: false,
     streamable: true,
     priorityQueues: false,
@@ -87,6 +88,7 @@ export const apiInfo = {
   banana: {
     oneshot: false,
     startViaServer: true,
+    startOnly: true,
     checkViaServer: false,
     streamable: false,
     priorityQueues: false,
@@ -94,6 +96,7 @@ export const apiInfo = {
   "banana+kiri": {
     oneshot: false,
     startViaServer: true,
+    startOnly: false,
     checkViaServer: false,
     streamable: true,
     priorityQueues: true,
@@ -101,6 +104,7 @@ export const apiInfo = {
   runpod: {
     oneshot: false,
     startViaServer: true,
+    startOnly: true,
     checkViaServer: true,
     streamable: false,
     priorityQueues: false,

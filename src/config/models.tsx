@@ -1,3 +1,5 @@
+"use client";
+
 export interface Model {
   MODEL_ID: string;
   MODEL_PRECISION?: "" | "fp16";

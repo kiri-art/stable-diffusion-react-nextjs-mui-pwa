@@ -33,9 +33,10 @@ class Hooks {
         await hook(data, result);
       } catch (error) {
         console.error(
-          "The following hook error occured, and was caught and skipped"
+          `hooks.exec("${hookName}"): the following hook error was caught and SKIPPED!`
         );
-        console.error(error);
+        if (error instanceof Error) console.error(error.stack);
+        else console.error(error);
       }
     }
 

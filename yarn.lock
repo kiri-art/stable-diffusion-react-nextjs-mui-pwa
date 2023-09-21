@@ -5049,10 +5049,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gongo-client-react@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.4.0.tgz#8a479f35b2bde5b61e3a475234d062c09467af84"
-  integrity sha512-BH7s5fzXAQeF1ARLH24bKmdTPSlyvuQtmpDk0OJ6t/iI+3vPLT19ebKrfkMYAMkpIUp/adV5yvEeHWd5prLdvw==
+gongo-client-react@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.5.0.tgz#1d05534f880d4d7bd7296d82284fa4569c020885"
+  integrity sha512-Uzp5Cknd4FrYTJFXV2hzrwWg4Wq98qhzdgTAXbOVld/nosH7p0j0TM4VcLBqfTey8NpYePSTu5fq6LVpZN2XYA==
   dependencies:
     next-auth "^4.23.1"
 

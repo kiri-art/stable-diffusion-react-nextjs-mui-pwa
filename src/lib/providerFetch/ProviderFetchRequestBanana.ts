@@ -70,8 +70,10 @@ export default class ProviderFetchRequestBanana extends ProviderFetchRequestBase
     if (!provider.apiKey)
       console.warn("Warning, provider apiKey not set for: " + provider.id);
 
+    const apiInfo = this.apiInfo();
+
     // Present on "banana+kiri" API.
-    if (this.apiInfo().streamable) {
+    if (apiInfo.streamable) {
       if (this.inputs.callInputs) {
         // @ts-expect-error: ok
         this.inputs.callInputs.streamEvents = true;
@@ -98,11 +100,10 @@ export default class ProviderFetchRequestBanana extends ProviderFetchRequestBase
       apiKey: provider.apiKey,
       modelKey,
       modelInputs: this.inputs,
-      startOnly: true,
+      startOnly: apiInfo.startOnly ?? true,
     };
 
-    if (this.apiInfo().priorityQueues)
-      payload.queuePriority = this.queuePriority;
+    if (apiInfo.priorityQueues) payload.queuePriority = this.queuePriority;
 
     return { url, payload };
   }

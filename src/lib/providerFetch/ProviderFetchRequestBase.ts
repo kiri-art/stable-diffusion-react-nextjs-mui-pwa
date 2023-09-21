@@ -56,6 +56,7 @@ export default class ProviderFetchRequestBase {
       }
 
       const schema = model.callInputsSchema;
+      console.log("checkInputs", model.callInputsSchema?.fields.MODEL_ID);
       if (schema) await schema.validate(this.inputs.callInputs);
     }
     if (this.inputs.modelInputs) {
@@ -201,13 +202,14 @@ export default class ProviderFetchRequestBase {
     return result;
   }
 
-  async browserStart() {
+  async browserStart(callback?: (result: Record<string, unknown>) => void) {
     if (this.apiInfo().startViaServer) {
       const extraInfo = await hooks.exec(
         "providerFetch.browser.extraInfoToSend"
       );
 
-      const response = await fetch("/api/providerFetch", {
+      const url = this.apiInfo().startOnly ? "/api/providerFetch" : "/api/kiri";
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -238,6 +240,20 @@ export default class ProviderFetchRequestBase {
         };
       }
 
+      if (!this.apiInfo().startOnly) {
+        const result = await this.handleResponse(response, callback);
+
+        // this.callID = result.callID;  don't reset
+        this.message = result.message;
+        if (result.finished !== undefined) this.finished = result.finished;
+        else
+          this.finished = result.message !== "" && result.message !== "running";
+        this.modelOutputs = result.modelOutputs;
+
+        if (this.message) return result;
+        return;
+      }
+
       const result = await response.json();
       // console.log("browserStart result", result);
 
@@ -247,6 +263,7 @@ export default class ProviderFetchRequestBase {
       this.finished = result.finished;
       this.$extra = result.$extra;
 
+      // XXX TODO what about in startOnly?  need to stream this back
       await hooks.exec("providerFetch.browser.postStart", { request: this });
       return result;
     } else {

@@ -158,9 +158,7 @@ export default async function fetchToOutput(
     }
 
     if (!result.modelOutputs || result.message.match(/[Ee]rror/)) {
-      // @ts-expect-error: hmm TODO
       if (result.$error) {
-        // @ts-expect-error: hmm TODO
         setLog(JSON.stringify(result.$error, null, 2).split("\n"));
         return;
       }

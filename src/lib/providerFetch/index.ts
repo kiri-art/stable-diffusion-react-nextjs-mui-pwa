@@ -74,7 +74,9 @@ export default async function providerFetch(
         modelOutputs: [result],
       };
     } else {
-      const startResult = await request.browserStart();
+      const startResult = await request.browserStart(callback);
+      if (!request.apiInfo().startOnly) return startResult;
+
       if (!startResult.callID || startResult.message) {
         return {
           message: startResult.message,
