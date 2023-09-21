@@ -17,7 +17,20 @@ async function updateFinishedStep(
   timestampMs: number,
   value: Record<string, unknown>
 ) {
-  await fetch("/api/bananaUpdate", {
+  const url = (function () {
+    let url = "";
+    if (typeof window !== "object") {
+      url =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3000"
+          : "https://kiri.art";
+    }
+    url += "/api/bananaUpdate";
+    console.log("url", url);
+    return url;
+  })();
+
+  await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
