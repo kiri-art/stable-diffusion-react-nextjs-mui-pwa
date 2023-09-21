@@ -8,6 +8,7 @@
  */
 
 import "../../../src/hooks/providerFetch";
+import ProviderFetchRequestBase from "./ProviderFetchRequestBase";
 import ProviderFetchRequestFromObject from "./ProviderFetchRequestFromObject";
 
 // TODO, make this all internal to providerFetch
@@ -30,6 +31,23 @@ async function updateFinishedStep(
       },
     }),
   });
+}
+
+export async function updateFinishedStepFromResult(
+  result: ProviderFetchRequestBase
+) {
+  const callID = result.callID;
+  const now = Date.now(); // result.created * 1000
+  if (result.modelOutputs?.length) {
+    await updateFinishedStep(callID, now, { $success: true });
+  } else {
+    await updateFinishedStep(callID, now, {
+      $error: {
+        message: result.message,
+        modelOutputs: result.modelOutputs,
+      },
+    });
+  }
 }
 
 export default async function providerFetch(
@@ -87,20 +105,8 @@ export default async function providerFetch(
       const result = await request.checkUntilResult(callback);
       console.log("providerFetch result", result);
 
-      if (!request.apiInfo().checkViaServer) {
-        const callID = result.callID;
-        const now = Date.now(); // result.created * 1000
-        if (result.modelOutputs?.length) {
-          updateFinishedStep(callID, now, { $success: true });
-        } else {
-          updateFinishedStep(callID, now, {
-            $error: {
-              message: result.message,
-              modelOutputs: result.modelOutputs,
-            },
-          });
-        }
-      }
+      if (!request.apiInfo().checkViaServer)
+        await updateFinishedStepFromResult(result);
 
       return result;
     }

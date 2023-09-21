@@ -195,7 +195,7 @@ hooks.on("providerFetch.server.postStart", async (data) => {
 });
 
 hooks.on("providerFetch.browser.postStart", async (data) => {
-  console.log("providerFetch.browser.postStart", data);
+  // console.log("providerFetch.browser.postStart", data);
   if (typeof data === "object") {
     // @ts-expect-error: TODO
     const { request } = data;

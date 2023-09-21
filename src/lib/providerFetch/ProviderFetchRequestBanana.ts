@@ -101,6 +101,7 @@ export default class ProviderFetchRequestBanana extends ProviderFetchRequestBase
       modelKey,
       modelInputs: this.inputs,
       startOnly: apiInfo.startOnly ?? true,
+      $extra: this.$extra,
     };
 
     if (apiInfo.priorityQueues) payload.queuePriority = this.queuePriority;

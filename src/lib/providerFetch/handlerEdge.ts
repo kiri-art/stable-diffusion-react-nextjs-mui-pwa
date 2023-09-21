@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 
 import hooks from "../hooks";
 import "../../../src/hooks/providerFetch";
+import ProviderFetchRequestBase from "./ProviderFetchRequestBase";
 import ProviderFetchRequestFromObject from "./ProviderFetchRequestFromObject";
+import { updateFinishedStepFromResult } from ".";
 
 export const runtime = "edge";
 
@@ -97,10 +99,6 @@ export default function createHandler(deps?: Record<string, unknown>) {
 
     const providerRequest = ProviderFetchRequestFromObject(query.requestObject);
 
-    // these are all correct!
-    // console.log("query", query);
-    // console.log("inputs", providerRequest.inputs);
-
     if (providerRequest.apiInfo().startOnly)
       return new NextResponse("Bad Request: startOnly = true not implemented", {
         status: 400,
@@ -109,8 +107,6 @@ export default function createHandler(deps?: Record<string, unknown>) {
     await providerRequest.checkInputs();
 
     const extraInfo = query.extraInfo;
-    // console.log("req.body", req.body);
-    // console.log("request", request);
 
     if (type === "start") {
       const preStartResult: Record<string, unknown> = await hooks.exec(
@@ -187,9 +183,13 @@ export default function createHandler(deps?: Record<string, unknown>) {
         }
       );
 
+      // Note, previously this was sent by the client, so we could measure network
+      // transfer times too.  Should perhaps consider that again too.  TODO?
       watcher.on("finalResult", async (result: Record<string, unknown>) => {
-        console.log("TODO updatedFinishstep now");
-        console.log(result);
+        console.log("finalResult, result");
+        await updateFinishedStepFromResult(
+          result as unknown as ProviderFetchRequestBase
+        );
       });
 
       watcher.watch();

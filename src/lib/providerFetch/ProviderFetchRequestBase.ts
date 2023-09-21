@@ -15,6 +15,7 @@ export interface ProviderFetchRequestObject {
   callID?: string;
   finished?: boolean;
   message?: string;
+  $extra?: Record<string, unknown>;
 }
 
 export default class ProviderFetchRequestBase {

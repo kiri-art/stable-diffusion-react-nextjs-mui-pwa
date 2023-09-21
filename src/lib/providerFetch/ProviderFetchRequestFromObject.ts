@@ -16,6 +16,8 @@ export default function ProviderFetchRequestFromObject(
   object: ProviderFetchRequestObject,
   createId = false
 ) {
+  // console.log("ProviderFetchRequestFromObject", object, "createId: ", createId);
+
   const id = createId ? undefined : object.id;
   if (!(id || createId))
     throw new Error("fromObject(obj) but `obj` has no `id` field");
@@ -38,6 +40,7 @@ export default function ProviderFetchRequestFromObject(
   providerFetchRequest.callID = object.callID || "";
   providerFetchRequest.finished = object.finished || false;
   providerFetchRequest.message = object.message || "";
+  providerFetchRequest.$extra = object.$extra;
 
   return providerFetchRequest;
 }
