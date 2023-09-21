@@ -72,7 +72,7 @@
     "stylis": "4.1.1",
     "stylis-plugin-rtl": "2.1.1",
     "uuid": "^9.0.0",
-    "yup": "1.0.0-beta.7"
+    "yup": "1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
