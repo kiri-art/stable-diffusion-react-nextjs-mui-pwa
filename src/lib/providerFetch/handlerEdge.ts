@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 
 import hooks from "../hooks";
 import "../../../src/hooks/providerFetch";
-import ProviderFetchRequestBase from "./ProviderFetchRequestBase";
+import ProviderFetchRequestBase, {
+  ProviderFetchRequestObject,
+} from "./ProviderFetchRequestBase";
 import ProviderFetchRequestFromObject from "./ProviderFetchRequestFromObject";
 import { updateFinishedStepFromResult } from ".";
 
@@ -171,14 +173,22 @@ export default function createHandler(deps?: Record<string, unknown>) {
 
       watcher.on(
         "firstResult",
-        async (startResult: Record<string, unknown>) => {
-          console.log("firstResult", startResult);
+        async (result: Partial<ProviderFetchRequestObject>) => {
+          console.log("firstResult", result);
+          if (result.callID) providerRequest.callID = result.callID;
+          if (result.finished !== undefined)
+            providerRequest.finished = result.finished;
+          if (result.modelOutputs !== undefined)
+            providerRequest.modelOutputs == result.modelOutputs;
+          if (result.message !== undefined)
+            providerRequest.message = result.message;
+
           await hooks.exec("providerFetch.server.postStart", {
             request: providerRequest,
             extraInfo,
             deps,
             preStartResult,
-            startResult,
+            startResult: result,
           });
         }
       );
