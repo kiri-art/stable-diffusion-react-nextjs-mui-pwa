@@ -429,7 +429,7 @@ function Requests() {
   );
 
   const userId = useGongoUserId();
-  const user = db.collection("users").findOne(userId);
+  const user = userId && db.collection("users").findOne(userId);
   const isAdmin = !!user?.admin;
 
   const requests = useGongoLive((db) =>
