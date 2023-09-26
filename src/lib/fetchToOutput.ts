@@ -144,7 +144,15 @@ export default async function fetchToOutput(
                 "%",
             ]);
           else if (typeof data.queuePosition === "number")
-            setLog(["Position in queue: " + data.queuePosition]);
+            setLog([
+              "Position in queue: " + data.queuePosition,
+              "",
+              "Maintain a balance of at least",
+              "5 paid credits to skip the queue.",
+              "For more details, click your avatar",
+              "in the top right corner, and choose",
+              "'credits'.",
+            ]);
         }
       }
     );
