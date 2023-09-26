@@ -70,6 +70,8 @@ const models: Record<string, Model> = {
     baseModel: "SD 2.1",
     dateAdded: new Date("2022-12-06"),
     ogModel: true,
+    notes:
+      "This is the default model, and great to start with.  However, you may get much better results with the specialized models, particularly ICBINP-Final, DreamShaper_7 and the various anime models.  Some models take longer and use more credits with their default settings.  It's worth looking at what people have shared on the front page, and checking which models and settings were used to produce them.",
   },
   "stabilityai/stable-diffusion-2-1": {
     MODEL_ID: "stabilityai/stable-diffusion-2-1",
