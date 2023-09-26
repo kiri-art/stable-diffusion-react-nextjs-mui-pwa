@@ -94,8 +94,8 @@ const Stats: NextPage = () => {
     return series;
   }, [statsDaily]);
 
-  console.log(series);
-  console.log(hourlyStats.map((doc) => [doc.date, doc.total]));
+  // console.log(series);
+  // console.log(hourlyStats.map((doc) => [doc.date, doc.total]));
 
   const defaults = Highcharts.getOptions();
 
@@ -270,6 +270,16 @@ const Stats: NextPage = () => {
               enabled: false,
             },
             tooltip: {
+              formatter: function (
+                this: Highcharts.TooltipFormatterContextObject,
+                tooltip: Highcharts.Tooltip
+              ) {
+                if (this.points) {
+                  this.points = this.points.filter((p) => (p.y || 0) > 0);
+                  this.points.sort((a, b) => (b.y || 0) - (a.y || 0));
+                }
+                return tooltip.defaultFormatter.call(this, tooltip);
+              },
               shared: true,
             },
             legend: {
