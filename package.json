@@ -17,7 +17,7 @@
     "gongo-update": "yarn add --exact gongo-client@latest gongo-client-react@latest gongo-server@latest gongo-server-db-mongo@latest"
   },
   "engines": {
-    "node": ">=18.18.2"
+    "node": ">=18.17.1"
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
