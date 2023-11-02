@@ -112,10 +112,10 @@ function Credits() {
     {},
     {
       sort: ["createdAt", "desc"],
-      limit: 50,
+      limit: 200,
       minInterval: 500,
       maxInterval: 5000,
-      persist: false,
+      // persist: false,
     }
   );
   const [filter, setFilter] = React.useState("");
