@@ -246,7 +246,7 @@ export default function GongoAuthAdapter(
       ).U.findOneAndUpdate(
         { _id },
         { $set: user },
-        { returnDocument: "after" }
+        { returnDocument: "after", includeResultMetadata: true }
       );
 
       return from<AdapterUser>(result.value!);
@@ -272,7 +272,9 @@ export default function GongoAuthAdapter(
     async unlinkAccount(provider_providerAccountId) {
       const { value: account } = await (
         await db
-      ).A.findOneAndDelete(provider_providerAccountId);
+      ).A.findOneAndDelete(provider_providerAccountId, {
+        includeResultMetadata: true,
+      });
       return from<AdapterAccount>(account!);
     },
 
@@ -306,7 +308,7 @@ export default function GongoAuthAdapter(
       ).S.findOneAndUpdate(
         { sessionToken: session.sessionToken },
         { $set: session },
-        { returnDocument: "after" }
+        { returnDocument: "after", includeResultMetadata: true }
       );
       return from<AdapterSession>(result.value!);
     },
@@ -314,9 +316,12 @@ export default function GongoAuthAdapter(
     async deleteSession(sessionToken) {
       const { value: session } = await (
         await db
-      ).S.findOneAndDelete({
-        sessionToken,
-      });
+      ).S.findOneAndDelete(
+        {
+          sessionToken,
+        },
+        { includeResultMetadata: true }
+      );
       return from<AdapterSession>(session!);
     },
 
@@ -331,7 +336,7 @@ export default function GongoAuthAdapter(
     async useVerificationToken(identifier_token) {
       const { value: verificationToken } = await (
         await db
-      ).V.findOneAndDelete(identifier_token);
+      ).V.findOneAndDelete(identifier_token, { includeResultMetadata: true });
 
       if (!verificationToken) return null;
       // @ts-expect-error: ok
