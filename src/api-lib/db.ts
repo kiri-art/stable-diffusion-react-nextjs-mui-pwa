@@ -1,13 +1,9 @@
 import GongoServer from "gongo-server/lib/serverless";
 import MongoDBA from "gongo-server-db-mongo";
 import Auth from "gongo-server/lib/auth-class";
-import Database /*, ObjectId */ from "gongo-server-db-mongo";
+import Database from "gongo-server-db-mongo";
 import MongoClient from "mongodb-rest-relay/lib/client";
-import { ObjectId } from "bson";
-
-// Uh, "export { ObjectId }" from gongo-server-db-mongo not working?????
-// import { ObjectId } from "bson";
-// console.log("db", ObjectId);
+import { ObjectId } from "./objectId";
 
 import type {
   User as _User,
