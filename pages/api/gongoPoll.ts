@@ -18,7 +18,9 @@ export const config = {
 };
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
-gs.publish("accounts", (db) => db.collection("accounts").find());
+gs.publish("accounts", (db) =>
+  db.collection("accounts").find({ userId: { $exists: false } })
+);
 
 gs.publish("orders", async (db, {}, { auth }) => {
   const userId = await auth.userId();

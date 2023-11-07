@@ -36,6 +36,14 @@ if (typeof window !== "undefined")
     // Disabled here since we can subscribe just when Login() component active
     const accounts = db.subscriptions.get('["accounts"]');
     if (accounts) accounts.active = false;
+
+    const docs = db
+      .collection("accounts")
+      .find({ userId: { $exists: true } })
+      .toArraySync();
+    for (const doc of docs) {
+      db.collection("accounts")._remove(doc._id);
+    }
   }, 5000);
 
 db.collection("users").persist();
