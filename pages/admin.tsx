@@ -111,10 +111,10 @@ function Credits() {
     "usersAndCredits",
     {},
     {
-      sort: ["createdAt", "desc"],
+      sort: ["createdAt", "asc"],
       limit: 200,
       minInterval: 500,
-      maxInterval: 5000,
+      maxInterval: 2000,
       // persist: false,
     }
   );
