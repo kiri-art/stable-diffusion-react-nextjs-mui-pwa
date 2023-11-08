@@ -112,7 +112,7 @@ function Credits() {
     {},
     {
       sort: ["__updatedAt", "desc"],
-      limit: 200,
+      limit: 5000,
       minInterval: 500,
       maxInterval: 2000,
       // persist: false,
