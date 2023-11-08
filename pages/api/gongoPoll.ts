@@ -290,7 +290,7 @@ gs.publish("userRequests", async (db, _opts, { auth, updatedAt }) => {
 });
 */
 
-gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
+gs.publish("usersAndCredits", async (db, _opts, { auth }) => {
   const userId = await auth.userId();
   if (!userId) return [];
 
@@ -298,9 +298,6 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
   if (!user || !user.admin) return [];
 
   const query = { _id: { $ne: userId } };
-  if (updatedAt.users)
-    // @ts-expect-error: i don't have time for you typescript
-    query.__updatedAt = { $gt: updatedAt.users };
 
   return await db.collection("users").find(query).project({
     _id: true,
