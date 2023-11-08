@@ -309,6 +309,7 @@ gs.publish("usersAndCredits", async (db, _opts, { auth, updatedAt }) => {
     displayName: true,
     credits: true,
     admin: true,
+    createdAt: true,
     __updatedAt: true,
   });
 });

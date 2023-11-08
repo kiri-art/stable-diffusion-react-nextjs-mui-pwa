@@ -107,11 +107,11 @@ function rowContent(_index: number, user: User) {
 }
 
 function Credits() {
-  useGongoSub(
+  const sub = useGongoSub(
     "usersAndCredits",
     {},
     {
-      sort: ["createdAt", "asc"],
+      sort: ["__updatedAt", "desc"],
       limit: 200,
       minInterval: 500,
       maxInterval: 2000,
@@ -141,6 +141,7 @@ function Credits() {
       />
 
       <p>Total users: {users.length}</p>
+      {sub.isMore && <Button onClick={sub.loadMore}>Load More</Button>}
 
       <Paper style={{ height: "80vh", width: "100%" }}>
         <TableVirtuoso
