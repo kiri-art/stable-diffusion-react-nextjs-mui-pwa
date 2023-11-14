@@ -70,7 +70,12 @@ export default function AccountData() {
             associated with your account.
           </Trans>
         </p>
-        <a href={"/api/myData?sessionId=" + db?.auth?.sessionId}>
+        <a
+          href={
+            "/api/myData" +
+            (db?.auth?.sessionId ? "?sessionId=" + db.auth.sessionId : "")
+          }
+        >
           <Button variant="contained">Download Zip</Button>
         </a>
 

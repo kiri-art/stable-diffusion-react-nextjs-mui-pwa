@@ -40,6 +40,9 @@ export default async function myData(
   res: NextApiResponse
 ) {
   const { sessionId } = req.query;
+  const { cookie } = req.headers;
+  const nextAuthSessionId =
+    cookie && cookie.match(/\bnext-auth.session-token=([^;]+)/)?.[1];
 
   if (!gs.dba)
     return res
@@ -48,9 +51,15 @@ export default async function myData(
 
   const db = await gs.dba.dbPromise;
 
-  // @ts-expect-error: note, sessionId is a string.  this is a bug in gongo
-  // that uses string ids for sessions.
-  const session = await db.collection("sessions").findOne({ _id: sessionId });
+  const query: Record<string, unknown> = {};
+
+  if (sessionId) {
+    query._id = sessionId;
+  } else {
+    query.sessionToken = nextAuthSessionId;
+  }
+
+  const session = await db.collection("sessions").findOne(query);
 
   if (!session) return res.status(401).send("Session not found");
 
