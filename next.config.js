@@ -35,6 +35,10 @@ module.exports = withPWA({
         "@lingui/swc-plugin",
         {
           // the same options as in .swcrc
+          "runtimeModules": {
+            "i18n": ["@lingui/core", "i18n"],
+            "trans": ["@lingui/react", "Trans"]
+          }
         },
       ],
     ],

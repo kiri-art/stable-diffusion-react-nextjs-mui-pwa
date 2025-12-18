@@ -83,7 +83,7 @@
     "@eslint/js": "^9.39.2",
     "@lingui/cli": "4.3.0",
     "@lingui/macro": "4.3.0",
-    "@lingui/swc-plugin": "^4.0.3",
+    "@lingui/swc-plugin": "^5.9.0",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
     "@types/micro-cors": "^0.1.2",
@@ -108,6 +108,7 @@
     "crypto": false
   },
   "resolutions": {
-    "@types/react": "19.2.7"
+    "@types/react": "19.2.7",
+    "@swc/core": "1.13.21"
   }
 }
