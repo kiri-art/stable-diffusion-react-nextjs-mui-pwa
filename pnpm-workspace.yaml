@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - aws-sdk
+  - esbuild
+  - sharp
+  - unrs-resolver

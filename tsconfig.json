@@ -2,9 +2,9 @@
   "compilerOptions": {
     "target": "es2015",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
     ],
     "allowJs": true,
     "skipLibCheck": true,

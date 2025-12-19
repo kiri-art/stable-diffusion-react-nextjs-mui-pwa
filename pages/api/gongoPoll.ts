@@ -1,9 +1,9 @@
 import gs, { CreditCode, User } from "../../src/api-lib/db";
 import {
-  GongoDocument,
   CollectionEventProps,
-  userIsAdmin,
+  GongoDocument,
   userIdMatches,
+  userIsAdmin,
 } from "gongo-server-db-mongo/lib/collection";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/config/constants";
@@ -18,8 +18,9 @@ export const config = {
 };
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
-gs.publish("accounts", (db) =>
-  db.collection("accounts").find({ userId: { $exists: false } })
+gs.publish(
+  "accounts",
+  (db) => db.collection("accounts").find({ userId: { $exists: false } }),
 );
 
 gs.publish("orders", async (db, {}, { auth }) => {
@@ -82,8 +83,9 @@ gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
   if (!star) return [];
 
   const upQuery: Record<string, unknown> = { _id: star.userId };
-  if (updatedAt.userProfiles)
+  if (updatedAt.userProfiles) {
     upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+  }
 
   const userProfiles = await (await db.collection("users").getReal())
     .find(upQuery)
@@ -103,7 +105,7 @@ gs.publish(
   async (
     db,
     { userId, username, nsfw = false } = {},
-    { updatedAt, limit, sort, lastSortedValue }
+    { updatedAt, limit, sort, lastSortedValue },
   ) => {
     const query: Record<string, unknown> = {};
     if (username && !userId) {
@@ -113,12 +115,13 @@ gs.publish(
     } else if (userId) query.userId = new ObjectId(userId);
 
     if (nsfw) query["callInputs.safety_checker"] = false;
-    else
+    else {
       query.$or = [
         { "callInputs.safety_checker": true },
         { "callInputs.safety_checker": { $exists: false } },
         { "callInputs.safety_checker": null },
       ];
+    }
 
     if (updatedAt && updatedAt.stars) {
       query.__updatedAt = { $gt: updatedAt.stars };
@@ -144,8 +147,9 @@ gs.publish(
     const stars = await cursor.toArray();
 
     const upQuery: Record<string, unknown> = {};
-    if (updatedAt && updatedAt.userProfiles)
+    if (updatedAt && updatedAt.userProfiles) {
       upQuery.userProfiles = { $gt: updatedAt.userProfiles };
+    }
 
     const uids = Array.from(new Set(stars.map((s) => s.userId)));
     // if (profile with no stars), still return userProfile
@@ -157,13 +161,13 @@ gs.publish(
       .project({ username: 1 })
       .toArray();
 
-    if (stars.length || userProfiles.length)
+    if (stars.length || userProfiles.length) {
       return [
         { coll: "stars", entries: stars },
         { coll: "userProfiles", entries: userProfiles },
       ];
-    else return [];
-  }
+    } else return [];
+  },
 );
 
 /*
@@ -244,8 +248,11 @@ gs.method("redeemCreditCode", async (db, { creditCode }, { auth }) => {
     .collection("users")
     .findOne({ _id: userId })) as unknown as User;
 
-  if (user.redeemedCreditCodes && user.redeemedCreditCodes.includes(creditCode))
+  if (
+    user.redeemedCreditCodes && user.redeemedCreditCodes.includes(creditCode)
+  ) {
     return { $error: "ALREADY_REDEEMED" };
+  }
 
   // TODO, make atomic.  but honestly, who cares.
   const code = (await db
@@ -261,7 +268,7 @@ gs.method("redeemCreditCode", async (db, { creditCode }, { auth }) => {
     {
       $inc: { "credits.free": code.credits },
       $push: { redeemedCreditCodes: creditCode },
-    }
+    },
   );
 
   await db
@@ -341,7 +348,7 @@ gs.method(
     }
 
     return { status: "OK", NUM_REPORTS: star.reports ? star.reports + 1 : 1 };
-  }
+  },
 );
 
 if (gs.dba) {
@@ -352,7 +359,7 @@ if (gs.dba) {
     "update",
     async (
       doc: GongoDocument | ChangeSetUpdate | string,
-      eventProps: CollectionEventProps
+      eventProps: CollectionEventProps,
     ) => {
       const isAdmin = await userIsAdmin(doc, eventProps);
       if (isAdmin === true) return true;
@@ -367,7 +374,7 @@ if (gs.dba) {
       }
 
       return "ACCESS_DENIED";
-    }
+    },
   );
 
   const creditCodes = db.collection("creditCodes");
@@ -390,7 +397,7 @@ if (gs.dba) {
       await db.collection("stars").updateOne(
         // @ts-expect-error: TODO
         { _id: doc.starId },
-        { $inc: { likes: 1 } }
+        { $inc: { likes: 1 } },
       );
     }
   });
@@ -408,15 +415,16 @@ if (gs.dba) {
         .collection("stars")
         .updateOne(
           { _id: like.starId },
-          { $inc: { likes: like.liked ? 1 : -1 } }
+          { $inc: { likes: like.liked ? 1 : -1 } },
         );
     }
   });
 }
 
 // module.exports = gs.expressPost();
-const gsExpressPost =
-  config.runtime === "edge" ? gs.vercelEdgePost() : gs.expressPost();
+const gsExpressPost = config.runtime === "edge"
+  ? gs.vercelEdgePost()
+  : gs.expressPost();
 async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
   /*
   if (
@@ -431,4 +439,5 @@ async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
   // @ts-expect-error: TODO
   return gsExpressPost(req, res);
 }
-module.exports = gongoPoll;
+
+export default gongoPoll;
