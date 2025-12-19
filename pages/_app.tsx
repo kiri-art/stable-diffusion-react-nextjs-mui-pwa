@@ -17,7 +17,7 @@ import themes from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import locales, { defaultLocale } from "../src/lib/locales";
 import { i18n, I18nProvider } from "../src/lib/i18n";
-import workboxStuff from "../src/workboxStuff";
+import serwistStuff from "../src/serwistStuff";
 import { ConfirmDialog } from "../src/asyncConfirm";
 
 interface MyAppProps extends AppProps {
@@ -72,7 +72,7 @@ export default function MyApp(props: MyAppProps) {
   }, [locale]);
 
   React.useEffect(() => {
-    workboxStuff();
+    serwistStuff();
   }, []);
 
   // if (!isServer && !isPopulated) return <div>Loading...</div>;
