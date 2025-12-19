@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@banana-dev/banana-dev": "4.0.0",
-    "@ducanh2912/next-pwa": "9.7.2",
     "@emotion/cache": "11.10.3",
     "@emotion/react": "11.10.4",
     "@emotion/server": "11.10.0",
@@ -33,6 +32,7 @@
     "@mui/lab": "5.0.0-alpha.145",
     "@mui/material": "5.14.10",
     "@projectfunction/async-busboy": "^1.0.4",
+    "@serwist/next": "^9.2.3",
     "@stripe/react-stripe-js": "^1.10.0",
     "@stripe/stripe-js": "^1.35.0",
     "@vercel/analytics": "1.0.2",
