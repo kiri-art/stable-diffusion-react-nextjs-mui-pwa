@@ -1,7 +1,7 @@
 // https://github.com/nextauthjs/next-auth/blob/main/packages/next-auth/src/providers/github.ts
 // commit fa58065951e6983f988819ca4c3af8f71f159f23
 
-import type { OAuthConfig, OAuthUserConfig } from "next-auth/providers";
+import type { OAuthConfig, OAuthUserConfig } from "next-auth/providers/oauth";
 
 /** @see https://docs.github.com/en/rest/users/users#get-the-authenticated-user */
 export interface GithubProfile extends Record<string, unknown> {

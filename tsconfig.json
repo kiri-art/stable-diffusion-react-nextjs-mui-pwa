@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "ES2018",
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -11,14 +11,13 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "types": ["@serwist/next/typings"],
+    "types": ["@serwist/next/typings", "react"],
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
     "incremental": true,
     "plugins": [
       {
@@ -36,6 +35,7 @@
   "exclude": [
     "node_modules",
     ".next",
-    "archive"
+    "archive",
+    "worker"
   ]
 }

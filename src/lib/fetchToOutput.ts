@@ -272,7 +272,11 @@ export default async function fetchToOutput(
     }
     */
 
-    const blob = new Blob([buffer], { type });
+    const blobBuffer =
+      buffer instanceof ArrayBuffer
+        ? buffer
+        : buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+    const blob = new Blob([new Uint8Array(blobBuffer as ArrayBuffer)], { type });
     const objectURL = URL.createObjectURL(blob);
     setImgSrc(objectURL);
     setLog([]);

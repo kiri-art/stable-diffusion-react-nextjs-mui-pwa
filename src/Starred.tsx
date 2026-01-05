@@ -273,7 +273,7 @@ export default function Starred({
 }) {
   const router = useRouter();
   const _cols = useBreakPoint({ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 });
-  const itemRef = React.useRef<Star | undefined>();
+  const itemRef = React.useRef<Star | undefined>(undefined);
 
   React.useEffect(() => {
     router.beforePopState((state) => {

@@ -169,10 +169,10 @@ export default function InputImage({
   CanvasAdjacent,
   touchAction,
 }: {
-  initImageCanvasRef: React.RefObject<HTMLCanvasElement>;
-  inputFile: React.RefObject<HTMLInputElement>;
+  initImageCanvasRef: React.RefObject<HTMLCanvasElement | null>;
+  inputFile: React.RefObject<HTMLInputElement | null>;
   fileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  CanvasAdjacent?: () => JSX.Element;
+  CanvasAdjacent?: () => React.ReactElement;
   touchAction?: string;
 }) {
   return (

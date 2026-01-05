@@ -1,7 +1,17 @@
 // import { t } from "@lingui/macro";
 const t = String.raw.bind(String);
 
-import type { BroadcastMessage } from "serwist";
+type BroadcastMessage = {
+  meta: string;
+  type: string;
+  payload: {
+    updatedURL: string;
+  };
+};
+type SerwistLifecycleEventLike = { type: string; isUpdate?: boolean };
+type SerwistLifecycleWaitingEventLike = SerwistLifecycleEventLike & {
+  wasWaitingBeforeRegister?: boolean;
+};
 import asyncConfirm from "./asyncConfirm";
 
 const UPDATE_INTERVAL = 60_000;
@@ -36,7 +46,9 @@ export default function serwistStuff() {
     // A common UX pattern for progressive web apps is to show a banner when a service worker has updated and waiting to install.
     // NOTE: MUST set skipWaiting to false in next.config.js pwa object
     // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users
-    const promptNewVersionAvailable = async (_event) => {
+    const promptNewVersionAvailable = async (
+      _event: SerwistLifecycleWaitingEventLike
+    ) => {
       console.log("Event waiting is triggered.", _event);
       // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
       // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
@@ -46,7 +58,7 @@ export default function serwistStuff() {
           t`A newer version of this web app is available, reload to update?`,
         )
       ) {
-        sw.addEventListener("controlling", (_event) => {
+        sw.addEventListener("controlling", (_event: SerwistLifecycleEventLike) => {
           window.location.reload();
         });
 
@@ -61,7 +73,7 @@ export default function serwistStuff() {
 
     sw.addEventListener("waiting", promptNewVersionAvailable);
 
-    sw.addEventListener("controlling", async (event) => {
+    sw.addEventListener("controlling", async (event: SerwistLifecycleEventLike) => {
       // The time check is because we don't want to display the prompt if
       // the new service worker is installed on the first load.  Only on update.
       if (event.isUpdate && Date.now() > startTime + UPDATE_INTERVAL - 1000) {
@@ -114,7 +126,7 @@ export default function serwistStuff() {
     // never forget to call register as auto register is turned off in next.config.js
     sw.register();
 
-    let interval;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (typeof navigator === "object" && "serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then(function (registration) {
         console.log(
@@ -135,7 +147,9 @@ export default function serwistStuff() {
     */
 
     return function cleanup() {
-      clearInterval(interval);
+      if (interval !== undefined) {
+        clearInterval(interval);
+      }
       if (typeof navigator === "object" && "serviceWorker" in navigator) {
         navigator.serviceWorker.ready.then(function (registration) {
           registration.unregister();

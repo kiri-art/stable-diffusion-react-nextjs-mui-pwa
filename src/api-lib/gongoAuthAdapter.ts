@@ -264,12 +264,17 @@ export default function GongoAuthAdapter(
 
     // ------------------------------- ACCOUNTS -------------------------------
 
-    linkAccount: async (data) => {
+    linkAccount: async (data: AdapterAccount) => {
       const account = to<MongoAdapterAccount>(data);
       await (await db).A.insertOne(account);
       return from<AdapterAccount>(account);
     },
-    async unlinkAccount(provider_providerAccountId) {
+    async unlinkAccount(
+      provider_providerAccountId: Pick<
+        AdapterAccount,
+        "provider" | "providerAccountId"
+      >
+    ) {
       const { value: account } = await (
         await db
       ).A.findOneAndDelete(provider_providerAccountId, {
