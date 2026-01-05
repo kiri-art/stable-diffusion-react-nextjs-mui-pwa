@@ -7,6 +7,11 @@ settings:
 overrides:
   '@swc/core': 1.13.21
 
+patchedDependencies:
+  masonic@4.1.0:
+    hash: 3197d841fdeace3ed81e92274d1fc4425f004792dc546bbd106d97c17e75fbe2
+    path: patches/masonic@4.1.0.patch
+
 importers:
 
   .:
@@ -115,7 +120,7 @@ importers:
         version: 3.10.1
       masonic:
         specifier: ^4.1.0
-        version: 4.1.0(react@18.3.1)
+        version: 4.1.0(patch_hash=3197d841fdeace3ed81e92274d1fc4425f004792dc546bbd106d97c17e75fbe2)(react@18.3.1)
       micro:
         specifier: ^9.4.1
         version: 9.4.1
@@ -8671,7 +8676,7 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  masonic@4.1.0(react@18.3.1):
+  masonic@4.1.0(patch_hash=3197d841fdeace3ed81e92274d1fc4425f004792dc546bbd106d97c17e75fbe2)(react@18.3.1):
     dependencies:
       '@essentials/memoize-one': 1.1.0
       '@essentials/one-key-map': 1.2.0

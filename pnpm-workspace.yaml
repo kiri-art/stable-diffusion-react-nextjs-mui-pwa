@@ -3,3 +3,6 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
   - unrs-resolver
+
+patchedDependencies:
+  masonic@4.1.0: patches/masonic@4.1.0.patch
