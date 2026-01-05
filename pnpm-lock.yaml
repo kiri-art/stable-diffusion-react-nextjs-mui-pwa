@@ -174,8 +174,8 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       sharp:
-        specifier: ^0.32.5
-        version: 0.32.6
+        specifier: ^0.34.5
+        version: 0.34.5
       stripe:
         specifier: ^10.7.0
         version: 10.17.0
@@ -5433,8 +5433,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@1.2.1': {}
 
-  '@img/colour@1.0.0':
-    optional: true
+  '@img/colour@1.0.0': {}
 
   '@img/sharp-darwin-arm64@0.34.5':
     optionalDependencies:
@@ -9749,7 +9748,6 @@ snapshots:
       '@img/sharp-win32-arm64': 0.34.5
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:

@@ -7,7 +7,7 @@ const { AuthFromReq } = require("../../src/api-lib/auth");
 const Database = require("gongo-server-db-mongo").default;
 const ObjectId = require("bson").ObjectId;
 const { MongoClient } = require("mongodb");
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 const sharp = require("sharp");
 
 // only in upload, could do in different lambda
@@ -238,4 +238,5 @@ export const config = {
   },
 };
 
-module.exports = { default: fileRoute, config, __esModule: true };
+// module.exports = { default: fileRoute, config, __esModule: true };
+export default fileRoute;

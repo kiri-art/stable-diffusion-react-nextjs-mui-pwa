@@ -75,7 +75,7 @@
     "react-toastify": "9.0.8",
     "react-virtuoso": "^4.5.1",
     "sanitize-filename": "^1.6.3",
-    "sharp": "^0.32.5",
+    "sharp": "^0.34.5",
     "stripe": "^10.7.0",
     "stylis": "4.1.1",
     "stylis-plugin-rtl": "2.1.1",
