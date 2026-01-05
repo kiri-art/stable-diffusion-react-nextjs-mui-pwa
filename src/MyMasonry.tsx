@@ -12,9 +12,7 @@ import {
   //
   MasonryScroller,
 } from "masonic";
-import type { MasonryScrollerProps, UsePositionerOptions } from "masonic";
-
-import type { UseScrollToIndexOptions } from "masonic/src/use-scroll-to-index";
+import type { MasonryScrollerProps, UseScrollToIndexOptions, UsePositionerOptions } from "masonic";
 
 /**
  * A "batteries included" masonry grid which includes all of the implementation details below. This component is the
