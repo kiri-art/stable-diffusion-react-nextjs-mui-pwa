@@ -27,6 +27,7 @@ export default async function (phase: string): Promise<NextConfig> {
           pathname: "/api/file",
         },
       ],
+      dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     },
     experimental: {
       swcPlugins: [
