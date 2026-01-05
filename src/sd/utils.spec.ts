@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { prompt_a111_to_compel } from "./utils";
 
 describe("utils", () => {
