@@ -13,7 +13,11 @@
 - `pnpm build` creates the production build; `pnpm start` serves it.
 - `pnpm lint` runs ESLint (Next.js + TypeScript rules).
 - `pnpm test` runs Vitest in non-watch mode.
-- i18n helpers: `pnpm i18n:extract` and `pnpm i18n:compile` for Lingui workflows.
+- `pnpm i18n:extract` refreshes Lingui catalogs in `locales/*/messages.po`.
+- `pnpm i18n:extract:clean` refreshes catalogs and removes obsolete `#~` entries.
+- `pnpm i18n:compile` regenerates the checked-in compiled catalogs in `locales/*/messages.js`.
+- `pnpm i18n:status` reports active missing translations and obsolete entries per locale.
+- `pnpm i18n:refresh` runs the repo’s standard translation maintenance flow: clean extract, then compile.
 
 ## Coding Style & Naming Conventions
 - TypeScript + React; 2-space indentation is the dominant style.
@@ -35,3 +39,12 @@
 - Use `.env.local` for local secrets. Common variables: `BANANA_API_KEY`, `BANANA_MODEL_KEY`, `STABLE_DIFFUSION_HOME`.
 - `NEXT_PUBLIC_` variables are baked at build time (set before `pnpm build`).
 - `REQUIRE_REGISTRATION` and `NEXT_PUBLIC_REQUIRE_REGISTRATION` toggle auth flow behavior.
+
+## Localization / i18n
+- Next.js locale routing is configured in `next.config.ts`; the app currently serves `en-US`, `he-IL`, `ja-JP`, and `fa-IR`.
+- Locale metadata such as language labels and text direction (`ltr` / `rtl`) lives in `src/lib/locales.ts`.
+- Lingui is configured in `lingui.config.js` and extracts messages from `pages/` and `src/`.
+- User-facing strings are typically wrapped with `@lingui/macro` helpers such as `t`, `Trans`, and `Plural`.
+- `pages/_app.tsx` activates the current locale, and `src/lib/i18n.ts` statically imports the compiled `locales/*/messages.js` catalogs.
+- After changing translatable copy, run `pnpm i18n:extract` or `pnpm i18n:extract:clean`, update non-source `msgstr` entries in `locales/*/messages.po`, then run `pnpm i18n:compile`.
+- `scripts/i18n/status.mjs` and `scripts/i18n/refresh.mjs` are the reusable maintenance helpers behind `pnpm i18n:status` and `pnpm i18n:refresh`.

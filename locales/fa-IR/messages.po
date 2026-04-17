@@ -21,23 +21,23 @@ msgstr "دکمه \"اشتراک‌گذاری\" / نام فایل شامل \"{sha
 msgid "(Denoising) Strength"
 msgstr "قدرت (کاهش نویز)"
 
-#: src/Inpaint.tsx:405
+#: src/Inpaint.tsx:406
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(کشیدن و رها کردن، اشتراک‌گذاری به زودی)"
 
 #: src/MyAppBar.tsx:485
 msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
-msgstr ""
+msgstr "{0, plural, one {یک خبر خوانده‌نشده وجود دارد.} other {# خبر خوانده‌نشده وجود دارد.}}"
 
-#: src/GoButton.tsx:72
+#: src/GoButton.tsx:73
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
 msgstr "{credits, plural, one {# اعتبار} other {# اعتبار}}"
 
-#: pages/checkout.tsx:68
+#: pages/checkout.tsx:69
 msgid "{numCredits} credits"
 msgstr "{numCredits} اعتبار"
 
-#: src/GoButton.tsx:85
+#: src/GoButton.tsx:86
 msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 msgstr "{userCredits, plural, one {# اعتبار باقی مانده} other {# اعتبار باقی مانده}}"
 
@@ -45,13 +45,13 @@ msgstr "{userCredits, plural, one {# اعتبار باقی مانده} other {# 
 msgid "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 msgstr "<0>@Comamoca_</0> (こまもか🦊) که در ارائه نام \"KIRI\" (\"霧\") کمک و مشارکت کرد و به طور کلی برای پروژه فوق‌العاده مفید بوده و از آن حمایت کرده است 🙏."
 
-#: pages/credits.tsx:187
+#: pages/credits.tsx:186
 msgid "<0>*</0>May change at any time."
 msgstr "<0>*</0>ممکن است هر زمانی تغییر کند."
 
-#: pages/credits.tsx:222
+#: pages/credits.tsx:221
 msgid "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
-msgstr ""
+msgstr "<0>کلاس دوم</0>: استفاده از اعتبار رایگان، اما با حداقل {MIN_PAID_CREDITS} اعتبار پرداخت‌شده در موجودی."
 
 #: pages/about.tsx:123
 msgid "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
@@ -88,16 +88,12 @@ msgstr "1) با مسئولیت خود استفاده کنید، ما هیچ مس
 msgid "A black image will be shown instead."
 msgstr "در عوض یک تصویر سیاه نمایش داده خواهد شد."
 
-#: src/workboxStuff.tsx:74
-msgid "A newer version of this web app is available, reload to update?"
-msgstr "نسخه جدیدتری از این برنامه تحت وب موجود است، برای به‌روزرسانی مجدداً بارگیری شود؟"
-
 #: pages/about.tsx:16
 #: src/MyAppBar.tsx:255
 msgid "About"
 msgstr "درباره"
 
-#: pages/admin.tsx:221
+#: pages/admin.tsx:288
 msgid "Access Denied."
 msgstr "دسترسی رد شد."
 
@@ -105,24 +101,20 @@ msgstr "دسترسی رد شد."
 msgid "Acknowledements and Thanks"
 msgstr "قدردانی و تشکر"
 
-#: src/sd/Addons.tsx:276
-#~ msgid "Add"
-#~ msgstr ""
-
-#: src/Inpaint.tsx:411
+#: src/Inpaint.tsx:412
 msgid "Adjust prompt and GO"
 msgstr "دستور را تنظیم کنید و ادامه دهید"
 
-#: pages/admin.tsx:227
+#: pages/admin.tsx:294
 #: src/MyAppBar.tsx:266
 msgid "Admin"
 msgstr "مدیر"
 
 #: src/OutputImage.tsx:440
 msgid "Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first)."
-msgstr ""
+msgstr "در غیر این صورت، اگر دقیقاً همین را می‌خواستید، فیلتر NSFW زیر را خاموش کنید (ممکن است ابتدا لازم باشد تاریخ تولد خود را تأیید کنید)."
 
-#: pages/order/[_id].tsx:58
+#: pages/order/[_id].tsx:59
 msgid "Amount"
 msgstr "مقدار"
 
@@ -148,7 +140,7 @@ msgstr "آیا مطمئن هستید؟ این قابل بازگشت نیست."
 msgid "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
 msgstr "ما به عنوان یک پروژه کاملاً متن‌باز، از شفافیت کامل و به اشتراک‌گذاشتن این داده‌ها با شما هیجان‌زده هستیم. اکنون در <0>GitHub ما مشارکت کنید!</0>"
 
-#: pages/order/[_id].tsx:75
+#: pages/order/[_id].tsx:76
 msgid "Back to Credits"
 msgstr "بازگشت به طراحان"
 
@@ -156,7 +148,7 @@ msgstr "بازگشت به طراحان"
 msgid "Be Responsible"
 msgstr "مسئولیت‌پذیر باشید"
 
-#: pages/upsample.tsx:91
+#: pages/upsample.tsx:92
 msgid "Best for Anime"
 msgstr "بهترین برای انیمه"
 
@@ -177,15 +169,15 @@ msgstr "صفحه {username} را در kiri.art بررسی کنید"
 msgid "Check out this user page on kiri.art"
 msgstr "صفحه این کاربر را در kiri.art بررسی کنید"
 
-#: pages/checkout.tsx:61
-#: pages/checkout.tsx:64
-#: pages/credits.tsx:275
+#: pages/checkout.tsx:62
+#: pages/checkout.tsx:65
+#: pages/credits.tsx:274
 msgid "Checkout"
 msgstr "تسویه حساب"
 
 #: pages/share_target.tsx:20
 msgid "Choose Share Target"
-msgstr ""
+msgstr "مقصد اشتراک‌گذاری را انتخاب کنید"
 
 #: src/sd/Controls.tsx:305
 msgid "Classifier-Free Guidance (Scale)"
@@ -195,11 +187,11 @@ msgstr "راهنمای بدون طبقه‌بندی (مقیاس)"
 msgid "Clear History"
 msgstr "پاک کردن تاریخچه"
 
-#: pages/credits.tsx:64
+#: pages/credits.tsx:65
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr "این کد قبلاً به تعداد حداکثر استفاده شده است، متأسفیم."
 
-#: src/Inpaint.tsx:418
+#: src/Inpaint.tsx:419
 msgid "Coming Soon"
 msgstr "به زودی"
 
@@ -211,19 +203,15 @@ msgstr "جامعه"
 msgid "Confirm Date of Birth"
 msgstr "تاریخ تولد را تأیید کنید"
 
-#: pages/login.tsx:93
-msgid "Connect with {0}"
-msgstr "ارتباط با {0}"
-
 #: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr "در کلیپ‌بورد کپی شد"
 
 #: src/sd/Addons/common.tsx:373
 msgid "Created images may not be sold."
-msgstr ""
+msgstr "تصاویر ایجادشده نباید فروخته شوند."
 
-#: pages/order/[_id].tsx:64
+#: pages/order/[_id].tsx:65
 msgid "Credits"
 msgstr "طراحان"
 
@@ -231,17 +219,17 @@ msgstr "طراحان"
 msgid "Credits:"
 msgstr "طراحان:"
 
-#: pages/order/[_id].tsx:61
+#: pages/order/[_id].tsx:62
 msgid "Currency"
 msgstr "واحد پول"
 
-#: pages/order/[_id].tsx:55
+#: pages/order/[_id].tsx:56
 msgid "Date"
 msgstr "تاریخ"
 
-#: pages/account/data.tsx:81
+#: pages/account/data.tsx:86
 msgid "Delete My Account"
-msgstr ""
+msgstr "حذف حساب من"
 
 #: src/Starred.tsx:25
 msgid "Delete this star?"
@@ -255,27 +243,27 @@ msgstr "توضیحات / شرح تصویر مورد نظر شما. می‌توا
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "شرح همه چیزهایی که در تصویر خروجی <0>نمی‌خواهید</0>، به‌عنوان مثال دستور: \"دسته گل رز\"، دستور منفی: \"رز قرمز\". همچنین می‌توانید درخواست کنید که مصنوعات دیفیوژن رایج مانند «دست‌های تغییر شکل یافته» حذف شوند. برای برخی از پیش‌فرض‌های رایج، روی آیکن\"تنظیم مجدد\" کلیک کنید."
 
-#: pages/account/data.tsx:132
+#: pages/account/data.tsx:137
 msgid "Destroy my Data"
-msgstr ""
+msgstr "داده‌هایم را حذف کن"
 
-#: pages/account/data.tsx:134
+#: pages/account/data.tsx:139
 msgid "Destroying..."
-msgstr ""
+msgstr "در حال حذف..."
 
 #: pages/start.tsx:130
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "هیچ محتوای مضر (نژادپرستانه، تحریک‌آمیز و غیره) ایجاد نکنید."
 
-#: pages/account/data.tsx:136
+#: pages/account/data.tsx:141
 msgid "Done!"
-msgstr ""
+msgstr "انجام شد!"
 
-#: pages/credits.tsx:198
+#: pages/credits.tsx:197
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "با مشارکت در پروژه در GitHub اعتبار رایگان کسب کنید!"
 
-#: pages/logs.tsx:508
+#: pages/logs.tsx:513
 msgid "Event Log"
 msgstr "گزارش رویداد"
 
@@ -283,30 +271,30 @@ msgstr "گزارش رویداد"
 msgid "Explicit"
 msgstr "صریح"
 
-#: pages/upsample.tsx:141
+#: pages/upsample.tsx:142
 msgid "Face Enhance"
 msgstr "تقویت صورت"
 
-#: pages/upsample.tsx:149
+#: pages/upsample.tsx:150
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "ترمیم صورت. خوب برای تصاویر واقعی، بد برای انیمه."
 
 #: pages/s/[_id].tsx:233
 #: src/sd/Addons/common.tsx:421
 msgid "Failed to copy to clipboard"
-msgstr ""
+msgstr "کپی در کلیپ‌بورد ناموفق بود"
 
 #: src/MyAppBar.tsx:209
 msgid "FAQ"
-msgstr ""
+msgstr "پرسش‌های متداول"
 
-#: pages/upsample.tsx:261
+#: pages/upsample.tsx:262
 msgid "File is not a valid image."
-msgstr ""
+msgstr "فایل یک تصویر معتبر نیست."
 
-#: pages/upsample.tsx:267
+#: pages/upsample.tsx:268
 msgid "File is too large; {maxSizeText} max."
-msgstr ""
+msgstr "فایل بیش از حد بزرگ است؛ حداکثر {maxSizeText}."
 
 #: pages/index.tsx:70
 msgid "Filter"
@@ -318,36 +306,31 @@ msgstr "تصاویری را که ممکن است NSFW (\"غیر ایمن برا�
 
 #: src/MyAppBar.tsx:222
 msgid "Forums"
-msgstr ""
+msgstr "انجمن‌ها"
 
-#: pages/credits.tsx:178
+#: pages/credits.tsx:177
 msgid "Free Credits"
 msgstr "اعتبارهای رایگان"
 
 #: pages/faq.tsx:81
 msgid "Frequently Asked Questions (FAQ)"
-msgstr ""
+msgstr "پرسش‌های متداول (FAQ)"
 
-#: pages/upsample.tsx:101
+#: pages/upsample.tsx:102
 msgid "General - v3"
 msgstr "عمومی - v3"
 
-#: src/GoButton.tsx:71
+#: src/GoButton.tsx:72
 msgid "Get More Credits"
 msgstr "اعتبار بیشتری دریافت کنید"
 
-#: pages/login.tsx:56
 #: src/MyAppBar.tsx:245
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/GoButton.tsx:69
+#: src/GoButton.tsx:70
 msgid "Go"
 msgstr "برو"
-
-#: pages/login.tsx:40
-msgid "Google"
-msgstr "گوگل"
 
 #: pages/s/[_id].tsx:343
 #: src/sd/Controls.tsx:483
@@ -375,9 +358,9 @@ msgstr "چقدر دقیق باید از دستور پیروی شود. مقادی
 
 #: src/sd/Controls.tsx:351
 msgid "Image Guidance Scale"
-msgstr ""
+msgstr "مقیاس هدایت تصویر"
 
-#: pages/upsample.tsx:211
+#: pages/upsample.tsx:212
 #: src/InputImage.tsx:28
 msgid "Image Loaded"
 msgstr "تصویر بارگذاری شد"
@@ -388,17 +371,17 @@ msgstr "تصویر بارگذاری شد"
 msgid "Image to Image"
 msgstr "تصویر به تصویر"
 
-#: src/Inpaint.tsx:423
+#: src/Inpaint.tsx:424
 msgid "Image will be down scaled to max 1024x1024."
 msgstr "مقیاس تصویر به حداکثر 1024x1024 کوچک می‌شود."
 
-#: pages/upsample.tsx:378
+#: pages/upsample.tsx:379
 msgid "Images should be max {maxSizeText}."
-msgstr ""
+msgstr "حداکثر اندازه تصاویر باید {maxSizeText} باشد."
 
-#: src/IPix2Pix.tsx:49
+#: src/IPix2Pix.tsx:50
 msgid "Important Tips"
-msgstr ""
+msgstr "نکات مهم"
 
 #: src/OutputImage.tsx:384
 msgid "Inpaint"
@@ -415,11 +398,11 @@ msgstr "Inpainting"
 #: src/MyAppBar.tsx:197
 #: src/OutputImage.tsx:377
 msgid "Instruct Pix2Pix"
-msgstr ""
+msgstr "Instruct Pix2Pix"
 
-#: src/IPix2Pix.tsx:51
+#: src/IPix2Pix.tsx:52
 msgid "Instruct-Pix2Pix is a Stable Diffusion model fine-tuned for editing images from human instructions. Given an input image and a written instruction that tells the model what to do, the model follows these instructions to edit the image."
-msgstr ""
+msgstr "Instruct-Pix2Pix یک مدل Stable Diffusion است که برای ویرایش تصاویر بر اساس دستورهای متنی انسان به‌صورت ویژه تنظیم شده است. با دادن یک تصویر ورودی و یک دستور متنی که مشخص می‌کند مدل چه کاری انجام دهد، مدل بر اساس آن دستورها تصویر را ویرایش می‌کند."
 
 #: pages/about.tsx:52
 msgid "It can be used here instantly with free & paid credits, run for free on your own computer (if you have a suitable GPU) or very cheaply via <0>banana.dev</0>'s serverless GPU cloud (see the <1>README</1> for details). Get involved in our <2>GitHub project page</2> and let's build something awesome together."
@@ -446,8 +429,8 @@ msgid "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically
 msgstr "موارد گزارش‌شده توسط {NUM_REPORTS_UNTIL_REMOVAL} کاربر به طور خودکار حذف خواهند شد."
 
 #: pages/stats.tsx:262
-#: pages/stats.tsx:386
-#: pages/stats.tsx:527
+#: pages/stats.tsx:396
+#: pages/stats.tsx:537
 msgid "Last 2 weeks"
 msgstr "2 هفته اخیر"
 
@@ -456,11 +439,11 @@ msgid "Last 24 hours"
 msgstr "24 ساعت اخیر"
 
 #: pages/[_id].tsx:199
-#: pages/credits.tsx:109
+#: pages/credits.tsx:108
 msgid "Loading..."
 msgstr "در حال بارگذاری..."
 
-#: src/GoButton.tsx:70
+#: src/GoButton.tsx:71
 #: src/MyAppBar.tsx:438
 msgid "Login"
 msgstr "ورود"
@@ -469,17 +452,13 @@ msgstr "ورود"
 msgid "Logout"
 msgstr "خروج"
 
-#: src/sd/Controls.tsx:494
-#~ msgid "Maximum size is 1024x768 or 768x1024 because of memory limits."
-#~ msgstr "به دلیل محدودیت حافظه، حداکثر اندازه 1024x768 یا 768x1024 است."
-
 #: src/sd/Addons/common.tsx:363
 msgid "May only be used with free credits."
-msgstr ""
+msgstr "فقط با اعتبارهای رایگان قابل استفاده است."
 
 #: pages/s/[_id].tsx:293
-#: pages/upsample.tsx:63
-#: pages/upsample.tsx:67
+#: pages/upsample.tsx:64
+#: pages/upsample.tsx:68
 #: src/sd/ModelSelect.tsx:427
 #: src/sd/ModelSelect.tsx:440
 msgid "Model"
@@ -487,19 +466,11 @@ msgstr "مدل"
 
 #: src/sd/Addons/common.tsx:264
 msgid "Model is already added."
-msgstr ""
+msgstr "مدل قبلاً اضافه شده است."
 
 #: src/sd/Addons/common.tsx:240
 msgid "Model must be a \"{0}\", not a \"{type}\"."
-msgstr ""
-
-#: src/sd/Addons/common.tsx:207
-#~ msgid "Model must be a \"{requiredType}\", not a \"{type}\"."
-#~ msgstr ""
-
-#: src/sd/Addons.tsx:145
-#~ msgid "Model must be a \"Textual Inversion\", not a \"{type}\"."
-#~ msgstr ""
+msgstr "مدل باید از نوع \"{0}\" باشد، نه \"{type}\"."
 
 #: pages/index.tsx:342
 msgid "Most Popular"
@@ -510,33 +481,29 @@ msgid "Most Recent"
 msgstr "جدیدترین"
 
 #: src/sd/Controls.tsx:456
-#~ msgid "Must be a multiple of 64. Maximum image size is 1024x768 or 768x1024 because of memory limits."
-#~ msgstr "باید مضرب 64 باشد. به دلیل محدودیت حافظه، حداکثر اندازه تصویر 1024x768 یا 768x1024 است."
-
-#: src/sd/Controls.tsx:456
 #: src/sd/Controls.tsx:495
 msgid "Must be a multiple of 64. Maximum size is 1024x1024 because of memory limits (but you can upsample to 4x resolution afterwards)."
-msgstr ""
+msgstr "باید مضربی از 64 باشد. حداکثر اندازه به دلیل محدودیت‌های حافظه 1024x1024 است (اما بعداً می‌توانید آن را تا 4 برابر ارتقا دهید)."
 
 #: src/sd/Addons/common.tsx:355
 msgid "Must credit the model creator."
-msgstr ""
+msgstr "باید به سازنده مدل اعتبار داده شود."
 
-#: pages/credits.tsx:166
+#: pages/credits.tsx:165
 msgid "My Credits"
 msgstr "اعتبارهای من"
 
 #: pages/account/data.tsx:26
 #: src/MyAppBar.tsx:415
 msgid "My Data"
-msgstr ""
+msgstr "داده‌های من"
 
 #: pages/s/[_id].tsx:324
 #: src/sd/Controls.tsx:191
 msgid "Negative Prompt"
 msgstr "دستور منفی"
 
-#: pages/stats.tsx:596
+#: pages/stats.tsx:606
 msgid "New Users"
 msgstr "کاربران جدید"
 
@@ -544,7 +511,7 @@ msgstr "کاربران جدید"
 msgid "News"
 msgstr "اخبار"
 
-#: pages/credits.tsx:192
+#: pages/credits.tsx:191
 msgid "Next credits on:"
 msgstr "اعتبارات بعدی در:"
 
@@ -552,19 +519,19 @@ msgstr "اعتبارات بعدی در:"
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr "برای استفاده منصفانه، هیچ دیپ‌فیکی کنار گذاشته نشود (مثلاً طنز، آموزش، هیچ چیز گمراه‌کننده یا سیاسی)."
 
-#: pages/credits.tsx:61
+#: pages/credits.tsx:62
 msgid "No such code exists."
 msgstr "چنین کدی وجود ندارد."
 
 #: src/sd/Addons/common.tsx:203
 msgid "No valid model ID, URL, or hash found."
-msgstr ""
+msgstr "هیچ شناسه مدل، نشانی اینترنتی یا هش معتبری پیدا نشد."
 
-#: pages/account/data.tsx:143
+#: pages/account/data.tsx:148
 msgid "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
-msgstr ""
+msgstr "توجه: این کار فقط داده‌های شما را از سرورهای ما و <0>این دستگاه</0> حذف می‌کند. اگر از این برنامه روی دستگاه‌های دیگر هم استفاده کرده‌اید، باید آنجا نیز آن را حذف نصب کنید (یا حافظه محلی مرورگر را پاک کنید)."
 
-#: src/Inpaint.tsx:417
+#: src/Inpaint.tsx:418
 msgid "Notes"
 msgstr "یادداشت‌ها"
 
@@ -593,35 +560,35 @@ msgstr "فقط ستاره‌هایی با دستورات منطبق نمایش �
 msgid "Open Source, developer friendly."
 msgstr "منبع‌باز، برنامه‌نویس پسند."
 
-#: pages/order/[_id].tsx:52
+#: pages/order/[_id].tsx:53
 msgid "Order {_id}"
 msgstr "{_id} سفارش"
 
-#: pages/credits.tsx:293
-#: pages/order/[_id].tsx:78
+#: pages/credits.tsx:292
+#: pages/order/[_id].tsx:79
 msgid "Order History"
 msgstr "سوابق سفارش"
 
-#: pages/order/[_id].tsx:49
-#: pages/orders.tsx:46
+#: pages/order/[_id].tsx:50
+#: pages/orders.tsx:44
 msgid "Order Status"
 msgstr "وضعیت سفارش"
 
-#: pages/orders.tsx:49
+#: pages/orders.tsx:47
 msgid "Orders"
 msgstr "سفارشات"
 
-#: pages/upsample.tsx:81
+#: pages/upsample.tsx:82
 msgid "Original model, best for most cases."
 msgstr "مدل اصلی، بهترین حالت برای اکثر موارد."
 
-#: pages/stats.tsx:616
+#: pages/stats.tsx:626
 msgid "Our <0>event logs</0> are also available."
 msgstr "<0>گزارش‌های رویداد</0> ما نیز موجود است."
 
-#: pages/credits.tsx:210
+#: pages/credits.tsx:209
 msgid "Paid credits help you jump the queue!"
-msgstr ""
+msgstr "اعتبارهای پرداختی به شما کمک می‌کنند سریع‌تر از صف عبور کنید!"
 
 #: src/CheckoutForm.tsx:82
 msgid "Pay"
@@ -631,7 +598,7 @@ msgstr "پرداخت"
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "لطفاً یک عدد آغازین معتبر وارد کنید یا \"تصادفی\" را دوباره روشن کنید."
 
-#: pages/credits.tsx:273
+#: pages/credits.tsx:272
 #: src/CheckoutForm.tsx:82
 msgid "Please wait..."
 msgstr "لطفاً صبر کنید "
@@ -642,7 +609,7 @@ msgstr "محتوای بالقوه NSFW شناسایی شد. به جای آن ی�
 
 #: pages/account/data.tsx:29
 msgid "Privacy"
-msgstr ""
+msgstr "حریم خصوصی"
 
 #: pages/privacy.tsx:14
 #: src/Copyright.tsx:28
@@ -666,23 +633,23 @@ msgstr "دستور"
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr "ارائه دهنده 1 ارائه دهنده اصلی و تاریخی ما است. ارائه‌دهنده 2 یک ارائه‌دهنده جدید و اضافی است - با نسل‌هایی که هر کدام 0.25 اعتبار هزینه دارند - به طور موقت - در حالی که ما هنوز روی آن کار می‌کنیم."
 
-#: pages/credits.tsx:170
+#: pages/credits.tsx:169
 msgid "Purchase Successful!"
 msgstr "خرید موفق!"
 
-#: pages/credits.tsx:203
+#: pages/credits.tsx:202
 msgid "Purchased Credits"
 msgstr "اعتبارهای خریداری شده"
 
-#: pages/credits.tsx:206
+#: pages/credits.tsx:205
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr "اعتبارهای خریداری‌شده پس از اتمام اعتبار رایگان آن ماه استفاده می‌شود و منقضی نمی‌شود."
 
 #: src/sd/Controls.tsx:357
 msgid "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
-msgstr ""
+msgstr "تصویر تولیدشده را به تصویر اولیه نزدیک‌تر می‌کند. هرچه مقیاس هدایت تصویر بیشتر باشد، تصویر تولیدشده بیشتر به تصویر منبع وابسته می‌شود، هرچند معمولاً این کار به قیمت کاهش کیفیت تصویر تمام می‌شود."
 
-#: src/Inpaint.tsx:398
+#: src/Inpaint.tsx:399
 msgid "Quick Start"
 msgstr "شروع سریع"
 
@@ -698,19 +665,19 @@ msgstr "عدد آغازین تصادفی، در هر درخواست. این بد
 msgid "Read the full Terms of Service below."
 msgstr "شرایط کامل خدمات را در زیر بخوانید."
 
-#: pages/order/[_id].tsx:71
+#: pages/order/[_id].tsx:72
 msgid "Reason"
 msgstr "دلیل"
 
-#: pages/credits.tsx:109
+#: pages/credits.tsx:108
 msgid "Redeem"
 msgstr "بازخرید"
 
-#: pages/credits.tsx:100
+#: pages/credits.tsx:99
 msgid "Redeem Credit Code"
 msgstr "بازخرید کد اعتبار"
 
-#: pages/credits.tsx:296
+#: pages/credits.tsx:295
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr "یادآوری: این نرم‌افزار رایگان و متن‌باز است. می‌توانید نسخه شخصی خود را به صورت رایگان بر روی رایانه شخصی خود، با یک کارت گرافیک مناسب یا یک حساب Banana.Dev ارزان اجرا کنید. اطلاعات بیشتر در <0>صفحه درباره</0>."
 
@@ -720,7 +687,7 @@ msgstr "این ستاره را گزارش می‌کنید؟"
 
 #: pages/stats.tsx:123
 #: pages/stats.tsx:262
-#: pages/stats.tsx:386
+#: pages/stats.tsx:396
 msgid "Requests"
 msgstr "درخواست‌ها"
 
@@ -728,7 +695,7 @@ msgstr "درخواست‌ها"
 msgid "Resources"
 msgstr "منابع"
 
-#: src/Inpaint.tsx:417
+#: src/Inpaint.tsx:418
 msgid "Roadmap"
 msgstr "نقشه راه"
 
@@ -743,9 +710,9 @@ msgstr "ذخیره"
 
 #: src/sd/Addons/common.tsx:100
 msgid "Scale"
-msgstr ""
+msgstr "مقیاس"
 
-#: pages/checkout.tsx:80
+#: pages/checkout.tsx:81
 msgid "Secure Payment via Stripe.com and partners."
 msgstr "پرداخت ایمن از طریق Stripe.com و شرکا."
 
@@ -755,7 +722,7 @@ msgstr "مشاهده همه ورودی‌ها و ریمیکس در {url}"
 
 #: pages/account/data.tsx:60
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
-msgstr ""
+msgstr "همچنین <0>شرایط استفاده</0> و <1>سیاست حفظ حریم خصوصی</1> ما را ببینید"
 
 #: pages/s/[_id].tsx:149
 #: src/OutputImage.tsx:167
@@ -779,9 +746,9 @@ msgstr "اشتراک‌گذاری ورودی‌ها"
 msgid "Sheduler"
 msgstr "برنامه‌ریز"
 
-#: pages/credits.tsx:235
+#: pages/credits.tsx:234
 msgid "So, just owning {MIN_PAID_CREDITS} paid credits"
-msgstr ""
+msgstr "پس تنها با داشتن {MIN_PAID_CREDITS} اعتبار پرداختی"
 
 #: src/sd/Controls.tsx:977
 msgid "Speed, stability, cost"
@@ -796,7 +763,7 @@ msgstr "آفریدن را آغاز کنید"
 msgid "Stats"
 msgstr "آمار"
 
-#: pages/order/[_id].tsx:67
+#: pages/order/[_id].tsx:68
 msgid "Status"
 msgstr "وضعیت"
 
@@ -804,7 +771,7 @@ msgstr "وضعیت"
 msgid "Steps"
 msgstr "مراحل"
 
-#: pages/credits.tsx:91
+#: pages/credits.tsx:90
 msgid "Successfully redeemed {0} credits."
 msgstr "{0} اعتبار با موفقیت بازخرید شد."
 
@@ -812,9 +779,9 @@ msgstr "{0} اعتبار با موفقیت بازخرید شد."
 msgid "Super simple, easy to share."
 msgstr "فوق‌العاده ساده، قابلیت اشتراک‌گذاری آسان."
 
-#: pages/credits.tsx:214
+#: pages/credits.tsx:213
 msgid "Tell me more?"
-msgstr ""
+msgstr "بیشتر بدانم؟"
 
 #: pages/start.tsx:194
 #: src/Copyright.tsx:24
@@ -822,19 +789,19 @@ msgid "Terms of Service"
 msgstr "شرایط استفاده از خدمات"
 
 #: pages/start.tsx:21
-#: pages/txt2img.tsx:126
+#: pages/txt2img.tsx:127
 #: src/MyAppBar.tsx:137
 msgid "Text to Image"
 msgstr "متن به تصویر"
 
-#: pages/credits.tsx:281
+#: pages/credits.tsx:280
 #: src/CheckoutForm.tsx:86
 msgid "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 msgstr "هزینه از طرف \"Wastelands Networking\" یا \"KIRI.ART\" در صورتحساب شما منظور می‌شود."
 
-#: pages/credits.tsx:216
+#: pages/credits.tsx:215
 msgid "There are 3 queue priorites, served in this order:"
-msgstr ""
+msgstr "3 اولویت در صف وجود دارد که به این ترتیب رسیدگی می‌شوند:"
 
 #: src/Starred.tsx:26
 msgid "This cannot be undone.  All likes will be lost."
@@ -844,36 +811,36 @@ msgstr "این قابل بازگشت نیست. همه لایک‌ها از بی�
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "این پروژه بر اساس نرم‌افزار رایگان و متن‌باز است. می‌توانید آن را به صورت رایگان روی رایانه شخصی خود اجرا کنید (اگر یک GPU مناسب دارید یا با حساب GPU بدون سرور Banana خود). می‌خواهید مشارکت کنید؟ به صفحه <0>درباره</0> مراجعه کنید."
 
-#: pages/credits.tsx:287
+#: pages/credits.tsx:286
 msgid "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 msgstr "این پروژه توسط داوطلبان جامعه در اوقات فراغت ما اداره می‌شود. ما هیچ تضمینی ارائه نمی‌کنیم و بازپرداخت در حال حاضر امکان‌پذیر نیست."
 
-#: pages/credits.tsx:229
+#: pages/credits.tsx:228
 msgid "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
-msgstr ""
+msgstr "کسانی که از اعتبار رایگان استفاده می‌کنند و {MIN_PAID_CREDITS} یا کمتر اعتبار پرداختی دارند."
 
-#: pages/credits.tsx:219
+#: pages/credits.tsx:218
 msgid "those using paid credits."
-msgstr ""
+msgstr "کسانی که از اعتبارهای پرداختی استفاده می‌کنند."
 
-#: pages/checkout.tsx:73
+#: pages/checkout.tsx:74
 msgid "TOTAL"
 msgstr "مجموع"
 
-#: pages/credits.tsx:174
+#: pages/credits.tsx:173
 msgid "Total Credits"
 msgstr "مجموع اعتبار"
 
-#: pages/credits.tsx:176
+#: pages/credits.tsx:175
 msgid "Total credits available for immediate use."
 msgstr "مجموع اعتبارات موجود برای استفاده فوری."
 
-#: pages/stats.tsx:370
-#: pages/stats.tsx:512
+#: pages/stats.tsx:380
+#: pages/stats.tsx:522
 msgid "Total Requests"
 msgstr "کل درخواست‌ها"
 
-#: pages/stats.tsx:602
+#: pages/stats.tsx:612
 msgid "Total Users"
 msgstr "مجموع کاربران"
 
@@ -881,15 +848,11 @@ msgstr "مجموع کاربران"
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr "توسعه شفاف و امکان مشارکت آسان برای توسعه‌دهندگان. به خصوص توسعه‌دهندگان وب بدون پیشینه قبلی در یادگیری ماشین."
 
-#: pages/login.tsx:48
-msgid "Twitter"
-msgstr "توئیتر"
-
-#: pages/account/data.tsx:94
+#: pages/account/data.tsx:99
 msgid "Type the text in the box below to enable this service."
-msgstr ""
+msgstr "برای فعال شدن این سرویس، متن داخل کادر زیر را وارد کنید."
 
-#: src/Inpaint.tsx:403
+#: src/Inpaint.tsx:404
 msgid "Upload an image with button below"
 msgstr "یک تصویر را با دکمه زیر بارگذاری کنید"
 
@@ -899,22 +862,22 @@ msgid "Upsample"
 msgstr " نمونه‌برداری افزایشی"
 
 #: pages/start.tsx:39
-#: pages/upsample.tsx:340
+#: pages/upsample.tsx:341
 #: src/MyAppBar.tsx:182
 msgid "Upsampling"
 msgstr " نمونه افزایی"
 
-#: pages/checkout.tsx:73
+#: pages/checkout.tsx:74
 msgid "USD"
 msgstr "دلار"
 
-#: src/Inpaint.tsx:408
+#: src/Inpaint.tsx:409
 msgid "Use mouse / finger to draw mask over it"
 msgstr "از ماوس / انگشت برای ترسیم ماسک روی آن استفاده کنید"
 
-#: pages/account/data.tsx:90
+#: pages/account/data.tsx:95
 msgid "Use the button below to <0>irreversably</0> delete your account and all associated data."
-msgstr ""
+msgstr "برای حذف <0>غیرقابل‌بازگشت</0> حساب و همه داده‌های مرتبط با آن، از دکمه زیر استفاده کنید."
 
 #: pages/[_id].tsx:188
 #: pages/[_id].tsx:200
@@ -925,7 +888,7 @@ msgstr "کاربر یافت نشد"
 msgid "Username not available."
 msgstr "نام کاربری در دسترس نیست."
 
-#: pages/stats.tsx:527
+#: pages/stats.tsx:537
 msgid "Users"
 msgstr "کاربران"
 
@@ -939,11 +902,11 @@ msgstr "ما نمی‌توانیم آنگونه که شایسته است مرا�
 
 #: pages/account/data.tsx:47
 msgid "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
-msgstr ""
+msgstr "ما گزارشی از <0>درخواست‌های کاربران</0> نگه می‌داریم که <1>شامل دستورها</1>، تصاویر ورودی یا تصاویر خروجی نیست (به‌جز تصاویری که شما ستاره‌دار کرده‌اید)."
 
-#: src/IPix2Pix.tsx:49
+#: src/IPix2Pix.tsx:50
 msgid "What is this?"
-msgstr ""
+msgstr "این چیست؟"
 
 #: pages/s/[_id].tsx:339
 #: src/sd/Controls.tsx:444
@@ -957,9 +920,9 @@ msgstr "عرض تصویر خروجی."
 
 #: pages/account/data.tsx:67
 msgid "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
-msgstr ""
+msgstr "شما می‌توانید در هر زمان داده‌های خود را به صورت یک فایل ZIP (از مجموعه‌های JSON) دانلود کنید. این شامل <0>تمام داده‌ها</0>ی موجود در پایگاه داده ما است که با حساب شما مرتبط هستند."
 
-#: pages/credits.tsx:67
+#: pages/credits.tsx:68
 msgid "You have already redeemed this code before."
 msgstr "قبلاً از این کد استفاده کرده‌اید."
 
@@ -967,25 +930,21 @@ msgstr "قبلاً از این کد استفاده کرده‌اید."
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr "شما باید در هر محتوایی که در جاهای دیگر به اشتراک می‌گذارید، مشخص کنید که این تصویر توسط رایانه تولید شده است."
 
-#: pages/credits.tsx:181
-#~ msgid "Your <0>{0}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
-#~ msgstr "<0>{0}</0><1>*</1> اعتبارهای ایگان شما هر <2>روز شارژ می‌شود</2><3>*</3>. این اعتبارها قبل از اعتبارهای پولی شما استفاده می‌شود. اعتبارهای رایگان استفاده نشده به روز بعد منتقل نمی‌شوند."
-
-#: pages/credits.tsx:180
+#: pages/credits.tsx:179
 msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
-msgstr ""
+msgstr "اعتبارهای رایگان <0>{DAILY_FREE_CREDITS}</0><1>*</1> شما هر <2>روز</2><3>*</3> دوباره شارژ می‌شوند. ابتدا از اعتبارهای رایگان استفاده می‌شود و سپس از اعتبارهای پرداختی. اعتبارهای استفاده‌نشده منتقل نمی‌شوند."
 
 #: pages/account/data.tsx:43
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
-msgstr ""
+msgstr "<0>تاریخچه</0> شما فقط روی دستگاه محلی‌تان ذخیره می‌شود و روی سرورهای ما پشتیبان‌گیری نمی‌شود."
 
 #: pages/account/data.tsx:54
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
-msgstr ""
+msgstr "<0>نشانی IP</0> و عامل کاربر شما در هر ورود موفق ثبت می‌شود."
 
 #: pages/account/data.tsx:38
 msgid "Your data is stored in our database in <0>Paris, France</0>."
-msgstr ""
+msgstr "داده‌های شما در پایگاه داده ما در <0>پاریس، فرانسه</0> ذخیره می‌شود."
 
 #: pages/start.tsx:157
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
