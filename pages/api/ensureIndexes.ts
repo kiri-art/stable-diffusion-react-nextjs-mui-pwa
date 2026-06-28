@@ -11,7 +11,14 @@ type ManagedIndex = {
 };
 
 type IndexResult =
-  | (ManagedIndex & { status: "exists" | "created" | "would_create" })
+  | (ManagedIndex & {
+      status:
+        | "exists"
+        | "exists_with_different_name"
+        | "created"
+        | "would_create";
+      existingName?: string;
+    })
   | (ManagedIndex & {
       status: "conflict" | "error";
       existing?: unknown;
@@ -159,11 +166,12 @@ const managedIndexes: ManagedIndex[] = [
     key: { userId: 1 },
     name: "accounts_userId",
   },
-  {
-    collection: "verification_tokens",
-    key: { identifier: 1, token: 1 },
-    name: "verification_tokens_identifier_token",
-  },
+  // Enable if we start using NextAuth email/magic-link verification tokens.
+  // {
+  //   collection: "verification_tokens",
+  //   key: { identifier: 1, token: 1 },
+  //   name: "verification_tokens_identifier_token",
+  // },
   {
     collection: "csends",
     key: { container_id: 1, type: 1, status: 1, date: -1 },
@@ -261,9 +269,8 @@ export default async function ensureIndexes(
   for (const spec of specs) {
     try {
       const collection = db.collection(spec.collection);
-      const existing = (await collection.indexes()).find(
-        (index) => index.name === spec.name
-      );
+      const indexes = await collection.indexes();
+      const existing = indexes.find((index) => index.name === spec.name);
 
       if (existing) {
         if (!sameKey(existing.key, spec.key)) {
@@ -275,6 +282,18 @@ export default async function ensureIndexes(
         } else {
           results.push({ ...spec, status: "exists" });
         }
+        continue;
+      }
+
+      const sameKeyExisting = indexes.find((index) =>
+        sameKey(index.key, spec.key)
+      );
+      if (sameKeyExisting) {
+        results.push({
+          ...spec,
+          status: "exists_with_different_name",
+          existingName: sameKeyExisting.name,
+        });
         continue;
       }
 
@@ -304,6 +323,7 @@ export default async function ensureIndexes(
       created: 0,
       error: 0,
       exists: 0,
+      exists_with_different_name: 0,
       would_create: 0,
     }
   );
