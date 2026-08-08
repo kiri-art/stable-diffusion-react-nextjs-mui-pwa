@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";

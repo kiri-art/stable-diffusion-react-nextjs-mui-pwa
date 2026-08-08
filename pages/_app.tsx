@@ -57,6 +57,11 @@ export default function MyApp(props: MyAppProps) {
     pageProps: { session, ...pageProps },
   } = props;
 
+  // Lingui 6 requires the locale to be active before the initial SSR render.
+  if (i18n.locale !== locale.id) {
+    i18n.activate(locale.id);
+  }
+
   React.useEffect(() => {
     // Initially set on server-rendered _document.js
     const html = document.querySelector("html");
@@ -64,11 +69,6 @@ export default function MyApp(props: MyAppProps) {
       html.setAttribute("lang", locale.id);
       html.setAttribute("dir", locale.dir);
     }
-
-    // Lingui
-    // When we need to add dynamic language loading...
-    // https://lingui.js.org/guides/dynamic-loading-catalogs.html#final-i18n-loader-helper
-    i18n.activate(locale.id);
   }, [locale]);
 
   React.useEffect(() => {

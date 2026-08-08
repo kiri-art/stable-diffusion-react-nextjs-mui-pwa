@@ -3,7 +3,7 @@ import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 
 import Copyright from "../src/Copyright";
 import MyAppBar from "../src/MyAppBar";

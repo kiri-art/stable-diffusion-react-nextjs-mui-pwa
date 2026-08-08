@@ -85,7 +85,7 @@ Useful commands:
 - Send `locales/*/messages.po` to translators, resave.
 - `yarn i18n:compile` before deploy.
 
-See also [lingui.config.js](./lingui.config.js) and [locales](./locales) dir.
+See also [lingui.config.mjs](./lingui.config.mjs) and [locales](./locales) dir.
 
 ## Refs
 

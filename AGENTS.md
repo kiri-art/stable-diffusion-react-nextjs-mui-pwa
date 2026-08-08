@@ -43,8 +43,8 @@
 ## Localization / i18n
 - Next.js locale routing is configured in `next.config.ts`; the app currently serves `en-US`, `he-IL`, `ja-JP`, and `fa-IR`.
 - Locale metadata such as language labels and text direction (`ltr` / `rtl`) lives in `src/lib/locales.ts`.
-- Lingui is configured in `lingui.config.js` and extracts messages from `pages/` and `src/`.
-- User-facing strings are typically wrapped with `@lingui/macro` helpers such as `t`, `Trans`, and `Plural`.
+- Lingui is configured in `lingui.config.mjs` and extracts messages from `pages/` and `src/`.
+- User-facing strings use `t` from `@lingui/core/macro` and React helpers such as `Trans` and `Plural` from `@lingui/react/macro`.
 - `pages/_app.tsx` activates the current locale, and `src/lib/i18n.ts` statically imports the compiled `locales/*/messages.js` catalogs.
 - After changing translatable copy, run `pnpm i18n:extract` or `pnpm i18n:extract:clean`, update non-source `msgstr` entries in `locales/*/messages.po`, then run `pnpm i18n:compile`.
 - `scripts/i18n/status.mjs` and `scripts/i18n/refresh.mjs` are the reusable maintenance helpers behind `pnpm i18n:status` and `pnpm i18n:refresh`.

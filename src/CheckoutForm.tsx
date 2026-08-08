@@ -5,7 +5,7 @@ import {
   LinkAuthenticationElement,
 } from "@stripe/react-stripe-js";
 import React, { SyntheticEvent } from "react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 
 import { Box, Button } from "@mui/material";
 import {

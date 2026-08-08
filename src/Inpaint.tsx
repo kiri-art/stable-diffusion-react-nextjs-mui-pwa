@@ -1,7 +1,7 @@
 import React from "react";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 
 import { IconButton } from "@mui/material";
 import { Clear, Redo, Undo } from "@mui/icons-material";

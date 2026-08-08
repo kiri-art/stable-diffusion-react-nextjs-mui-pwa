@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { Trans, t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import {
   Box,
@@ -95,11 +96,11 @@ export default function InputSlider({
         <Trans>Scale</Trans>
       </Typography>
       */}
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>
+      <Grid container spacing={2} sx={{ alignItems: "center" }}>
+        <Grid>
           <Trans>Scale</Trans>
         </Grid>
-        <Grid item xs>
+        <Grid size="grow">
           <Slider
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
@@ -109,7 +110,7 @@ export default function InputSlider({
             step={0.05}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <Input
             value={value}
             size="small"

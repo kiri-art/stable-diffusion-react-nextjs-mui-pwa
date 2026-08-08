@@ -5,7 +5,7 @@ import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 // import Masonry from "@mui/lab/Masonry";
 
 // import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
@@ -71,11 +71,11 @@ export async function report(starId: string) {
 
   if ((result.NUM_REPORTS as number) >= NUM_REPORTS_UNTIL_REMOVAL)
     return toast(
-      t`Item was reported ${result.NUM_REPORTS} times has been removed.  Thank you!`
+      t`Item was reported ${result.NUM_REPORTS as number} times has been removed.  Thank you!`
     );
 
   return toast(
-    t`Item was reported ${result.NUM_REPORTS} times.  Thanks for reporting!`
+    t`Item was reported ${result.NUM_REPORTS as number} times.  Thanks for reporting!`
   );
 }
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 import {
   db,
   useGongoSub,
@@ -294,6 +294,22 @@ function RequestRow({
 }) {
   const [open, setOpen] = React.useState(false);
   const times = request.times;
+  const callInputs = request.callInputs;
+  const modelInputs = request.modelInputs;
+  const pipeline = "PIPELINE" in callInputs ? callInputs.PIPELINE : undefined;
+  const method =
+    "custom_pipeline_method" in callInputs
+      ? callInputs.custom_pipeline_method
+      : undefined;
+  const scheduler =
+    "SCHEDULER" in callInputs ? callInputs.SCHEDULER : undefined;
+  const width = "width" in modelInputs ? modelInputs.width : undefined;
+  const height = "height" in modelInputs ? modelInputs.height : undefined;
+  const steps =
+    "num_inference_steps" in modelInputs
+      ? modelInputs.num_inference_steps
+      : undefined;
+  const prompt = "prompt" in modelInputs ? modelInputs.prompt : undefined;
 
   return (
     <>
@@ -305,8 +321,8 @@ function RequestRow({
         onClick={() => setOpen(!open)}
       >
         <TableCell align="left" style={{ whiteSpace: "nowrap" }}>
-          {request.callInputs.PROVIDER_ID === 2 ||
-          request.callInputs.PROVIDER_ID === "kiri"
+          {String(callInputs.PROVIDER_ID) === "2" ||
+          callInputs.PROVIDER_ID === "kiri"
             ? "2️⃣"
             : "1️⃣"}
           {request.createdAt.toLocaleTimeString()}
@@ -369,23 +385,23 @@ function RequestRow({
                   </TableRow>
                   <TableRow>
                     <TableCell>Model</TableCell>
-                    <TableCell>{request.callInputs.MODEL_ID}</TableCell>
+                    <TableCell>{callInputs.MODEL_ID}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Pipeline</TableCell>
-                    <TableCell>{request.callInputs.PIPELINE}</TableCell>
+                    <TableCell>{pipeline}</TableCell>
                   </TableRow>
-                  {request.callInputs.custom_pipeline_method && (
+                  {method && (
                     <TableRow>
                       <TableCell>Method</TableCell>
                       <TableCell>
-                        {request.callInputs.custom_pipeline_method}
+                        {method}
                       </TableCell>
                     </TableRow>
                   )}
                   <TableRow>
                     <TableCell>Scheduler</TableCell>
-                    <TableCell>{request.callInputs.SCHEDULER}</TableCell>
+                    <TableCell>{scheduler}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>CallID</TableCell>
@@ -393,15 +409,13 @@ function RequestRow({
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={2}>
-                      Dimensions: {request.modelInputs.width}x
-                      {request.modelInputs.height}, steps:{" "}
-                      {request.modelInputs.num_inference_steps}x
+                      Dimensions: {width}x{height}, steps: {steps}x
                     </TableCell>
                   </TableRow>
                   {isAdmin && (
                     <TableRow>
                       <TableCell>Prompt</TableCell>
-                      <TableCell>{request.modelInputs.prompt}</TableCell>
+                      <TableCell>{prompt}</TableCell>
                     </TableRow>
                   )}
                 </TableBody>

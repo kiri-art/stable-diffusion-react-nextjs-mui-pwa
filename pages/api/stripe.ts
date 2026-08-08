@@ -13,6 +13,7 @@ if (!process.env.STRIPE_WEBHOOK_SECRET)
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   // https://github.com/stripe/stripe-node#configuration
+  // @ts-expect-error Stripe types only model the SDK's latest API version.
   apiVersion: "2022-08-01",
 });
 

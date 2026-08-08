@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 
 import { Container, Typography } from "@mui/material";
 

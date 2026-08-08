@@ -1,6 +1,8 @@
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
 import { NextRouter, useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import React from "react";
 import {
   Box,
@@ -19,7 +21,7 @@ import {
   Star,
 } from "@mui/icons-material";
 import sanitizeFilename from "sanitize-filename";
-import { Masonry } from "masonic";
+import type { MasonryProps } from "masonic";
 
 import MyAppBar from "../src/MyAppBar";
 import type { HistoryItem } from "../src/schemas/history";
@@ -35,6 +37,11 @@ import StarType from "../src/schemas/star";
 import { toast } from "react-toastify";
 
 const MAX_HISTORY = 250;
+
+const Masonry = dynamic<MasonryProps<HistoryItem>>(
+  () => import("masonic").then((module) => module.Masonry),
+  { ssr: false }
+);
 
 function ImgFromBase64({
   base64,
@@ -70,26 +77,32 @@ export async function editItem(
 ) {
   console.log(item);
 
-  const params = new URLSearchParams({
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries({
     ...item.callInputs,
     ...item.modelInputs,
-  });
+  })) {
+    if (value != null) params.set(key, String(value));
+  }
 
   let page = "/txt2img";
-  if (item.callInputs.PIPELINE.match(/Img2Img|Image2Image/)) page = "/img2img";
-  else if (item.callInputs.PIPELINE.match(/Inpaint/)) page = "/inpaint";
+  const pipeline =
+    "PIPELINE" in item.callInputs ? item.callInputs.PIPELINE : undefined;
+  if (pipeline?.match(/Img2Img|Image2Image/)) page = "/img2img";
+  else if (pipeline?.match(/Inpaint/)) page = "/inpaint";
+  else if ("input_image" in item.modelInputs) page = "/upsample";
   params.delete("PIPELINE");
   params.delete("SCHEDULER");
 
   const src = "data:image/png;base64," + base64;
   const blob = await fetch(src).then((res) => res.blob());
 
+  const prompt =
+    "prompt" in item.modelInputs ? item.modelInputs.prompt || "image" : "image";
   outputImageQueue.add({
-    title: item.modelInputs.prompt,
-    text: item.modelInputs.prompt,
-    files: [
-      new File([blob], sanitizeFilename(item.modelInputs.prompt + ".png")),
-    ],
+    title: prompt,
+    text: prompt,
+    files: [new File([blob], sanitizeFilename(prompt + ".png"))],
   });
 
   if (params.has("image")) {
@@ -129,7 +142,8 @@ function Item({ item }: { item: HistoryItem }) {
   const modelOutputs = item?.result?.modelOutputs;
   if (!modelOutputs) return null;
   const base64 = modelOutputs[0].image_base64;
-  const prompt = item.modelInputs.prompt;
+  const prompt =
+    "prompt" in item.modelInputs ? item.modelInputs.prompt || "" : "";
 
   async function editItemClick(_event: React.SyntheticEvent) {
     editItem(item, base64, router);

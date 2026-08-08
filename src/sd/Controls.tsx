@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
 import models from "../config/models";
 import Providers from "../config/providers";
@@ -27,7 +28,7 @@ import {
   Clear,
   Height,
   Help,
-  HelpOutline,
+  HelpOutlined,
   Scale,
   SettingsBackupRestore,
 } from "@mui/icons-material";
@@ -96,13 +97,14 @@ function Prompt({
           onKeyDown={promptKeyDown}
           value={value}
           placeholder={placeholder}
-          InputLabelProps={{ shrink: true }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setValue(event.target.value);
           }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
+          slotProps={{
+            inputLabel: { shrink: true },
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
                 <IconButton onClick={() => setValue("")} edge="end">
                   <Clear />
                 </IconButton>
@@ -136,8 +138,9 @@ function Prompt({
                 >
                   <Help />
                 </Tooltip>
-              </InputAdornment>
-            ),
+                </InputAdornment>
+              ),
+            },
           }}
         />
         <div style={{ marginTop: "5px", fontSize: "70%" }}>
@@ -195,13 +198,14 @@ function NegativePrompt({
         onKeyDown={promptKeyDown}
         value={value}
         // placeholder={placeholder}
-        InputLabelProps={{ shrink: true }}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setValue(event.target.value);
         }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
+        slotProps={{
+          inputLabel: { shrink: true },
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
               <IconButton onClick={() => setValue("")} edge="end">
                 <Clear />
               </IconButton>
@@ -237,8 +241,9 @@ function NegativePrompt({
               >
                 <Help />
               </Tooltip>
-            </InputAdornment>
-          ),
+              </InputAdornment>
+            ),
+          },
         }}
       />
     );
@@ -256,7 +261,7 @@ function Strength_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         {/*
           tooltip={
             <Box>
@@ -300,7 +305,7 @@ function CFS_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         <InputSlider
           label={t`Classifier-Free Guidance (Scale)`}
           value={value}
@@ -346,7 +351,7 @@ function Image_Guidance_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         <InputSlider
           label={t`Image Guidance Scale`}
           value={value}
@@ -386,7 +391,7 @@ function Steps_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         <InputSlider
           label={t`Number of Inference Steps`}
           value={value}
@@ -438,7 +443,7 @@ function Width_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         {" "}
         <InputSlider
           label={t`Width`}
@@ -478,7 +483,7 @@ function Height_Grid_Slider({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
         <InputSlider
           label={t`Height`}
           value={value}
@@ -521,7 +526,7 @@ function Seed({
     const error = !(value || randomizeSeedValue);
 
     return (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
+      <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
         <TextField
           label={t`Seed`}
           value={value}
@@ -538,9 +543,10 @@ function Seed({
               </Trans>
             )
           }
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
                 <Tooltip
                   title={
                     <Box>
@@ -560,12 +566,13 @@ function Seed({
                   leaveDelay={0}
                   leaveTouchDelay={5000}
                 >
-                  <HelpOutline
+                  <HelpOutlined
                     sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
                   />
                 </Tooltip>
-              </InputAdornment>
-            ),
+                </InputAdornment>
+              ),
+            },
           }}
         />
       </Grid>
@@ -593,12 +600,11 @@ function RandomizeSeed({
     };
 
     return (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
+      <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
         <Stack
           direction="row"
           spacing={0}
-          justifyContent="center"
-          alignItems="center"
+          sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <FormGroup sx={{ alignItems: "center" }}>
             <FormControlLabel
@@ -626,7 +632,7 @@ function RandomizeSeed({
             leaveDelay={0}
             leaveTouchDelay={3000}
           >
-            <HelpOutline
+            <HelpOutlined
               sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
             />
           </Tooltip>
@@ -649,12 +655,11 @@ function ShareInputs({
 }) {
   return React.useMemo(() => {
     return (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
+      <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
         <Stack
           direction="row"
           spacing={0}
-          justifyContent="center"
-          alignItems="center"
+          sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <FormGroup sx={{ alignItems: "center" }}>
             <FormControlLabel
@@ -686,7 +691,7 @@ function ShareInputs({
             leaveDelay={0}
             leaveTouchDelay={3000}
           >
-            <HelpOutline
+            <HelpOutlined
               sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
             />
           </Tooltip>
@@ -743,12 +748,11 @@ function SafetyChecker({
     return (
       <>
         {(!user || !user.dob || over18) && (
-          <Grid item xs={6} sm={4} md={3} lg={2}>
+          <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
             <Stack
               direction="row"
               spacing={0}
-              justifyContent="center"
-              alignItems="center"
+              sx={{ justifyContent: "center", alignItems: "center" }}
             >
               <FormGroup sx={{ alignItems: "center" }}>
                 <FormControlLabel
@@ -782,7 +786,7 @@ function SafetyChecker({
                 leaveDelay={0}
                 leaveTouchDelay={3000}
               >
-                <HelpOutline
+                <HelpOutlined
                   sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
                 />
               </Tooltip>
@@ -790,7 +794,10 @@ function SafetyChecker({
           </Grid>
         )}
         {user && !user.dob && (
-          <Grid item xs={6} sm={4} md={3} lg={2} sx={{ textAlign: "center" }}>
+          <Grid
+            size={{ xs: 6, sm: 4, md: 3, lg: 2 }}
+            sx={{ textAlign: "center" }}
+          >
             <a target="_blank" rel="noreferrer" href="#" onClick={confirmDob}>
               <Trans>Confirm Date of Birth</Trans>
             </a>
@@ -869,7 +876,7 @@ function Sampler({
 }) {
   return useMemo(
     () => (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
+      <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
         <FormControl fullWidth>
           <InputLabel id="model-select-label">
             <Trans>Sampler</Trans>
@@ -955,7 +962,7 @@ export function ProviderSelect({
   return useMemo(
     () =>
       Providers.length > 1 ? (
-        <Grid item xs={6} sm={3} md={2} lg={1}>
+        <Grid size={{ xs: 6, sm: 3, md: 2, lg: 1 }}>
           Provider{" "}
           <ToggleButtonGroup
             value={value}

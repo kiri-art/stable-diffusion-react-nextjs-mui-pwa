@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { db } from "gongo-client-react";
 import sanitizeFilename from "sanitize-filename";
 import { Line } from "rc-progress";

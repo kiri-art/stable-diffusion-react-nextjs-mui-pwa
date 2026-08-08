@@ -1,4 +1,6 @@
-module.exports = {
+import { formatter } from "@lingui/format-po";
+
+export default {
   locales: ["en-US", "he-IL", "ja-JP", "fa-IR"],
   // pseudoLocale: "pseudo",
   sourceLocale: "en-US",
@@ -11,5 +13,5 @@ module.exports = {
       include: ["pages", "src"],
     },
   ],
-  format: "po",
+  format: formatter(),
 };

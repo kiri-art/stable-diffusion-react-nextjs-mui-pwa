@@ -11,7 +11,8 @@ import {
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Box from "@mui/material/Box";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import MyAppBar from "../src/MyAppBar";
 import Link from "../src/Link";
@@ -271,7 +272,7 @@ const Stats: NextPage = () => {
             },
             tooltip: {
               formatter: function (
-                this: Highcharts.TooltipFormatterContextObject,
+                this: Highcharts.Point,
                 tooltip: Highcharts.Tooltip
               ) {
                 if (this.points) {

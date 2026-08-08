@@ -1,6 +1,8 @@
 import * as React from "react";
 import type { NextPage } from "next";
-import { t, Trans } from "@lingui/macro";
+import dynamic from "next/dynamic";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import {
   Box,
@@ -23,11 +25,12 @@ import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
 import Copyright from "../src/Copyright";
 import { useGongoLive, useGongoSub, db } from "gongo-client-react";
-import Starred from "../src/Starred";
 import useOver18 from "../src/lib/useOver18";
 import { useRouter } from "next/router";
 import { Clear, GridView, Help, Splitscreen } from "@mui/icons-material";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../src/config/constants";
+
+const Starred = dynamic(() => import("../src/Starred"), { ssr: false });
 
 function TextFieldDebounced({
   currentValue,
@@ -75,9 +78,10 @@ function TextFieldDebounced({
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           setValue(event.target.value)
         }
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
               {value != "" && (
                 <IconButton onClick={() => setValue("")} edge="end">
                   <Clear />
@@ -101,8 +105,9 @@ function TextFieldDebounced({
               >
                 <Help />
               </Tooltip>
-            </InputAdornment>
-          ),
+              </InputAdornment>
+            ),
+          },
         }}
       />
     ),

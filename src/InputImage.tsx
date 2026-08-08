@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import sendQueue from "./lib/sendQueue";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;

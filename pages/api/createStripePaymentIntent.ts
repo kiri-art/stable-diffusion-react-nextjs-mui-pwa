@@ -8,6 +8,7 @@ if (!process.env.STRIPE_SECRET_KEY)
   throw new Error("STRIPE_SECRET_KEY not defined");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  // @ts-expect-error Stripe types only model the SDK's latest API version.
   apiVersion: "2022-08-01",
 });
 

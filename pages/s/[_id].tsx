@@ -1,7 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useGongoOne, useGongoSub } from "gongo-client-react";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 // import { GetServerSideProps } from "next";
 
 import { Box, Chip, Container, IconButton } from "@mui/material";

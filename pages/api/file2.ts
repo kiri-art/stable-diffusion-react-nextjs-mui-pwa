@@ -7,6 +7,10 @@ import { ObjectId } from "bson";
 import gs /* Auth, User, Order,  ObjectId */ from "../../src/api-lib/db";
 // import { format } from 'date-fns';
 
+type SharpMetadata = Awaited<
+  ReturnType<ReturnType<typeof sharp>["metadata"]>
+>;
+
 const AWS_S3_BUCKET = "kiri-art";
 
 const defaults = {
@@ -33,7 +37,7 @@ interface FileEntry {
   mimeType?: string;
   createdAt: Date;
   image?: {
-    format: sharp.Metadata["format"];
+    format: SharpMetadata["format"];
     size?: number;
     width?: number;
     height?: number;

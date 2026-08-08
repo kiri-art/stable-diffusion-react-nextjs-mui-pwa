@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Trans, t } from "@lingui/macro";
-import EventListener from "react-event-listener";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import ScrollShadowWrapper from "../lib/ScrollShadowWrapper";
 
 import { AccessTime, ArrowDropDown, SortByAlpha } from "@mui/icons-material";
@@ -151,6 +151,15 @@ const ModelSelectModalContents = React.forwardRef(
       input.forceBaseModel = undefined;
     }, [input, baseModelFilter]);
 
+    React.useEffect(() => {
+      if (!open) return;
+      const closeOnEscape = (event: KeyboardEvent) => {
+        if (event.key === "Escape") setOpen(false);
+      };
+      window.addEventListener("keyup", closeOnEscape);
+      return () => window.removeEventListener("keyup", closeOnEscape);
+    }, [open, setOpen]);
+
     const filteredModels = React.useMemo(() => {
       const filteredModels = Object.values(models).filter(
         (model) =>
@@ -222,12 +231,6 @@ const ModelSelectModalContents = React.forwardRef(
             boxShadow: 24,
           }}
         >
-          <EventListener
-            target="window"
-            onKeyUp={(event: KeyboardEvent) => {
-              if (event.key === "Escape") setOpen(false);
-            }}
-          />
           <Container sx={{ pt: 2, pb: 1, textAlign: "center" }}>
             <select
               value={baseModelFilter}

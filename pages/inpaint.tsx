@@ -5,7 +5,7 @@ const Inpaint = dynamic(() => import("../src/Inpaint"), {
 });
 
 import React from "react";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 
 import { Container } from "@mui/material";
 

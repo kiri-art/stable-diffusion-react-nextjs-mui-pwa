@@ -30,6 +30,9 @@ export default async function (phase: string): Promise<NextConfig> {
       dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
     },
     experimental: {
+      // Next 16.3's CLI runner captures empty `tsc --showConfig` output here.
+      // Keep the compiler API path while this project remains on TypeScript 5.
+      useTypeScriptCli: false,
       swcPlugins: [
         [
           "@lingui/swc-plugin",

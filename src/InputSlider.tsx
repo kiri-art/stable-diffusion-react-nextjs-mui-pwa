@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import UnstyledSlider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
-import HelpIcon from "@mui/icons-material/HelpOutline";
+import HelpIcon from "@mui/icons-material/HelpOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import yup from "yup";
 
@@ -100,9 +100,9 @@ export default function InputSlider({
           </Tooltip>
         )}
       </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>{icon}</Grid>
-        <Grid item xs>
+      <Grid container spacing={2} sx={{ alignItems: "center" }}>
+        <Grid>{icon}</Grid>
+        <Grid size="grow">
           <Slider
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
@@ -113,7 +113,7 @@ export default function InputSlider({
             aria-labelledby="input-slider"
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <Input
             value={value}
             size="small"
@@ -129,7 +129,7 @@ export default function InputSlider({
             }}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <SettingsBackupRestore
             sx={{ opacity: 0.4 }}
             onClick={() => setValue(defaultValue)}

@@ -5,7 +5,7 @@ const IPix2Pix = dynamic(() => import("../src/IPix2Pix"), {
 });
 
 import React from "react";
-import { t } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
 
 import { Container } from "@mui/material";
 

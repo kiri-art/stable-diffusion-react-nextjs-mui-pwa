@@ -15,6 +15,12 @@ export default function useNews() {
   >([]);
   const [lastRead, setLastRead] = React.useState(
     (function () {
+      if (
+        typeof localStorage === "undefined" ||
+        typeof localStorage.getItem !== "function"
+      ) {
+        return null;
+      }
       const str = localStorage.getItem("newsLastDismissed");
       return str ? parseInt(str) : null;
     })()

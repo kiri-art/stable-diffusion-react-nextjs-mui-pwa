@@ -1,12 +1,13 @@
 import * as React from "react";
 import type { NextPage } from "next";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import {
   Box,
   Button,
   Container,
-  Unstable_Grid2 as Grid,
+  Grid,
   Typography,
 } from "@mui/material";
 
@@ -57,12 +58,15 @@ export function ItemGrid({
   items?: typeof itemData;
 }) {
   return (
-    <Grid container spacing={2} width="100%">
+    <Grid container spacing={2} sx={{ width: "100%" }}>
       {items.map((item) => {
         const title =
           typeof item.title === "function" ? item.title() : item.title;
         return (
-          <Grid key={item.href} xs={6} sm={4} md={3} lg={3} xl={3}>
+          <Grid
+            key={item.href}
+            size={{ xs: 6, sm: 4, md: 3, lg: 3, xl: 3 }}
+          >
             <Box
               sx={{
                 p: 0,

@@ -1,4 +1,4 @@
-import { Trans, Plural } from "@lingui/macro";
+import { Trans, Plural } from "@lingui/react/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 

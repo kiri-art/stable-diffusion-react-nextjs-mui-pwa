@@ -4,7 +4,8 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 
 import Link from "../src/Link";
 import Copyright from "../src/Copyright";
@@ -27,7 +28,7 @@ const About: NextPage = () => {
           <Typography variant="h6" component="h1" gutterBottom>
             stable-diffusion-react-nextjs-mui-pwa
           </Typography>
-          <Box maxWidth="sm" sx={{ textAlign: "justify" }}>
+          <Box sx={{ maxWidth: "sm", textAlign: "justify" }}>
             <p>
               <Trans>
                 <b>KIRI.ART</b> (&quot;SD-MUI&quot;) is a WEB UI frontend for{" "}

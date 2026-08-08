@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import MyAppBar from "../src/MyAppBar";
 import { Container, Typography, Box } from "@mui/material";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 
 export default function FAQ() {
   useRouter();

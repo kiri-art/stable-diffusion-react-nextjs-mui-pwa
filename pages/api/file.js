@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const crypto = require("crypto");
 const GongoServer = require("gongo-server/lib/serverless").default;
 const Auth = require("gongo-server/lib/auth-class").default;

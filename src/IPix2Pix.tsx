@@ -1,7 +1,7 @@
 import React from "react";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import NextImage from "next/image";
 
 import { Container, Grid } from "@mui/material";
@@ -59,7 +59,7 @@ function WhatIsThis() {
         <br />
         <Grid container spacing={1}>
           {exampleImages.map((alt, i) => (
-            <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
+            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={i}>
               <div
                 style={{
                   position: "relative",

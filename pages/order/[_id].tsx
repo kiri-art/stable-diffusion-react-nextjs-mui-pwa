@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import {
   useGongoSub,
   useGongoUserId,

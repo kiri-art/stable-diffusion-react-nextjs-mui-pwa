@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import {
   db,
   useGongoUserId,
@@ -9,7 +10,7 @@ import {
 } from "gongo-client-react";
 import type { WithId } from "gongo-client/lib/browser/Collection";
 // import addMonths from "date-fns/addMonths";
-import addDays from "date-fns/addDays";
+import { addDays } from "date-fns/addDays";
 //import RevolutCheckout from "@revolut/checkout";
 
 import {
@@ -87,7 +88,9 @@ function RedeemCreditCode({ user }: { user: WithId<User> }) {
       });
       */
 
-      return setMessage(t`Successfully redeemed ${result.credits} credits.`);
+      return setMessage(
+        t`Successfully redeemed ${result.credits as number} credits.`
+      );
     }
 
     return setMessage("Failed with unknown error.");

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useRouter } from "next/router";
-import { Plural, Trans } from "@lingui/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import Image from "next/legacy/image";
 import useNews from "./useNews";
@@ -352,7 +352,7 @@ export default function MyAppBar({ title }: { title: string }) {
                         setAnchorElLang(null);
                       }}
                     >
-                      <Typography textAlign="center">
+                      <Typography sx={{ textAlign: "center" }}>
                         <Link
                           href={asPath}
                           color="inherit"
@@ -379,7 +379,9 @@ export default function MyAppBar({ title }: { title: string }) {
                           /* @ts-expect-error: TODO */
                           user.photos[0].value
                         }
-                        imgProps={{ referrerPolicy: "no-referrer" }}
+                        slotProps={{
+                          img: { referrerPolicy: "no-referrer" },
+                        }}
                       />
                     </IconButton>
                     {/* </Tooltip> */}
@@ -422,7 +424,7 @@ export default function MyAppBar({ title }: { title: string }) {
                           signOut();
                         }}
                       >
-                        <Typography textAlign="center">
+                        <Typography sx={{ textAlign: "center" }}>
                           <Trans>Logout</Trans>
                         </Typography>
                       </MenuItem>

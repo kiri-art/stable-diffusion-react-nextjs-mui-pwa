@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
+import { pathToFileURL } from "node:url";
 
 const repoRoot = process.cwd();
 const localesDir = path.join(repoRoot, "locales");
-const require = createRequire(import.meta.url);
-const linguiConfig = require(path.join(repoRoot, "lingui.config.js"));
+const { default: linguiConfig } = await import(
+  pathToFileURL(path.join(repoRoot, "lingui.config.mjs")).href
+);
 const sourceLocale = linguiConfig.sourceLocale;
 
 function readPoFile(filePath) {

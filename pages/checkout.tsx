@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { useGongoUserId } from "gongo-client-react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
@@ -32,6 +33,8 @@ export default function Checkout() {
   */
 
   if (typeof clientSecret !== "string" || typeof orderId !== "string") {
+    if (typeof window === "undefined") return <div>Loading...</div>;
+
     if (
       Object.keys(router.query).length === 0 &&
       typeof location === "object" &&

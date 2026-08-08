@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { useRouter } from "next/router";
 // import bananaFetch from "../src/bananaFetch";
@@ -23,7 +24,7 @@ import {
   Switch,
   Tooltip,
 } from "@mui/material";
-import { HelpOutline } from "@mui/icons-material";
+import { HelpOutlined } from "@mui/icons-material";
 
 import { /* isDev, */ REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import MyAppBar from "../src/MyAppBar";
@@ -120,12 +121,11 @@ function FaceEnhance({
 }) {
   return React.useMemo(() => {
     return (
-      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
         <Stack
           direction="row"
           spacing={0}
-          justifyContent="center"
-          alignItems="center"
+          sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <FormGroup sx={{ alignItems: "center" }}>
             <FormControlLabel
@@ -158,7 +158,7 @@ function FaceEnhance({
             leaveDelay={0}
             leaveTouchDelay={3000}
           >
-            <HelpOutline
+            <HelpOutlined
               sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
             />
           </Tooltip>

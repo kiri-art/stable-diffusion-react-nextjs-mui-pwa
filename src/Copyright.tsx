@@ -1,7 +1,7 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import MuiLink from "@mui/material/Link";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 
 import Link from "./Link";
 
