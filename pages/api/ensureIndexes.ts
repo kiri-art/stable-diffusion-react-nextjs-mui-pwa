@@ -6,6 +6,7 @@ type IndexKey = Record<string, 1 | -1>;
 
 type ManagedIndex = {
   collection: string;
+  expireAfterSeconds?: number;
   key: IndexKey;
   name: string;
 };
@@ -105,6 +106,16 @@ const managedIndexes: ManagedIndex[] = [
     collection: "users",
     key: { admin: 1 },
     name: "users_admin",
+  },
+  {
+    collection: "users",
+    key: { deletionPendingAt: 1 },
+    name: "users_deletionPendingAt",
+  },
+  {
+    collection: "users",
+    key: { deletionId: 1 },
+    name: "users_deletionId",
   },
   {
     collection: "statsDaily",
@@ -222,6 +233,17 @@ const managedIndexes: ManagedIndex[] = [
     name: "accountDeletionJobs_updatedAt_attempts",
   },
   {
+    collection: "accountDeletionJobs",
+    key: { phase: 1, updatedAt: 1 },
+    name: "accountDeletionJobs_phase_updatedAt",
+  },
+  {
+    collection: "accountDeletionCallbackTombstones",
+    expireAfterSeconds: 0,
+    key: { expiresAt: 1 },
+    name: "accountDeletionCallbackTombstones_expiresAt_ttl",
+  },
+  {
     collection: "verification_tokens",
     key: { identifier: 1 },
     name: "verification_tokens_identifier",
@@ -284,6 +306,13 @@ function sameKey(left: unknown, right: unknown) {
   return JSON.stringify(left) === JSON.stringify(right);
 }
 
+function sameIndex(existing: Record<string, unknown>, spec: ManagedIndex) {
+  return (
+    sameKey(existing.key, spec.key) &&
+    (existing.expireAfterSeconds ?? undefined) === spec.expireAfterSeconds
+  );
+}
+
 export default async function ensureIndexes(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -343,7 +372,7 @@ export default async function ensureIndexes(
       const existing = indexes.find((index) => index.name === spec.name);
 
       if (existing) {
-        if (!sameKey(existing.key, spec.key)) {
+        if (!sameIndex(existing, spec)) {
           results.push({
             ...spec,
             status: "conflict",
@@ -355,9 +384,7 @@ export default async function ensureIndexes(
         continue;
       }
 
-      const sameKeyExisting = indexes.find((index) =>
-        sameKey(index.key, spec.key),
-      );
+      const sameKeyExisting = indexes.find((index) => sameIndex(index, spec));
       if (sameKeyExisting) {
         results.push({
           ...spec,
@@ -372,7 +399,12 @@ export default async function ensureIndexes(
         continue;
       }
 
-      await collection.createIndex(spec.key, { name: spec.name });
+      await collection.createIndex(spec.key, {
+        name: spec.name,
+        ...(spec.expireAfterSeconds === undefined
+          ? {}
+          : { expireAfterSeconds: spec.expireAfterSeconds }),
+      });
       results.push({ ...spec, status: "created" });
     } catch (error) {
       results.push({

@@ -277,7 +277,10 @@ describe.sequential("account data export", () => {
       { modelInputs: { prompt: "target private prompt" } },
     ]);
     expect(serialized).toContain("token=%5BREDACTED%5D");
-    expect(byName.csends).toMatchObject([{ status: "target-start" }]);
+    expect(byName.csends).toMatchObject([
+      { status: "target-start" },
+      { status: "ambiguous-same-container" },
+    ]);
     expect(byName.likes).toMatchObject({
       given: [{ starId: ids.controlStar, userId: ids.targetUser }],
       received: [{ count: 1, starId: ids.targetStar.toHexString() }],
@@ -315,7 +318,6 @@ describe.sequential("account data export", () => {
 
     for (const privateValue of [
       ids.controlUser.toHexString(),
-      "ambiguous-same-container",
       "ambiguous-shared-status",
       "ambiguous shared prompt",
       "control private prompt",

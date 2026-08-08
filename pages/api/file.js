@@ -5,6 +5,10 @@ const { AuthFromReq } = require("../../src/api-lib/auth");
 const Database = require("gongo-server-db-mongo").default;
 const ObjectId = require("bson").ObjectId;
 const { MongoClient } = require("mongodb");
+const {
+  AccountDeletionPendingError,
+  acquireAccountWriteLease,
+} = require("../../src/server/account-data/writeBarrier");
 // const fetch = require("node-fetch");
 const sharp = require("sharp");
 
@@ -74,25 +78,22 @@ async function createFromBuffer(
     ...extra,
   };
 
-  console.log(entry);
-
   const params = {
     Bucket: "kiri-art",
     Key: sha256,
     Body: buffer,
   };
 
-  console.log(params);
-
-  const result = await new AWS.S3().putObject(params).promise();
-  console.log({ result });
-
+  // Make the account-owned row durable before writing S3 so a crash cannot
+  // leave an object that account deletion has no way to discover.
   if (existingId) {
     delete entry._id;
     await Files.updateOne({ _id: existingId }, { $set: entry });
   } else {
     await Files.insertOne(entry);
   }
+
+  await new AWS.S3().putObject(params).promise();
 
   return [entry, buffer];
 }
@@ -123,7 +124,7 @@ async function PostRequest(req, res) {
   if (fields.auth) {
     try {
       authData = JSON.parse(fields.auth);
-    } catch (e) {
+    } catch (_error) {
       return res.status(400).send("Bad Request");
     }
   }
@@ -137,37 +138,54 @@ async function PostRequest(req, res) {
   }
 
   if (!userId) {
-    res.status(403).send("Forbidden");
+    return res.status(403).send("Forbidden");
   }
 
-  // TODO XXX some checks.  #files, size, types?
-
-  const results = new Array(files.length);
-  for (let i = 0; i < files.length; i++) {
-    const file = files[0];
-    const stat = await fs.stat(file.path);
-
-    const buffer = await new Promise((resolve, reject) => {
-      const chunks = [];
-      file.on("data", (chunk) => chunks.push(chunk));
-      file.on("error", (err) => reject(err));
-      file.on("end", () => resolve(Buffer.concat(chunks)));
+  let writeLease;
+  try {
+    writeLease = await acquireAccountWriteLease({
+      db: await gs.dba.dbPromise,
+      operation: "legacy-file-upload",
+      targetUserId: userId,
     });
-
-    const [entry] = await createFromBuffer(
-      buffer,
-      file.filename,
-      file.mimeType,
-      stat.size,
-      undefined,
-      { userId },
-    );
-
-    results[i] = entry;
+  } catch (error) {
+    if (error instanceof AccountDeletionPendingError)
+      return res.status(409).send("Account deletion is pending");
+    throw error;
   }
 
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).send(JSON.stringify(results));
+  try {
+    // TODO XXX some checks.  #files, size, types?
+
+    const results = new Array(files.length);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[0];
+      const stat = await fs.stat(file.path);
+
+      const buffer = await new Promise((resolve, reject) => {
+        const chunks = [];
+        file.on("data", (chunk) => chunks.push(chunk));
+        file.on("error", (err) => reject(err));
+        file.on("end", () => resolve(Buffer.concat(chunks)));
+      });
+
+      const [entry] = await createFromBuffer(
+        buffer,
+        file.filename,
+        file.mimeType,
+        stat.size,
+        undefined,
+        { userId },
+      );
+
+      results[i] = entry;
+    }
+
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).send(JSON.stringify(results));
+  } finally {
+    await writeLease.release();
+  }
 }
 
 async function fileRoute(req, res) {

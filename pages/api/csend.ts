@@ -3,6 +3,15 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import gs from "../../src/api-lib/db-full";
 import { BananaRequest, CSend } from "../../src/schemas";
+import {
+  isDeletedCallbackIdentifier,
+  recordDeletedCallbackIdentifiers,
+} from "../../src/server/account-data/requestTombstone";
+import {
+  AccountDeletionPendingError,
+  type AccountWriteLease,
+  acquireAccountWriteLease,
+} from "../../src/server/account-data/writeBarrier";
 
 const csends = gs.dba && gs.dba.collection("csends");
 const bananaRequests = gs.dba && gs.dba.collection("bananaRequests");
@@ -37,7 +46,7 @@ async function aggregateRequestCsends(inferDone: CSend) {
   )[0];
 
   if (!(initStart && inferStart && initDone)) {
-    console.warn("Missing", { initStart, inferStart, initDone });
+    console.warn("Incomplete provider telemetry sequence", { container_id });
     return;
   }
 
@@ -96,16 +105,91 @@ export default async function CSendRequest(
   data.date = new Date(data.time);
   delete data.time;
 
-  console.log(JSON.stringify(data, null, 2));
-  csends && (await csends.insertOne(data));
-
-  if (data.type === "inference" && data.status === "done") {
-    if (!(csends && bananaRequests))
-      throw new Error("No csends / bananaRequests collections");
-    await aggregateRequestCsends(data);
+  const nativeDb = await gs.dba?.dbPromise;
+  const containerId =
+    typeof data.container_id === "string" ? data.container_id : undefined;
+  if (
+    nativeDb &&
+    containerId &&
+    (await isDeletedCallbackIdentifier(nativeDb, "container", containerId))
+  ) {
+    return res.status(200).end("OK");
   }
 
-  /*
+  const startRequestId =
+    data.payload && typeof data.payload.startRequestId === "string"
+      ? data.payload.startRequestId
+      : undefined;
+  if (
+    nativeDb &&
+    startRequestId &&
+    (await isDeletedCallbackIdentifier(nativeDb, "request", startRequestId))
+  ) {
+    if (containerId) {
+      await recordDeletedCallbackIdentifiers(nativeDb, "container", [
+        containerId,
+      ]);
+      await nativeDb
+        .collection("csends")
+        .deleteMany({ container_id: containerId });
+    }
+    return res.status(200).end("OK");
+  }
+
+  const writeLeases: AccountWriteLease[] = [];
+  if (nativeDb && startRequestId) {
+    const linkedRequests = await nativeDb
+      .collection("userRequests")
+      .find(
+        {
+          $or: [
+            { startRequestId },
+            { "callInputs.startRequestId": startRequestId },
+          ],
+        },
+        { projection: { userId: 1 } },
+      )
+      .toArray();
+    const linkedUserIds = Array.from(
+      new Map(
+        linkedRequests
+          .filter((entry) => entry.userId)
+          .map((entry) => [entry.userId.toString(), entry.userId]),
+      ).values(),
+    );
+    try {
+      for (const targetUserId of linkedUserIds) {
+        try {
+          writeLeases.push(
+            await acquireAccountWriteLease({
+              db: nativeDb,
+              operation: "provider-callback",
+              targetUserId,
+            }),
+          );
+        } catch (error) {
+          if (!(error instanceof AccountDeletionPendingError)) throw error;
+        }
+      }
+    } catch (error) {
+      await Promise.all(writeLeases.map((lease) => lease.release()));
+      throw error;
+    }
+    if (linkedUserIds.length && !writeLeases.length) {
+      return res.status(200).end("OK");
+    }
+  }
+
+  try {
+    csends && (await csends.insertOne(data));
+
+    if (data.type === "inference" && data.status === "done") {
+      if (!(csends && bananaRequests))
+        throw new Error("No csends / bananaRequests collections");
+      await aggregateRequestCsends(data);
+    }
+
+    /*
 
   const { callID, step } = req.body;
   if (!callID) throw new Error("No callID provided");
@@ -143,5 +227,8 @@ export default async function CSendRequest(
 
   */
 
-  res.status(200).end("OK");
+    res.status(200).end("OK");
+  } finally {
+    await Promise.all(writeLeases.map((lease) => lease.release()));
+  }
 }

@@ -17,6 +17,7 @@ import type {
   VerificationToken,
 } from "next-auth/adapters";
 import { User } from "../schemas";
+import { withAccountWriteLease } from "../server/account-data/writeBarrier";
 
 type ServerDocument<T> = GongoDocument &
   EnhancedOmit<T, "_id"> & { _id: ObjectId };
@@ -126,7 +127,6 @@ export default function GongoAuthAdapter(
     */
     async createUser(data: Omit<AdapterUser, "id">): Promise<AdapterUser> {
       if (!gs.dba) throw new Error("no gs.dba");
-      console.log("createUser", data);
       const user = await gs.dba.Users.createUser((user) => {
         Object.assign(user, data);
         /*
@@ -179,7 +179,6 @@ export default function GongoAuthAdapter(
             "services.id": provider_providerAccountId.providerAccountId,
           });
         if (user) {
-          console.log("found oldschool user", user);
           const service = user.services.find(
             (s) => s.service === provider_providerAccountId.provider,
           )!;
@@ -203,7 +202,14 @@ export default function GongoAuthAdapter(
             $unset: {
           })
           */
-          await gs.dba.collection("accounts").insertOne(account);
+          await withAccountWriteLease(
+            {
+              db: await gs.dba.dbPromise,
+              operation: "auth-migrate-legacy-account",
+              targetUserId: user._id,
+            },
+            () => gs.dba!.collection("accounts").insertOne(account),
+          );
         } else return null;
 
         return from<AdapterUser>(user);
@@ -241,10 +247,18 @@ export default function GongoAuthAdapter(
     async updateUser(data) {
       const { _id, ...user } = to<AdapterUser>(data);
 
-      const result = await (await db).U.findOneAndUpdate(
-        { _id },
-        { $set: user },
-        { returnDocument: "after", includeResultMetadata: true },
+      const result = await withAccountWriteLease(
+        {
+          db: await gs.dba!.dbPromise,
+          operation: "auth-update-user",
+          targetUserId: _id,
+        },
+        async () =>
+          (await db).U.findOneAndUpdate(
+            { _id },
+            { $set: user },
+            { returnDocument: "after", includeResultMetadata: true },
+          ),
       );
 
       return from<AdapterUser>(result.value!);
@@ -264,7 +278,14 @@ export default function GongoAuthAdapter(
 
     linkAccount: async (data: AdapterAccount) => {
       const account = to<MongoAdapterAccount>(data);
-      await (await db).A.insertOne(account);
+      await withAccountWriteLease(
+        {
+          db: await gs.dba!.dbPromise,
+          operation: "auth-link-account",
+          targetUserId: account.userId,
+        },
+        async () => (await db).A.insertOne(account),
+      );
       return from<AdapterAccount>(account);
     },
     async unlinkAccount(
@@ -289,6 +310,7 @@ export default function GongoAuthAdapter(
       if (!session) return null;
       const user = await (await db).U.findOne({
         _id: new ObjectId(session.userId),
+        deletionPendingAt: { $exists: false },
       });
       if (!user) return null;
       return {
@@ -298,19 +320,37 @@ export default function GongoAuthAdapter(
     },
 
     async createSession(data) {
-      console.log("createSession", data);
       const session = to<MongoAdapterSession>(data);
-      await (await db).S.insertOne(session);
+      await withAccountWriteLease(
+        {
+          db: await gs.dba!.dbPromise,
+          operation: "auth-create-session",
+          targetUserId: session.userId,
+        },
+        async () => (await db).S.insertOne(session),
+      );
       return from<AdapterSession>(session);
     },
 
     async updateSession(data) {
       const { _id, ...session } = to<MongoAdapterSession>(data);
+      const existing = await (await db).S.findOne({
+        sessionToken: session.sessionToken,
+      });
+      if (!existing) return null;
 
-      const result = await (await db).S.findOneAndUpdate(
-        { sessionToken: session.sessionToken },
-        { $set: session },
-        { returnDocument: "after", includeResultMetadata: true },
+      const result = await withAccountWriteLease(
+        {
+          db: await gs.dba!.dbPromise,
+          operation: "auth-update-session",
+          targetUserId: existing.userId,
+        },
+        async () =>
+          (await db).S.findOneAndUpdate(
+            { sessionToken: session.sessionToken },
+            { $set: session },
+            { returnDocument: "after", includeResultMetadata: true },
+          ),
       );
       return from<AdapterSession>(result.value!);
     },

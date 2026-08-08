@@ -92,25 +92,22 @@ async function createFileFromBuffer(
     ...extra,
   };
 
-  console.log(entry);
-
   const params = {
     Bucket: AWS_S3_BUCKET,
     Key: sha256,
     Body: buffer,
   };
 
-  console.log(params);
-
-  const result = await new AWS.S3().putObject(params).promise();
-  console.log({ result });
-
+  // Persist ownership before the external write. If the process dies after S3
+  // succeeds, account deletion can still discover and erase the object.
   if (existingId) {
     const $set = (({ _id, ...rest }) => rest)(entry);
     await Files.updateOne({ _id: new ObjectId(existingId) }, { $set });
   } else {
     await Files.insertOne(entry);
   }
+
+  await new AWS.S3().putObject(params).promise();
 
   // return [entry, buffer];
   return entry;

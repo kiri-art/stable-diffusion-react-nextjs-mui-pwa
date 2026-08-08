@@ -11,6 +11,11 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 import gs, { CreditCode, User } from "../../src/api-lib/db";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/config/constants";
+import {
+  type AccountWriteLease,
+  acquireAccountWriteLease,
+  withAccountWriteLease,
+} from "../../src/server/account-data/writeBarrier";
 
 export const config = {
   runtime: "edge",
@@ -91,8 +96,6 @@ gs.publish("star", async (db, { starId } = {}, { updatedAt }) => {
     .project({ username: 1 })
     .limit(1)
     .toArray();
-  console.log(userProfiles);
-
   return [
     { coll: "stars", entries: [star] },
     { coll: "userProfiles", entries: userProfiles },
@@ -219,13 +222,22 @@ gs.method("setUserName", async (db, { username }, { auth }) => {
   const userId = await auth.userId();
   if (!userId) throw new Error("Not logged in");
 
-  const existing = await db.collection("users").findOne({ username });
-  if (existing) return { status: "USERNAME_NOT_AVAILABLE" };
+  return withAccountWriteLease(
+    {
+      db: await gs.dba!.dbPromise,
+      operation: "set-username",
+      targetUserId: userId,
+    },
+    async () => {
+      const existing = await db.collection("users").findOne({ username });
+      if (existing) return { status: "USERNAME_NOT_AVAILABLE" };
 
-  await db
-    .collection("users")
-    .updateOne({ _id: userId }, { $set: { username } });
-  return { status: "OK" };
+      await db
+        .collection("users")
+        .updateOne({ _id: userId }, { $set: { username } });
+      return { status: "OK" };
+    },
+  );
 });
 
 gs.publish("allCreditCodes", async (db, _opts, { auth /*, updatedAt */ }) => {
@@ -242,40 +254,49 @@ gs.method("redeemCreditCode", async (db, { creditCode }, { auth }) => {
   const userId = await auth.userId();
   if (!userId) throw new Error("User not logged in");
 
-  // TODO, projection
-  const user = (await db
-    .collection("users")
-    .findOne({ _id: userId })) as unknown as User;
-
-  if (
-    user.redeemedCreditCodes &&
-    user.redeemedCreditCodes.includes(creditCode)
-  ) {
-    return { $error: "ALREADY_REDEEMED" };
-  }
-
-  // TODO, make atomic.  but honestly, who cares.
-  const code = (await db
-    .collection("creditCodes")
-    .findOne({ name: creditCode })) as CreditCode | null;
-
-  if (!code) return { $error: "NO_SUCH_CODE" };
-
-  if (code.used >= code.total) return { $error: "MAXIMUM_REACHED" };
-
-  await db.collection("users").updateOne(
-    { _id: userId },
+  return withAccountWriteLease(
     {
-      $inc: { "credits.free": code.credits },
-      $push: { redeemedCreditCodes: creditCode },
+      db: await gs.dba!.dbPromise,
+      operation: "redeem-credit-code",
+      targetUserId: userId,
+    },
+    async () => {
+      // TODO, projection
+      const user = (await db
+        .collection("users")
+        .findOne({ _id: userId })) as unknown as User;
+
+      if (
+        user.redeemedCreditCodes &&
+        user.redeemedCreditCodes.includes(creditCode)
+      ) {
+        return { $error: "ALREADY_REDEEMED" };
+      }
+
+      // TODO, make atomic.  but honestly, who cares.
+      const code = (await db
+        .collection("creditCodes")
+        .findOne({ name: creditCode })) as CreditCode | null;
+
+      if (!code) return { $error: "NO_SUCH_CODE" };
+
+      if (code.used >= code.total) return { $error: "MAXIMUM_REACHED" };
+
+      await db.collection("users").updateOne(
+        { _id: userId },
+        {
+          $inc: { "credits.free": code.credits },
+          $push: { redeemedCreditCodes: creditCode },
+        },
+      );
+
+      await db
+        .collection("creditCodes")
+        .updateOne({ _id: code._id }, { $inc: { used: 1 } });
+
+      return { $success: true, credits: code.credits };
     },
   );
-
-  await db
-    .collection("creditCodes")
-    .updateOne({ _id: code._id }, { $inc: { used: 1 } });
-
-  return { $success: true, credits: code.credits };
 });
 
 gs.publish("userLikes", async (db, _, { auth }) => {
@@ -322,34 +343,81 @@ gs.method(
   "reportStar",
   async (db, { starId: _starId }: { starId: string }, { auth }) => {
     const userId = await auth.userId();
+    if (!userId) throw new Error("User not logged in");
     const starId = new ObjectId(_starId);
 
-    const Reports = db.collection("reportedStars");
-    const Stars = db.collection("stars");
+    return withAccountWriteLease(
+      {
+        db: await gs.dba!.dbPromise,
+        operation: "report-star",
+        targetUserId: userId,
+      },
+      async () => {
+        const Reports = db.collection("reportedStars");
+        const Stars = db.collection("stars");
 
-    const star = await Stars.findOne({ _id: starId });
-    if (!star) throw new Error("No such star");
-    console.log(star);
+        const star = await Stars.findOne({ _id: starId });
+        if (!star) throw new Error("No such star");
+        // const existingUserReport = await Reported.findOne({ userId, starId });
 
-    // const existingUserReport = await Reported.findOne({ userId, starId });
+        const entry = {
+          userId,
+          starId,
+          date: new Date(),
+        };
+        await Reports.insertOne(entry);
+        await Stars.updateOne({ _id: starId }, { $inc: { reports: 1 } });
 
-    const entry = {
-      userId,
-      starId,
-      date: new Date(),
-    };
-    console.log(entry);
-    await Reports.insertOne(entry);
-    await Stars.updateOne({ _id: starId }, { $inc: { reports: 1 } });
+        if (star.reports >= NUM_REPORTS_UNTIL_REMOVAL - 1) {
+          // Maybe in the future we'll do something,
+          // for now we just rely on `reports` count.
+        }
 
-    if (star.reports >= NUM_REPORTS_UNTIL_REMOVAL - 1) {
-      // Maybe in the future we'll do something,
-      // for now we just rely on `reports` count.
-    }
-
-    return { status: "OK", NUM_REPORTS: star.reports ? star.reports + 1 : 1 };
+        return {
+          status: "OK",
+          NUM_REPORTS: star.reports ? star.reports + 1 : 1,
+        };
+      },
+    );
   },
 );
+
+async function userIdMatchesWritable(
+  doc: GongoDocument | ChangeSetUpdate | string,
+  eventProps: CollectionEventProps,
+) {
+  const matches = await userIdMatches(doc, eventProps);
+  if (matches !== true) return matches;
+  const userId = await eventProps.auth.userId();
+  if (!userId) return "NOT_LOGGED_IN";
+  await acquireGongoWriteLease(eventProps, userId, "gongo-account-write");
+  return true;
+}
+
+const gongoWriteLeases = new WeakMap<object, AccountWriteLease[]>();
+
+async function acquireGongoWriteLease(
+  eventProps: CollectionEventProps,
+  targetUserId: ObjectId | string,
+  operation: string,
+) {
+  const lease = await acquireAccountWriteLease({
+    db: await gs.dba!.dbPromise,
+    operation,
+    targetUserId,
+  });
+  const key = eventProps.auth as object;
+  const leases = gongoWriteLeases.get(key) || [];
+  leases.push(lease);
+  gongoWriteLeases.set(key, leases);
+}
+
+async function releaseGongoWriteLeases(eventProps: CollectionEventProps) {
+  const key = eventProps.auth as object;
+  const leases = gongoWriteLeases.get(key) || [];
+  gongoWriteLeases.delete(key);
+  await Promise.all(leases.map((lease) => lease.release()));
+}
 
 if (gs.dba) {
   const db = gs.dba;
@@ -361,13 +429,28 @@ if (gs.dba) {
       doc: GongoDocument | ChangeSetUpdate | string,
       eventProps: CollectionEventProps,
     ) => {
+      const actorUserId = await eventProps.auth.userId();
+      if (!actorUserId) return "NOT_LOGGED_IN";
+
       const isAdmin = await userIsAdmin(doc, eventProps);
-      if (isAdmin === true) return true;
+      if (isAdmin === true) {
+        await acquireGongoWriteLease(
+          eventProps,
+          actorUserId,
+          "gongo-user-update",
+        );
+        return true;
+      }
 
       if (typeof doc === "object" && "patch" in doc) {
         if (doc.patch.length === 1) {
           if (doc.patch[0].path === "/dob") {
             // Ok for now
+            await acquireGongoWriteLease(
+              eventProps,
+              actorUserId,
+              "gongo-user-update",
+            );
             return true;
           }
         }
@@ -376,6 +459,9 @@ if (gs.dba) {
       return "ACCESS_DENIED";
     },
   );
+  users.on("postUpdateMany", async (props) => {
+    await releaseGongoWriteLeases(props);
+  });
 
   const creditCodes = db.collection("creditCodes");
   creditCodes.allow("insert", userIsAdmin);
@@ -383,41 +469,51 @@ if (gs.dba) {
   creditCodes.allow("remove", userIsAdmin);
 
   const stars = db.collection("stars");
-  stars.allow("update", userIdMatches);
+  stars.allow("update", userIdMatchesWritable);
 
   const likes = db.collection("likes");
-  likes.allow("insert", userIdMatches);
-  likes.allow("update", userIdMatches);
+  likes.allow("insert", userIdMatchesWritable);
+  likes.allow("update", userIdMatchesWritable);
 
   // @ts-expect-error: gongo
   likes.on("postInsertMany", async (props, { entries }) => {
-    // TODO, remove "as Document[]" when we complete gongo typesafety
-    for (const doc of entries as Document[]) {
-      console.log(doc);
-      await db.collection("stars").updateOne(
-        // @ts-expect-error: TODO
-        { _id: doc.starId },
-        { $inc: { likes: 1 } },
-      );
+    try {
+      // TODO, remove "as Document[]" when we complete gongo typesafety
+      for (const doc of entries as Document[]) {
+        await db.collection("stars").updateOne(
+          // @ts-expect-error: TODO
+          { _id: doc.starId },
+          { $inc: { likes: 1 } },
+        );
+      }
+    } finally {
+      await releaseGongoWriteLeases(props);
     }
   });
 
   // @ts-expect-error: gongo
   likes.on("postUpdateMany", async (props, { entries }) => {
-    for (const update of entries as ChangeSetUpdate[]) {
-      console.log(update);
-      const likeId = update._id;
-      const like = await db
-        .collection("likes")
-        .findOne({ _id: new ObjectId(likeId) });
-      if (!like) return;
-      await db
-        .collection("stars")
-        .updateOne(
-          { _id: like.starId },
-          { $inc: { likes: like.liked ? 1 : -1 } },
-        );
+    try {
+      for (const update of entries as ChangeSetUpdate[]) {
+        const likeId = update._id;
+        const like = await db
+          .collection("likes")
+          .findOne({ _id: new ObjectId(likeId) });
+        if (!like) return;
+        await db
+          .collection("stars")
+          .updateOne(
+            { _id: like.starId },
+            { $inc: { likes: like.liked ? 1 : -1 } },
+          );
+      }
+    } finally {
+      await releaseGongoWriteLeases(props);
     }
+  });
+
+  stars.on("postUpdateMany", async (props) => {
+    await releaseGongoWriteLeases(props);
   });
 }
 

@@ -76,7 +76,10 @@ describe("request authentication", () => {
     await expect(requireAdminUser(req, res)).resolves.toBe(admin);
 
     expect(mocks.collection).toHaveBeenCalledExactlyOnceWith("users");
-    expect(mocks.findOne).toHaveBeenCalledExactlyOnceWith({ _id: userId });
+    expect(mocks.findOne).toHaveBeenCalledExactlyOnceWith({
+      _id: userId,
+      deletionPendingAt: { $exists: false },
+    });
   });
 
   it("rejects an authenticated non-administrator", async () => {

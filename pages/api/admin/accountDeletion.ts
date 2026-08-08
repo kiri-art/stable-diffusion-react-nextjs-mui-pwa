@@ -365,6 +365,7 @@ async function retryDeletion(
   }
 
   return retryAccountDeletionJob({
+    client: gs.dba.client,
     db,
     deletionId,
     external: createAccountDeletionExternalServices(),

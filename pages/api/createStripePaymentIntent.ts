@@ -2,6 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { AuthFromReq } from "../../src/api-lib/auth";
 import gs, { Order, User } from "../../src/api-lib/db";
+import {
+  AccountDeletionPendingError,
+  type AccountWriteLease,
+  acquireAccountWriteLease,
+} from "../../src/server/account-data/writeBarrier";
 
 if (!process.env.STRIPE_SECRET_KEY)
   throw new Error("STRIPE_SECRET_KEY not defined");
@@ -16,7 +21,6 @@ export default async function craeateStripePaymentIntent(
   res: NextApiResponse,
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
-  console.log(req.body);
   if (typeof req.body !== "object") throw new Error("Body not decoded");
   if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -33,57 +37,75 @@ export default async function craeateStripePaymentIntent(
     return res.status(403).send("Forbidden");
   }
 
-  const user = (await gs.dba
-    .collection("users")
-    .findOne({ _id: userId })) as User | null;
-  if (!user) return res.status(500).send("Server error");
-
-  if (!user.stripeCustomerId) {
-    const customer = await stripe.customers.create({
-      name: user.displayName,
-      email: user.emails[0].value,
+  let writeLease: AccountWriteLease;
+  try {
+    writeLease = await acquireAccountWriteLease({
+      db: await gs.dba.dbPromise,
+      operation: "create-payment-intent",
+      targetUserId: userId,
     });
-
-    user.stripeCustomerId = customer.id;
-    await gs.dba
-      .collection("users")
-      .updateOne(
-        { _id: user._id },
-        { $set: { stripeCustomerId: customer.id } },
-      );
+  } catch (error) {
+    if (error instanceof AccountDeletionPendingError) {
+      return res.status(409).send("Account deletion is pending");
+    }
+    throw error;
   }
 
-  const order: Order = {
-    userId: userId,
-    amount: costInUSD * 100,
-    currency: "usd",
-    createdAt: new Date(),
-    numCredits,
-  };
+  try {
+    const user = (await gs.dba
+      .collection("users")
+      .findOne({ _id: userId })) as User | null;
+    if (!user) return res.status(500).send("Server error");
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: order.amount,
-    currency: order.currency,
-    automatic_payment_methods: {
-      enabled: true,
-    },
-    customer: user.stripeCustomerId,
-    // Automatic based on https://dashboard.stripe.com/settings/emails
-    // receipt_email: user.emails[0].value,
-    description: numCredits + " credits on kiri.art",
-    statement_descriptor: "KIRI.ART",
-  });
+    if (!user.stripeCustomerId) {
+      const customer = await stripe.customers.create({
+        name: user.displayName,
+        email: user.emails[0].value,
+      });
 
-  order.stripePaymentIntentId = paymentIntent.id;
-  order.stripePaymentIntentStatus = paymentIntent.status;
+      user.stripeCustomerId = customer.id;
+      await gs.dba
+        .collection("users")
+        .updateOne(
+          { _id: user._id },
+          { $set: { stripeCustomerId: customer.id } },
+        );
+    }
 
-  const result = await gs.dba.collection("orders").insertOne(order);
-  const id = result.insertedId;
+    const order: Order = {
+      userId: userId,
+      amount: costInUSD * 100,
+      currency: "usd",
+      createdAt: new Date(),
+      numCredits,
+    };
 
-  res.send({
-    orderId: id,
-    clientSecret: paymentIntent.client_secret,
-    numCredits,
-    costInUSD,
-  });
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: order.amount,
+      currency: order.currency,
+      automatic_payment_methods: {
+        enabled: true,
+      },
+      customer: user.stripeCustomerId,
+      // Automatic based on https://dashboard.stripe.com/settings/emails
+      // receipt_email: user.emails[0].value,
+      description: numCredits + " credits on kiri.art",
+      statement_descriptor: "KIRI.ART",
+    });
+
+    order.stripePaymentIntentId = paymentIntent.id;
+    order.stripePaymentIntentStatus = paymentIntent.status;
+
+    const result = await gs.dba.collection("orders").insertOne(order);
+    const id = result.insertedId;
+
+    res.send({
+      orderId: id,
+      clientSecret: paymentIntent.client_secret,
+      numCredits,
+      costInUSD,
+    });
+  } finally {
+    await writeLease.release();
+  }
 }

@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   collection: vi.fn(),
   ipFromReq: vi.fn(),
   updateOne: vi.fn(),
+  withAccountWriteLease: vi.fn(),
 }));
 
 vi.mock("next-auth", () => ({ default: vi.fn() }));
@@ -27,6 +28,9 @@ vi.mock("./db-full", () => ({
   default: { dba: { collection: mocks.collection } },
 }));
 vi.mock("./ipCheck", () => ({ ipFromReq: mocks.ipFromReq }));
+vi.mock("../server/account-data/writeBarrier", () => ({
+  withAccountWriteLease: mocks.withAccountWriteLease,
+}));
 
 import { createAuthOptions } from "../../pages/api/auth/[...nextauth]";
 
@@ -35,6 +39,9 @@ describe("request-aware NextAuth options", () => {
     vi.clearAllMocks();
     mocks.collection.mockReturnValue({ updateOne: mocks.updateOne });
     mocks.ipFromReq.mockReturnValue("203.0.113.10");
+    mocks.withAccountWriteLease.mockImplementation(async (_options, callback) =>
+      callback(),
+    );
   });
 
   it("adds the user ID and persists request metadata during session lookup", async () => {

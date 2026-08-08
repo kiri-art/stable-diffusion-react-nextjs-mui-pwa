@@ -21,6 +21,7 @@ import GongoAuthAdapter, {
 } from "../../../src/api-lib/gongoAuthAdapter";
 import { ipFromReq } from "../../../src/api-lib/ipCheck";
 import { DAILY_FREE_CREDITS } from "../../../src/config/constants";
+import { withAccountWriteLease } from "../../../src/server/account-data/writeBarrier";
 
 interface Service {
   service: string;
@@ -180,20 +181,29 @@ export function createAuthOptions(req: NextApiRequest): NextAuthOptions {
 
         // Note, session called not only during session creation.  Should we
         // or should we not overwrite these values?
-        await gs.dba.collection("sessions").updateOne(
+        const userId = new ObjectId(user.id);
+        await withAccountWriteLease(
           {
-            userId: new ObjectId(user.id),
-            expires: new Date(session.expires),
+            db: await gs.dba.dbPromise,
+            operation: "auth-session-metadata",
+            targetUserId: userId,
           },
-          {
-            $set: {
-              ip: ipFromReq(req),
-              userAgent:
-                req.headers instanceof Headers
-                  ? req.headers.get("user-agent")
-                  : req.headers["user-agent"],
-            },
-          },
+          () =>
+            gs.dba.collection("sessions").updateOne(
+              {
+                userId,
+                expires: new Date(session.expires),
+              },
+              {
+                $set: {
+                  ip: ipFromReq(req),
+                  userAgent:
+                    req.headers instanceof Headers
+                      ? req.headers.get("user-agent")
+                      : req.headers["user-agent"],
+                },
+              },
+            ),
         );
 
         return session;

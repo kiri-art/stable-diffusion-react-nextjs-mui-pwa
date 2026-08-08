@@ -6,6 +6,7 @@ import {
   ObjectId,
   type WithId,
 } from "mongodb";
+import { recordDeletedCallbackIdentifiers } from "./requestTombstone";
 
 export type AccountDataAction =
   | "anonymized"
@@ -54,6 +55,7 @@ export interface DeleteAccountDataOptions
 }
 
 export interface RetryAccountDeletionJobOptions {
+  client: MongoClient;
   db: Db;
   deletionId: ObjectId | string;
   external?: AccountDataExternalServices;
@@ -104,6 +106,7 @@ interface CounterRepair {
 }
 
 interface AccountFootprint {
+  csendContainerIds: string[];
   collectionEntries: AccountDataReportEntry[];
   counterRepairs: CounterRepair[];
   deletableEmailIdentifiers: string[];
@@ -115,6 +118,7 @@ interface AccountFootprint {
   s3DeleteKeys: string[];
   s3SharedKeys: string[];
   sharedEmailIdentifiers: string[];
+  sharedCsendContainerIds: string[];
   sharedFileIdValues: unknown[];
   stars: WithId<Document>[];
   stripeCustomerId?: string;
@@ -126,16 +130,25 @@ interface AccountFootprint {
 
 interface DatabaseDeletionResult {
   collections: AccountDataReportEntry[];
-  deletionId?: ObjectId;
   footprint: AccountFootprint;
+}
+
+interface AccountDeletionPhaseOneResult {
+  deletionId: ObjectId;
+  revokedSessions: number;
 }
 
 interface AccountDeletionJobDocument extends Document {
   _id: ObjectId;
   attempts: number;
+  collectionReport?: AccountDataReportEntry[];
   createdAt: Date;
+  databaseCompletedAt?: Date;
   pendingS3Keys?: string[];
   pendingStripeCustomerId?: string;
+  phase: "database_pending" | "external_pending";
+  resourceReport?: AccountDataReportEntry[];
+  revokedSessions: number;
   targetUserId: ObjectId;
   updatedAt: Date;
 }
@@ -674,6 +687,31 @@ async function discoverAccountFootprint(
   const requestIds = candidateRequestIds.filter(
     (requestId) => !sharedRequestIdSet.has(requestId),
   );
+  const targetCsendAnchors = requestIds.length
+    ? await db
+        .collection("csends")
+        .find(
+          { "payload.startRequestId": { $in: requestIds } },
+          { projection: { container_id: 1 }, session },
+        )
+        .toArray()
+    : [];
+  const sharedCsendAnchors = sharedRequestIds.length
+    ? await db
+        .collection("csends")
+        .find(
+          { "payload.startRequestId": { $in: sharedRequestIds } },
+          { projection: { container_id: 1 }, session },
+        )
+        .toArray()
+    : [];
+  const sharedCsendContainerIds = stringValues(
+    sharedCsendAnchors.map((entry) => entry.container_id),
+  );
+  const sharedCsendContainerSet = new Set(sharedCsendContainerIds);
+  const csendContainerIds = stringValues(
+    targetCsendAnchors.map((entry) => entry.container_id),
+  ).filter((containerId) => !sharedCsendContainerSet.has(containerId));
 
   const starFileIds = stars.flatMap((star) =>
     collectFileReferences(star.files),
@@ -801,21 +839,43 @@ async function discoverAccountFootprint(
           { session },
         )
     : 0;
-  const csendCount = requestIds.length
+  const csendDeleteParts: Document[] = [];
+  if (requestIds.length) {
+    csendDeleteParts.push({ "payload.startRequestId": { $in: requestIds } });
+  }
+  if (csendContainerIds.length) {
+    csendDeleteParts.push({ container_id: { $in: csendContainerIds } });
+  }
+  const csendDeleteFilter = csendDeleteParts.length
+    ? {
+        $and: [
+          { $or: csendDeleteParts },
+          ...(sharedCsendContainerIds.length
+            ? [{ container_id: { $nin: sharedCsendContainerIds } }]
+            : []),
+        ],
+      }
+    : null;
+  const csendCount = csendDeleteFilter
     ? await db
         .collection("csends")
-        .countDocuments(
-          { "payload.startRequestId": { $in: requestIds } },
-          { session },
-        )
+        .countDocuments(csendDeleteFilter, { session })
     : 0;
-  const sharedCsendCount = sharedRequestIds.length
+  const sharedCsendParts: Document[] = [];
+  if (sharedRequestIds.length) {
+    sharedCsendParts.push({
+      "payload.startRequestId": { $in: sharedRequestIds },
+    });
+  }
+  if (sharedCsendContainerIds.length) {
+    sharedCsendParts.push({
+      container_id: { $in: sharedCsendContainerIds },
+    });
+  }
+  const sharedCsendCount = sharedCsendParts.length
     ? await db
         .collection("csends")
-        .countDocuments(
-          { "payload.startRequestId": { $in: sharedRequestIds } },
-          { session },
-        )
+        .countDocuments({ $or: sharedCsendParts }, { session })
     : 0;
   const likeCount = await db
     .collection("likes")
@@ -906,6 +966,14 @@ async function discoverAccountFootprint(
 
   const collectionEntries = [
     reportEntry("accounts", "deleted", accountCount),
+    reportEntry(
+      "accountDeletionCallbackTombstones",
+      "retained",
+      requestIds.length,
+      requestIds.length
+        ? "Short-lived hashed markers prevent delayed provider callbacks from recreating deleted request data"
+        : undefined,
+    ),
     reportEntry("bananaRequests", "deleted", bananaRequestCount),
     reportEntry(
       "bananaRequests",
@@ -995,6 +1063,7 @@ async function discoverAccountFootprint(
   ];
 
   return {
+    csendContainerIds,
     collectionEntries,
     counterRepairs,
     deletableEmailIdentifiers,
@@ -1006,6 +1075,7 @@ async function discoverAccountFootprint(
     s3DeleteKeys,
     s3SharedKeys,
     sharedEmailIdentifiers,
+    sharedCsendContainerIds,
     sharedFileIdValues,
     stars,
     stripeCustomerId,
@@ -1051,6 +1121,7 @@ export async function exportAccountData({
   if (!footprint) return null;
 
   const {
+    csendContainerIds,
     fileDocuments,
     ownedStarIdValues,
     requestIds,
@@ -1086,7 +1157,14 @@ export async function exportAccountData({
   const csends = requestIds.length
     ? await db
         .collection("csends")
-        .find({ "payload.startRequestId": { $in: requestIds } })
+        .find({
+          $or: [
+            { "payload.startRequestId": { $in: requestIds } },
+            ...(csendContainerIds.length
+              ? [{ container_id: { $in: csendContainerIds } }]
+              : []),
+          ],
+        })
         .toArray()
     : [];
   const likes = await db
@@ -1238,23 +1316,46 @@ async function assertAdminDeletionAllowed(
     );
   const adminCount = await db
     .collection("users")
-    .countDocuments({ admin: true }, { session });
+    .countDocuments(
+      { admin: true, deletionPendingAt: { $exists: false } },
+      { session },
+    );
   if (adminCount <= 1) throw new LastAdminDeletionError();
 
   return true;
 }
 
-async function createExternalDeletionJob(
+async function beginAccountDeletion(
   db: Db,
   targetUserId: ObjectId,
-  footprint: AccountFootprint,
   session: ClientSession,
-): Promise<ObjectId | undefined> {
-  const pendingS3Keys = Array.from(new Set(footprint.s3DeleteKeys));
-  const pendingStripeCustomerId = footprint.stripeCustomerShared
-    ? undefined
-    : footprint.stripeCustomerId;
-  if (!pendingS3Keys.length && !pendingStripeCustomerId) return undefined;
+): Promise<AccountDeletionPhaseOneResult | null> {
+  const target = await db
+    .collection("users")
+    .findOne(mixedIdFilter({ _id: { $in: allIdValues([targetUserId]) } }), {
+      projection: {
+        deletionId: 1,
+        deletionPendingAt: 1,
+      },
+      session,
+    });
+  if (!target) return null;
+
+  if (target.deletionPendingAt && target.deletionId) {
+    const deletionId = deletionJobIdFrom(target.deletionId);
+    const job = await db
+      .collection<AccountDeletionJobDocument>("accountDeletionJobs")
+      .findOne({ _id: deletionId }, { session });
+    if (!job) throw new AccountDeletionJobNotFoundError();
+    return {
+      deletionId,
+      revokedSessions: job.revokedSessions || 0,
+    };
+  }
+
+  if (!(await assertAdminDeletionAllowed(db, targetUserId, session))) {
+    return null;
+  }
 
   const now = new Date();
   const deletionId = new ObjectId();
@@ -1265,40 +1366,66 @@ async function createExternalDeletionJob(
         _id: deletionId,
         attempts: 0,
         createdAt: now,
-        ...(pendingS3Keys.length ? { pendingS3Keys } : {}),
-        ...(pendingStripeCustomerId ? { pendingStripeCustomerId } : {}),
+        phase: "database_pending",
+        revokedSessions: 0,
         targetUserId,
         updatedAt: now,
       },
       { session },
     );
-  return deletionId;
+
+  const marked = await db.collection("users").updateOne(
+    mixedIdFilter({
+      _id: { $in: allIdValues([targetUserId]) },
+      deletionPendingAt: { $exists: false },
+    }),
+    { $set: { deletionId, deletionPendingAt: now } },
+    { session },
+  );
+  if (!marked.matchedCount) {
+    throw new Error("Account deletion phase-one write lost its target");
+  }
+
+  const revoked = await db
+    .collection("sessions")
+    .deleteMany({ userId: { $in: allIdValues([targetUserId]) } }, { session });
+  await db
+    .collection<AccountDeletionJobDocument>("accountDeletionJobs")
+    .updateOne(
+      { _id: deletionId },
+      {
+        $set: {
+          revokedSessions: revoked.deletedCount,
+          updatedAt: now,
+        },
+      },
+      { session },
+    );
+
+  return {
+    deletionId,
+    revokedSessions: revoked.deletedCount,
+  };
 }
 
 async function deleteDatabaseData(
   db: Db,
   targetUserId: ObjectId,
+  revokedSessions: number,
   session: ClientSession,
 ): Promise<DatabaseDeletionResult | null> {
-  if (!(await assertAdminDeletionAllowed(db, targetUserId, session))) {
-    return null;
-  }
   const footprint = await discoverAccountFootprint(db, targetUserId, session);
   if (!footprint) return null;
-  const deletionId = await createExternalDeletionJob(
-    db,
-    targetUserId,
-    footprint,
-    session,
-  );
 
   const entries = footprint.collectionEntries.map((entry) => ({ ...entry }));
   const {
+    csendContainerIds,
     deletableEmailIdentifiers,
     fileIdValues,
     ownedStarIdValues,
     requestIds,
     sharedEmailIdentifiers,
+    sharedCsendContainerIds,
     sharedFileIdValues,
     userIdValues,
   } = footprint;
@@ -1358,6 +1485,19 @@ async function deleteDatabaseData(
     : { deletedCount: 0 };
   replaceEntryCount(entries, "stars", "deleted", stars.deletedCount);
 
+  const callbackTombstones = await recordDeletedCallbackIdentifiers(
+    db,
+    "request",
+    requestIds,
+    session,
+  );
+  replaceEntryCount(
+    entries,
+    "accountDeletionCallbackTombstones",
+    "retained",
+    callbackTombstones,
+  );
+
   const userRequests = await db
     .collection("userRequests")
     .deleteMany({ userId: { $in: userIdValues } }, { session });
@@ -1380,13 +1520,25 @@ async function deleteDatabaseData(
     bananaRequests.deletedCount,
   );
 
-  const csends = requestIds.length
-    ? await db
-        .collection("csends")
-        .deleteMany(
-          { "payload.startRequestId": { $in: requestIds } },
-          { session },
-        )
+  const csendDeleteParts: Document[] = [];
+  if (requestIds.length) {
+    csendDeleteParts.push({ "payload.startRequestId": { $in: requestIds } });
+  }
+  if (csendContainerIds.length) {
+    csendDeleteParts.push({ container_id: { $in: csendContainerIds } });
+  }
+  const csends = csendDeleteParts.length
+    ? await db.collection("csends").deleteMany(
+        {
+          $and: [
+            { $or: csendDeleteParts },
+            ...(sharedCsendContainerIds.length
+              ? [{ container_id: { $nin: sharedCsendContainerIds } }]
+              : []),
+          ],
+        },
+        { session },
+      )
     : { deletedCount: 0 };
   replaceEntryCount(entries, "csends", "deleted", csends.deletedCount);
 
@@ -1418,7 +1570,12 @@ async function deleteDatabaseData(
   const sessions = await db
     .collection("sessions")
     .deleteMany({ userId: { $in: userIdValues } }, { session });
-  replaceEntryCount(entries, "sessions", "deleted", sessions.deletedCount);
+  replaceEntryCount(
+    entries,
+    "sessions",
+    "deleted",
+    revokedSessions + sessions.deletedCount,
+  );
 
   const deletableVerificationTokenFilter = deletableEmailReferenceFilter(
     deletableEmailIdentifiers,
@@ -1441,7 +1598,7 @@ async function deleteDatabaseData(
     .deleteOne(mixedIdFilter({ _id: { $in: userIdValues } }), { session });
   replaceEntryCount(entries, "users", "deleted", users.deletedCount);
 
-  return { collections: entries, deletionId, footprint };
+  return { collections: entries, footprint };
 }
 
 export interface S3DeletionRecheck {
@@ -1526,11 +1683,103 @@ async function removePendingStripeCustomer(
     );
 }
 
+interface DatabasePhaseFinalization {
+  activeWrites?: number;
+  databaseResult?: DatabaseDeletionResult;
+}
+
+async function finalizeDatabaseDeletionPhase(
+  client: MongoClient,
+  db: Db,
+  deletionId: ObjectId,
+): Promise<DatabasePhaseFinalization | null> {
+  return client.withSession((session) =>
+    session.withTransaction(async () => {
+      const jobs = db.collection<AccountDeletionJobDocument>(
+        "accountDeletionJobs",
+      );
+      const job = await jobs.findOne({ _id: deletionId }, { session });
+      if (!job) return null;
+      if (job.phase !== "database_pending") return {};
+
+      const now = new Date();
+      const targetFilter = mixedIdFilter({
+        _id: { $in: allIdValues([job.targetUserId]) },
+        deletionId: { $in: allIdValues([deletionId]) },
+        deletionPendingAt: { $exists: true },
+      });
+      await db.collection("users").updateOne(
+        targetFilter,
+        {
+          $pull: {
+            accountWriteLeases: {
+              expiresAt: { $lte: now },
+            },
+          },
+        },
+        { session },
+      );
+      const target = await db.collection("users").findOne(targetFilter, {
+        projection: { accountWriteLeases: 1 },
+        session,
+      });
+      if (!target) {
+        throw new Error("Pending account-deletion target is missing");
+      }
+
+      const activeWrites = Array.isArray(target.accountWriteLeases)
+        ? target.accountWriteLeases.length
+        : 0;
+      if (activeWrites) return { activeWrites };
+
+      const databaseResult = await deleteDatabaseData(
+        db,
+        job.targetUserId,
+        job.revokedSessions || 0,
+        session,
+      );
+      if (!databaseResult) {
+        throw new Error("Pending account-deletion graph is missing its user");
+      }
+
+      const pendingS3Keys = Array.from(
+        new Set(databaseResult.footprint.s3DeleteKeys),
+      );
+      const pendingStripeCustomerId = databaseResult.footprint
+        .stripeCustomerShared
+        ? undefined
+        : databaseResult.footprint.stripeCustomerId;
+      const resourceReport = databaseResult.footprint.resourceEntries.filter(
+        (entry) => entry.action === "skipped_shared",
+      );
+      await jobs.updateOne(
+        { _id: deletionId, phase: "database_pending" },
+        {
+          $set: {
+            collectionReport: databaseResult.collections,
+            databaseCompletedAt: now,
+            phase: "external_pending",
+            resourceReport,
+            updatedAt: now,
+            ...(pendingS3Keys.length ? { pendingS3Keys } : {}),
+            ...(pendingStripeCustomerId ? { pendingStripeCustomerId } : {}),
+          },
+        },
+        { session },
+      );
+
+      return { databaseResult };
+    }, transactionOptions),
+  );
+}
+
 /**
- * Drain one durable external-erasure job. External deletes are idempotent, so
- * a crash after the SDK call but before the atomic pull/unset is safe to retry.
+ * Resume a durable two-phase deletion job. Database finalization waits for
+ * writers that crossed the phase-one boundary; external deletes are
+ * idempotent, so a crash after the SDK call is safe to retry.
  */
 export async function retryAccountDeletionJob({
+  client,
   db,
   deletionId: rawDeletionId,
   external,
@@ -1544,8 +1793,51 @@ export async function retryAccountDeletionJob({
   );
   if (!job) throw new AccountDeletionJobNotFoundError();
 
+  let databaseCollections = job.collectionReport || [];
+  let persistedResourceEntries = job.resourceReport || [];
+  if (job.phase === "database_pending") {
+    const finalization = await finalizeDatabaseDeletionPhase(
+      client,
+      db,
+      deletionId,
+    );
+    if (!finalization) throw new AccountDeletionJobNotFoundError();
+    if (finalization.activeWrites) {
+      return {
+        collections: job.revokedSessions
+          ? [
+              reportEntry(
+                "sessions",
+                "deleted",
+                job.revokedSessions,
+                "Revoked when account deletion entered its pending phase",
+              ),
+            ]
+          : [],
+        deletionId: deletionId.toHexString(),
+        resources: [
+          reportEntry(
+            "account_writes",
+            "retained",
+            finalization.activeWrites,
+            "Waiting for in-flight account operations before the final sweep",
+          ),
+        ],
+        status: "partial",
+        targetUserId: job.targetUserId.toHexString(),
+      };
+    }
+
+    const finalizedJob = await jobs.findOne({ _id: deletionId });
+    if (!finalizedJob) throw new AccountDeletionJobNotFoundError();
+    databaseCollections = finalizedJob.collectionReport || [];
+    persistedResourceEntries = finalizedJob.resourceReport || [];
+  }
+
   const entries: AccountDataReportEntry[] = [];
-  const pendingS3Keys = Array.from(new Set(job.pendingS3Keys || []));
+  const externalJob = await jobs.findOne({ _id: deletionId });
+  if (!externalJob) throw new AccountDeletionJobNotFoundError();
+  const pendingS3Keys = Array.from(new Set(externalJob.pendingS3Keys || []));
   let s3Deleted = 0;
   let s3SkippedShared = 0;
   if (pendingS3Keys.length) {
@@ -1592,8 +1884,8 @@ export async function retryAccountDeletionJob({
 
   let stripeDeleted = 0;
   let stripeSkippedShared = 0;
-  if (job.pendingStripeCustomerId) {
-    const customerId = job.pendingStripeCustomerId;
+  if (externalJob.pendingStripeCustomerId) {
+    const customerId = externalJob.pendingStripeCustomerId;
     try {
       const sharedCustomer = await db
         .collection("users")
@@ -1634,8 +1926,8 @@ export async function retryAccountDeletionJob({
   if (!remaining || (!remainingS3Count && !remainingStripeCount)) {
     await jobs.deleteOne({ _id: deletionId });
     return {
-      collections: [],
-      resources: entries,
+      collections: databaseCollections,
+      resources: mergedReportEntries([...persistedResourceEntries, ...entries]),
       status: "complete",
       targetUserId: job.targetUserId.toHexString(),
     };
@@ -1663,9 +1955,9 @@ export async function retryAccountDeletionJob({
   }
 
   return {
-    collections: [],
+    collections: databaseCollections,
     deletionId: deletionId.toHexString(),
-    resources: entries,
+    resources: mergedReportEntries([...persistedResourceEntries, ...entries]),
     status: "partial",
     targetUserId: job.targetUserId.toHexString(),
   };
@@ -1680,81 +1972,53 @@ export async function deleteAccountData({
   const targetUserId = objectIdFrom(rawTargetUserId);
   await assertTransactionalDeletionTopology(client);
   await ensureAdminDeletionGuard(db);
-  const databaseResult = await client.withSession((session) =>
+  const phaseOne = await client.withSession((session) =>
     session.withTransaction(
-      () => deleteDatabaseData(db, targetUserId, session),
+      () => beginAccountDeletion(db, targetUserId, session),
       transactionOptions,
     ),
   );
 
-  if (!databaseResult) return notFoundReport(targetUserId);
+  if (!phaseOne) return notFoundReport(targetUserId);
 
-  if (!databaseResult.deletionId) {
-    return {
-      collections: databaseResult.collections,
-      resources: databaseResult.footprint.resourceEntries,
-      status: "complete",
-      targetUserId: targetUserId.toHexString(),
-    };
-  }
-
-  const initiallySharedResources =
-    databaseResult.footprint.resourceEntries.filter(
-      (entry) => entry.action === "skipped_shared",
-    );
   try {
-    const externalResult = await retryAccountDeletionJob({
+    return await retryAccountDeletionJob({
+      client,
       db,
-      deletionId: databaseResult.deletionId,
+      deletionId: phaseOne.deletionId,
       external,
     });
-    return {
-      collections: databaseResult.collections,
-      ...(externalResult.deletionId
-        ? { deletionId: externalResult.deletionId }
-        : {}),
-      resources: mergedReportEntries([
-        ...initiallySharedResources,
-        ...externalResult.resources,
-      ]),
-      status: externalResult.status,
-      targetUserId: targetUserId.toHexString(),
-    };
   } catch (error) {
     if (error instanceof AccountDeletionJobNotFoundError) {
       return {
-        collections: databaseResult.collections,
-        resources: initiallySharedResources,
+        collections: [],
+        resources: [],
         status: "complete",
         targetUserId: targetUserId.toHexString(),
       };
     }
     console.error("Inline account-deletion job processing failed", error);
 
-    const queuedEntries = [...initiallySharedResources];
-    if (databaseResult.footprint.s3DeleteKeys.length) {
-      queuedEntries.push(
+    return {
+      collections: phaseOne.revokedSessions
+        ? [
+            reportEntry(
+              "sessions",
+              "deleted",
+              phaseOne.revokedSessions,
+              "Revoked when account deletion entered its pending phase",
+            ),
+          ]
+        : [],
+      deletionId: phaseOne.deletionId.toHexString(),
+      resources: [
         reportEntry(
-          "s3",
+          "account_deletion",
           "retained",
-          databaseResult.footprint.s3DeleteKeys.length,
+          1,
           "Queued for administrator retry",
         ),
-      );
-    }
-    if (
-      databaseResult.footprint.stripeCustomerId &&
-      !databaseResult.footprint.stripeCustomerShared
-    ) {
-      queuedEntries.push(
-        reportEntry("stripe", "retained", 1, "Queued for administrator retry"),
-      );
-    }
-
-    return {
-      collections: databaseResult.collections,
-      deletionId: databaseResult.deletionId.toHexString(),
-      resources: mergedReportEntries(queuedEntries),
+      ],
       status: "partial",
       targetUserId: targetUserId.toHexString(),
     };

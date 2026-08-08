@@ -11,6 +11,11 @@ import {
 } from "../../src/schemas";
 import type NodeCol from "../../src/schemas/lib/NodeCol";
 import type Star from "../../src/schemas/star";
+import {
+  AccountDeletionPendingError,
+  type AccountWriteLease,
+  acquireAccountWriteLease,
+} from "../../src/server/account-data/writeBarrier";
 import { createFileFromBuffer } from "./file2";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
@@ -41,76 +46,90 @@ export default async function starItem(
 
   if (!userId) return res.status(401).end("Unauthorized");
 
-  const modelInputs = await ddaModelInputsSchema.validate(item.modelInputs);
-  const callInputs = await ddaCallInputsSchema.validate(item.callInputs);
-  const result = item.result;
+  let writeLease: AccountWriteLease;
+  try {
+    writeLease = await acquireAccountWriteLease({
+      db: await gs.dba.dbPromise,
+      operation: "star-image",
+      targetUserId: userId,
+    });
+  } catch (error) {
+    if (error instanceof AccountDeletionPendingError) {
+      return res.status(409).end("Account deletion is pending");
+    }
+    throw error;
+  }
 
-  const simulatedModelState = {
-    prompt: { value: modelInputs.prompt || "" },
-    shareInputs: { value: true },
-    guidance_scale: { value: modelInputs.guidance_scale },
-    num_inference_steps: { value: modelInputs.num_inference_steps },
-    seed: { value: modelInputs.seed as number },
-    negative_prompt: { value: modelInputs.negative_prompt || "" },
-  };
+  try {
+    const modelInputs = await ddaModelInputsSchema.validate(item.modelInputs);
+    const callInputs = await ddaCallInputsSchema.validate(item.callInputs);
+    const result = item.result;
 
-  const images = {
-    output: BufferFromBase64(result?.modelOutputs?.[0]?.image_base64),
-    init: BufferFromBase64(modelInputs?.image),
-    mask: BufferFromBase64(modelInputs?.mask_image),
-  };
-  if (!images.output)
-    return res.status(400).end("Bad Request - no output file");
-  delete result?.modelOutputs?.[0]?.image_base64;
-  delete modelInputs?.image;
-  delete modelInputs?.mask_image;
+    const simulatedModelState = {
+      prompt: { value: modelInputs.prompt || "" },
+      shareInputs: { value: true },
+      guidance_scale: { value: modelInputs.guidance_scale },
+      num_inference_steps: { value: modelInputs.num_inference_steps },
+      seed: { value: modelInputs.seed as number },
+      negative_prompt: { value: modelInputs.negative_prompt || "" },
+    };
 
-  const sharedInputs = sharedInputTextFromInputs(simulatedModelState);
-  const mimeType = getMimeTypeFromBuffer(images.output);
-  const ext = extensions[mimeType];
-  const filename = sanitizeFilename(sharedInputs + "." + ext);
+    const images = {
+      output: BufferFromBase64(result?.modelOutputs?.[0]?.image_base64),
+      init: BufferFromBase64(modelInputs?.image),
+      mask: BufferFromBase64(modelInputs?.mask_image),
+    };
+    if (!images.output)
+      return res.status(400).end("Bad Request - no output file");
+    delete result?.modelOutputs?.[0]?.image_base64;
+    delete modelInputs?.image;
+    delete modelInputs?.mask_image;
 
-  const files: Star["files"] = {
-    // @ts-expect-error: objectid
-    output: (await createFileFromBuffer(images.output, { filename, userId }))
-      ._id,
-  };
-  if (images.init)
-    // @ts-expect-error: objectid
-    files.init = (
-      await createFileFromBuffer(images.init, {
-        filename: "init_image.jpg", // TODO, file ext
-        userId,
-      })
-    )._id;
-  if (images.mask)
-    // @ts-expect-error: objectid
-    files.mask = (
-      await createFileFromBuffer(images.mask, {
-        filename: "mask_image.jpg", // TODO, file ext
-        userId,
-      })
-    )._id;
+    const sharedInputs = sharedInputTextFromInputs(simulatedModelState);
+    const mimeType = getMimeTypeFromBuffer(images.output);
+    const ext = extensions[mimeType];
+    const filename = sanitizeFilename(sharedInputs + "." + ext);
 
-  console.log(images);
-  console.log(files);
+    const files: Star["files"] = {
+      // @ts-expect-error: objectid
+      output: (await createFileFromBuffer(images.output, { filename, userId }))
+        ._id,
+    };
+    if (images.init)
+      // @ts-expect-error: objectid
+      files.init = (
+        await createFileFromBuffer(images.init, {
+          filename: "init_image.jpg", // TODO, file ext
+          userId,
+        })
+      )._id;
+    if (images.mask)
+      // @ts-expect-error: objectid
+      files.mask = (
+        await createFileFromBuffer(images.mask, {
+          filename: "mask_image.jpg", // TODO, file ext
+          userId,
+        })
+      )._id;
 
-  const entry: Partial<NodeCol<Star>> = {
-    userId,
-    date: new Date(),
-    callInputs,
-    modelInputs,
-    files,
-    // stars: 1,
-    // starredBy: [userId],
-    likes: 0,
-  };
+    const entry: Partial<NodeCol<Star>> = {
+      userId,
+      date: new Date(),
+      callInputs,
+      modelInputs,
+      files,
+      // stars: 1,
+      // starredBy: [userId],
+      likes: 0,
+    };
 
-  console.log(entry);
-  const insertResult = await Stars.insertOne(entry);
-  const { insertedId } = insertResult;
+    const insertResult = await Stars.insertOne(entry);
+    const { insertedId } = insertResult;
 
-  entry._id = insertedId;
+    entry._id = insertedId;
 
-  res.status(200).json(entry);
+    res.status(200).json(entry);
+  } finally {
+    await writeLease.release();
+  }
 }

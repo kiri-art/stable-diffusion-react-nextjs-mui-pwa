@@ -41,9 +41,10 @@ export async function requireAdminUser(
   }
 
   const db = await gs.dba.dbPromise;
-  const user = await db
-    .collection<NativeUserDocument>("users")
-    .findOne({ _id: new ObjectId(userId) });
+  const user = await db.collection<NativeUserDocument>("users").findOne({
+    _id: new ObjectId(userId),
+    deletionPendingAt: { $exists: false },
+  });
 
   if (!user) throw new RequestAuthError(401, "Unauthorized");
   if (!user.admin) throw new RequestAuthError(403, "Forbidden");

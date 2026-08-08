@@ -437,6 +437,7 @@ describe("POST /api/admin/accountDeletion", () => {
     );
 
     expect(mocks.retryAccountDeletionJob).toHaveBeenCalledExactlyOnceWith({
+      client: mocks.client,
       db: expect.any(Object),
       deletionId,
       external,

@@ -10,6 +10,7 @@ import {
   recheckS3DeletionKeys,
   retryAccountDeletionJob,
 } from "../../src/server/account-data";
+import { isDeletedCallbackIdentifier } from "../../src/server/account-data/requestTombstone";
 import {
   startMongoReplicaSet,
   type TestMongoReplicaSet,
@@ -59,9 +60,14 @@ const requestIds = {
 
 const expectedCollections: ReportEntry[] = [
   { name: "accounts", action: "deleted", affectedRows: 2 },
+  {
+    name: "accountDeletionCallbackTombstones",
+    action: "retained",
+    affectedRows: 3,
+  },
   { name: "bananaRequests", action: "deleted", affectedRows: 3 },
   { name: "bananaRequests", action: "skipped_shared", affectedRows: 1 },
-  { name: "csends", action: "deleted", affectedRows: 3 },
+  { name: "csends", action: "deleted", affectedRows: 4 },
   { name: "csends", action: "skipped_shared", affectedRows: 1 },
   { name: "files", action: "deleted", affectedRows: 2 },
   { name: "files", action: "skipped_shared", affectedRows: 2 },
@@ -558,7 +564,7 @@ describe.sequential("account data deletion", () => {
     ).toBe(guardBefore);
   });
 
-  it("rolls back every database change when a late deletion step fails", async () => {
+  it("keeps a failed final sweep pending and resumes it without partial graph deletion", async () => {
     const external = {
       deleteS3Objects: vi.fn(async (keys: string[]) => ({
         affectedRows: keys.length,
@@ -575,15 +581,14 @@ describe.sequential("account data deletion", () => {
       validator: { accountDeletedAt: { $exists: false } },
     });
 
+    let pending!: Awaited<ReturnType<typeof deleteAccountData>>;
     try {
-      await expect(
-        deleteAccountData({
-          client: mongo.client,
-          db: mongo.db,
-          external,
-          targetUserId: ids.targetUser,
-        }),
-      ).rejects.toThrow();
+      pending = await deleteAccountData({
+        client: mongo.client,
+        db: mongo.db,
+        external,
+        targetUserId: ids.targetUser,
+      });
     } finally {
       await mongo.db.command({
         collMod: "orders",
@@ -593,9 +598,17 @@ describe.sequential("account data deletion", () => {
       });
     }
 
+    expect(pending).toMatchObject({
+      deletionId: expect.any(String),
+      status: "partial",
+    });
+
     expect(
       await mongo.db.collection("users").findOne({ _id: ids.targetUser }),
-    ).not.toBeNull();
+    ).toMatchObject({
+      deletionId: new ObjectId(pending.deletionId),
+      deletionPendingAt: expect.any(Date),
+    });
     expect(
       await mongo.db.collection("stars").countDocuments({
         _id: { $in: [ids.targetStarA, ids.targetStarB] },
@@ -619,7 +632,21 @@ describe.sequential("account data deletion", () => {
     expect(external.deleteStripeCustomer).not.toHaveBeenCalled();
     expect(
       await mongo.db.collection("accountDeletionJobs").countDocuments(),
-    ).toBe(0);
+    ).toBe(1);
+
+    const completed = await retryAccountDeletionJob({
+      client: mongo.client,
+      db: mongo.db,
+      deletionId: pending.deletionId as string,
+      external,
+    });
+    expect(completed.status).toBe("complete");
+    expect(
+      await mongo.db.collection("users").findOne({ _id: ids.targetUser }),
+    ).toBeNull();
+
+    await mongo.db.dropDatabase();
+    await seedAccountGraph(mongo.db);
   }, 30_000);
 
   it("previews and deletes the complete account graph without harming shared data", async () => {
@@ -684,6 +711,12 @@ describe.sequential("account data deletion", () => {
     expect(
       await db.collection("users").findOne({ _id: ids.targetUser }),
     ).toBeNull();
+    await expect(
+      isDeletedCallbackIdentifier(db, "request", requestIds.targetA),
+    ).resolves.toBe(true);
+    await expect(
+      isDeletedCallbackIdentifier(db, "request", requestIds.shared),
+    ).resolves.toBe(false);
     expect(await db.collection("users").countDocuments()).toBe(2);
     expect(
       await db
@@ -724,7 +757,7 @@ describe.sequential("account data deletion", () => {
         container_id: "target-container-a",
         payload: {},
       }),
-    ).not.toBeNull();
+    ).toBeNull();
     expect(
       await db.collection("bananaRequests").findOne({
         startRequestId: requestIds.shared,
@@ -1022,9 +1055,14 @@ describe.sequential("account data deletion", () => {
       expect(Object.keys(persistedJob || {}).toSorted()).toEqual([
         "_id",
         "attempts",
+        "collectionReport",
         "createdAt",
+        "databaseCompletedAt",
         "pendingS3Keys",
         "pendingStripeCustomerId",
+        "phase",
+        "resourceReport",
+        "revokedSessions",
         "targetUserId",
         "updatedAt",
       ]);
@@ -1041,6 +1079,7 @@ describe.sequential("account data deletion", () => {
         deleteStripeCustomer: vi.fn(async () => ({ affectedRows: 1 })),
       };
       const retried = await retryAccountDeletionJob({
+        client: mongo.client,
         db: failureDb,
         deletionId,
         external: retryExternal,
@@ -1061,6 +1100,7 @@ describe.sequential("account data deletion", () => {
       ).toBeNull();
       await expect(
         retryAccountDeletionJob({
+          client: mongo.client,
           db: failureDb,
           deletionId,
           external: retryExternal,
@@ -1118,6 +1158,7 @@ describe.sequential("account data deletion", () => {
         deleteStripeCustomer: vi.fn(async () => ({ affectedRows: 1 })),
       };
       const retried = await retryAccountDeletionJob({
+        client: mongo.client,
         db: sharedDb,
         deletionId: initial.deletionId as string,
         external,

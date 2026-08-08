@@ -4,6 +4,12 @@ import calculateCredits from "../calculateCredits";
 // import { ipPass, ipFromReq } from "../api-lib/ipCheck";
 import ProviderFetchRequestBase from "../lib/providerFetch/ProviderFetchRequestBase";
 import { BananaRequest } from "../schemas";
+import {
+  AccountDeletionPendingError,
+  type AccountWriteLease,
+  acquireAccountWriteLease,
+  withAccountWriteLease,
+} from "../server/account-data/writeBarrier";
 
 hooks.register("providerFetch.browser.extraInfoToSend");
 hooks.register("providerFetch.server.preStart");
@@ -71,12 +77,27 @@ hooks.on("providerFetch.server.preStart", async (data) => {
 
   if (!userId) return res.status(403).end("Forbidden, no userId");
 
-  const user = await gs.dba.collection("users").findOne({ _id: userId });
-  if (!user) return res.status(500).end("Server error");
+  let writeLease: AccountWriteLease;
+  try {
+    writeLease = await acquireAccountWriteLease({
+      db: await gs.dba.dbPromise,
+      operation: "start-generation",
+      targetUserId: userId,
+    });
+  } catch (error) {
+    if (error instanceof AccountDeletionPendingError) {
+      return res.status(409).end("Account deletion is pending");
+    }
+    throw error;
+  }
 
-  // --- TEMPORARY BAN --- //
+  try {
+    const user = await gs.dba.collection("users").findOne({ _id: userId });
+    if (!user) return res.status(500).end("Server error");
 
-  /*
+    // --- TEMPORARY BAN --- //
+
+    /*
   if (
     request.model.id === "upsample" &&
     user.createdAt > new Date("2023-07-16")
@@ -88,7 +109,7 @@ hooks.on("providerFetch.server.preStart", async (data) => {
       );
   */
 
-  /*
+    /*
   if (
     process.env.NODE_ENV === "production" &&
     !(await ipPass(ipFromReq(req)))
@@ -98,64 +119,68 @@ hooks.on("providerFetch.server.preStart", async (data) => {
   }
   */
 
-  // --- CHECK AND MODIFY CREDITS --- //
+    // --- CHECK AND MODIFY CREDITS --- //
 
-  const chargedCredits = { credits: 0, paid: false };
+    const chargedCredits = { credits: 0, paid: false };
 
-  const CREDIT_COST = calculateCredits(callInputs, modelInputs);
+    const CREDIT_COST = calculateCredits(callInputs, modelInputs);
 
-  if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
-    return res.status(403).send("Out of credits");
+    if (!(user.credits.free >= CREDIT_COST || user.credits.paid >= CREDIT_COST))
+      return res.status(403).send("Out of credits");
 
-  if (user.credits.free >= CREDIT_COST) {
-    user.credits.free -= CREDIT_COST;
-    chargedCredits.credits = CREDIT_COST;
-    await gs.dba
-      .collection("users")
-      .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
-    // Higher priority if they have a good paid credit balance (if if using free)
-    result.queuePriority = user.credits.paid > 5 ? 1 : 2;
-  } else {
-    user.credits.paid -= CREDIT_COST;
-    chargedCredits.credits = CREDIT_COST;
-    chargedCredits.paid = true;
-    await gs.dba
-      .collection("users")
-      .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
-    result.queuePriority = 0;
+    if (user.credits.free >= CREDIT_COST) {
+      user.credits.free -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
+      await gs.dba
+        .collection("users")
+        .updateOne({ _id: userId }, { $inc: { "credits.free": -CREDIT_COST } });
+      // Higher priority if they have a good paid credit balance (if if using free)
+      result.queuePriority = user.credits.paid > 5 ? 1 : 2;
+    } else {
+      user.credits.paid -= CREDIT_COST;
+      chargedCredits.credits = CREDIT_COST;
+      chargedCredits.paid = true;
+      await gs.dba
+        .collection("users")
+        .updateOne({ _id: userId }, { $inc: { "credits.paid": -CREDIT_COST } });
+      result.queuePriority = 0;
+    }
+
+    // --- SAVE REQUESTS --- //
+
+    const userModelInputs = { ...modelInputs };
+
+    for (const key of [
+      "prompt",
+      "negative_prompt",
+      "image",
+      "init_image",
+      "input_image",
+      "mask_image",
+    ])
+      if (userModelInputs[key]) userModelInputs[key] = "[redacted]";
+
+    const userRequest = {
+      userId,
+      date: new Date(),
+      ...chargedCredits,
+      callInputs,
+      modelInputs: userModelInputs,
+      ...chargedCredits,
+    };
+
+    await gs.dba.collection("userRequests").insertOne(userRequest);
+
+    result.$extra = {
+      credits: user.credits,
+      chargedCredits: chargedCredits,
+    };
+    result.accountWriteTargetUserId = userId.toString();
+
+    return result;
+  } finally {
+    await writeLease.release();
   }
-
-  // --- SAVE REQUESTS --- //
-
-  const userModelInputs = { ...modelInputs };
-
-  for (const key of [
-    "prompt",
-    "negative_prompt",
-    "image",
-    "init_image",
-    "input_image",
-    "mask_image",
-  ])
-    if (userModelInputs[key]) userModelInputs[key] = "[redacted]";
-
-  const userRequest = {
-    userId,
-    date: new Date(),
-    ...chargedCredits,
-    callInputs,
-    modelInputs: userModelInputs,
-    ...chargedCredits,
-  };
-
-  await gs.dba.collection("userRequests").insertOne(userRequest);
-
-  result.$extra = {
-    credits: user.credits,
-    chargedCredits: chargedCredits,
-  };
-
-  return result;
 });
 
 hooks.on("providerFetch.server.postStart", async (data) => {
@@ -190,8 +215,21 @@ hooks.on("providerFetch.server.postStart", async (data) => {
     ...preStartResult.chargedCredits,
   };
 
-  if (gs && gs.dba)
-    await gs.dba.collection("bananaRequests").insertOne(bananaRequest);
+  const targetUserId = preStartResult.accountWriteTargetUserId;
+  if (gs?.dba && typeof targetUserId === "string") {
+    try {
+      await withAccountWriteLease(
+        {
+          db: await gs.dba.dbPromise,
+          operation: "record-generation-start",
+          targetUserId,
+        },
+        () => gs.dba.collection("bananaRequests").insertOne(bananaRequest),
+      );
+    } catch (error) {
+      if (!(error instanceof AccountDeletionPendingError)) throw error;
+    }
+  }
 });
 
 hooks.on("providerFetch.browser.postStart", async (data) => {
