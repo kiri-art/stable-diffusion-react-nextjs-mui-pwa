@@ -84,15 +84,20 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             { $set: { stripePaymentIntentStatus: paymentIntent.status } },
           ));
 
-      await (dba &&
-        dba.collection("users").updateOne(
-          {
-            _id: order.userId,
-          },
-          {
-            $inc: { "credits.paid": order.numCredits },
-          },
-        ));
+      // Account deletion intentionally anonymizes retained order records. A
+      // late Stripe webhook should still update the order without resurrecting
+      // or attempting to credit a deleted user.
+      if (order.userId) {
+        await (dba &&
+          dba.collection("users").updateOne(
+            {
+              _id: order.userId,
+            },
+            {
+              $inc: { "credits.paid": order.numCredits },
+            },
+          ));
+      }
     } else if (event.type === "payment_intent.payment_failed") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log(

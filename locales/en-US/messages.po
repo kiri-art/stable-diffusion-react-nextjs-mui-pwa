@@ -13,24 +13,24 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/sd/Controls.tsx:679
+#: src/sd/Controls.tsx:681
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 
-#: src/sd/Controls.tsx:278
+#: src/sd/Controls.tsx:280
 msgid "(Denoising) Strength"
 msgstr "(Denoising) Strength"
 
-#: src/Inpaint.tsx:406
+#: src/Inpaint.tsx:404
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(drag & drop, sharing coming soon)"
 
 #. placeholder {0}: news.length
-#: src/MyAppBar.tsx:485
+#: src/MyAppBar.tsx:486
 msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
 msgstr "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
 
-#: src/GoButton.tsx:73
+#: src/GoButton.tsx:71
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
 msgstr "{credits, plural, one {# Credit} other {# Credits}}"
 
@@ -38,84 +38,112 @@ msgstr "{credits, plural, one {# Credit} other {# Credits}}"
 msgid "{numCredits} credits"
 msgstr "{numCredits} credits"
 
-#: src/GoButton.tsx:86
+#: src/GoButton.tsx:84
 msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 msgstr "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 
-#: pages/about.tsx:136
+#: pages/about.tsx:134
 msgid "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 msgstr "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 
-#: pages/credits.tsx:189
+#: pages/credits.tsx:188
 msgid "<0>*</0>May change at any time."
 msgstr "<0>*</0>May change at any time."
 
-#: pages/credits.tsx:224
+#: pages/credits.tsx:223
 msgid "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
 msgstr "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
 
-#: pages/about.tsx:124
+#: pages/about.tsx:122
 msgid "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
 msgstr "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
 
-#: pages/about.tsx:33
+#: pages/about.tsx:31
 msgid "<0>KIRI.ART</0> (\"SD-MUI\") is a WEB UI frontend for <1>Stability.AI</1>'s <2>Stable Diffusion</2>."
 msgstr "<0>KIRI.ART</0> (\"SD-MUI\") is a WEB UI frontend for <1>Stability.AI</1>'s <2>Stable Diffusion</2>."
 
-#: pages/about.tsx:70
+#: pages/about.tsx:68
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 
-#: src/sd/Controls.tsx:122
-#: src/sd/Controls.tsx:223
-#: src/sd/Controls.tsx:317
-#: src/sd/Controls.tsx:406
+#: src/sd/Controls.tsx:121
+#: src/sd/Controls.tsx:224
+#: src/sd/Controls.tsx:319
+#: src/sd/Controls.tsx:408
 msgid "<0>Learn more</0>"
 msgstr ""
 
-#: pages/about.tsx:115
+#: pages/about.tsx:113
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 msgstr "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 
-#: pages/index.tsx:285
+#: pages/index.tsx:287
 msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 msgstr "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 
-#: pages/start.tsx:201
+#: pages/start.tsx:189
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr ""
 
-#: src/sd/Controls.tsx:778
+#: src/sd/Controls.tsx:779
 msgid "A black image will be shown instead."
 msgstr "A black image will be shown instead."
 
-#: pages/about.tsx:17
-#: src/MyAppBar.tsx:255
+#: pages/about.tsx:15
+#: src/MyAppBar.tsx:254
 msgid "About"
 msgstr ""
 
-#: pages/admin.tsx:289
+#: pages/admin.tsx:286
 msgid "Access Denied."
 msgstr ""
 
-#: pages/about.tsx:101
+#: src/account/AccountDeletionReportView.tsx:140
+msgid "Account deletion completed."
+msgstr "Account deletion completed."
+
+#: src/account/AccountDeletionReportView.tsx:142
+msgid "Account deletion finished with follow-up work required. Review the notes below."
+msgstr "Account deletion finished with follow-up work required. Review the notes below."
+
+#: src/admin/AccountDeletionDangerZone.tsx:344
+msgid "Account deletion is permanent. Search only by an exact email address or full user ID; partial matching is not supported."
+msgstr "Account deletion is permanent. Search only by an exact email address or full user ID; partial matching is not supported."
+
+#: src/account/AccountDeletionReportView.tsx:174
+msgid "Account deletion report"
+msgstr "Account deletion report"
+
+#: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "Acknowledements and Thanks"
 
-#: src/Inpaint.tsx:412
+#: src/account/AccountDeletionReportView.tsx:187
+msgid "Action"
+msgstr "Action"
+
+#: src/Inpaint.tsx:410
 msgid "Adjust prompt and GO"
 msgstr "Adjust prompt and GO"
 
-#: pages/admin.tsx:295
-#: src/MyAppBar.tsx:266
+#: pages/admin.tsx:292
+#: src/MyAppBar.tsx:265
 msgid "Admin"
 msgstr ""
 
-#: src/OutputImage.tsx:441
+#: src/admin/AccountDeletionDangerZone.tsx:136
+msgid "Administrator"
+msgstr "Administrator"
+
+#: src/account/AccountDeletionReportView.tsx:191
+msgid "Affected items"
+msgstr "Affected items"
+
+#: src/OutputImage.tsx:439
 msgid "Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first)."
 msgstr "Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first)."
 
-#: pages/order/[_id].tsx:60
+#: pages/order/[_id].tsx:57
 msgid "Amount"
 msgstr ""
 
@@ -123,112 +151,154 @@ msgstr ""
 msgid "An error occured: "
 msgstr "An error occured: "
 
-#: pages/[_id].tsx:143
-#: pages/[_id].tsx:188
+#: src/account/AccountDeletionReportView.tsx:108
+msgid "Anonymized"
+msgstr "Anonymized"
+
+#: pages/[_id].tsx:142
+#: pages/[_id].tsx:187
 #: pages/s/[_id].tsx:287
 msgid "Anonymous User"
 msgstr "Anonymous User"
 
-#: pages/history.tsx:280
+#: pages/history.tsx:292
 msgid "Are you sure?  This action cannot be undone"
 msgstr "Are you sure?  This action cannot be undone"
 
-#: pages/history.tsx:140
+#: pages/history.tsx:152
 msgid "Are you sure?  This cannot be undone."
 msgstr "Are you sure?  This cannot be undone."
 
-#: pages/stats.tsx:108
+#: pages/stats.tsx:107
 msgid "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
 msgstr "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
 
-#: pages/order/[_id].tsx:77
+#: pages/order/[_id].tsx:74
 msgid "Back to Credits"
 msgstr ""
 
-#: pages/start.tsx:130
+#: pages/start.tsx:118
 msgid "Be Responsible"
 msgstr ""
 
-#: pages/upsample.tsx:93
+#: pages/upsample.tsx:91
 msgid "Best for Anime"
 msgstr "Best for Anime"
 
-#: pages/[_id].tsx:127
+#: pages/[_id].tsx:126
+#: src/admin/AccountDeletionDangerZone.tsx:242
+#: src/admin/AccountDeletionDangerZone.tsx:280
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "Cancel"
+
+#: pages/account/data.tsx:275
+msgid "Capitalization and spaces must match."
+msgstr "Capitalization and spaces must match."
 
 #: pages/s/[_id].tsx:328
 msgid "CFG"
 msgstr "CFG"
 
-#: pages/[_id].tsx:88
+#: pages/[_id].tsx:87
 msgid "Check out {username}'s page on kiri.art"
 msgstr "Check out {username}'s page on kiri.art"
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:88
 msgid "Check out this user page on kiri.art"
 msgstr "Check out this user page on kiri.art"
 
 #: pages/checkout.tsx:63
 #: pages/checkout.tsx:66
-#: pages/credits.tsx:277
+#: pages/credits.tsx:276
 msgid "Checkout"
 msgstr ""
 
-#: pages/share_target.tsx:20
+#: pages/share_target.tsx:18
 msgid "Choose Share Target"
 msgstr "Choose Share Target"
 
-#: src/sd/Controls.tsx:306
+#: src/sd/Controls.tsx:308
 msgid "Classifier-Free Guidance (Scale)"
 msgstr ""
 
-#: pages/history.tsx:297
+#: src/admin/AccountDeletionDangerZone.tsx:382
+msgid "Cleanup receipt ID"
+msgstr "Cleanup receipt ID"
+
+#: src/admin/AccountDeletionDangerZone.tsx:413
+msgid "Cleanup retry report"
+msgstr "Cleanup retry report"
+
+#: pages/history.tsx:309
 msgid "Clear History"
 msgstr "Clear History"
 
-#: pages/credits.tsx:66
+#: pages/credits.tsx:65
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr ""
 
-#: src/Inpaint.tsx:419
+#: src/Inpaint.tsx:417
 msgid "Coming Soon"
 msgstr ""
 
-#: pages/index.tsx:282
+#: pages/index.tsx:284
 msgid "Community"
 msgstr "Community"
 
-#: src/sd/Controls.tsx:796
+#: src/sd/Controls.tsx:800
 msgid "Confirm Date of Birth"
 msgstr "Confirm Date of Birth"
 
-#: pages/[_id].tsx:105
+#: src/admin/AccountDeletionDangerZone.tsx:546
+msgid "Confirm the immutable user ID"
+msgstr "Confirm the immutable user ID"
+
+#: pages/account/data.tsx:260
+msgid "Confirmation phrase"
+msgstr "Confirmation phrase"
+
+#: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr "Copied to clipboard"
 
-#: src/sd/Addons/common.tsx:374
+#: src/admin/AccountDeletionDangerZone.tsx:130
+msgid "Created"
+msgstr "Created"
+
+#: src/sd/Addons/common.tsx:373
 msgid "Created images may not be sold."
 msgstr "Created images may not be sold."
 
-#: pages/order/[_id].tsx:66
+#: pages/order/[_id].tsx:63
 msgid "Credits"
 msgstr "Credits"
 
-#: src/MyAppBar.tsx:412
+#: src/MyAppBar.tsx:413
 msgid "Credits:"
 msgstr ""
 
-#: pages/order/[_id].tsx:63
+#: pages/order/[_id].tsx:60
 msgid "Currency"
 msgstr ""
 
-#: pages/order/[_id].tsx:57
+#: src/admin/AccountDeletionDangerZone.tsx:326
+msgid "Danger zone"
+msgstr "Danger zone"
+
+#: src/account/AccountDeletionReportView.tsx:205
+msgid "Database"
+msgstr "Database"
+
+#: pages/order/[_id].tsx:54
 msgid "Date"
 msgstr ""
 
-#: pages/account/data.tsx:87
+#: src/admin/AccountDeletionDangerZone.tsx:333
+msgid "Delete a user account"
+msgstr "Delete a user account"
+
+#: pages/account/data.tsx:202
 msgid "Delete My Account"
 msgstr "Delete My Account"
 
@@ -236,64 +306,118 @@ msgstr "Delete My Account"
 msgid "Delete this star?"
 msgstr "Delete this star?"
 
-#: src/sd/Controls.tsx:116
+#: src/account/AccountDeletionReportView.tsx:109
+msgid "Deleted"
+msgstr "Deleted"
+
+#: pages/account/data.tsx:292
+#: src/admin/AccountDeletionDangerZone.tsx:566
+msgid "Deleting account…"
+msgstr "Deleting account…"
+
+#: src/account/AccountDeletionReportView.tsx:106
+msgid "Deletion preview"
+msgstr "Deletion preview"
+
+#: src/account/AccountDeletionReportView.tsx:106
+msgid "Deletion report"
+msgstr "Deletion report"
+
+#: src/sd/Controls.tsx:115
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr ""
 
-#: src/sd/Controls.tsx:215
+#: src/sd/Controls.tsx:216
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 
-#: pages/account/data.tsx:138
-msgid "Destroy my Data"
-msgstr "Destroy my Data"
+#: src/admin/AccountDeletionDangerZone.tsx:120
+msgid "Display name"
+msgstr "Display name"
 
-#: pages/account/data.tsx:140
-msgid "Destroying..."
-msgstr "Destroying..."
-
-#: pages/start.tsx:134
+#: pages/start.tsx:122
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
-#: pages/account/data.tsx:142
-msgid "Done!"
-msgstr "Done!"
+#: pages/account/data.tsx:181
+msgid "Download account data (ZIP)"
+msgstr "Download account data (ZIP)"
 
-#: pages/credits.tsx:200
+#: pages/credits.tsx:199
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr ""
 
-#: pages/logs.tsx:513
+#: src/admin/AccountDeletionDangerZone.tsx:116
+msgid "Email"
+msgstr "Email"
+
+#: src/admin/AccountDeletionDangerZone.tsx:381
+msgid "Enter the 24-character cleanup receipt ID from the deletion report."
+msgstr "Enter the 24-character cleanup receipt ID from the deletion report."
+
+#: src/admin/AccountDeletionDangerZone.tsx:433
+msgid "Enter the complete email address or 24-character user ID."
+msgstr "Enter the complete email address or 24-character user ID."
+
+#: pages/logs.tsx:525
 msgid "Event Log"
 msgstr "Event Log"
 
-#: pages/index.tsx:321
+#: src/admin/AccountDeletionDangerZone.tsx:465
+msgid "Exact account matches"
+msgstr "Exact account matches"
+
+#: src/admin/AccountDeletionDangerZone.tsx:434
+msgid "Exact email or user ID"
+msgstr "Exact email or user ID"
+
+#: src/admin/AccountDeletionDangerZone.tsx:468
+msgid "Exact match"
+msgstr "Exact match"
+
+#: src/admin/AccountDeletionDangerZone.tsx:470
+msgid "Exact matches"
+msgstr "Exact matches"
+
+#: pages/index.tsx:323
 msgid "Explicit"
 msgstr "Explicit"
 
-#: pages/upsample.tsx:143
+#. placeholder {0}: report.deletionId
+#: src/account/AccountDeletionReportView.tsx:160
+msgid "External cleanup receipt: <0>{0}</0>"
+msgstr "External cleanup receipt: <0>{0}</0>"
+
+#: src/account/AccountDeletionReportView.tsx:207
+msgid "External service"
+msgstr "External service"
+
+#: pages/upsample.tsx:140
 msgid "Face Enhance"
 msgstr "Face Enhance"
 
-#: pages/upsample.tsx:151
+#: pages/upsample.tsx:148
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "Face Restoration. Good for photorealistic images, bad for anime."
 
+#: src/account/AccountDeletionReportView.tsx:110
+msgid "Failed"
+msgstr "Failed"
+
 #: pages/s/[_id].tsx:234
-#: src/sd/Addons/common.tsx:422
+#: src/sd/Addons/common.tsx:421
 msgid "Failed to copy to clipboard"
 msgstr "Failed to copy to clipboard"
 
-#: src/MyAppBar.tsx:209
+#: src/MyAppBar.tsx:208
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/upsample.tsx:263
+#: pages/upsample.tsx:260
 msgid "File is not a valid image."
 msgstr "File is not a valid image."
 
-#: pages/upsample.tsx:269
+#: pages/upsample.tsx:266
 msgid "File is too large; {maxSizeText} max."
 msgstr "File is too large; {maxSizeText} max."
 
@@ -301,119 +425,135 @@ msgstr "File is too large; {maxSizeText} max."
 msgid "Filter"
 msgstr "Filter"
 
-#: src/sd/Controls.tsx:774
+#: src/sd/Controls.tsx:775
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 
-#: src/MyAppBar.tsx:222
+#: src/admin/AccountDeletionDangerZone.tsx:421
+msgid "Find an account to delete"
+msgstr "Find an account to delete"
+
+#: src/admin/AccountDeletionDangerZone.tsx:336
+msgid "Find one exact account, verify its immutable ID and deletion preview, then explicitly confirm that same ID."
+msgstr "Find one exact account, verify its immutable ID and deletion preview, then explicitly confirm that same ID."
+
+#: src/MyAppBar.tsx:221
 msgid "Forums"
 msgstr "Forums"
 
-#: pages/credits.tsx:180
+#: pages/credits.tsx:179
 msgid "Free Credits"
 msgstr ""
 
-#: pages/faq.tsx:81
+#: pages/faq.tsx:79
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "Frequently Asked Questions (FAQ)"
 
-#: pages/upsample.tsx:103
+#: pages/upsample.tsx:101
 msgid "General - v3"
 msgstr "General - v3"
 
-#: src/GoButton.tsx:72
+#: src/GoButton.tsx:70
 msgid "Get More Credits"
 msgstr ""
 
-#: src/MyAppBar.tsx:245
+#: src/MyAppBar.tsx:244
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/GoButton.tsx:70
+#: src/GoButton.tsx:68
 msgid "Go"
 msgstr ""
 
 #: pages/s/[_id].tsx:344
-#: src/sd/Controls.tsx:484
+#: src/sd/Controls.tsx:486
 msgid "Height"
 msgstr ""
 
-#: pages/history.tsx:288
-#: src/MyAppBar.tsx:409
+#: pages/history.tsx:300
+#: src/MyAppBar.tsx:410
 msgid "History"
 msgstr "History"
 
-#: pages/history.tsx:290
+#: pages/history.tsx:302
 msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 msgstr "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 
-#: pages/index.tsx:272
-#: pages/start.tsx:112
-#: src/MyAppBar.tsx:122
+#: pages/index.tsx:274
+#: pages/start.tsx:100
+#: src/MyAppBar.tsx:121
 msgid "Home"
 msgstr ""
 
-#: src/sd/Controls.tsx:312
+#: src/sd/Controls.tsx:314
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr ""
 
-#: src/sd/Controls.tsx:352
+#: src/admin/AccountDeletionDangerZone.tsx:368
+msgid "If a deletion report was partial, enter its cleanup receipt ID to retry the remaining provider operations."
+msgstr "If a deletion report was partial, enter its cleanup receipt ID to retry the remaining provider operations."
+
+#: src/sd/Controls.tsx:354
 msgid "Image Guidance Scale"
 msgstr "Image Guidance Scale"
 
-#: pages/upsample.tsx:213
+#: pages/upsample.tsx:210
 #: src/InputImage.tsx:28
 msgid "Image Loaded"
 msgstr "Image Loaded"
 
-#: pages/img2img.tsx:17
-#: pages/start.tsx:28
-#: src/MyAppBar.tsx:152
+#: pages/img2img.tsx:15
+#: pages/start.tsx:19
+#: src/MyAppBar.tsx:151
 msgid "Image to Image"
 msgstr ""
 
-#: src/Inpaint.tsx:424
+#: src/Inpaint.tsx:422
 msgid "Image will be down scaled to max 1024x1024."
 msgstr "Image will be down scaled to max 1024x1024."
 
-#: pages/upsample.tsx:380
+#: pages/upsample.tsx:377
 msgid "Images should be max {maxSizeText}."
 msgstr "Images should be max {maxSizeText}."
 
-#: src/IPix2Pix.tsx:50
+#: src/admin/AccountDeletionDangerZone.tsx:124
+msgid "Immutable user ID"
+msgstr "Immutable user ID"
+
+#: src/IPix2Pix.tsx:48
 msgid "Important Tips"
 msgstr "Important Tips"
 
-#: src/OutputImage.tsx:385
+#: src/OutputImage.tsx:383
 msgid "Inpaint"
 msgstr "Inpaint"
 
-#: pages/inpaint.tsx:17
-#: pages/start.tsx:34
-#: src/MyAppBar.tsx:167
-#: src/OutputImage.tsx:463
+#: pages/inpaint.tsx:15
+#: pages/start.tsx:25
+#: src/MyAppBar.tsx:166
+#: src/OutputImage.tsx:461
 msgid "Inpainting"
 msgstr "Inpainting"
 
-#: pages/ipix2pix.tsx:17
-#: src/MyAppBar.tsx:197
-#: src/OutputImage.tsx:378
+#: pages/ipix2pix.tsx:15
+#: src/MyAppBar.tsx:196
+#: src/OutputImage.tsx:376
 msgid "Instruct Pix2Pix"
 msgstr "Instruct Pix2Pix"
 
-#: src/IPix2Pix.tsx:52
+#: src/IPix2Pix.tsx:50
 msgid "Instruct-Pix2Pix is a Stable Diffusion model fine-tuned for editing images from human instructions. Given an input image and a written instruction that tells the model what to do, the model follows these instructions to edit the image."
 msgstr "Instruct-Pix2Pix is a Stable Diffusion model fine-tuned for editing images from human instructions. Given an input image and a written instruction that tells the model what to do, the model follows these instructions to edit the image."
 
-#: pages/about.tsx:53
+#: pages/about.tsx:51
 msgid "It can be used here instantly with free & paid credits, run for free on your own computer (if you have a suitable GPU) or very cheaply via <0>banana.dev</0>'s serverless GPU cloud (see the <1>README</1> for details). Get involved in our <2>GitHub project page</2> and let's build something awesome together."
 msgstr "It can be used here instantly with free & paid credits, run for free on your own computer (if you have a suitable GPU) or very cheaply via <0>banana.dev</0>'s serverless GPU cloud (see the <1>README</1> for details). Get involved in our <2>GitHub project page</2> and let's build something awesome together."
 
-#: pages/about.tsx:46
+#: pages/about.tsx:44
 msgid "It is Free and Open Source Software (\"FOSS\") developed by the community."
 msgstr "It is Free and Open Source Software (\"FOSS\") developed by the community."
 
-#: pages/about.tsx:41
+#: pages/about.tsx:39
 msgid "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 msgstr "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 
@@ -431,124 +571,151 @@ msgstr "Item was reported {0} times.  Thanks for reporting!"
 msgid "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
 msgstr "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
 
-#: pages/stats.tsx:263
-#: pages/stats.tsx:397
-#: pages/stats.tsx:538
+#: pages/account/data.tsx:96
+msgid "Keep my account"
+msgstr "Keep my account"
+
+#: pages/stats.tsx:262
+#: pages/stats.tsx:396
+#: pages/stats.tsx:537
 msgid "Last 2 weeks"
 msgstr "Last 2 weeks"
 
-#: pages/stats.tsx:124
+#: pages/stats.tsx:123
 msgid "Last 24 hours"
 msgstr "Last 24 hours"
 
-#: pages/[_id].tsx:200
-#: pages/credits.tsx:111
+#: pages/[_id].tsx:199
+#: pages/credits.tsx:110
 msgid "Loading..."
 msgstr ""
 
-#: src/GoButton.tsx:71
-#: src/MyAppBar.tsx:438
+#: pages/account/data.tsx:302
+msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
+msgstr "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
+
+#: src/GoButton.tsx:69
+#: src/MyAppBar.tsx:439
 msgid "Login"
 msgstr ""
 
-#: src/MyAppBar.tsx:426
+#: src/MyAppBar.tsx:427
 msgid "Logout"
 msgstr ""
 
-#: src/sd/Addons/common.tsx:364
+#: src/sd/Addons/common.tsx:363
 msgid "May only be used with free credits."
 msgstr "May only be used with free credits."
 
 #: pages/s/[_id].tsx:294
-#: pages/upsample.tsx:65
-#: pages/upsample.tsx:69
+#: pages/upsample.tsx:63
+#: pages/upsample.tsx:67
 #: src/sd/ModelSelect.tsx:428
 #: src/sd/ModelSelect.tsx:441
 msgid "Model"
 msgstr "Model"
 
-#: src/sd/Addons/common.tsx:265
+#: src/sd/Addons/common.tsx:264
 msgid "Model is already added."
 msgstr "Model is already added."
 
 #. placeholder {0}: allowedTypes.join('", "')
-#: src/sd/Addons/common.tsx:241
+#: src/sd/Addons/common.tsx:240
 msgid "Model must be a \"{0}\", not a \"{type}\"."
 msgstr "Model must be a \"{0}\", not a \"{type}\"."
 
-#: pages/index.tsx:343
+#: pages/index.tsx:345
 msgid "Most Popular"
 msgstr "Most Popular"
 
-#: pages/index.tsx:340
+#: pages/index.tsx:342
 msgid "Most Recent"
 msgstr "Most Recent"
 
-#: src/sd/Controls.tsx:457
-#: src/sd/Controls.tsx:496
+#: src/sd/Controls.tsx:459
+#: src/sd/Controls.tsx:498
 msgid "Must be a multiple of 64. Maximum size is 1024x1024 because of memory limits (but you can upsample to 4x resolution afterwards)."
 msgstr "Must be a multiple of 64. Maximum size is 1024x1024 because of memory limits (but you can upsample to 4x resolution afterwards)."
 
-#: src/sd/Addons/common.tsx:356
+#: src/sd/Addons/common.tsx:355
 msgid "Must credit the model creator."
 msgstr "Must credit the model creator."
 
-#: pages/credits.tsx:168
+#: pages/credits.tsx:167
 msgid "My Credits"
 msgstr ""
 
-#: pages/account/data.tsx:27
-#: src/MyAppBar.tsx:415
+#: pages/account/data.tsx:137
+#: src/MyAppBar.tsx:416
 msgid "My Data"
 msgstr "My Data"
+
+#: src/account/AccountDeletionReportView.tsx:181
+msgid "Name"
+msgstr "Name"
 
 #: pages/s/[_id].tsx:325
 #: src/sd/Controls.tsx:192
 msgid "Negative Prompt"
 msgstr "Negative Prompt"
 
-#: pages/stats.tsx:607
+#: pages/stats.tsx:606
 msgid "New Users"
 msgstr "New Users"
 
-#: pages/news.tsx:12
+#: pages/news.tsx:9
 msgid "News"
 msgstr "News"
 
-#: pages/credits.tsx:194
+#: pages/credits.tsx:193
 msgid "Next credits on:"
 msgstr ""
 
-#: pages/start.tsx:139
+#: src/admin/AccountDeletionDangerZone.tsx:139
+msgid "No"
+msgstr "No"
+
+#: src/account/AccountDeletionReportView.tsx:135
+#: src/account/AccountDeletionReportView.tsx:143
+msgid "No account was found for this user ID."
+msgstr "No account was found for this user ID."
+
+#: pages/start.tsx:127
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr ""
 
-#: pages/credits.tsx:63
+#: pages/credits.tsx:62
 msgid "No such code exists."
 msgstr ""
 
-#: src/sd/Addons/common.tsx:204
+#: src/admin/AccountDeletionDangerZone.tsx:460
+msgid "No user matched that exact value."
+msgstr "No user matched that exact value."
+
+#: src/sd/Addons/common.tsx:203
 msgid "No valid model ID, URL, or hash found."
 msgstr "No valid model ID, URL, or hash found."
 
-#: pages/account/data.tsx:149
-msgid "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
-msgstr "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
+#: src/admin/AccountDeletionDangerZone.tsx:118
+#: src/admin/AccountDeletionDangerZone.tsx:122
+msgid "Not set"
+msgstr "Not set"
 
-#: src/Inpaint.tsx:418
+#: src/account/AccountDeletionReportView.tsx:194
+#: src/Inpaint.tsx:416
 msgid "Notes"
 msgstr "Notes"
 
-#: pages/index.tsx:307
-#: src/sd/Controls.tsx:766
+#: pages/index.tsx:309
+#: src/sd/Controls.tsx:767
 msgid "NSFW Filter"
 msgstr "NSFW Filter"
 
-#: src/sd/Controls.tsx:401
+#: src/sd/Controls.tsx:403
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr ""
 
-#: src/sd/Controls.tsx:392
+#: src/sd/Controls.tsx:394
 msgid "Number of Inference Steps"
 msgstr ""
 
@@ -556,132 +723,165 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: pages/index.tsx:91
+#: pages/index.tsx:92
 msgid "Only show stars with matching prompts. More advanced filters coming soon. Separate multiple terms with a pipe (\"|\") character."
 msgstr "Only show stars with matching prompts. More advanced filters coming soon. Separate multiple terms with a pipe (\"|\") character."
 
-#: pages/start.tsx:170
+#: pages/start.tsx:158
 msgid "Open Source, developer friendly."
 msgstr "Open Source, developer friendly."
 
-#: pages/order/[_id].tsx:54
+#: pages/order/[_id].tsx:51
 msgid "Order {_id}"
 msgstr ""
 
-#: pages/credits.tsx:295
-#: pages/order/[_id].tsx:80
+#: pages/credits.tsx:294
+#: pages/order/[_id].tsx:77
 msgid "Order History"
 msgstr ""
 
-#: pages/order/[_id].tsx:51
-#: pages/orders.tsx:45
+#: pages/order/[_id].tsx:48
+#: pages/orders.tsx:42
 msgid "Order Status"
 msgstr ""
 
-#: pages/orders.tsx:48
+#: pages/orders.tsx:45
 msgid "Orders"
 msgstr ""
 
-#: pages/upsample.tsx:83
+#: pages/upsample.tsx:81
 msgid "Original model, best for most cases."
 msgstr "Original model, best for most cases."
 
-#: pages/stats.tsx:627
+#: pages/stats.tsx:626
 msgid "Our <0>event logs</0> are also available."
 msgstr "Our <0>event logs</0> are also available."
 
-#: pages/credits.tsx:212
+#: pages/credits.tsx:211
 msgid "Paid credits help you jump the queue!"
 msgstr "Paid credits help you jump the queue!"
 
-#: src/CheckoutForm.tsx:82
+#: src/CheckoutForm.tsx:81
 msgid "Pay"
 msgstr ""
 
-#: src/sd/Controls.tsx:537
+#: pages/account/data.tsx:95
+#: src/admin/AccountDeletionDangerZone.tsx:241
+msgid "Permanently delete"
+msgstr "Permanently delete"
+
+#: pages/account/data.tsx:294
+msgid "Permanently delete my account"
+msgstr "Permanently delete my account"
+
+#: src/admin/AccountDeletionDangerZone.tsx:568
+msgid "Permanently delete this account"
+msgstr "Permanently delete this account"
+
+#: src/admin/AccountDeletionDangerZone.tsx:239
+msgid "Permanently delete this user?"
+msgstr "Permanently delete this user?"
+
+#: pages/account/data.tsx:93
+msgid "Permanently delete your account?"
+msgstr "Permanently delete your account?"
+
+#: src/account/AccountDeletionReportView.tsx:185
+msgid "Planned action"
+msgstr "Planned action"
+
+#: src/sd/Controls.tsx:539
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "Please enter a valid seed or turn \"Randomize\" back on."
 
-#: pages/credits.tsx:275
-#: src/CheckoutForm.tsx:82
+#: pages/credits.tsx:274
+#: src/CheckoutForm.tsx:81
 msgid "Please wait..."
 msgstr ""
 
-#: src/OutputImage.tsx:439
+#: src/OutputImage.tsx:437
 msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 msgstr "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 
-#: pages/account/data.tsx:30
+#: src/account/AccountDeletionReportView.tsx:137
+msgid "Preview ready with items that may require follow-up. Nothing has been deleted yet."
+msgstr "Preview ready with items that may require follow-up. Nothing has been deleted yet."
+
+#: src/account/AccountDeletionReportView.tsx:138
+msgid "Preview ready. Nothing has been deleted yet."
+msgstr "Preview ready. Nothing has been deleted yet."
+
+#: pages/account/data.tsx:140
 msgid "Privacy"
 msgstr "Privacy"
 
-#: pages/privacy.tsx:14
-#: src/Copyright.tsx:28
+#: pages/privacy.tsx:15
+#: src/Copyright.tsx:27
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
-#: src/MyAppBar.tsx:406
+#: src/MyAppBar.tsx:407
 msgid "Profile"
 msgstr "Profile"
 
-#: pages/start.tsx:154
+#: pages/start.tsx:142
 msgid "Project Goals"
 msgstr "Project Goals"
 
 #: pages/s/[_id].tsx:321
-#: src/sd/Controls.tsx:94
+#: src/sd/Controls.tsx:92
 msgid "Prompt"
 msgstr "Prompt"
 
-#: src/sd/Controls.tsx:982
+#: src/sd/Controls.tsx:986
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 
-#: pages/credits.tsx:172
+#: pages/credits.tsx:171
 msgid "Purchase Successful!"
 msgstr ""
 
-#: pages/credits.tsx:205
+#: pages/credits.tsx:204
 msgid "Purchased Credits"
 msgstr ""
 
-#: pages/credits.tsx:208
+#: pages/credits.tsx:207
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr ""
 
-#: src/sd/Controls.tsx:358
+#: src/sd/Controls.tsx:360
 msgid "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
 msgstr "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
 
-#: src/Inpaint.tsx:399
+#: src/Inpaint.tsx:397
 msgid "Quick Start"
 msgstr "Quick Start"
 
-#: src/sd/Controls.tsx:610
+#: src/sd/Controls.tsx:613
 msgid "Randomize"
 msgstr "Randomize"
 
-#: src/sd/Controls.tsx:618
+#: src/sd/Controls.tsx:621
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 
-#: pages/start.tsx:216
+#: pages/start.tsx:204
 msgid "Read the full Terms of Service below."
 msgstr "Read the full Terms of Service below."
 
-#: pages/order/[_id].tsx:73
+#: pages/order/[_id].tsx:70
 msgid "Reason"
 msgstr ""
 
-#: pages/credits.tsx:111
+#: pages/credits.tsx:110
 msgid "Redeem"
 msgstr ""
 
-#: pages/credits.tsx:102
+#: pages/credits.tsx:101
 msgid "Redeem Credit Code"
 msgstr ""
 
-#: pages/credits.tsx:298
+#: pages/credits.tsx:297
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr ""
 
@@ -689,32 +889,73 @@ msgstr ""
 msgid "Report this star?"
 msgstr "Report this star?"
 
-#: pages/stats.tsx:124
-#: pages/stats.tsx:263
-#: pages/stats.tsx:397
+#: pages/stats.tsx:123
+#: pages/stats.tsx:262
+#: pages/stats.tsx:396
 msgid "Requests"
 msgstr "Requests"
 
-#: pages/resources.tsx:11
+#: pages/resources.tsx:8
 msgid "Resources"
 msgstr "Resources"
 
-#: src/Inpaint.tsx:418
+#: src/account/AccountDeletionReportView.tsx:111
+msgid "Retained"
+msgstr "Retained"
+
+#: src/admin/AccountDeletionDangerZone.tsx:279
+#: src/admin/AccountDeletionDangerZone.tsx:406
+msgid "Retry cleanup"
+msgstr "Retry cleanup"
+
+#: src/admin/AccountDeletionDangerZone.tsx:278
+msgid "Retry external cleanup receipt {normalizedDeletionId}? This may permanently remove queued S3 or Stripe resources."
+msgstr "Retry external cleanup receipt {normalizedDeletionId}? This may permanently remove queued S3 or Stripe resources."
+
+#: src/admin/AccountDeletionDangerZone.tsx:277
+msgid "Retry queued cleanup?"
+msgstr "Retry queued cleanup?"
+
+#: src/admin/AccountDeletionDangerZone.tsx:365
+msgid "Retry queued external cleanup"
+msgstr "Retry queued external cleanup"
+
+#: src/admin/AccountDeletionDangerZone.tsx:404
+msgid "Retrying cleanup…"
+msgstr "Retrying cleanup…"
+
+#: src/Inpaint.tsx:416
 msgid "Roadmap"
 msgstr "Roadmap"
 
-#: src/sd/Controls.tsx:876
 #: src/sd/Controls.tsx:880
+#: src/sd/Controls.tsx:884
 msgid "Sampler"
 msgstr "Sampler"
 
-#: pages/[_id].tsx:132
+#: pages/[_id].tsx:131
 msgid "Save"
 msgstr "Save"
 
-#: src/sd/Addons/common.tsx:101
+#: src/account/AccountDeletionReportView.tsx:165
+msgid "Save this ID. An administrator can use it to retry queued cleanup."
+msgstr "Save this ID. An administrator can use it to retry queued cleanup."
+
+#: src/sd/Addons/common.tsx:100
 msgid "Scale"
 msgstr "Scale"
+
+#: src/account/AccountDeletionReportView.tsx:178
+msgid "Scope"
+msgstr "Scope"
+
+#: src/admin/AccountDeletionDangerZone.tsx:452
+msgid "Search"
+msgstr "Search"
+
+#: src/admin/AccountDeletionDangerZone.tsx:450
+msgid "Searching…"
+msgstr "Searching…"
 
 #: pages/checkout.tsx:82
 msgid "Secure Payment via Stripe.com and partners."
@@ -724,25 +965,29 @@ msgstr "Secure Payment via Stripe.com and partners."
 msgid "See all inputs and remix at {url}"
 msgstr "See all inputs and remix at {url}"
 
-#: pages/account/data.tsx:61
+#: pages/account/data.tsx:166
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 
 #: pages/s/[_id].tsx:150
-#: src/OutputImage.tsx:168
+#: src/OutputImage.tsx:166
 msgid "See my Kiri.Art creation!"
 msgstr "See my Kiri.Art creation!"
 
 #: pages/s/[_id].tsx:348
-#: src/sd/Controls.tsx:527
+#: src/sd/Controls.tsx:529
 msgid "Seed"
 msgstr "Seed"
 
-#: src/OutputImage.tsx:456
+#: src/OutputImage.tsx:454
 msgid "SEND IMAGE TO"
 msgstr "SEND IMAGE TO"
 
-#: src/sd/Controls.tsx:671
+#: pages/account/data.tsx:222
+msgid "Server deletion finished, but local cleanup needs attention:"
+msgstr "Server deletion finished, but local cleanup needs attention:"
+
+#: src/sd/Controls.tsx:673
 msgid "Share Inputs"
 msgstr "Share Inputs"
 
@@ -750,24 +995,32 @@ msgstr "Share Inputs"
 msgid "Sheduler"
 msgstr "Sheduler"
 
-#: pages/credits.tsx:237
+#: src/account/AccountDeletionReportView.tsx:112
+msgid "Skipped (shared)"
+msgstr "Skipped (shared)"
+
+#: pages/credits.tsx:236
 msgid "So, just owning {MIN_PAID_CREDITS} paid credits "
 msgstr "So, just owning {MIN_PAID_CREDITS} paid credits "
 
-#: src/sd/Controls.tsx:978
+#: pages/account/data.tsx:52
+msgid "Some cached data could not be cleared from this device."
+msgstr "Some cached data could not be cleared from this device."
+
+#: src/sd/Controls.tsx:982
 msgid "Speed, stability, cost"
 msgstr "Speed, stability, cost"
 
-#: pages/index.tsx:276
+#: pages/index.tsx:278
 msgid "Start Creating"
 msgstr "Start Creating"
 
-#: pages/stats.tsx:105
-#: src/MyAppBar.tsx:232
+#: pages/stats.tsx:104
+#: src/MyAppBar.tsx:231
 msgid "Stats"
 msgstr "Stats"
 
-#: pages/order/[_id].tsx:69
+#: pages/order/[_id].tsx:66
 msgid "Status"
 msgstr ""
 
@@ -776,99 +1029,177 @@ msgid "Steps"
 msgstr "Steps"
 
 #. placeholder {0}: result.credits
-#: pages/credits.tsx:92
+#: pages/credits.tsx:91
 msgid "Successfully redeemed {0} credits."
 msgstr ""
 
-#: pages/start.tsx:159
+#: pages/start.tsx:147
 msgid "Super simple, easy to share."
 msgstr "Super simple, easy to share."
 
-#: pages/credits.tsx:216
+#. placeholder {0}: report.targetUserId
+#: src/account/AccountDeletionReportView.tsx:152
+msgid "Target user ID: <0>{0}</0>"
+msgstr "Target user ID: <0>{0}</0>"
+
+#: pages/credits.tsx:215
 msgid "Tell me more?"
 msgstr "Tell me more?"
 
-#: pages/start.tsx:198
-#: src/Copyright.tsx:24
+#: pages/start.tsx:186
+#: src/Copyright.tsx:23
 msgid "Terms of Service"
 msgstr ""
 
-#: pages/start.tsx:22
-#: pages/txt2img.tsx:127
-#: src/MyAppBar.tsx:137
+#: pages/start.tsx:13
+#: pages/txt2img.tsx:124
+#: src/MyAppBar.tsx:136
 msgid "Text to Image"
 msgstr ""
 
-#: pages/credits.tsx:283
-#: src/CheckoutForm.tsx:86
+#: pages/account/data.tsx:72
+msgid "The browser session could not be signed out automatically."
+msgstr "The browser session could not be signed out automatically."
+
+#: pages/credits.tsx:282
+#: src/CheckoutForm.tsx:85
 msgid "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 msgstr "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 
-#: pages/credits.tsx:218
+#: pages/account/data.tsx:65
+msgid "The local browser database could not be deleted."
+msgstr "The local browser database could not be deleted."
+
+#: pages/account/data.tsx:59
+msgid "The local Gongo session could not be cleared."
+msgstr "The local Gongo session could not be cleared."
+
+#. placeholder {0}: response.status
+#: src/account/AccountDeletionReportView.tsx:90
+msgid "The request failed ({0} {statusText})."
+msgstr "The request failed ({0} {statusText})."
+
+#: pages/account/data.tsx:31
+#: src/admin/AccountDeletionDangerZone.tsx:73
+msgid "The request failed."
+msgstr "The request failed."
+
+#: src/admin/AccountDeletionDangerZone.tsx:298
+msgid "The server returned an invalid cleanup report."
+msgstr "The server returned an invalid cleanup report."
+
+#: src/admin/AccountDeletionDangerZone.tsx:221
+msgid "The server returned an invalid deletion preview."
+msgstr "The server returned an invalid deletion preview."
+
+#: pages/account/data.tsx:119
+#: src/admin/AccountDeletionDangerZone.tsx:260
+msgid "The server returned an invalid deletion report."
+msgstr "The server returned an invalid deletion report."
+
+#: src/admin/AccountDeletionDangerZone.tsx:198
+msgid "The server returned invalid search results."
+msgstr "The server returned invalid search results."
+
+#: pages/credits.tsx:217
 msgid "There are 3 queue priorites, served in this order:"
 msgstr "There are 3 queue priorites, served in this order:"
+
+#: src/admin/AccountDeletionDangerZone.tsx:514
+msgid "This account has administrator privileges. Confirm the user ID with particular care."
+msgstr "This account has administrator privileges. Confirm the user ID with particular care."
 
 #: src/Starred.tsx:26
 msgid "This cannot be undone.  All likes will be lost."
 msgstr "This cannot be undone.  All likes will be lost."
 
-#: pages/start.tsx:189
+#. placeholder {0}: target.email || target.displayName || target.id
+#. placeholder {1}: target.id
+#: src/admin/AccountDeletionDangerZone.tsx:240
+msgid "This is the final confirmation for {0} ({1}). This action cannot be undone."
+msgstr "This is the final confirmation for {0} ({1}). This action cannot be undone."
+
+#: pages/account/data.tsx:94
+msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
+msgstr "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
+
+#: pages/account/data.tsx:205
+msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
+msgstr "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
+
+#: pages/start.tsx:177
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr ""
 
-#: pages/credits.tsx:289
+#: pages/credits.tsx:288
 msgid "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 msgstr "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 
-#: pages/credits.tsx:231
+#: pages/credits.tsx:230
 msgid "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
 msgstr "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
 
-#: pages/credits.tsx:221
+#: pages/credits.tsx:220
 msgid "those using paid credits."
 msgstr "those using paid credits."
+
+#: pages/account/data.tsx:239
+msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
+msgstr "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
+
+#: src/admin/AccountDeletionDangerZone.tsx:527
+msgid "To enable deletion, type this exact phrase:"
+msgstr "To enable deletion, type this exact phrase:"
 
 #: pages/checkout.tsx:75
 msgid "TOTAL"
 msgstr "TOTAL"
 
-#: pages/credits.tsx:176
+#: pages/credits.tsx:175
 msgid "Total Credits"
 msgstr ""
 
-#: pages/credits.tsx:178
+#: pages/credits.tsx:177
 msgid "Total credits available for immediate use."
 msgstr ""
 
-#: pages/stats.tsx:381
-#: pages/stats.tsx:523
+#: pages/stats.tsx:380
+#: pages/stats.tsx:522
 msgid "Total Requests"
 msgstr "Total Requests"
 
-#: pages/stats.tsx:613
+#: pages/stats.tsx:612
 msgid "Total Users"
 msgstr "Total Users"
 
-#: pages/start.tsx:172
+#: pages/start.tsx:160
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 
-#: pages/account/data.tsx:100
-msgid "Type the text in the box below to enable this service."
-msgstr "Type the text in the box below to enable this service."
+#: src/admin/AccountDeletionDangerZone.tsx:77
+msgid "Unknown"
+msgstr "Unknown"
 
-#: src/Inpaint.tsx:404
+#: src/account/AccountDeletionReportView.tsx:89
+msgid "Unknown error"
+msgstr "Unknown error"
+
+#: src/account/AccountDeletionReportView.tsx:113
+msgid "Updated"
+msgstr "Updated"
+
+#: src/Inpaint.tsx:402
 msgid "Upload an image with button below"
 msgstr "Upload an image with button below"
 
-#: src/OutputImage.tsx:388
-#: src/OutputImage.tsx:460
+#: src/OutputImage.tsx:386
+#: src/OutputImage.tsx:458
 msgid "Upsample"
 msgstr "Upsample"
 
-#: pages/start.tsx:40
-#: pages/upsample.tsx:342
-#: src/MyAppBar.tsx:182
+#: pages/start.tsx:31
+#: pages/upsample.tsx:339
+#: src/MyAppBar.tsx:181
 msgid "Upsampling"
 msgstr "Upsampling"
 
@@ -876,82 +1207,90 @@ msgstr "Upsampling"
 msgid "USD"
 msgstr "USD"
 
-#: src/Inpaint.tsx:409
+#: src/Inpaint.tsx:407
 msgid "Use mouse / finger to draw mask over it"
 msgstr "Use mouse / finger to draw mask over it"
 
-#: pages/account/data.tsx:96
-msgid "Use the button below to <0>irreversably</0> delete your account and all associated data."
-msgstr "Use the button below to <0>irreversably</0> delete your account and all associated data."
-
-#: pages/[_id].tsx:189
-#: pages/[_id].tsx:201
+#: pages/[_id].tsx:188
+#: pages/[_id].tsx:200
 msgid "User not found"
 msgstr "User not found"
 
-#: pages/[_id].tsx:137
+#: pages/account/data.tsx:153
+msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
+msgstr "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
+
+#: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "Username not available."
 
-#: pages/stats.tsx:538
+#: pages/stats.tsx:537
 msgid "Users"
 msgstr "Users"
 
 #. placeholder {0}: 0
-#: src/sd/Controls.tsx:548
+#: src/sd/Controls.tsx:551
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 
-#: pages/about.tsx:105
+#: src/admin/AccountDeletionDangerZone.tsx:507
+msgid "Verified target"
+msgstr "Verified target"
+
+#: src/admin/AccountDeletionDangerZone.tsx:494
+msgid "Verify and preview"
+msgstr "Verify and preview"
+
+#: pages/about.tsx:103
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 
-#: pages/account/data.tsx:48
-msgid "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
-msgstr "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
-
-#: src/IPix2Pix.tsx:50
+#: src/IPix2Pix.tsx:48
 msgid "What is this?"
 msgstr "What is this?"
 
 #: pages/s/[_id].tsx:340
-#: src/sd/Controls.tsx:445
+#: src/sd/Controls.tsx:447
 msgid "Width"
 msgstr ""
 
-#: src/sd/Controls.tsx:456
-#: src/sd/Controls.tsx:495
+#: src/sd/Controls.tsx:458
+#: src/sd/Controls.tsx:497
 msgid "Width of output image."
 msgstr "Width of output image."
 
-#: pages/account/data.tsx:68
-msgid "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
-msgstr "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
+#: src/admin/AccountDeletionDangerZone.tsx:139
+msgid "Yes"
+msgstr "Yes"
 
-#: pages/credits.tsx:69
+#: pages/account/data.tsx:174
+msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
+msgstr "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
+
+#: pages/credits.tsx:68
 msgid "You have already redeemed this code before."
 msgstr ""
 
-#: pages/start.tsx:145
+#: pages/start.tsx:133
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr ""
 
-#: pages/credits.tsx:182
+#: pages/credits.tsx:181
 msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
 msgstr "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
 
-#: pages/account/data.tsx:44
+#: pages/account/data.tsx:149
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 
-#: pages/account/data.tsx:55
+#: pages/account/data.tsx:160
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "Your <0>IP address</0> and user agent is recorded on each successful log in."
 
-#: pages/account/data.tsx:39
+#: pages/account/data.tsx:144
 msgid "Your data is stored in our database in <0>Paris, France</0>."
 msgstr "Your data is stored in our database in <0>Paris, France</0>."
 
-#: pages/start.tsx:161
+#: pages/start.tsx:149
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 msgstr "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."

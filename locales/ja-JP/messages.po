@@ -13,24 +13,24 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\";\n"
 "X-Generator: Poedit 3.1\n"
 
-#: src/sd/Controls.tsx:679
+#: src/sd/Controls.tsx:681
 msgid "\"Share\" button / filename will include \"{sharedInputs}\" after the prompt."
 msgstr "\"共有\" ボタン / ファイル名には、プロンプトの後に \"{sharedInputs}\" が含まれます。"
 
-#: src/sd/Controls.tsx:278
+#: src/sd/Controls.tsx:280
 msgid "(Denoising) Strength"
 msgstr "(ノイズ除去) 強度"
 
-#: src/Inpaint.tsx:406
+#: src/Inpaint.tsx:404
 msgid "(drag & drop, sharing coming soon)"
 msgstr "(ドラッグ & ドロップ、共有が間もなく追加されます)"
 
 #. placeholder {0}: news.length
-#: src/MyAppBar.tsx:485
+#: src/MyAppBar.tsx:486
 msgid "{0, plural, one {There us one unread news update.} other {There are # unread news updates.}}"
 msgstr "{0, plural, one {未読のニュース更新が 1 件あります。} other {未読のニュース更新が # 件あります。}}"
 
-#: src/GoButton.tsx:73
+#: src/GoButton.tsx:71
 msgid "{credits, plural, one {# Credit} other {# Credits}}"
 msgstr "{credits, plural, one {# クレジット} other {# クレジット}}"
 
@@ -38,84 +38,112 @@ msgstr "{credits, plural, one {# クレジット} other {# クレジット}}"
 msgid "{numCredits} credits"
 msgstr "{numCredits} クレジット"
 
-#: src/GoButton.tsx:86
+#: src/GoButton.tsx:84
 msgid "{userCredits, plural, one {# credit remaining} other {# credits remaining}}"
 msgstr "{userCredits, plural, one {残り # クレジット} other {残り # クレジット}}"
 
-#: pages/about.tsx:136
+#: pages/about.tsx:134
 msgid "<0>@Comamoca_</0> (こまもか🦊) who contributed the name \"KIRI\" (\"霧\") and has just generally been super helpful and supportive of the project 🙏."
 msgstr "<0>@Comamoca_</0> (こまもか🦊) さんは「KIRI」（「霧」）という名前の提案に貢献し、プロジェクト全体を通して非常に親切で心強いサポートをしてくださいました 🙏。"
 
-#: pages/credits.tsx:189
+#: pages/credits.tsx:188
 msgid "<0>*</0>May change at any time."
 msgstr "<0>*</0>これはいつでも変更される可能性があります。"
 
-#: pages/credits.tsx:224
+#: pages/credits.tsx:223
 msgid "<0>2nd Class</0>: using free credits but have a balance of at least {MIN_PAID_CREDITS} paid credits."
 msgstr "<0>2nd Class</0>: 無料クレジットを使用しているが、有料クレジットを少なくとも {MIN_PAID_CREDITS} 保有している場合。"
 
-#: pages/about.tsx:124
+#: pages/about.tsx:122
 msgid "<0>HuggingFace</0> - for their passion and inspiration for making machine learning more accessibe to developers, and in particular, their <1>Diffusers</1> Library."
 msgstr "<0>HuggingFace</0> - 機械学習を開発者にとってより身近なものにする情熱とインスピレーション、特に <1>Diffusers</1> ライブラリに感謝します。"
 
-#: pages/about.tsx:33
+#: pages/about.tsx:31
 msgid "<0>KIRI.ART</0> (\"SD-MUI\") is a WEB UI frontend for <1>Stability.AI</1>'s <2>Stable Diffusion</2>."
 msgstr "<0>KIRI.ART</0>（\"SD-MUI\"）は、<1>Stability.AI</1> の <2>Stable Diffusion</2> 向け WEB UI フロントエンドです。"
 
-#: pages/about.tsx:70
+#: pages/about.tsx:68
 msgid "<0>KIRI</0> (\"霧\") is the Japanese word for \"fog\", a natural phenomena sharing the same \"spreading\" (<1>diffusion</1>) quality as the method we use for image generation. It has a sharp sound, just like the sharp images we hope you'll produce here :) You could thus consider the site to also be called \"fog art\" or \"diffusion art\"."
 msgstr "<0>KIRI</0>（「霧」）は日本語で「fog」を意味する言葉で、私たちが画像生成に使っている手法と同じ「広がり」（<1>diffusion</1>）という性質を持つ自然現象です。鋭い響きがあり、ここで皆さんに生み出してほしいシャープな画像にもぴったりです :) そのため、このサイトは「fog art」や「diffusion art」と呼ぶこともできます。"
 
-#: src/sd/Controls.tsx:122
-#: src/sd/Controls.tsx:223
-#: src/sd/Controls.tsx:317
-#: src/sd/Controls.tsx:406
+#: src/sd/Controls.tsx:121
+#: src/sd/Controls.tsx:224
+#: src/sd/Controls.tsx:319
+#: src/sd/Controls.tsx:408
 msgid "<0>Learn more</0>"
 msgstr "<0>詳細を見る</0>"
 
-#: pages/about.tsx:115
+#: pages/about.tsx:113
 msgid "<0>Stability.Ai</0> - for their incredible time, work and efforts in creating <1>StableDiffusion</1> and no less so, their decision to release it publicly with an open source license."
 msgstr "<0>Stability.Ai</0> - <1>StableDiffusion</1> の開発に費やされた膨大な時間と作業、努力、そしてオープンソースライセンスでの一般リリースの決断に。"
 
-#: pages/index.tsx:285
+#: pages/index.tsx:287
 msgid "<0>Star images from your <1>history</1></0> <2>and have them appear here too!</2>"
 msgstr "<0><1>履歴</1>の画像にスターを付ける</0> <2>と、ここにも表示されます！</2>"
 
-#: pages/start.tsx:201
+#: pages/start.tsx:189
 msgid "1) Use at your own risk, we assume no responsibilty for any consequences as a result of your use (or misuse) of this project. 2) Any use of this site or project implies acceptance of its terms, and rules, including the \"be responsible\" rules above, Stable Diffusion's <0>CreativeML Open RAIL-M license</0>, and this project's <1>MIT license</1>."
 msgstr "1) 自己責任でご使用ください。このプロジェクトの使用（または誤用）の結果として生じる結果について、当社は一切の責任を負いません。2) このサイトまたはプロジェクトを使用することは、上記の「自己責任」の原則、Stable Diffusion の <0>CreativeML Open RAIL-M ライセンス</0>、およびこのプロジェクトの <1>MIT ライセンス</1>を含む、その条項および規則に同意することを意味します。"
 
-#: src/sd/Controls.tsx:778
+#: src/sd/Controls.tsx:779
 msgid "A black image will be shown instead."
 msgstr "代わりに黒い画像が表示されます。"
 
-#: pages/about.tsx:17
-#: src/MyAppBar.tsx:255
+#: pages/about.tsx:15
+#: src/MyAppBar.tsx:254
 msgid "About"
 msgstr "概要"
 
-#: pages/admin.tsx:289
+#: pages/admin.tsx:286
 msgid "Access Denied."
 msgstr "アクセスが拒否されました。"
 
-#: pages/about.tsx:101
+#: src/account/AccountDeletionReportView.tsx:140
+msgid "Account deletion completed."
+msgstr "アカウントの削除が完了しました。"
+
+#: src/account/AccountDeletionReportView.tsx:142
+msgid "Account deletion finished with follow-up work required. Review the notes below."
+msgstr "アカウントの削除は完了しましたが、追加の対応が必要です。以下の注意事項を確認してください。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:344
+msgid "Account deletion is permanent. Search only by an exact email address or full user ID; partial matching is not supported."
+msgstr "アカウントの削除は元に戻せません。完全に一致するメールアドレスまたはユーザーIDで検索してください。部分一致検索には対応していません。"
+
+#: src/account/AccountDeletionReportView.tsx:174
+msgid "Account deletion report"
+msgstr "アカウント削除レポート"
+
+#: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "謝辞"
 
-#: src/Inpaint.tsx:412
+#: src/account/AccountDeletionReportView.tsx:187
+msgid "Action"
+msgstr "操作"
+
+#: src/Inpaint.tsx:410
 msgid "Adjust prompt and GO"
 msgstr "プロンプトを調整して移動"
 
-#: pages/admin.tsx:295
-#: src/MyAppBar.tsx:266
+#: pages/admin.tsx:292
+#: src/MyAppBar.tsx:265
 msgid "Admin"
 msgstr "管理者"
 
-#: src/OutputImage.tsx:441
+#: src/admin/AccountDeletionDangerZone.tsx:136
+msgid "Administrator"
+msgstr "管理者"
+
+#: src/account/AccountDeletionReportView.tsx:191
+msgid "Affected items"
+msgstr "対象件数"
+
+#: src/OutputImage.tsx:439
 msgid "Alternatively, if this is what you really wanted, turn off the NSFW filter below (you might need to confirm your birthdate first)."
 msgstr "それでも本当にそれを表示したい場合は、下の NSFW フィルターをオフにしてください（先に生年月日の確認が必要な場合があります）。"
 
-#: pages/order/[_id].tsx:60
+#: pages/order/[_id].tsx:57
 msgid "Amount"
 msgstr "総額"
 
@@ -123,112 +151,154 @@ msgstr "総額"
 msgid "An error occured: "
 msgstr "エラーが発生しました:"
 
-#: pages/[_id].tsx:143
-#: pages/[_id].tsx:188
+#: src/account/AccountDeletionReportView.tsx:108
+msgid "Anonymized"
+msgstr "匿名化"
+
+#: pages/[_id].tsx:142
+#: pages/[_id].tsx:187
 #: pages/s/[_id].tsx:287
 msgid "Anonymous User"
 msgstr "匿名ユーザー"
 
-#: pages/history.tsx:280
+#: pages/history.tsx:292
 msgid "Are you sure?  This action cannot be undone"
 msgstr "本当によろしいですか？この操作は元に戻せません"
 
-#: pages/history.tsx:140
+#: pages/history.tsx:152
 msgid "Are you sure?  This cannot be undone."
 msgstr "本当によろしいですか？これは元に戻せません。"
 
-#: pages/stats.tsx:108
+#: pages/stats.tsx:107
 msgid "As a fully open source project, we're excited to have total transparancy and share this data with you. Get involved now on our <0>GitHub!</0>"
 msgstr "完全なオープンソースプロジェクトとして、私たちは全面的な透明性を大切にしており、このデータを皆さんと共有できることを嬉しく思います。ぜひ <0>GitHub!</0> から参加してください。"
 
-#: pages/order/[_id].tsx:77
+#: pages/order/[_id].tsx:74
 msgid "Back to Credits"
 msgstr "クレジットに戻る"
 
-#: pages/start.tsx:130
+#: pages/start.tsx:118
 msgid "Be Responsible"
 msgstr "責任を持ちましょう"
 
-#: pages/upsample.tsx:93
+#: pages/upsample.tsx:91
 msgid "Best for Anime"
 msgstr "アニメに最適"
 
-#: pages/[_id].tsx:127
+#: pages/[_id].tsx:126
+#: src/admin/AccountDeletionDangerZone.tsx:242
+#: src/admin/AccountDeletionDangerZone.tsx:280
 #: src/asyncConfirm.tsx:67
 msgid "Cancel"
 msgstr "キャンセル"
+
+#: pages/account/data.tsx:275
+msgid "Capitalization and spaces must match."
+msgstr "大文字と小文字、空白を正確に一致させてください。"
 
 #: pages/s/[_id].tsx:328
 msgid "CFG"
 msgstr "CFG"
 
-#: pages/[_id].tsx:88
+#: pages/[_id].tsx:87
 msgid "Check out {username}'s page on kiri.art"
 msgstr "kiri.art の {username} さんのページを見てみましょう"
 
-#: pages/[_id].tsx:89
+#: pages/[_id].tsx:88
 msgid "Check out this user page on kiri.art"
 msgstr "kiri.art のこのユーザーページを見てみましょう"
 
 #: pages/checkout.tsx:63
 #: pages/checkout.tsx:66
-#: pages/credits.tsx:277
+#: pages/credits.tsx:276
 msgid "Checkout"
 msgstr "お支払い"
 
-#: pages/share_target.tsx:20
+#: pages/share_target.tsx:18
 msgid "Choose Share Target"
 msgstr "共有先を選択"
 
-#: src/sd/Controls.tsx:306
+#: src/sd/Controls.tsx:308
 msgid "Classifier-Free Guidance (Scale)"
 msgstr "分類子なしのガイダンス (スケール)"
 
-#: pages/history.tsx:297
+#: src/admin/AccountDeletionDangerZone.tsx:382
+msgid "Cleanup receipt ID"
+msgstr "クリーンアップ受付ID"
+
+#: src/admin/AccountDeletionDangerZone.tsx:413
+msgid "Cleanup retry report"
+msgstr "クリーンアップ再試行レポート"
+
+#: pages/history.tsx:309
 msgid "Clear History"
 msgstr "履歴を消去"
 
-#: pages/credits.tsx:66
+#: pages/credits.tsx:65
 msgid "Code already redeeemed maximum number of times, sorry."
 msgstr "申し訳ありませんが、コードの使用回数がすでに最大数に達しています。"
 
-#: src/Inpaint.tsx:419
+#: src/Inpaint.tsx:417
 msgid "Coming Soon"
 msgstr "近日追加予定"
 
-#: pages/index.tsx:282
+#: pages/index.tsx:284
 msgid "Community"
 msgstr "コミュニティ"
 
-#: src/sd/Controls.tsx:796
+#: src/sd/Controls.tsx:800
 msgid "Confirm Date of Birth"
 msgstr "生年月日を確認"
 
-#: pages/[_id].tsx:105
+#: src/admin/AccountDeletionDangerZone.tsx:546
+msgid "Confirm the immutable user ID"
+msgstr "変更不能なユーザーIDを確認"
+
+#: pages/account/data.tsx:260
+msgid "Confirmation phrase"
+msgstr "確認フレーズ"
+
+#: pages/[_id].tsx:104
 msgid "Copied to clipboard"
 msgstr "クリップボードにコピーしました"
 
-#: src/sd/Addons/common.tsx:374
+#: src/admin/AccountDeletionDangerZone.tsx:130
+msgid "Created"
+msgstr "作成日時"
+
+#: src/sd/Addons/common.tsx:373
 msgid "Created images may not be sold."
 msgstr "作成した画像は販売できません。"
 
-#: pages/order/[_id].tsx:66
+#: pages/order/[_id].tsx:63
 msgid "Credits"
 msgstr "クレジット"
 
-#: src/MyAppBar.tsx:412
+#: src/MyAppBar.tsx:413
 msgid "Credits:"
 msgstr "クレジット: "
 
-#: pages/order/[_id].tsx:63
+#: pages/order/[_id].tsx:60
 msgid "Currency"
 msgstr "通貨"
 
-#: pages/order/[_id].tsx:57
+#: src/admin/AccountDeletionDangerZone.tsx:326
+msgid "Danger zone"
+msgstr "危険な操作"
+
+#: src/account/AccountDeletionReportView.tsx:205
+msgid "Database"
+msgstr "データベース"
+
+#: pages/order/[_id].tsx:54
 msgid "Date"
 msgstr "日付"
 
-#: pages/account/data.tsx:87
+#: src/admin/AccountDeletionDangerZone.tsx:333
+msgid "Delete a user account"
+msgstr "ユーザーアカウントを削除"
+
+#: pages/account/data.tsx:202
 msgid "Delete My Account"
 msgstr "アカウントを削除する"
 
@@ -236,64 +306,118 @@ msgstr "アカウントを削除する"
 msgid "Delete this star?"
 msgstr "このスターを削除しますか？"
 
-#: src/sd/Controls.tsx:116
+#: src/account/AccountDeletionReportView.tsx:109
+msgid "Deleted"
+msgstr "削除済み"
+
+#: pages/account/data.tsx:292
+#: src/admin/AccountDeletionDangerZone.tsx:566
+msgid "Deleting account…"
+msgstr "アカウントを削除しています…"
+
+#: src/account/AccountDeletionReportView.tsx:106
+msgid "Deletion preview"
+msgstr "削除内容のプレビュー"
+
+#: src/account/AccountDeletionReportView.tsx:106
+msgid "Deletion report"
+msgstr "削除レポート"
+
+#: src/sd/Controls.tsx:115
 msgid "Description / caption of your desired image. May include art styles like 'impressionist', 'digital art', photographic styles and lenses, and other hints."
 msgstr "ご希望の画像の説明/キャプション。 「印象派」、「デジタルアート」、写真のスタイルやレンズなどのアートスタイル、その他のヒントが含まれる場合があります。"
 
-#: src/sd/Controls.tsx:215
+#: src/sd/Controls.tsx:216
 msgid "Description of all the things you <0>don't want</0> in the output image, e.g. prompt: \"bouquet of roses\", negative prompt: \"red roses\". You can also ask to exclude common diffusion artifacts like \"deformed hands\". Click the \"reset\" icon for some common defaults."
 msgstr "出力画像に<0>含めたくないもの</0>を説明します。たとえば、プロンプトが「bouquet of roses」の場合、ネガティブプロンプトに「red roses」と書くことができます。「deformed hands」のような一般的な拡散アーティファクトの除外を求めることもできます。よく使う初期値は「reset」アイコンから設定できます。"
 
-#: pages/account/data.tsx:138
-msgid "Destroy my Data"
-msgstr "自分のデータを削除する"
+#: src/admin/AccountDeletionDangerZone.tsx:120
+msgid "Display name"
+msgstr "表示名"
 
-#: pages/account/data.tsx:140
-msgid "Destroying..."
-msgstr "削除中..."
-
-#: pages/start.tsx:134
+#: pages/start.tsx:122
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "有害なコンテンツ (人種差別、扇動的など) を作成しないでください。"
 
-#: pages/account/data.tsx:142
-msgid "Done!"
-msgstr "完了！"
+#: pages/account/data.tsx:181
+msgid "Download account data (ZIP)"
+msgstr "アカウントデータをダウンロード（ZIP）"
 
-#: pages/credits.tsx:200
+#: pages/credits.tsx:199
 msgid "Earn free credits by contributing to the project on GitHub!"
 msgstr "GitHub でプロジェクトに貢献して、無料クレジットを獲得しましょう！"
 
-#: pages/logs.tsx:513
+#: src/admin/AccountDeletionDangerZone.tsx:116
+msgid "Email"
+msgstr "メールアドレス"
+
+#: src/admin/AccountDeletionDangerZone.tsx:381
+msgid "Enter the 24-character cleanup receipt ID from the deletion report."
+msgstr "削除レポートに記載された24文字のクリーンアップ受付IDを入力してください。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:433
+msgid "Enter the complete email address or 24-character user ID."
+msgstr "完全なメールアドレスまたは24文字のユーザーIDを入力してください。"
+
+#: pages/logs.tsx:525
 msgid "Event Log"
 msgstr "イベントログ"
 
-#: pages/index.tsx:321
+#: src/admin/AccountDeletionDangerZone.tsx:465
+msgid "Exact account matches"
+msgstr "完全一致したアカウント"
+
+#: src/admin/AccountDeletionDangerZone.tsx:434
+msgid "Exact email or user ID"
+msgstr "完全一致するメールアドレスまたはユーザーID"
+
+#: src/admin/AccountDeletionDangerZone.tsx:468
+msgid "Exact match"
+msgstr "完全一致"
+
+#: src/admin/AccountDeletionDangerZone.tsx:470
+msgid "Exact matches"
+msgstr "完全一致"
+
+#: pages/index.tsx:323
 msgid "Explicit"
 msgstr "露骨な内容"
 
-#: pages/upsample.tsx:143
+#. placeholder {0}: report.deletionId
+#: src/account/AccountDeletionReportView.tsx:160
+msgid "External cleanup receipt: <0>{0}</0>"
+msgstr "外部クリーンアップ受付ID：<0>{0}</0>"
+
+#: src/account/AccountDeletionReportView.tsx:207
+msgid "External service"
+msgstr "外部サービス"
+
+#: pages/upsample.tsx:140
 msgid "Face Enhance"
 msgstr "顔補正"
 
-#: pages/upsample.tsx:151
+#: pages/upsample.tsx:148
 msgid "Face Restoration. Good for photorealistic images, bad for anime."
 msgstr "顔の復元。写実的な画像には向いていますが、アニメには不向きです。"
 
+#: src/account/AccountDeletionReportView.tsx:110
+msgid "Failed"
+msgstr "失敗"
+
 #: pages/s/[_id].tsx:234
-#: src/sd/Addons/common.tsx:422
+#: src/sd/Addons/common.tsx:421
 msgid "Failed to copy to clipboard"
 msgstr "クリップボードへのコピーに失敗しました"
 
-#: src/MyAppBar.tsx:209
+#: src/MyAppBar.tsx:208
 msgid "FAQ"
 msgstr "FAQ"
 
-#: pages/upsample.tsx:263
+#: pages/upsample.tsx:260
 msgid "File is not a valid image."
 msgstr "有効な画像ファイルではありません。"
 
-#: pages/upsample.tsx:269
+#: pages/upsample.tsx:266
 msgid "File is too large; {maxSizeText} max."
 msgstr "ファイルが大きすぎます。最大 {maxSizeText} です。"
 
@@ -301,119 +425,135 @@ msgstr "ファイルが大きすぎます。最大 {maxSizeText} です。"
 msgid "Filter"
 msgstr "フィルター"
 
-#: src/sd/Controls.tsx:774
+#: src/sd/Controls.tsx:775
 msgid "Filter out images that may be NSFW (\"Not Safe for Work\") and inappropriate for under 18s."
 msgstr "NSFW（\"Not Safe for Work\"）や 18 歳未満に不適切な可能性のある画像を除外します。"
 
-#: src/MyAppBar.tsx:222
+#: src/admin/AccountDeletionDangerZone.tsx:421
+msgid "Find an account to delete"
+msgstr "削除するアカウントを検索"
+
+#: src/admin/AccountDeletionDangerZone.tsx:336
+msgid "Find one exact account, verify its immutable ID and deletion preview, then explicitly confirm that same ID."
+msgstr "完全に一致するアカウントを1つ選び、変更不能なIDと削除プレビューを確認してから、同じIDを明示的に入力して確定してください。"
+
+#: src/MyAppBar.tsx:221
 msgid "Forums"
 msgstr "フォーラム"
 
-#: pages/credits.tsx:180
+#: pages/credits.tsx:179
 msgid "Free Credits"
 msgstr "無料クレジット"
 
-#: pages/faq.tsx:81
+#: pages/faq.tsx:79
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "よくある質問（FAQ）"
 
-#: pages/upsample.tsx:103
+#: pages/upsample.tsx:101
 msgid "General - v3"
 msgstr "一般向け - v3"
 
-#: src/GoButton.tsx:72
+#: src/GoButton.tsx:70
 msgid "Get More Credits"
 msgstr "クレジットをさらに取得"
 
-#: src/MyAppBar.tsx:245
+#: src/MyAppBar.tsx:244
 msgid "GitHub"
 msgstr "GitHub"
 
-#: src/GoButton.tsx:70
+#: src/GoButton.tsx:68
 msgid "Go"
 msgstr "進む"
 
 #: pages/s/[_id].tsx:344
-#: src/sd/Controls.tsx:484
+#: src/sd/Controls.tsx:486
 msgid "Height"
 msgstr "高さ"
 
-#: pages/history.tsx:288
-#: src/MyAppBar.tsx:409
+#: pages/history.tsx:300
+#: src/MyAppBar.tsx:410
 msgid "History"
 msgstr "履歴"
 
-#: pages/history.tsx:290
+#: pages/history.tsx:302
 msgid "History is kept on your <0>local device only</0>. It is not backed up to the cloud nor visible to others (in contrast to your <1>starred</1> images). Only the last {MAX_HISTORY} items are kept."
 msgstr "履歴は<0>この端末内だけ</0>に保存されます。クラウドにバックアップされず、他の人からも見えません（<1>スター付き</1>画像とは異なります）。保持されるのは直近 {MAX_HISTORY} 件までです。"
 
-#: pages/index.tsx:272
-#: pages/start.tsx:112
-#: src/MyAppBar.tsx:122
+#: pages/index.tsx:274
+#: pages/start.tsx:100
+#: src/MyAppBar.tsx:121
 msgid "Home"
 msgstr "ホーム"
 
-#: src/sd/Controls.tsx:312
+#: src/sd/Controls.tsx:314
 msgid "How closely to follow the prompt. Lower values = more creative, more variety. Higher values = more exact, may cause artifacts. Values of 5 - 15 tend to work best."
 msgstr "プロンプトに従う程度。 値が低い = より創造的で、より多様性があります。 値が高い = より正確で、アーティファクトが発生する場合があります。 5 ～ 15 の値が最適です。"
 
-#: src/sd/Controls.tsx:352
+#: src/admin/AccountDeletionDangerZone.tsx:368
+msgid "If a deletion report was partial, enter its cleanup receipt ID to retry the remaining provider operations."
+msgstr "削除レポートが一部完了だった場合は、残りのプロバイダー操作を再試行するため、そのクリーンアップ受付IDを入力してください。"
+
+#: src/sd/Controls.tsx:354
 msgid "Image Guidance Scale"
 msgstr "画像ガイダンススケール"
 
-#: pages/upsample.tsx:213
+#: pages/upsample.tsx:210
 #: src/InputImage.tsx:28
 msgid "Image Loaded"
 msgstr "画像を読み込みました"
 
-#: pages/img2img.tsx:17
-#: pages/start.tsx:28
-#: src/MyAppBar.tsx:152
+#: pages/img2img.tsx:15
+#: pages/start.tsx:19
+#: src/MyAppBar.tsx:151
 msgid "Image to Image"
 msgstr "画像から画像へ"
 
-#: src/Inpaint.tsx:424
+#: src/Inpaint.tsx:422
 msgid "Image will be down scaled to max 1024x1024."
 msgstr "画像は最大 1024x1024 に縮小されます。"
 
-#: pages/upsample.tsx:380
+#: pages/upsample.tsx:377
 msgid "Images should be max {maxSizeText}."
 msgstr "画像は最大 {maxSizeText} までにしてください。"
 
-#: src/IPix2Pix.tsx:50
+#: src/admin/AccountDeletionDangerZone.tsx:124
+msgid "Immutable user ID"
+msgstr "変更不能なユーザーID"
+
+#: src/IPix2Pix.tsx:48
 msgid "Important Tips"
 msgstr "重要なヒント"
 
-#: src/OutputImage.tsx:385
+#: src/OutputImage.tsx:383
 msgid "Inpaint"
 msgstr "インペイント"
 
-#: pages/inpaint.tsx:17
-#: pages/start.tsx:34
-#: src/MyAppBar.tsx:167
-#: src/OutputImage.tsx:463
+#: pages/inpaint.tsx:15
+#: pages/start.tsx:25
+#: src/MyAppBar.tsx:166
+#: src/OutputImage.tsx:461
 msgid "Inpainting"
 msgstr "インペインティング"
 
-#: pages/ipix2pix.tsx:17
-#: src/MyAppBar.tsx:197
-#: src/OutputImage.tsx:378
+#: pages/ipix2pix.tsx:15
+#: src/MyAppBar.tsx:196
+#: src/OutputImage.tsx:376
 msgid "Instruct Pix2Pix"
 msgstr "Instruct Pix2Pix"
 
-#: src/IPix2Pix.tsx:52
+#: src/IPix2Pix.tsx:50
 msgid "Instruct-Pix2Pix is a Stable Diffusion model fine-tuned for editing images from human instructions. Given an input image and a written instruction that tells the model what to do, the model follows these instructions to edit the image."
 msgstr "Instruct-Pix2Pix は、人間の指示文から画像を編集するために微調整された Stable Diffusion モデルです。入力画像と「何をするか」を説明する文章を与えると、その指示に従って画像を編集します。"
 
-#: pages/about.tsx:53
+#: pages/about.tsx:51
 msgid "It can be used here instantly with free & paid credits, run for free on your own computer (if you have a suitable GPU) or very cheaply via <0>banana.dev</0>'s serverless GPU cloud (see the <1>README</1> for details). Get involved in our <2>GitHub project page</2> and let's build something awesome together."
 msgstr "ここでは無料クレジットと有料クレジットですぐに使えますし、適切な GPU があれば自分のコンピューターで無料で実行することも、<0>banana.dev</0> のサーバーレス GPU クラウドを使って非常に安価に実行することもできます（詳しくは <1>README</1> を参照してください）。ぜひ <2>GitHub プロジェクトページ</2>に参加して、一緒に素晴らしいものを作りましょう。"
 
-#: pages/about.tsx:46
+#: pages/about.tsx:44
 msgid "It is Free and Open Source Software (\"FOSS\") developed by the community."
 msgstr "これはコミュニティによって開発されたフリーかつオープンソースのソフトウェア（\"FOSS\"）です。"
 
-#: pages/about.tsx:41
+#: pages/about.tsx:39
 msgid "It's focus is a simple, <0>zero-setup</0>, <1>mobile-first</1> interface that's <2>easy-to-share</2> with friends."
 msgstr "このプロジェクトの焦点は、友だちと<2>共有しやすい</2>、シンプルで<0>セットアップ不要</0>、<1>モバイルファースト</1>のインターフェースです。"
 
@@ -431,124 +571,151 @@ msgstr "この項目は {0} 回通報されました。ご報告ありがとう�
 msgid "Items reported by {NUM_REPORTS_UNTIL_REMOVAL} users will be automatically removed."
 msgstr "{NUM_REPORTS_UNTIL_REMOVAL} 人のユーザーに通報された項目は自動的に削除されます。"
 
-#: pages/stats.tsx:263
-#: pages/stats.tsx:397
-#: pages/stats.tsx:538
+#: pages/account/data.tsx:96
+msgid "Keep my account"
+msgstr "アカウントを残す"
+
+#: pages/stats.tsx:262
+#: pages/stats.tsx:396
+#: pages/stats.tsx:537
 msgid "Last 2 weeks"
 msgstr "過去 2 週間"
 
-#: pages/stats.tsx:124
+#: pages/stats.tsx:123
 msgid "Last 24 hours"
 msgstr "過去 24 時間"
 
-#: pages/[_id].tsx:200
-#: pages/credits.tsx:111
+#: pages/[_id].tsx:199
+#: pages/credits.tsx:110
 msgid "Loading..."
 msgstr "読み込み中..."
 
-#: src/GoButton.tsx:71
-#: src/MyAppBar.tsx:438
+#: pages/account/data.tsx:302
+msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
+msgstr "削除後、この端末のローカル履歴は消去されます。別の端末でこのアプリを使用した場合は、その端末でアプリをアンインストールするか、ブラウザのストレージを個別に消去してください。"
+
+#: src/GoButton.tsx:69
+#: src/MyAppBar.tsx:439
 msgid "Login"
 msgstr "ログイン"
 
-#: src/MyAppBar.tsx:426
+#: src/MyAppBar.tsx:427
 msgid "Logout"
 msgstr "ログアウト"
 
-#: src/sd/Addons/common.tsx:364
+#: src/sd/Addons/common.tsx:363
 msgid "May only be used with free credits."
 msgstr "無料クレジットでのみ使用できます。"
 
 #: pages/s/[_id].tsx:294
-#: pages/upsample.tsx:65
-#: pages/upsample.tsx:69
+#: pages/upsample.tsx:63
+#: pages/upsample.tsx:67
 #: src/sd/ModelSelect.tsx:428
 #: src/sd/ModelSelect.tsx:441
 msgid "Model"
 msgstr "モデル"
 
-#: src/sd/Addons/common.tsx:265
+#: src/sd/Addons/common.tsx:264
 msgid "Model is already added."
 msgstr "モデルはすでに追加されています。"
 
 #. placeholder {0}: allowedTypes.join('", "')
-#: src/sd/Addons/common.tsx:241
+#: src/sd/Addons/common.tsx:240
 msgid "Model must be a \"{0}\", not a \"{type}\"."
 msgstr "モデルは \"{type}\" ではなく \"{0}\" でなければなりません。"
 
-#: pages/index.tsx:343
+#: pages/index.tsx:345
 msgid "Most Popular"
 msgstr "最も人気"
 
-#: pages/index.tsx:340
+#: pages/index.tsx:342
 msgid "Most Recent"
 msgstr "最新"
 
-#: src/sd/Controls.tsx:457
-#: src/sd/Controls.tsx:496
+#: src/sd/Controls.tsx:459
+#: src/sd/Controls.tsx:498
 msgid "Must be a multiple of 64. Maximum size is 1024x1024 because of memory limits (but you can upsample to 4x resolution afterwards)."
 msgstr "64 の倍数である必要があります。メモリ制限のため最大サイズは 1024x1024 です（ただし後から 4 倍解像度までアップサンプルできます）。"
 
-#: src/sd/Addons/common.tsx:356
+#: src/sd/Addons/common.tsx:355
 msgid "Must credit the model creator."
 msgstr "モデル作成者を明記する必要があります。"
 
-#: pages/credits.tsx:168
+#: pages/credits.tsx:167
 msgid "My Credits"
 msgstr "私のクレジット"
 
-#: pages/account/data.tsx:27
-#: src/MyAppBar.tsx:415
+#: pages/account/data.tsx:137
+#: src/MyAppBar.tsx:416
 msgid "My Data"
 msgstr "マイデータ"
+
+#: src/account/AccountDeletionReportView.tsx:181
+msgid "Name"
+msgstr "名前"
 
 #: pages/s/[_id].tsx:325
 #: src/sd/Controls.tsx:192
 msgid "Negative Prompt"
 msgstr "ネガティブプロンプト"
 
-#: pages/stats.tsx:607
+#: pages/stats.tsx:606
 msgid "New Users"
 msgstr "新規ユーザー"
 
-#: pages/news.tsx:12
+#: pages/news.tsx:9
 msgid "News"
 msgstr "ニュース"
 
-#: pages/credits.tsx:194
+#: pages/credits.tsx:193
 msgid "Next credits on:"
 msgstr "次のクレジット："
 
-#: pages/start.tsx:139
+#: src/admin/AccountDeletionDangerZone.tsx:139
+msgid "No"
+msgstr "いいえ"
+
+#: src/account/AccountDeletionReportView.tsx:135
+#: src/account/AccountDeletionReportView.tsx:143
+msgid "No account was found for this user ID."
+msgstr "このユーザーIDに該当するアカウントは見つかりませんでした。"
+
+#: pages/start.tsx:127
 msgid "No deepfakes aside for fair use (e.g. humour, education, nothing misleading or political)."
 msgstr "フェアユース以外のディープフェイクはありません（例：ユーモア、教育、誤解を招くもの、政治的なもの）。"
 
-#: pages/credits.tsx:63
+#: pages/credits.tsx:62
 msgid "No such code exists."
 msgstr "そのようなコードは存在しません。"
 
-#: src/sd/Addons/common.tsx:204
+#: src/admin/AccountDeletionDangerZone.tsx:460
+msgid "No user matched that exact value."
+msgstr "入力した値と完全に一致するユーザーは見つかりませんでした。"
+
+#: src/sd/Addons/common.tsx:203
 msgid "No valid model ID, URL, or hash found."
 msgstr "有効なモデル ID、URL、またはハッシュが見つかりません。"
 
-#: pages/account/data.tsx:149
-msgid "Note: this only deletes your data from our servers and <0>this device</0>. If you have used our app on other devices, you should uninstall it there too (or clear the browser's local storage)."
-msgstr "注: これはサーバー上のデータと<0>この端末</0>上のデータだけを削除します。他の端末でもこのアプリを使ったことがある場合は、そちらでもアンインストールするか、ブラウザのローカルストレージを消去してください。"
+#: src/admin/AccountDeletionDangerZone.tsx:118
+#: src/admin/AccountDeletionDangerZone.tsx:122
+msgid "Not set"
+msgstr "未設定"
 
-#: src/Inpaint.tsx:418
+#: src/account/AccountDeletionReportView.tsx:194
+#: src/Inpaint.tsx:416
 msgid "Notes"
 msgstr "メモ"
 
-#: pages/index.tsx:307
-#: src/sd/Controls.tsx:766
+#: pages/index.tsx:309
+#: src/sd/Controls.tsx:767
 msgid "NSFW Filter"
 msgstr "NSFW フィルター"
 
-#: src/sd/Controls.tsx:401
+#: src/sd/Controls.tsx:403
 msgid "Number of denoising steps (how many times to iterate over and improve the image). Larger numbers take longer to render but may produce higher quality results."
 msgstr "ノイズ除去のステップ数 (画像をやり直して改善する回数)。 数値が大きいほどレンダリングに時間がかかりますが、より質が高い結果が得られる場合があります。"
 
-#: src/sd/Controls.tsx:392
+#: src/sd/Controls.tsx:394
 msgid "Number of Inference Steps"
 msgstr "推論ステップ数"
 
@@ -556,132 +723,165 @@ msgstr "推論ステップ数"
 msgid "OK"
 msgstr "OK"
 
-#: pages/index.tsx:91
+#: pages/index.tsx:92
 msgid "Only show stars with matching prompts. More advanced filters coming soon. Separate multiple terms with a pipe (\"|\") character."
 msgstr "一致するプロンプトを持つスター付き画像だけを表示します。より高度なフィルターは近日対応予定です。複数の語句はパイプ（\"|\"）文字で区切ってください。"
 
-#: pages/start.tsx:170
+#: pages/start.tsx:158
 msgid "Open Source, developer friendly."
 msgstr "オープンソースで、開発者にもやさしい。"
 
-#: pages/order/[_id].tsx:54
+#: pages/order/[_id].tsx:51
 msgid "Order {_id}"
 msgstr "注文 {_id}"
 
-#: pages/credits.tsx:295
-#: pages/order/[_id].tsx:80
+#: pages/credits.tsx:294
+#: pages/order/[_id].tsx:77
 msgid "Order History"
 msgstr "注文履歴"
 
-#: pages/order/[_id].tsx:51
-#: pages/orders.tsx:45
+#: pages/order/[_id].tsx:48
+#: pages/orders.tsx:42
 msgid "Order Status"
 msgstr "注文状況"
 
-#: pages/orders.tsx:48
+#: pages/orders.tsx:45
 msgid "Orders"
 msgstr "注文"
 
-#: pages/upsample.tsx:83
+#: pages/upsample.tsx:81
 msgid "Original model, best for most cases."
 msgstr "元のモデル、ほとんどのケースに最適"
 
-#: pages/stats.tsx:627
+#: pages/stats.tsx:626
 msgid "Our <0>event logs</0> are also available."
 msgstr "私たちの <0>イベントログ</0> も公開しています。"
 
-#: pages/credits.tsx:212
+#: pages/credits.tsx:211
 msgid "Paid credits help you jump the queue!"
 msgstr "有料クレジットを使うと待ち行列を優先できます！"
 
-#: src/CheckoutForm.tsx:82
+#: src/CheckoutForm.tsx:81
 msgid "Pay"
 msgstr "支払う"
 
-#: src/sd/Controls.tsx:537
+#: pages/account/data.tsx:95
+#: src/admin/AccountDeletionDangerZone.tsx:241
+msgid "Permanently delete"
+msgstr "完全に削除"
+
+#: pages/account/data.tsx:294
+msgid "Permanently delete my account"
+msgstr "自分のアカウントを完全に削除"
+
+#: src/admin/AccountDeletionDangerZone.tsx:568
+msgid "Permanently delete this account"
+msgstr "このアカウントを完全に削除"
+
+#: src/admin/AccountDeletionDangerZone.tsx:239
+msgid "Permanently delete this user?"
+msgstr "このユーザーを完全に削除しますか？"
+
+#: pages/account/data.tsx:93
+msgid "Permanently delete your account?"
+msgstr "アカウントを完全に削除しますか？"
+
+#: src/account/AccountDeletionReportView.tsx:185
+msgid "Planned action"
+msgstr "予定されている操作"
+
+#: src/sd/Controls.tsx:539
 msgid "Please enter a valid seed or turn \"Randomize\" back on."
 msgstr "有効なシードを入力するか、「ランダム化」をもう一度有効にしてください。"
 
-#: pages/credits.tsx:275
-#: src/CheckoutForm.tsx:82
+#: pages/credits.tsx:274
+#: src/CheckoutForm.tsx:81
 msgid "Please wait..."
 msgstr "お待ちください..."
 
-#: src/OutputImage.tsx:439
+#: src/OutputImage.tsx:437
 msgid "Potential NSFW content detected. A black image was returned instead. Try again with a different prompt and/or seed."
 msgstr "NSFW の可能性があるコンテンツが検出されました。代わりに黒い画像が返されました。別のプロンプトやシードでもう一度試してください。"
 
-#: pages/account/data.tsx:30
+#: src/account/AccountDeletionReportView.tsx:137
+msgid "Preview ready with items that may require follow-up. Nothing has been deleted yet."
+msgstr "プレビューの準備ができました。追加対応が必要になる可能性のある項目があります。まだ何も削除されていません。"
+
+#: src/account/AccountDeletionReportView.tsx:138
+msgid "Preview ready. Nothing has been deleted yet."
+msgstr "プレビューの準備ができました。まだ何も削除されていません。"
+
+#: pages/account/data.tsx:140
 msgid "Privacy"
 msgstr "プライバシー"
 
-#: pages/privacy.tsx:14
-#: src/Copyright.tsx:28
+#: pages/privacy.tsx:15
+#: src/Copyright.tsx:27
 msgid "Privacy Policy"
 msgstr "プライバシーポリシー"
 
-#: src/MyAppBar.tsx:406
+#: src/MyAppBar.tsx:407
 msgid "Profile"
 msgstr "プロフィール"
 
-#: pages/start.tsx:154
+#: pages/start.tsx:142
 msgid "Project Goals"
 msgstr "プロジェクトの目標"
 
 #: pages/s/[_id].tsx:321
-#: src/sd/Controls.tsx:94
+#: src/sd/Controls.tsx:92
 msgid "Prompt"
 msgstr "プロンプト"
 
-#: src/sd/Controls.tsx:982
+#: src/sd/Controls.tsx:986
 msgid "Provider 1 is our original, historic provider. Provider 2 is a new, additional provider - with generations costing 0.25 credits each - temporarily - while we're still working on this."
 msgstr "Provider 1 はこれまでの標準プロバイダーです。Provider 2 は新しい追加プロバイダーで、現在は暫定的に 1 回の生成あたり 0.25 クレジットです。まだ調整中です。"
 
-#: pages/credits.tsx:172
+#: pages/credits.tsx:171
 msgid "Purchase Successful!"
 msgstr "購入しました!"
 
-#: pages/credits.tsx:205
+#: pages/credits.tsx:204
 msgid "Purchased Credits"
 msgstr "購入したクレジット"
 
-#: pages/credits.tsx:208
+#: pages/credits.tsx:207
 msgid "Purchased credits are used after you run out of free credits that month, and don't expire."
 msgstr "購入したクレジットはその月の無料クレジットがなくなると使用され、有効期限はありません。"
 
-#: src/sd/Controls.tsx:358
+#: src/sd/Controls.tsx:360
 msgid "Push the generated image towards the inital image. Higher image guidance scale encourages generated images that are closely linked to the source image, usually at the expense of lower image quality."
 msgstr "生成画像を元の画像に近づけます。画像ガイダンススケールを高くすると、生成画像は元画像との関連がより強くなりますが、そのぶん画質が下がることがあります。"
 
-#: src/Inpaint.tsx:399
+#: src/Inpaint.tsx:397
 msgid "Quick Start"
 msgstr "クイックスタート"
 
-#: src/sd/Controls.tsx:610
+#: src/sd/Controls.tsx:613
 msgid "Randomize"
 msgstr "ランダム化"
 
-#: src/sd/Controls.tsx:618
+#: src/sd/Controls.tsx:621
 msgid "Randomize Seed on every request. This means each new image will be completely different. If you want to, instead, \"tweak\" your last creation, turn this off."
 msgstr "すべての要求でシードをランダム化します。 つまり、新しい画像はそれぞれ完全に異なるものになります。 代わりに前回の作品を「調整」したい場合は、この機能をオフにしてください。"
 
-#: pages/start.tsx:216
+#: pages/start.tsx:204
 msgid "Read the full Terms of Service below."
 msgstr "下の完全なサービス規約をお読みください。"
 
-#: pages/order/[_id].tsx:73
+#: pages/order/[_id].tsx:70
 msgid "Reason"
 msgstr "理由"
 
-#: pages/credits.tsx:111
+#: pages/credits.tsx:110
 msgid "Redeem"
 msgstr "利用する"
 
-#: pages/credits.tsx:102
+#: pages/credits.tsx:101
 msgid "Redeem Credit Code"
 msgstr "クレジットコードを利用する"
 
-#: pages/credits.tsx:298
+#: pages/credits.tsx:297
 msgid "Reminder: this is Free and Open Source Software. You can run your own copy for free on your own PC, with either a suitable graphics card or a cheap Banana.Dev acccount. More info on the <0>About Page</0>."
 msgstr "ご注意: これは無料オープンソースソフトウェアです。 適切なグラフィックカードまたは安価な Banana.Dev アカウントを使用して、ご自身の PC でご自身のコピーを無料で実行できます。 詳しくは<0>ページについて</0>をご覧ください。"
 
@@ -689,32 +889,73 @@ msgstr "ご注意: これは無料オープンソースソフトウェアです�
 msgid "Report this star?"
 msgstr "このスターを通報しますか？"
 
-#: pages/stats.tsx:124
-#: pages/stats.tsx:263
-#: pages/stats.tsx:397
+#: pages/stats.tsx:123
+#: pages/stats.tsx:262
+#: pages/stats.tsx:396
 msgid "Requests"
 msgstr "リクエスト"
 
-#: pages/resources.tsx:11
+#: pages/resources.tsx:8
 msgid "Resources"
 msgstr "リソース"
 
-#: src/Inpaint.tsx:418
+#: src/account/AccountDeletionReportView.tsx:111
+msgid "Retained"
+msgstr "保持"
+
+#: src/admin/AccountDeletionDangerZone.tsx:279
+#: src/admin/AccountDeletionDangerZone.tsx:406
+msgid "Retry cleanup"
+msgstr "クリーンアップを再試行"
+
+#: src/admin/AccountDeletionDangerZone.tsx:278
+msgid "Retry external cleanup receipt {normalizedDeletionId}? This may permanently remove queued S3 or Stripe resources."
+msgstr "外部クリーンアップ受付ID {normalizedDeletionId} を再試行しますか？キューに登録されたS3またはStripeのリソースが完全に削除される可能性があります。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:277
+msgid "Retry queued cleanup?"
+msgstr "キュー内のクリーンアップを再試行しますか？"
+
+#: src/admin/AccountDeletionDangerZone.tsx:365
+msgid "Retry queued external cleanup"
+msgstr "キュー内の外部クリーンアップを再試行"
+
+#: src/admin/AccountDeletionDangerZone.tsx:404
+msgid "Retrying cleanup…"
+msgstr "クリーンアップを再試行しています…"
+
+#: src/Inpaint.tsx:416
 msgid "Roadmap"
 msgstr "ロードマップ"
 
-#: src/sd/Controls.tsx:876
 #: src/sd/Controls.tsx:880
+#: src/sd/Controls.tsx:884
 msgid "Sampler"
 msgstr "サンプラー"
 
-#: pages/[_id].tsx:132
+#: pages/[_id].tsx:131
 msgid "Save"
 msgstr "保存"
 
-#: src/sd/Addons/common.tsx:101
+#: src/account/AccountDeletionReportView.tsx:165
+msgid "Save this ID. An administrator can use it to retry queued cleanup."
+msgstr "このIDを保存してください。管理者はこのIDを使って、キュー内のクリーンアップを再試行できます。"
+
+#: src/sd/Addons/common.tsx:100
 msgid "Scale"
 msgstr "スケール"
+
+#: src/account/AccountDeletionReportView.tsx:178
+msgid "Scope"
+msgstr "対象"
+
+#: src/admin/AccountDeletionDangerZone.tsx:452
+msgid "Search"
+msgstr "検索"
+
+#: src/admin/AccountDeletionDangerZone.tsx:450
+msgid "Searching…"
+msgstr "検索中…"
 
 #: pages/checkout.tsx:82
 msgid "Secure Payment via Stripe.com and partners."
@@ -724,25 +965,29 @@ msgstr "Stripe.com とそのパートナーによる安全な決済です。"
 msgid "See all inputs and remix at {url}"
 msgstr "{url} ですべての入力を確認してリミックスできます"
 
-#: pages/account/data.tsx:61
+#: pages/account/data.tsx:166
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "<0>利用規約</0>と <1>プライバシーポリシー</1> もご覧ください"
 
 #: pages/s/[_id].tsx:150
-#: src/OutputImage.tsx:168
+#: src/OutputImage.tsx:166
 msgid "See my Kiri.Art creation!"
 msgstr "私の Kiri.Art 作品を見てください！"
 
 #: pages/s/[_id].tsx:348
-#: src/sd/Controls.tsx:527
+#: src/sd/Controls.tsx:529
 msgid "Seed"
 msgstr "シード"
 
-#: src/OutputImage.tsx:456
+#: src/OutputImage.tsx:454
 msgid "SEND IMAGE TO"
 msgstr "画像の送信先"
 
-#: src/sd/Controls.tsx:671
+#: pages/account/data.tsx:222
+msgid "Server deletion finished, but local cleanup needs attention:"
+msgstr "サーバー上の削除は完了しましたが、ローカルデータの消去に確認が必要です："
+
+#: src/sd/Controls.tsx:673
 msgid "Share Inputs"
 msgstr "入力を共有"
 
@@ -750,24 +995,32 @@ msgstr "入力を共有"
 msgid "Sheduler"
 msgstr "スケジューラー"
 
-#: pages/credits.tsx:237
+#: src/account/AccountDeletionReportView.tsx:112
+msgid "Skipped (shared)"
+msgstr "スキップ（共有中）"
+
+#: pages/credits.tsx:236
 msgid "So, just owning {MIN_PAID_CREDITS} paid credits "
 msgstr "つまり、有料クレジットを {MIN_PAID_CREDITS} 持っているだけで"
 
-#: src/sd/Controls.tsx:978
+#: pages/account/data.tsx:52
+msgid "Some cached data could not be cleared from this device."
+msgstr "この端末から一部のキャッシュデータを消去できませんでした。"
+
+#: src/sd/Controls.tsx:982
 msgid "Speed, stability, cost"
 msgstr "速度、安定性、コスト"
 
-#: pages/index.tsx:276
+#: pages/index.tsx:278
 msgid "Start Creating"
 msgstr "作成を始める"
 
-#: pages/stats.tsx:105
-#: src/MyAppBar.tsx:232
+#: pages/stats.tsx:104
+#: src/MyAppBar.tsx:231
 msgid "Stats"
 msgstr "統計"
 
-#: pages/order/[_id].tsx:69
+#: pages/order/[_id].tsx:66
 msgid "Status"
 msgstr "ステータス"
 
@@ -776,99 +1029,177 @@ msgid "Steps"
 msgstr "ステップ"
 
 #. placeholder {0}: result.credits
-#: pages/credits.tsx:92
+#: pages/credits.tsx:91
 msgid "Successfully redeemed {0} credits."
 msgstr "{0}クレジットを利用しました。"
 
-#: pages/start.tsx:159
+#: pages/start.tsx:147
 msgid "Super simple, easy to share."
 msgstr "とてもシンプルで、共有も簡単。"
 
-#: pages/credits.tsx:216
+#. placeholder {0}: report.targetUserId
+#: src/account/AccountDeletionReportView.tsx:152
+msgid "Target user ID: <0>{0}</0>"
+msgstr "対象ユーザーID：<0>{0}</0>"
+
+#: pages/credits.tsx:215
 msgid "Tell me more?"
 msgstr "詳しく知る"
 
-#: pages/start.tsx:198
-#: src/Copyright.tsx:24
+#: pages/start.tsx:186
+#: src/Copyright.tsx:23
 msgid "Terms of Service"
 msgstr "利用規約"
 
-#: pages/start.tsx:22
-#: pages/txt2img.tsx:127
-#: src/MyAppBar.tsx:137
+#: pages/start.tsx:13
+#: pages/txt2img.tsx:124
+#: src/MyAppBar.tsx:136
 msgid "Text to Image"
 msgstr "テキストから画像へ"
 
-#: pages/credits.tsx:283
-#: src/CheckoutForm.tsx:86
+#: pages/account/data.tsx:72
+msgid "The browser session could not be signed out automatically."
+msgstr "ブラウザのセッションから自動的にログアウトできませんでした。"
+
+#: pages/credits.tsx:282
+#: src/CheckoutForm.tsx:85
 msgid "The charge will appear from \"Wastelands Networking\" or \"KIRI.ART\"."
 msgstr "請求名は \"Wastelands Networking\" または \"KIRI.ART\" と表示されます。"
 
-#: pages/credits.tsx:218
+#: pages/account/data.tsx:65
+msgid "The local browser database could not be deleted."
+msgstr "ブラウザのローカルデータベースを削除できませんでした。"
+
+#: pages/account/data.tsx:59
+msgid "The local Gongo session could not be cleared."
+msgstr "ローカルのGongoセッションを消去できませんでした。"
+
+#. placeholder {0}: response.status
+#: src/account/AccountDeletionReportView.tsx:90
+msgid "The request failed ({0} {statusText})."
+msgstr "リクエストに失敗しました（{0} {statusText}）。"
+
+#: pages/account/data.tsx:31
+#: src/admin/AccountDeletionDangerZone.tsx:73
+msgid "The request failed."
+msgstr "リクエストに失敗しました。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:298
+msgid "The server returned an invalid cleanup report."
+msgstr "サーバーから無効なクリーンアップレポートが返されました。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:221
+msgid "The server returned an invalid deletion preview."
+msgstr "サーバーから無効な削除プレビューが返されました。"
+
+#: pages/account/data.tsx:119
+#: src/admin/AccountDeletionDangerZone.tsx:260
+msgid "The server returned an invalid deletion report."
+msgstr "サーバーから無効な削除レポートが返されました。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:198
+msgid "The server returned invalid search results."
+msgstr "サーバーから無効な検索結果が返されました。"
+
+#: pages/credits.tsx:217
 msgid "There are 3 queue priorites, served in this order:"
 msgstr "キューには 3 つの優先順位があり、この順で処理されます:"
+
+#: src/admin/AccountDeletionDangerZone.tsx:514
+msgid "This account has administrator privileges. Confirm the user ID with particular care."
+msgstr "このアカウントには管理者権限があります。ユーザーIDを特に慎重に確認してください。"
 
 #: src/Starred.tsx:26
 msgid "This cannot be undone.  All likes will be lost."
 msgstr "これは元に戻せません。すべての「いいね」は失われます。"
 
-#: pages/start.tsx:189
+#. placeholder {0}: target.email || target.displayName || target.id
+#. placeholder {1}: target.id
+#: src/admin/AccountDeletionDangerZone.tsx:240
+msgid "This is the final confirmation for {0} ({1}). This action cannot be undone."
+msgstr "これは{0}（{1}）に対する最終確認です。この操作は元に戻せません。"
+
+#: pages/account/data.tsx:94
+msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
+msgstr "これが最終確認です。アカウントと関連データは消去され、この操作は元に戻せません。"
+
+#: pages/account/data.tsx:205
+msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
+msgstr "アカウントと関連データを完全に削除します。請求記録は、法的または運用上必要な場合、匿名化して保持されることがあります。"
+
+#: pages/start.tsx:177
 msgid "This project is based on Free and Open Source Software. You can run it on your own computer for free (if you have a suitable GPU, or with your own Banana serverless GPU account). Want to get involved? See the <0>about</0> page."
 msgstr "このプロジェクトは、無料オープンソースソフトウェアに基づいています。 ご自身のコンピューターで無料で実行できます (適切な GPU がある場合、またはご自身の Banana サーバーレス GPU アカウントを使用している場合)。 参加したいですか? <0>概要</0>ページをご覧ください。"
 
-#: pages/credits.tsx:289
+#: pages/credits.tsx:288
 msgid "This project is community run by volunteers in our spare time. We make no guarantees, and refunds are not possible at this time."
 msgstr "このプロジェクトは、空き時間に活動するボランティアによって運営されています。私たちはいかなる保証も行わず、現時点では返金もできません。"
 
-#: pages/credits.tsx:231
+#: pages/credits.tsx:230
 msgid "those using free credits, and have {MIN_PAID_CREDITS} or less paid credits."
 msgstr "無料クレジットを使用しており、有料クレジットが {MIN_PAID_CREDITS} 以下の人。"
 
-#: pages/credits.tsx:221
+#: pages/credits.tsx:220
 msgid "those using paid credits."
 msgstr "有料クレジットを使っている人。"
+
+#: pages/account/data.tsx:239
+msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
+msgstr "続行するには、以下のフレーズを正確に入力してください。削除を開始する前に、もう一度確認を求められます。"
+
+#: src/admin/AccountDeletionDangerZone.tsx:527
+msgid "To enable deletion, type this exact phrase:"
+msgstr "削除を有効にするには、次のフレーズを正確に入力してください："
 
 #: pages/checkout.tsx:75
 msgid "TOTAL"
 msgstr "合計"
 
-#: pages/credits.tsx:176
+#: pages/credits.tsx:175
 msgid "Total Credits"
 msgstr "合計クレジット"
 
-#: pages/credits.tsx:178
+#: pages/credits.tsx:177
 msgid "Total credits available for immediate use."
 msgstr "すぐに使用できる合計クレジット。"
 
-#: pages/stats.tsx:381
-#: pages/stats.tsx:523
+#: pages/stats.tsx:380
+#: pages/stats.tsx:522
 msgid "Total Requests"
 msgstr "総リクエスト数"
 
-#: pages/stats.tsx:613
+#: pages/stats.tsx:612
 msgid "Total Users"
 msgstr "総ユーザー数"
 
-#: pages/start.tsx:172
+#: pages/start.tsx:160
 msgid "Transparent development and easy for developers to get involved. Especially web devs without any prior background in Machine Learning."
 msgstr "開発の透明性が高く、開発者が参加しやすいこと。特に、機械学習の経験がない Web 開発者でも参加しやすいこと。"
 
-#: pages/account/data.tsx:100
-msgid "Type the text in the box below to enable this service."
-msgstr "この機能を有効にするには、下のボックスにその文字列を入力してください。"
+#: src/admin/AccountDeletionDangerZone.tsx:77
+msgid "Unknown"
+msgstr "不明"
 
-#: src/Inpaint.tsx:404
+#: src/account/AccountDeletionReportView.tsx:89
+msgid "Unknown error"
+msgstr "不明なエラー"
+
+#: src/account/AccountDeletionReportView.tsx:113
+msgid "Updated"
+msgstr "更新済み"
+
+#: src/Inpaint.tsx:402
 msgid "Upload an image with button below"
 msgstr "下のボタンで画像をアップロードします"
 
-#: src/OutputImage.tsx:388
-#: src/OutputImage.tsx:460
+#: src/OutputImage.tsx:386
+#: src/OutputImage.tsx:458
 msgid "Upsample"
 msgstr "アップサンプル"
 
-#: pages/start.tsx:40
-#: pages/upsample.tsx:342
-#: src/MyAppBar.tsx:182
+#: pages/start.tsx:31
+#: pages/upsample.tsx:339
+#: src/MyAppBar.tsx:181
 msgid "Upsampling"
 msgstr "アップサンプリング"
 
@@ -876,82 +1207,90 @@ msgstr "アップサンプリング"
 msgid "USD"
 msgstr "USD"
 
-#: src/Inpaint.tsx:409
+#: src/Inpaint.tsx:407
 msgid "Use mouse / finger to draw mask over it"
 msgstr "マウスまたは指を使って、重ねてマスクを描きます"
 
-#: pages/account/data.tsx:96
-msgid "Use the button below to <0>irreversably</0> delete your account and all associated data."
-msgstr "下のボタンを使って、アカウントと関連データをすべて<0>元に戻せない形で</0>削除してください。"
-
-#: pages/[_id].tsx:189
-#: pages/[_id].tsx:201
+#: pages/[_id].tsx:188
+#: pages/[_id].tsx:200
 msgid "User not found"
 msgstr "ユーザーが見つかりません"
 
-#: pages/[_id].tsx:137
+#: pages/account/data.tsx:153
+msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
+msgstr "ユーザーリクエストの記録ではプロンプトと画像が伏せられますが、関連するプロバイダーのログには、プロンプトを含む生成入力が記録される場合があります。スターを付けた画像もサーバーに保存されます。"
+
+#: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "そのユーザー名は利用できません。"
 
-#: pages/stats.tsx:538
+#: pages/stats.tsx:537
 msgid "Users"
 msgstr "ユーザー"
 
 #. placeholder {0}: 0
-#: src/sd/Controls.tsx:548
+#: src/sd/Controls.tsx:551
 msgid "Using an identical seed with identical options (prompt, guidance scale, etc) will always produce the same image. This can be useful to tweak prior creations, to understand how the other options affect the process (by removing the \"random\" element), or when sharing your work. A number between {0} and {MAX_SEED_VALUE}."
 msgstr "同じシードとオプション (プロンプト、ガイダンススケールなど) を使うと、常に同じ画像が作成されます。 これは、以前の作品を調整したり、(「ランダム」な要素を取り除いて) 他のオプションがプロセスに与える影響を把握したり、作品を共有したりする際に便利です。 {0} から {MAX_SEED_VALUE} の間の数字。"
 
-#: pages/about.tsx:105
+#: src/admin/AccountDeletionDangerZone.tsx:507
+msgid "Verified target"
+msgstr "確認済みの対象"
+
+#: src/admin/AccountDeletionDangerZone.tsx:494
+msgid "Verify and preview"
+msgstr "確認してプレビュー"
+
+#: pages/about.tsx:103
 msgid "We cannot overstate our thanks, appreciation and gratitude towards the following researchers, organizations and companies for their role in helping to <0>democratize AI</0>."
 msgstr "<0>誰もが AI を使えるようにする</0>取り組みにご協力いただいた、次の研究者、団体、企業の皆様への感謝の気持ちは、言葉では表しきれません。"
 
-#: pages/account/data.tsx:48
-msgid "We keep a log of <0>user requests</0> that <1>do not include prompts</1> nor input images or result images (except for images you've starred)."
-msgstr "私たちは<0>ユーザーのリクエスト</0>のログを保存していますが、<1>そこにはプロンプト</1>や入力画像、結果画像は含まれません（スターを付けた画像を除く）。"
-
-#: src/IPix2Pix.tsx:50
+#: src/IPix2Pix.tsx:48
 msgid "What is this?"
 msgstr "これは何ですか？"
 
 #: pages/s/[_id].tsx:340
-#: src/sd/Controls.tsx:445
+#: src/sd/Controls.tsx:447
 msgid "Width"
 msgstr "幅"
 
-#: src/sd/Controls.tsx:456
-#: src/sd/Controls.tsx:495
+#: src/sd/Controls.tsx:458
+#: src/sd/Controls.tsx:497
 msgid "Width of output image."
 msgstr "出力画像の幅。"
 
-#: pages/account/data.tsx:68
-msgid "You can download your data at anytime, in a ZIP file (of JSON collections). This includes <0>all data</0> in our database associated with your account."
-msgstr "自分のデータはいつでも ZIP ファイル（JSON コレクション）としてダウンロードできます。これには、アカウントに関連するデータベース内の<0>すべてのデータ</0>が含まれます。"
+#: src/admin/AccountDeletionDangerZone.tsx:139
+msgid "Yes"
+msgstr "はい"
 
-#: pages/credits.tsx:69
+#: pages/account/data.tsx:174
+msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
+msgstr "関連するデータベースのレコードとファイルのメタデータを、JSONコレクションのZIPアーカイブとしてダウンロードできます。アーカイブには、スターを付けた画像ファイル自体は含まれません。"
+
+#: pages/credits.tsx:68
 msgid "You have already redeemed this code before."
 msgstr "このコードは以前に利用したことがあります。"
 
-#: pages/start.tsx:145
+#: pages/start.tsx:133
 msgid "You must make clear on any content you share elsewhere that the image is computer generated."
 msgstr "他の場所で共有するコンテンツについては、その画像がコンピューターで生成されたものであることを明確に示す必要があります。"
 
-#: pages/credits.tsx:182
+#: pages/credits.tsx:181
 msgid "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up every <2>day</2><3>*</3>. They are used before your paid credits. Unused credits don't carry over."
 msgstr "無料クレジット <0>{DAILY_FREE_CREDITS}</0><1>*</1> は <2>毎日</2><3>*</3>補充されます。まず無料クレジットが使われ、その後に有料クレジットが使われます。未使用分は繰り越されません。"
 
-#: pages/account/data.tsx:44
+#: pages/account/data.tsx:149
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "<0>履歴</0>はこの端末にのみ保存され、サーバーにはバックアップされません。"
 
-#: pages/account/data.tsx:55
+#: pages/account/data.tsx:160
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "ログインが成功するたびに、<0>IP アドレス</0>とユーザーエージェントが記録されます。"
 
-#: pages/account/data.tsx:39
+#: pages/account/data.tsx:144
 msgid "Your data is stored in our database in <0>Paris, France</0>."
 msgstr "あなたのデータは <0>フランス・パリ</0> のデータベースに保存されます。"
 
-#: pages/start.tsx:161
+#: pages/start.tsx:149
 msgid "Zero setup, mobile-first. Easy for anyone - no matter their tech experience - to have access to this technology, and be able to play around and get excited about it."
 msgstr "セットアップ不要でモバイルファースト。技術経験を問わず、誰でもこの技術に触れて、試し、楽しめるようにすることを目指しています。"

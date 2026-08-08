@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { type NextAuthOptions, type Session } from "next-auth";
 
 // import { MongoDBAdapter } from "@auth/mongodb-adapter";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
@@ -13,7 +13,9 @@ import TwitterProvider, {
 
 import gs from "../../../src/api-lib/db-full";
 // import GithubProvider from "next-auth/providers/github";
-import GithubProvider from "../../../src/api-lib/GithubProvider";
+import GithubProvider, {
+  type GithubProfile,
+} from "../../../src/api-lib/GithubProvider";
 import GongoAuthAdapter, {
   AdapterUser,
 } from "../../../src/api-lib/gongoAuthAdapter";
@@ -72,7 +74,7 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       // scope: "user:email",
       // allRawEmails: true,
-      profile(profile) {
+      profile(profile: GithubProfile) {
         const service = {
           service: "github",
           id: profile.id.toString(),
@@ -158,11 +160,10 @@ export const authOptions = {
       },
     }),
   ],
-};
+} satisfies NextAuthOptions;
 
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  // @ ts-expect-error: problem with MongoDBAdapter
-  return await NextAuth(req, res, {
+export function createAuthOptions(req: NextApiRequest): NextAuthOptions {
+  return {
     ...authOptions,
     callbacks: {
       ...authOptions.callbacks,
@@ -198,5 +199,9 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         return session;
       },
     },
-  });
+  };
+}
+
+export default async function auth(req: NextApiRequest, res: NextApiResponse) {
+  return await NextAuth(req, res, createAuthOptions(req));
 }

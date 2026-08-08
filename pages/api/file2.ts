@@ -34,6 +34,7 @@ interface FileEntry {
   type: string; // "image",
   mimeType?: string;
   createdAt: Date;
+  userId?: ObjectId;
   image?: {
     format: SharpMetadata["format"];
     size?: number;
@@ -57,7 +58,7 @@ async function createFileFromBuffer(
     mimeType?: string;
     size?: number;
     existingId?: string;
-    extra?: Record<string, unknown>;
+    userId?: ObjectId;
   } = {},
 ) {
   // TODO, check if it's an image.

@@ -1,93 +1,77 @@
 import JSZip from "jszip";
-import { Document, WithId } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
-import Stream, { TransformCallback } from "stream";
+import { ObjectId } from "mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import gs from "../../src/api-lib/db-full";
+import { resolveAuthenticatedUserId } from "../../src/api-lib/requestAuth";
+import { exportAccountData } from "../../src/server/account-data";
 
-class ToJSON extends Stream.Transform {
-  sentFirst = false;
-  last: WithId<Document> | null = null;
-
-  constructor() {
-    super({ objectMode: true });
-  }
-
-  _transform(
-    data: WithId<Document>,
-    encoding: BufferEncoding,
-    callback: TransformCallback,
-  ) {
-    if (!this.sentFirst) {
-      callback(null, "[\n");
-      this.sentFirst = true;
-    }
-
-    if (this.last) {
-      callback(null, JSON.stringify(this.last, null, 2) + ",\n");
-    }
-
-    this.last = data;
-  }
-
-  _flush(callback: TransformCallback) {
-    callback(null, JSON.stringify(this.last, null, 2) + "\n]\n");
-  }
+function setDownloadSecurityHeaders(res: NextApiResponse): void {
+  res.setHeader(
+    "Cache-Control",
+    "private, no-store, no-cache, max-age=0, must-revalidate",
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  res.setHeader("X-Frame-Options", "DENY");
 }
 
 export default async function myData(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { sessionId } = req.query;
-  const { cookie } = req.headers;
-  const nextAuthSessionId =
-    cookie && cookie.match(/\bnext-auth.session-token=([^;]+)/)?.[1];
+  setDownloadSecurityHeaders(res);
 
-  if (!gs.dba)
-    return res
-      .status(500)
-      .send("Database not connected. Please try again later.");
-
-  const db = await gs.dba.dbPromise;
-
-  const query: Record<string, unknown> = {};
-
-  if (sessionId) {
-    query._id = sessionId;
-  } else {
-    query.sessionToken = nextAuthSessionId;
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const session = await db.collection("sessions").findOne(query);
+  const authenticatedUserId = await resolveAuthenticatedUserId(req, res);
+  if (!authenticatedUserId || !ObjectId.isValid(authenticatedUserId)) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
-  if (!session) return res.status(401).send("Session not found");
+  if (!gs.dba) {
+    return res.status(503).json({ error: "Database unavailable" });
+  }
 
-  const user = await db.collection("users").findOne({ _id: session.userId });
-  if (!user) return res.status(500).send("User not found");
+  try {
+    const db = await gs.dba.dbPromise;
+    const accountData = await exportAccountData({
+      db,
+      targetUserId: authenticatedUserId,
+    });
+    if (!accountData) {
+      return res.status(404).json({ error: "Account not found" });
+    }
 
-  res.writeHead(200, {
-    "Content-Type": "application/zip",
-    "Content-Disposition": `attachment; filename=kiri-${user._id}.zip`,
-  });
+    const zip = new JSZip();
+    for (const collection of accountData.collections) {
+      zip.file(
+        `${collection.name}.json`,
+        `${JSON.stringify(collection.data, null, 2)}\n`,
+      );
+    }
 
-  const zip = new JSZip();
-  zip.file("users.json", JSON.stringify(user, null, 2));
+    const archive = await zip.generateAsync({
+      compression: "DEFLATE",
+      compressionOptions: { level: 6 },
+      type: "nodebuffer",
+    });
 
-  const collections = await db.collections();
-  for (const collection of collections) {
-    const name = collection.collectionName;
-    if (name === "users") continue;
-
-    const query = { userId: user._id };
-    const exists = await collection.findOne(query);
-    if (!exists) continue;
-
-    zip.file(
-      `${name}.json`,
-      collection.find(query).stream().pipe(new ToJSON()),
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="kiri-account-data-${accountData.targetUserId}.zip"`,
     );
+    res.setHeader("Content-Length", archive.byteLength.toString());
+    return res.status(200).send(archive);
+  } catch (error) {
+    console.error("Account data export failed", error);
+    return res.status(500).json({ error: "Could not export account data" });
   }
-
-  zip.generateNodeStream({ streamFiles: true }).pipe(res);
 }

@@ -23,7 +23,7 @@ import {
 } from "gongo-client-react";
 import React from "react";
 import { TableComponents, TableVirtuoso } from "react-virtuoso";
-
+import AccountDeletionDangerZone from "../src/admin/AccountDeletionDangerZone";
 import MyAppBar from "../src/MyAppBar";
 import { creditCodeSchema, User } from "../src/schemas";
 
@@ -294,6 +294,7 @@ export default function Admin() {
         <Codes />
         <br />
         <Credits />
+        <AccountDeletionDangerZone />
       </Container>
     </>
   );

@@ -57,6 +57,16 @@ const managedIndexes: ManagedIndex[] = [
     name: "userRequests_userId",
   },
   {
+    collection: "userRequests",
+    key: { startRequestId: 1 },
+    name: "userRequests_startRequestId",
+  },
+  {
+    collection: "userRequests",
+    key: { "callInputs.startRequestId": 1 },
+    name: "userRequests_callInputs_startRequestId",
+  },
+  {
     collection: "users",
     key: { createdAt: 1 },
     name: "users_createdAt",
@@ -73,6 +83,16 @@ const managedIndexes: ManagedIndex[] = [
   },
   {
     collection: "users",
+    key: { email: 1 },
+    name: "users_email",
+  },
+  {
+    collection: "users",
+    key: { stripeCustomerId: 1 },
+    name: "users_stripeCustomerId",
+  },
+  {
+    collection: "users",
     key: { "services.service": 1, "services.id": 1 },
     name: "users_legacy_services",
   },
@@ -80,6 +100,11 @@ const managedIndexes: ManagedIndex[] = [
     collection: "users",
     key: { __updatedAt: 1 },
     name: "users_updatedAt",
+  },
+  {
+    collection: "users",
+    key: { admin: 1 },
+    name: "users_admin",
   },
   {
     collection: "statsDaily",
@@ -122,6 +147,21 @@ const managedIndexes: ManagedIndex[] = [
     name: "stars_updatedAt",
   },
   {
+    collection: "stars",
+    key: { "files.output": 1 },
+    name: "stars_files_output",
+  },
+  {
+    collection: "stars",
+    key: { "files.init": 1 },
+    name: "stars_files_init",
+  },
+  {
+    collection: "stars",
+    key: { "files.mask": 1 },
+    name: "stars_files_mask",
+  },
+  {
     collection: "likes",
     key: { userId: 1 },
     name: "likes_userId",
@@ -130,6 +170,16 @@ const managedIndexes: ManagedIndex[] = [
     collection: "likes",
     key: { starId: 1, userId: 1 },
     name: "likes_starId_userId",
+  },
+  {
+    collection: "reportedStars",
+    key: { userId: 1 },
+    name: "reportedStars_userId",
+  },
+  {
+    collection: "reportedStars",
+    key: { starId: 1 },
+    name: "reportedStars_starId",
   },
   {
     collection: "orders",
@@ -166,12 +216,21 @@ const managedIndexes: ManagedIndex[] = [
     key: { userId: 1 },
     name: "accounts_userId",
   },
-  // Enable if we start using NextAuth email/magic-link verification tokens.
-  // {
-  //   collection: "verification_tokens",
-  //   key: { identifier: 1, token: 1 },
-  //   name: "verification_tokens_identifier_token",
-  // },
+  {
+    collection: "accountDeletionJobs",
+    key: { updatedAt: 1, attempts: 1 },
+    name: "accountDeletionJobs_updatedAt_attempts",
+  },
+  {
+    collection: "verification_tokens",
+    key: { identifier: 1 },
+    name: "verification_tokens_identifier",
+  },
+  {
+    collection: "verification_tokens",
+    key: { email: 1 },
+    name: "verification_tokens_email",
+  },
   {
     collection: "csends",
     key: { container_id: 1, type: 1, status: 1, date: -1 },
@@ -191,6 +250,16 @@ const managedIndexes: ManagedIndex[] = [
     collection: "files",
     key: { sha256: 1 },
     name: "files_sha256",
+  },
+  {
+    collection: "files",
+    key: { userId: 1 },
+    name: "files_userId",
+  },
+  {
+    collection: "statsDaily",
+    key: { "requestsByUser.userId": 1 },
+    name: "statsDaily_requestsByUser_userId",
   },
 ];
 

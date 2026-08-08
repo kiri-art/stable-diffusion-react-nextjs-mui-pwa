@@ -72,13 +72,15 @@ export default async function starItem(
 
   const files: Star["files"] = {
     // @ts-expect-error: objectid
-    output: (await createFileFromBuffer(images.output, { filename }))._id,
+    output: (await createFileFromBuffer(images.output, { filename, userId }))
+      ._id,
   };
   if (images.init)
     // @ts-expect-error: objectid
     files.init = (
       await createFileFromBuffer(images.init, {
         filename: "init_image.jpg", // TODO, file ext
+        userId,
       })
     )._id;
   if (images.mask)
@@ -86,6 +88,7 @@ export default async function starItem(
     files.mask = (
       await createFileFromBuffer(images.mask, {
         filename: "mask_image.jpg", // TODO, file ext
+        userId,
       })
     )._id;
 
