@@ -14,3 +14,5 @@ tsconfig.tsbuildinfo
 .env.local
 .env*.local
 /dump
+public/worker-*.js
+stash
