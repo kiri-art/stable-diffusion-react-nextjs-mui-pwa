@@ -18,7 +18,7 @@ const gs = new GongoServer({
 
 export default async function bananaCheck(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   console.log(req.query);
   const callID = req.query.callID;

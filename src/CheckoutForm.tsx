@@ -1,18 +1,17 @@
-import {
-  useStripe,
-  useElements,
-  PaymentElement,
-  LinkAuthenticationElement,
-} from "@stripe/react-stripe-js";
-import React, { SyntheticEvent } from "react";
 import { Trans } from "@lingui/react/macro";
-
 import { Box, Button } from "@mui/material";
 import {
+  LinkAuthenticationElement,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import {
+  useGongoIsPopulated,
   useGongoOne,
   useGongoUserId,
-  useGongoIsPopulated,
 } from "gongo-client-react";
+import React, { SyntheticEvent } from "react";
 
 export default function CheckoutForm({ orderId }: { orderId: string }) {
   const stripe = useStripe();
@@ -21,7 +20,7 @@ export default function CheckoutForm({ orderId }: { orderId: string }) {
   const isPopulated = useGongoIsPopulated();
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const userEmail =
     user && user.emails && user.emails.length > 0 && user.emails[0].value;

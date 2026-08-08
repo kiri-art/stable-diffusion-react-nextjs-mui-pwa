@@ -30,7 +30,7 @@ export function getMimeTypeFromBuffer(buffer: Buffer): string {
   const mimeType = headers[header];
   if (!mimeType) {
     throw new Error(
-      `Unknown header "${header}", returning file.type instead: "{$file.type}"`
+      `Unknown header "${header}", returning file.type instead: "{$file.type}"`,
     );
   }
   return mimeType;
@@ -53,7 +53,7 @@ export function getMimeType(file: Blob): Promise<string> {
       const mimeType = headers[header];
       if (!mimeType) {
         console.warn(
-          `Unknown header "${header}", returning file.type instead: "{$file.type}"`
+          `Unknown header "${header}", returning file.type instead: "{$file.type}"`,
         );
       }
       return resolve(mimeType || file.type);

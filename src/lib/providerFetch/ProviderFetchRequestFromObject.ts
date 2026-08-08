@@ -1,9 +1,9 @@
+import providers from "../../config/providers";
+import { getModel } from "../models";
+import ProviderFetchRequestBanana from "./ProviderFetchRequestBanana";
 import ProviderFetchRequestBase, {
   ProviderFetchRequestObject,
 } from "./ProviderFetchRequestBase";
-import ProviderFetchRequestBanana from "./ProviderFetchRequestBanana";
-import providers from "../../config/providers";
-import { getModel } from "../models";
 
 const ProviderFetchRequestByApi = {
   direct: ProviderFetchRequestBase,
@@ -14,7 +14,7 @@ const ProviderFetchRequestByApi = {
 
 export default function ProviderFetchRequestFromObject(
   object: ProviderFetchRequestObject,
-  createId = false
+  createId = false,
 ) {
   // console.log("ProviderFetchRequestFromObject", object, "createId: ", createId);
 
@@ -34,7 +34,7 @@ export default function ProviderFetchRequestFromObject(
     provider,
     model,
     object.inputs,
-    id
+    id,
   );
 
   providerFetchRequest.callID = object.callID || "";

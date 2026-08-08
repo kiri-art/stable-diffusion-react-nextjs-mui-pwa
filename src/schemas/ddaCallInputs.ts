@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType, array } from "yup";
+import { array, boolean, InferType, object, string } from "yup";
 import models from "../config/models";
 import Providers from "../config/providers";
 
@@ -45,14 +45,14 @@ const ddaCallInputsSchema = object({
   textual_inversions: array().of(
     string()
       .matches(
-        /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/
+        /https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)&token=(.*)/,
       )
-      .required()
+      .required(),
   ),
   lora_weights: array().of(
     string()
       .matches(/https:\/\/civitai.com\/api\/download\/models\/(\d+)#fname=(.*)/)
-      .required()
+      .required(),
   ),
   compel_prompts: boolean(),
   image_format: string().oneOf(["PNG", "JXL", "WEBP"]),

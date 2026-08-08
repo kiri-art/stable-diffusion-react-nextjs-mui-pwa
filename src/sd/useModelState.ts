@@ -6,7 +6,7 @@ import defaults from "./defaults";
 function useSdState<T>(
   initialValue: T,
   type: "call" | "model" = "model",
-  opts: ModelStateIdConfig = { id: "" }
+  opts: ModelStateIdConfig = { id: "" },
 ) {
   const state = React.useState<T>(initialValue);
   return {
@@ -19,7 +19,7 @@ function useSdState<T>(
 
 export function modelStateValues(modelState: ModelState) {
   return Object.fromEntries(
-    Object.entries(modelState).map(([key, { value }]) => [key, value])
+    Object.entries(modelState).map(([key, { value }]) => [key, value]),
   );
 }
 
@@ -27,7 +27,7 @@ export function modelStateModelInputs(modelState: ModelState) {
   return Object.fromEntries(
     Object.entries(modelState)
       .filter(([_key, { type }]) => !type || type === "model")
-      .map(([key, { value }]) => [key, value])
+      .map(([key, { value }]) => [key, value]),
   );
 }
 
@@ -35,7 +35,7 @@ export function modelStateCallInputs(modelState: ModelState) {
   return Object.fromEntries(
     Object.entries(modelState)
       .filter(([_key, { type }]) => type === "call")
-      .map(([key, { value }]) => [key, value])
+      .map(([key, { value }]) => [key, value]),
   );
 }
 
@@ -75,7 +75,7 @@ export interface ModelStateIdConfig {
 }
 
 export default function useModelState(
-  _inputs?: Array<string | ModelStateIdConfig>
+  _inputs?: Array<string | ModelStateIdConfig>,
 ): ModelState {
   const router = useRouter();
   const query = router.query as {
@@ -101,7 +101,7 @@ export default function useModelState(
   const opts = Object.fromEntries(
     _inputs
       ?.filter((x): x is ModelStateIdConfig => typeof x !== "string")
-      .map((x) => [x.id, x]) ?? []
+      .map((x) => [x.id, x]) ?? [],
   );
 
   for (const v of ["randomizeSeed", "shareInputs", "safety_checker"] as const)
@@ -111,13 +111,13 @@ export default function useModelState(
     prompt: useSdState(query.prompt || ""),
     negative_prompt: useSdState(query.negative_prompt || ""), // defaults.negative_prompt),
     num_inference_steps: useSdState<number | string>(
-      query.num_inference_steps ?? defaults.num_inference_steps
+      query.num_inference_steps ?? defaults.num_inference_steps,
     ),
     guidance_scale: useSdState<number | string>(
-      query.guidance_scale ?? defaults.guidance_scale
+      query.guidance_scale ?? defaults.guidance_scale,
     ),
     image_guidance_scale: useSdState<number | string>(
-      query.image_guidance_scale ?? defaults.image_guidance_scale
+      query.image_guidance_scale ?? defaults.image_guidance_scale,
     ),
     width: useSdState<number | string>(query.width ?? defaults.width),
     height: useSdState<number | string>(query.height ?? defaults.height),
@@ -125,31 +125,32 @@ export default function useModelState(
     MODEL_ID: useSdState<string>(
       (opts.MODEL_ID?.default as string) ?? query.MODEL_ID ?? defaults.MODEL_ID,
       "model",
-      opts.MODEL_ID
+      opts.MODEL_ID,
     ),
     PROVIDER_ID: useSdState<string>(query.PROVIDER_ID ?? defaults.PROVIDER_ID),
     seed: useSdState<number | string>(query.seed ?? defaults.seed()),
     randomizeSeed: useSdState<boolean>(
-      (query.randomizeSeed as boolean) ?? defaults.randomizeSeed
+      (query.randomizeSeed as boolean) ?? defaults.randomizeSeed,
     ),
     shareInputs: useSdState<boolean>(
-      (query.shareInputs as boolean) ?? defaults.shareInputs
+      (query.shareInputs as boolean) ?? defaults.shareInputs,
     ),
     safety_checker: useSdState<boolean>(
-      (query.safety_checker as boolean) ?? defaults.safety_checker
+      (query.safety_checker as boolean) ?? defaults.safety_checker,
     ),
     sampler: useSdState<string>(defaults.sampler),
     lora_weights: useSdState<string[]>([], "call", opts.lora_weights),
     textual_inversions: useSdState<string[]>(
       [],
       "call",
-      opts.textual_inversions
+      opts.textual_inversions,
     ),
   };
 
   const ref = React.useRef(allStates);
   ref.current = allStates;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: This effect intentionally tracks the stable ref and query.
   React.useEffect(
     () => {
       console.log("query", query);
@@ -163,15 +164,14 @@ export default function useModelState(
       }
     },
     // ok for now... this is a bit of a workaround
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ref, query]
+    [ref, query],
   );
 
   // return allStates;
 
   return inputs
     ? (Object.fromEntries(
-        Object.entries(allStates).filter(([key]) => inputs.includes(key))
+        Object.entries(allStates).filter(([key]) => inputs.includes(key)),
       ) as unknown as ModelState) // TODO, clever typescript way to inspect inputs
     : allStates;
 }

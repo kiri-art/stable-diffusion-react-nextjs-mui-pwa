@@ -1,9 +1,6 @@
-import * as React from "react";
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-
+import { Clear, GridView, Help, Splitscreen } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -20,15 +17,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-
-import Link from "../src/Link";
-import MyAppBar from "../src/MyAppBar";
-import Copyright from "../src/Copyright";
-import { useGongoLive, useGongoSub, db } from "gongo-client-react";
-import useOver18 from "../src/lib/useOver18";
+import { db, useGongoLive, useGongoSub } from "gongo-client-react";
+import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { Clear, GridView, Help, Splitscreen } from "@mui/icons-material";
+import * as React from "react";
+import Copyright from "../src/Copyright";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "../src/config/constants";
+import Link from "../src/Link";
+import useOver18 from "../src/lib/useOver18";
+import MyAppBar from "../src/MyAppBar";
 
 const Starred = dynamic(() => import("../src/Starred"), { ssr: false });
 
@@ -82,36 +80,36 @@ function TextFieldDebounced({
           input: {
             endAdornment: (
               <InputAdornment position="end">
-              {value != "" && (
-                <IconButton onClick={() => setValue("")} edge="end">
-                  <Clear />
-                </IconButton>
-              )}
+                {value != "" && (
+                  <IconButton onClick={() => setValue("")} edge="end">
+                    <Clear />
+                  </IconButton>
+                )}
 
-              <Tooltip
-                title={
-                  <Box>
-                    <Trans>
-                      Only show stars with matching prompts. More advanced
-                      filters coming soon. Separate multiple terms with a pipe
-                      (&quot;|&quot;) character.
-                    </Trans>
-                  </Box>
-                }
-                enterDelay={0}
-                enterTouchDelay={0}
-                leaveDelay={0}
-                leaveTouchDelay={4000}
-              >
-                <Help />
-              </Tooltip>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Only show stars with matching prompts. More advanced
+                        filters coming soon. Separate multiple terms with a pipe
+                        (&quot;|&quot;) character.
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={4000}
+                >
+                  <Help />
+                </Tooltip>
               </InputAdornment>
             ),
           },
         }}
       />
     ),
-    [value]
+    [value],
   );
 }
 
@@ -125,7 +123,7 @@ const Home: NextPage = () => {
     router.replace(
       { pathname: "/", query: { ...router.query, nsfwFilter } },
       undefined,
-      { shallow: true, scroll: false }
+      { shallow: true, scroll: false },
     );
 
   // const [show, setShow] = React.useState("recent");
@@ -134,7 +132,7 @@ const Home: NextPage = () => {
     router.replace(
       { pathname: "/", query: { ...router.query, show } },
       undefined,
-      { shallow: true, scroll: false }
+      { shallow: true, scroll: false },
     );
 
   const explicit = router.query.explicit === "true" ? true : false;
@@ -142,7 +140,7 @@ const Home: NextPage = () => {
     router.replace(
       { pathname: "/", query: { ...router.query, explicit } },
       undefined,
-      { shallow: true, scroll: false }
+      { shallow: true, scroll: false },
     );
 
   const filter =
@@ -156,10 +154,10 @@ const Home: NextPage = () => {
       router.replace(
         { pathname: "/", query: { ...router.query, filter } },
         undefined,
-        { shallow: true, scroll: false }
+        { shallow: true, scroll: false },
       );
     },
-    [router]
+    [router],
   );
 
   const over18 = useOver18();
@@ -170,7 +168,7 @@ const Home: NextPage = () => {
     router.replace(
       { pathname: "/", query: { ...router.query, useGrid } },
       undefined,
-      { shallow: true, scroll: false }
+      { shallow: true, scroll: false },
     );
 
   const query: Record<string, unknown> = {};
@@ -209,7 +207,7 @@ const Home: NextPage = () => {
     };
 
   const items = useGongoLive(
-    (db) => db.collection("stars").find(query).sort(sortField, "desc") //.limit(100)
+    (db) => db.collection("stars").find(query).sort(sortField, "desc"), //.limit(100)
   );
 
   // We don't do this as part of the gongo query because the regexp instance doesn't
@@ -226,12 +224,12 @@ const Home: NextPage = () => {
   const starsFiltered = useGongoSub(
     "stars",
     { nsfw: false },
-    { sort: [sortField, "desc"], limit: 50 }
+    { sort: [sortField, "desc"], limit: 50 },
   );
   const starsNSFW = useGongoSub(
     nsfwFilter === false && "stars",
     { nsfw: true },
-    { sort: [sortField, "desc"], limit: 50 }
+    { sort: [sortField, "desc"], limit: 50 },
   );
 
   // 2023-09-06 temporary mitigation for old gongo-client version

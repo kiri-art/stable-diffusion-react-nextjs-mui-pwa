@@ -1,49 +1,48 @@
-import * as React from "react";
-import { useRouter } from "next/router";
 import { Plural, Trans } from "@lingui/react/macro";
-import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
-import Image from "next/legacy/image";
-import useNews from "./useNews";
-import { signIn, signOut } from "next-auth/react";
-
 import {
+  AdminPanelSettings,
+  Forum,
+  GitHub,
+  Home,
+  Info,
+  Language as LanguageIcon,
+  Menu as MenuIcon,
+  Quiz,
+  ShowChart,
+} from "@mui/icons-material";
+import {
+  Alert,
   AppBar,
-  Box,
-  Button,
-  Toolbar,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
   // Tooltip,
   Avatar,
+  Box,
+  Button,
   Divider,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  SwipeableDrawer,
+  Menu,
+  MenuItem,
   Slide,
+  SwipeableDrawer,
+  Toolbar,
+  Typography,
   useScrollTrigger,
-  Alert,
 } from "@mui/material";
-import {
-  Menu as MenuIcon,
-  Language as LanguageIcon,
-  Home,
-  GitHub,
-  Info,
-  AdminPanelSettings,
-  ShowChart,
-  Forum,
-  Quiz,
-} from "@mui/icons-material";
+import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
+import Image from "next/legacy/image";
+import { useRouter } from "next/router";
+import { signIn, signOut } from "next-auth/react";
+import * as React from "react";
+import { creditsStrOrFalse } from "../pages/credits";
 
 import Link from "../src/Link";
 import locales from "../src/lib/locales";
-import { creditsStrOrFalse } from "../pages/credits";
 import NewBadge from "./NewBadge";
+import useNews from "./useNews";
 
 const drawerWidth = 260;
 
@@ -61,7 +60,7 @@ export default function MyAppBar({ title }: { title: string }) {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [anchorElLang, setAnchorElLang] = React.useState<null | HTMLElement>(
-    null
+    null,
   );
 
   const userId = useGongoUserId();
@@ -69,7 +68,7 @@ export default function MyAppBar({ title }: { title: string }) {
   // const userId = session?.data?.user?.id;
 
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const isAdmin = user && user.admin;
   const userCredits = creditsStrOrFalse(user);
@@ -97,7 +96,7 @@ export default function MyAppBar({ title }: { title: string }) {
 
       setMobileOpen(open);
     },
-    []
+    [],
   );
 
   const drawer = React.useMemo(
@@ -271,17 +270,17 @@ export default function MyAppBar({ title }: { title: string }) {
         </List>
       </Box>
     ),
-    [isAdmin, toggleDrawer]
+    [isAdmin, toggleDrawer],
   );
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
+    null,
   );
   const handleOpenUserMenu = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
       setAnchorElUser(event.currentTarget);
     },
-    []
+    [],
   );
   const handleCloseUserMenu = React.useCallback(() => {
     setAnchorElUser(null);
@@ -513,6 +512,6 @@ export default function MyAppBar({ title }: { title: string }) {
       userCredits,
       dismissNews,
       news,
-    ]
+    ],
   );
 }

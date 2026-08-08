@@ -1,7 +1,7 @@
+import { t } from "@lingui/core/macro";
 import React from "react";
 import { toast } from "react-toastify";
 import sendQueue from "./lib/sendQueue";
-import { t } from "@lingui/core/macro";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -113,7 +113,7 @@ export function useInputImage({
           /*      dx: */ 0,
           /*      dy: */ 0,
           /*  dWidth: */ width,
-          /* dHeight: */ height
+          /* dHeight: */ height,
         );
 
         setInImgLoaded(true);
@@ -129,7 +129,7 @@ export function useInputImage({
       if (typeof result !== "string")
         throw new Error(
           `readerEvent.target.result is not a string, expected "${sample}" but got: ` +
-            JSON.stringify(result)
+            JSON.stringify(result),
         );
 
       image.src = result;

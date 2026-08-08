@@ -1,6 +1,6 @@
-import rtlPlugin from "stylis-plugin-rtl";
-import { prefixer } from "stylis";
 import createCache from "@emotion/cache";
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
 
 // const isBrowser = typeof document !== "undefined";
 
@@ -35,6 +35,6 @@ export default function createEmotionCache(dir = "ltr") {
   else
     throw new Error(
       "createEmotionCache(dir): dir should be 'rtl'/'ltr' not " +
-        JSON.stringify(dir)
+        JSON.stringify(dir),
     );
 }

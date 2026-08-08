@@ -1,9 +1,6 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
-
+import { Box, Container } from "@mui/material";
 import AppBar from "../src/MyAppBar";
-
-import { Container, Box } from "@mui/material";
 
 export default function Resources() {
   return (

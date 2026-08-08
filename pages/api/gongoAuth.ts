@@ -2,9 +2,9 @@
 import GongoAuth from "gongo-server/lib/auth";
 import { MongoDbaUser } from "gongo-server-db-mongo";
 import gs from "../../src/api-lib/db-full";
+
 // import { ipPass, ipFromReq } from "../../src/api-lib/ipCheck";
 
-/* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // import passport from "passport";
@@ -41,12 +41,12 @@ gongoAuth.use(
       passReqToCallback: true,
       scope: "email+profile",
     },
-    gongoAuth.passportVerify
+    gongoAuth.passportVerify,
   ),
   {
     //scope: 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email'
     scope: "email+profile",
-  }
+  },
 );
 
 gongoAuth.use(
@@ -59,12 +59,12 @@ gongoAuth.use(
       scope: "user:email",
       allRawEmails: true,
     },
-    gongoAuth.passportVerify
+    gongoAuth.passportVerify,
   ),
   {
     //scope: 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email'
     scope: "user:email",
-  }
+  },
 );
 
 gongoAuth.use(
@@ -76,9 +76,9 @@ gongoAuth.use(
       passReqToCallback: true,
       includeEmail: true,
     },
-    gongoAuth.passportVerify
+    gongoAuth.passportVerify,
   ),
-  {}
+  {},
 );
 
 //module.exports = passport.authenticate('google', gongoAuth.passportComplete);
@@ -88,7 +88,7 @@ if (gs.dba) {
   const Users = gs.dba.Users;
   const origCreateUser = Users.createUser;
   gs.dba.Users.createUser = async function sbMuiCreateUser(
-    origCallback?: ((dbaUser: Partial<MongoDbaUser>) => void) | undefined
+    origCallback?: ((dbaUser: Partial<MongoDbaUser>) => void) | undefined,
   ) {
     function callback(user: Partial<MongoDbaUser>): void {
       origCallback && origCallback(user);
@@ -163,6 +163,6 @@ export default async function handler(req, res) {
   passport.authenticate(
     req.query.service,
     authOpts,
-    gongoAuth.boundPassportComplete(req, res)
+    gongoAuth.boundPassportComplete(req, res),
   )(req, res, next);
 }

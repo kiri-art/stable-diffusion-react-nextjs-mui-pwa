@@ -4,10 +4,10 @@ import {
   type CSSProperties,
   type ReactNode,
   type RefObject,
-  type WheelEvent,
   useEffect,
   useRef,
   useState,
+  type WheelEvent,
 } from "react";
 
 export interface ScrollShadowWrapperProps {

@@ -1,10 +1,10 @@
+import SubModels from "../config/models";
 import ddaCallInputsSchema, { ddaCallInputs } from "../schemas/ddaCallInputs";
 import ddaModelInputsSchema, {
   ddaModelInputs,
 } from "../schemas/ddaModelInputs";
 import upsampleCallInputsSchema from "../schemas/upsampleCallInputs";
 import upsampleModelInputsSchema from "../schemas/upsampleModelInputs";
-import SubModels from "../config/models";
 import { prompt_a111_to_compel } from "../sd/utils";
 // import InvokeAIPromptResolver from "../sd/converter_standalone";
 
@@ -20,7 +20,7 @@ export interface Model {
     | typeof upsampleModelInputsSchema;
   prepareInputs?: (
     callInputs: ddaCallInputs,
-    modelInputs: ddaModelInputs
+    modelInputs: ddaModelInputs,
   ) => void;
 }
 
@@ -77,7 +77,7 @@ const models: Record<string, Model> = {
 
         modelInputs.prompt = prompt_a111_to_compel(modelInputs.prompt || "");
         modelInputs.negative_prompt = prompt_a111_to_compel(
-          modelInputs.negative_prompt || ""
+          modelInputs.negative_prompt || "",
         );
       }
     },

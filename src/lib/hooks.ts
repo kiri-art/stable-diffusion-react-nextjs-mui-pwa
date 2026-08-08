@@ -1,6 +1,6 @@
 type HookFunction = (
   data: unknown,
-  result: Record<string, unknown>
+  result: Record<string, unknown>,
 ) => Promise<Record<string, unknown> | void> | Record<string, unknown> | void;
 
 class Hooks {
@@ -17,7 +17,7 @@ class Hooks {
 
     if (!hooks)
       throw new Error(
-        `hooks.on("${hookName}") called, but no such hook exists`
+        `hooks.on("${hookName}") called, but no such hook exists`,
       );
 
     hooks.push(func);
@@ -27,7 +27,7 @@ class Hooks {
     const hooks = this._hooks.get(hookName);
     if (!hooks)
       throw new Error(
-        `hooks.exec("${hookName}") called, but no such hook exists`
+        `hooks.exec("${hookName}") called, but no such hook exists`,
       );
 
     let result = {};
@@ -36,7 +36,7 @@ class Hooks {
         result = { ...result, ...(await hook(data, result)) };
       } catch (error) {
         console.error(
-          `hooks.exec("${hookName}"): the following hook error was caught and SKIPPED!`
+          `hooks.exec("${hookName}"): the following hook error was caught and SKIPPED!`,
         );
         if (error instanceof Error) console.error(error.stack);
         else console.error(error);

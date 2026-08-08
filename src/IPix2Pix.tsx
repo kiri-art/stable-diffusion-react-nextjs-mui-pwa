@@ -1,22 +1,20 @@
-import React from "react";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
-import { useRouter } from "next/router";
 import { Trans } from "@lingui/react/macro";
-import NextImage from "next/image";
-
 import { Container, Grid } from "@mui/material";
-
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import NextImage from "next/image";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import React from "react";
 import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
-import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
-import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
-import blobToBase64 from "./lib/blobToBase64";
-import { outputImageQueue } from "./lib/sendQueue";
-import fetchToOutput from "./lib/fetchToOutput";
+import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import InputImage, { useInputImage } from "./InputImage";
-import { signIn } from "next-auth/react";
+import blobToBase64 from "./lib/blobToBase64";
+import fetchToOutput from "./lib/fetchToOutput";
+import { outputImageQueue } from "./lib/sendQueue";
+import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
 
 const ipix2pixState = [
   "prompt",
@@ -161,10 +159,10 @@ export default function IPix2Pix() {
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [historyId, setHistoryId] = React.useState("");
 
@@ -173,7 +171,7 @@ export default function IPix2Pix() {
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const router = useRouter();
 
@@ -198,8 +196,8 @@ export default function IPix2Pix() {
         initImageCanvasRef.current &&
         initImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
-          "image/jpeg"
-        )
+          "image/jpeg",
+        ),
     )) as Blob | null;
 
     if (!init_image_blob) {

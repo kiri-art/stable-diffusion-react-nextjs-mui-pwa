@@ -1,13 +1,5 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import {
-  useGongoSub,
-  useGongoUserId,
-  useGongoIsPopulated,
-  useGongoLive,
-} from "gongo-client-react";
-
 import {
   Container,
   Paper,
@@ -19,17 +11,22 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-import MyAppBar from "../src/MyAppBar";
-import Link from "../src/Link";
+import {
+  useGongoIsPopulated,
+  useGongoLive,
+  useGongoSub,
+  useGongoUserId,
+} from "gongo-client-react";
 import { signIn } from "next-auth/react";
+import Link from "../src/Link";
+import MyAppBar from "../src/MyAppBar";
 
 export default function Orders() {
   useGongoSub("orders", {});
   const isPopulated = useGongoIsPopulated();
   const userId = useGongoUserId();
   const orders = useGongoLive((db) =>
-    db.collection("orders").find().sort("createdAt", "desc")
+    db.collection("orders").find().sort("createdAt", "desc"),
   );
   if (!isPopulated) return <div>Loading...</div>;
 

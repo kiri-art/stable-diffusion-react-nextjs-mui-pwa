@@ -1,7 +1,8 @@
 // import * as banana from "@banana-dev/banana-dev";
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { Collection, Document } from "mongodb";
+
 import { addDays, endOfDay, startOfDay } from "date-fns";
+import type { Collection, Document } from "mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import gs from "../../src/api-lib/db-full";
 
@@ -125,7 +126,7 @@ function addKnownModel(knownModels: Map<string, unknown>, model: unknown) {
 async function countByDay(
   collection: Collection<Document>,
   fieldName: string,
-  windows: DayWindow[]
+  windows: DayWindow[],
 ) {
   const docs = await collection
     .aggregate<DailyCount>([
@@ -146,7 +147,7 @@ async function countByDay(
 
 async function requestsByModelByDay(
   requests: Collection<Document>,
-  windows: DayWindow[]
+  windows: DayWindow[],
 ) {
   const knownModels = new Map<string, unknown>();
   const byDay = new Map<number, Map<string, number>>();
@@ -193,7 +194,7 @@ async function requestsByModelByDay(
 
 async function requestsByUserByDay(
   userRequests: Collection<Document>,
-  windows: DayWindow[]
+  windows: DayWindow[],
 ) {
   const byDay = new Map<number, RequestsByUser[]>();
   const docs = await userRequests
@@ -251,7 +252,7 @@ function cutoffRequestsByUser(requestsByUser: RequestsByUser[]) {
 
 function knownModelsFromPreviousStats(
   knownModels: Map<string, unknown>,
-  previousStats: PreviousDailyStats | undefined
+  previousStats: PreviousDailyStats | undefined,
 ) {
   for (const entry of previousStats?.requestsByModel || []) {
     addKnownModel(knownModels, entry.model);
@@ -260,7 +261,7 @@ function knownModelsFromPreviousStats(
 
 function requestsByModelForDay(
   knownModels: Map<string, unknown>,
-  dailyModelCounts: Map<string, number> | undefined
+  dailyModelCounts: Map<string, number> | undefined,
 ) {
   return Array.from(knownModels.entries())
     .sort(([, left], [, right]) => String(left).localeCompare(String(right)))
@@ -317,13 +318,13 @@ async function computeHourlyStats({
         replacement: hourlyStats,
         upsert: true,
       },
-    }))
+    })),
   );
 }
 
 export default async function buildStats(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   // const day = req.query.day;
   // if (typeof day !== "string") return res.status(500).end("Invalid 'date' arg");
@@ -349,17 +350,13 @@ export default async function buildStats(
       .toArray()
   )[0] as PreviousDailyStats | undefined;
 
-  const [
-    newUsersByDay,
-    newRequestsByDay,
-    modelCounts,
-    dailyRequestsByUser,
-  ] = await Promise.all([
-    countByDay(users, "createdAt", windows),
-    countByDay(requests, "createdAt", windows),
-    requestsByModelByDay(requests, windows),
-    requestsByUserByDay(userRequests, windows),
-  ]);
+  const [newUsersByDay, newRequestsByDay, modelCounts, dailyRequestsByUser] =
+    await Promise.all([
+      countByDay(users, "createdAt", windows),
+      countByDay(requests, "createdAt", windows),
+      requestsByModelByDay(requests, windows),
+      requestsByUserByDay(userRequests, windows),
+    ]);
 
   knownModelsFromPreviousStats(modelCounts.knownModels, previousDailyStats);
 
@@ -390,10 +387,10 @@ export default async function buildStats(
       totalRequests,
       requestsByModel: requestsByModelForDay(
         modelCounts.knownModels,
-        modelCounts.byDay.get(dayIndex)
+        modelCounts.byDay.get(dayIndex),
       ),
       requestsByUser: cutoffRequestsByUser(
-        dailyRequestsByUser.get(dayIndex) || []
+        dailyRequestsByUser.get(dayIndex) || [],
       ),
       __updatedAt: updatedAt,
     };
@@ -407,7 +404,7 @@ export default async function buildStats(
           replacement: dayStats,
           upsert: true,
         },
-      }))
+      })),
     );
   }
 

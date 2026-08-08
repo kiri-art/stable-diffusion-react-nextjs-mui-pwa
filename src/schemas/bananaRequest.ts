@@ -1,8 +1,8 @@
-import { object, date, string, InferType, boolean, number, mixed } from "yup";
+import { boolean, date, InferType, mixed, number, object, string } from "yup";
 import type { ddaCallInputs } from "./ddaCallInputs";
 import type { ddaModelInputs } from "./ddaModelInputs";
-import type { UpsampleModelInputs } from "./upsampleModelInputs";
 import type { UpsampleCallInputs } from "./upsampleCallInputs";
+import type { UpsampleModelInputs } from "./upsampleModelInputs";
 
 const stepSchema = object({
   // name: string(),

@@ -1,8 +1,13 @@
-import React from "react";
-import { toast } from "react-toastify";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-
+import {
+  Attribution,
+  Delete,
+  KeyboardReturn,
+  Link as LinkIcon,
+  MoneyOffCsred,
+  RemoveShoppingCart,
+} from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -15,20 +20,14 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import {
-  Attribution,
-  KeyboardReturn,
-  Link as LinkIcon,
-  MoneyOffCsred,
-  RemoveShoppingCart,
-  Delete,
-} from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
 import MuiInput from "@mui/material/Input";
+import { styled } from "@mui/material/styles";
+import React from "react";
+import { toast } from "react-toastify";
 
 import models from "../../../src/config/models";
-import { fetchModel, modelIdFromIdOrUrlOrHash } from "../../lib/civitai";
 import type { Model, ModelVersionFile } from "../../lib/civitai";
+import { fetchModel, modelIdFromIdOrUrlOrHash } from "../../lib/civitai";
 import { ModelState } from "../useModelState";
 import * as LORA from "./LoRAs";
 import * as TextualInversion from "./TextualInversions";
@@ -60,7 +59,7 @@ export default function InputSlider({
     _setValue(newValue);
     if (Array.isArray(newValue))
       onChange(
-        typeof newValue[0] === "string" ? parseFloat(newValue[0]) : newValue[0]
+        typeof newValue[0] === "string" ? parseFloat(newValue[0]) : newValue[0],
       );
     else
       onChange(typeof newValue === "string" ? parseFloat(newValue) : newValue);
@@ -80,8 +79,8 @@ export default function InputSlider({
         ? parseFloat(value[0])
         : value[0]
       : typeof value === "string"
-      ? parseFloat(value)
-      : value;
+        ? parseFloat(value)
+        : value;
     if (f < 0) {
       setValue(0);
     } else if (f > 1) {
@@ -168,7 +167,7 @@ export function Models({
   added: AddedModel[];
   setAdded: React.Dispatch<React.SetStateAction<AddedModel[]>>;
   inputs: ModelState;
-  allowedTypes: typeof added[0]["model"]["type"][];
+  allowedTypes: (typeof added)[0]["model"]["type"][];
 }) {
   const [loading, setLoading] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -238,7 +237,7 @@ export function Models({
       setLoading(false);
       const type = model.type;
       toast(
-        t`Model must be a "${allowedTypes.join('", "')}", not a "${type}".`
+        t`Model must be a "${allowedTypes.join('", "')}", not a "${type}".`,
       );
       return;
     }
@@ -253,7 +252,7 @@ export function Models({
         toast(
           `You can only add ${addon.MAX_LENGTH} ${model.type} model${
             addon.MAX_LENGTH > 1 ? "s" : ""
-          }.`
+          }.`,
         );
         return;
       }

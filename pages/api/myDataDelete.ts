@@ -4,7 +4,7 @@ import gs from "../../src/api-lib/db-full";
 
 export default async function myDataDelete(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { sessionId } = req.query;
 

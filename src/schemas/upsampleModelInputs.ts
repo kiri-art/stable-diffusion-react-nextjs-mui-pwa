@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from "yup";
+import { boolean, InferType, object, string } from "yup";
 
 const upsampleModelInputsSchema = object({
   input_image: string(),

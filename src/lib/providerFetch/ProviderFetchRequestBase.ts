@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-
-import { Model, getModel } from "../models";
-import { Provider, apiInfo } from "../../config/providers";
+import { apiInfo, Provider } from "../../config/providers";
 import hooks from "../hooks";
+import { getModel, Model } from "../models";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,7 +35,7 @@ export default class ProviderFetchRequestBase {
     provider: Provider,
     model: Model,
     inputs: Record<string, unknown>,
-    id?: string
+    id?: string,
   ) {
     this.provider = provider;
     this.model = model;
@@ -93,7 +92,7 @@ export default class ProviderFetchRequestBase {
 
   async handleResponse(
     response: Response,
-    callback?: (result: Record<string, unknown>) => void
+    callback?: (result: Record<string, unknown>) => void,
   ) {
     if (response.headers.get("content-type") === "application/x-ndjson") {
       return await new Promise((resolve, reject) => {
@@ -205,7 +204,7 @@ export default class ProviderFetchRequestBase {
   async browserStart(callback?: (result: Record<string, unknown>) => void) {
     if (this.apiInfo().startViaServer) {
       const extraInfo = await hooks.exec(
-        "providerFetch.browser.extraInfoToSend"
+        "providerFetch.browser.extraInfoToSend",
       );
 
       const url = this.apiInfo().startOnly ? "/api/providerFetch" : "/api/kiri";
@@ -240,7 +239,7 @@ export default class ProviderFetchRequestBase {
         };
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Provider response errors have no stable external shape.
       const updateThisFromResult = (result: any) => {
         this.callID = result.callID;
         this.modelOutputs = result.modelOutputs;
@@ -252,7 +251,7 @@ export default class ProviderFetchRequestBase {
       if (!this.apiInfo().startOnly) {
         let isFirst = true;
         const callbackAndFirstResponse = async (
-          result: Record<string, unknown>
+          result: Record<string, unknown>,
         ) => {
           if (isFirst) {
             isFirst = false;
@@ -267,7 +266,7 @@ export default class ProviderFetchRequestBase {
 
         const result = await this.handleResponse(
           response,
-          callbackAndFirstResponse
+          callbackAndFirstResponse,
         );
 
         // this.callID = result.callID;  don't reset

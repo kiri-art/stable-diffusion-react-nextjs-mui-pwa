@@ -12,6 +12,7 @@ type SerwistLifecycleEventLike = { type: string; isUpdate?: boolean };
 type SerwistLifecycleWaitingEventLike = SerwistLifecycleEventLike & {
   wasWaitingBeforeRegister?: boolean;
 };
+
 import asyncConfirm from "./asyncConfirm";
 
 const UPDATE_INTERVAL = 60_000;
@@ -47,7 +48,7 @@ export default function serwistStuff() {
     // NOTE: MUST set skipWaiting to false in next.config.js pwa object
     // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users
     const promptNewVersionAvailable = async (
-      _event: SerwistLifecycleWaitingEventLike
+      _event: SerwistLifecycleWaitingEventLike,
     ) => {
       console.log("Event waiting is triggered.", _event);
       // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
@@ -58,9 +59,12 @@ export default function serwistStuff() {
           t`A newer version of this web app is available, reload to update?`,
         )
       ) {
-        sw.addEventListener("controlling", (_event: SerwistLifecycleEventLike) => {
-          window.location.reload();
-        });
+        sw.addEventListener(
+          "controlling",
+          (_event: SerwistLifecycleEventLike) => {
+            window.location.reload();
+          },
+        );
 
         // Send a message to the waiting service worker, instructing it to activate.
         sw.messageSkipWaiting();
@@ -73,30 +77,33 @@ export default function serwistStuff() {
 
     sw.addEventListener("waiting", promptNewVersionAvailable);
 
-    sw.addEventListener("controlling", async (event: SerwistLifecycleEventLike) => {
-      // The time check is because we don't want to display the prompt if
-      // the new service worker is installed on the first load.  Only on update.
-      if (event.isUpdate && Date.now() > startTime + UPDATE_INTERVAL - 1000) {
-        console.log({
-          isUpdate: event.isUpdate,
-          startTime,
-          UPDATE_INTERVAL,
-          now: Date.now(),
-          bool: Date.now() > startTime + UPDATE_INTERVAL - 1000,
-        });
-        if (
-          await asyncConfirm(
-            t`A newer version of this web app is available, reload to update?`,
-          )
-        ) {
-          window.location.reload();
-        } else {
-          console.log(
-            "User rejected to reload the web app, keep using old version, which might disfunction with newly loaded serviceworker",
-          );
+    sw.addEventListener(
+      "controlling",
+      async (event: SerwistLifecycleEventLike) => {
+        // The time check is because we don't want to display the prompt if
+        // the new service worker is installed on the first load.  Only on update.
+        if (event.isUpdate && Date.now() > startTime + UPDATE_INTERVAL - 1000) {
+          console.log({
+            isUpdate: event.isUpdate,
+            startTime,
+            UPDATE_INTERVAL,
+            now: Date.now(),
+            bool: Date.now() > startTime + UPDATE_INTERVAL - 1000,
+          });
+          if (
+            await asyncConfirm(
+              t`A newer version of this web app is available, reload to update?`,
+            )
+          ) {
+            window.location.reload();
+          } else {
+            console.log(
+              "User rejected to reload the web app, keep using old version, which might disfunction with newly loaded serviceworker",
+            );
+          }
         }
-      }
-    });
+      },
+    );
 
     sw.addEventListener("message", (event) => {
       if (

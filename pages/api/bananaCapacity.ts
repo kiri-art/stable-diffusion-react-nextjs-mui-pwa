@@ -7,7 +7,7 @@ const db = gs.dba;
 
 export default async function buildStats(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (!db) return res.status(500).end();
 

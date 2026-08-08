@@ -1,4 +1,4 @@
-import { object, string, InferType, date, mixed } from "yup";
+import { date, InferType, mixed, object, string } from "yup";
 import bananaRequestSchema from "./bananaRequest";
 
 const historyItemSchema = object({

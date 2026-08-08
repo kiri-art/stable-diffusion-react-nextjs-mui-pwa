@@ -1,10 +1,7 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
-
-import AppBar from "../src/MyAppBar";
-
-import { Container, Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Link from "next/link";
+import AppBar from "../src/MyAppBar";
 
 export default function News() {
   return (

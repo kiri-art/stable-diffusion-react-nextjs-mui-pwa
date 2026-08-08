@@ -1,13 +1,11 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
 import { useLingui } from "@lingui/react";
-import { db } from "gongo-client-react";
-
+import { Trans } from "@lingui/react/macro";
 import { Button, Container, Typography } from "@mui/material";
-
-import MyAppBar from "../../src/MyAppBar";
+import { db } from "gongo-client-react";
 import Link from "next/link";
+import React from "react";
+import MyAppBar from "../../src/MyAppBar";
 
 export default function AccountData() {
   useLingui();

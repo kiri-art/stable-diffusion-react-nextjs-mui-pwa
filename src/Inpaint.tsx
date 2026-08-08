@@ -1,24 +1,22 @@
-import React from "react";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
-import { useRouter } from "next/router";
 import { Trans } from "@lingui/react/macro";
-
-import { IconButton } from "@mui/material";
 import { Clear, Redo, Undo } from "@mui/icons-material";
-
+import { IconButton } from "@mui/material";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import React from "react";
+import blobToBase64 from "../src/lib/blobToBase64";
 import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
-import useModelState, { modelStateValues } from "../src/sd/useModelState";
+import locales, { defaultLocale } from "../src/lib/locales";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
-import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
-import locales, { defaultLocale } from "../src/lib/locales";
-import blobToBase64 from "../src/lib/blobToBase64";
-import { outputImageQueue } from "./lib/sendQueue";
-import fetchToOutput from "./lib/fetchToOutput";
-import { ddaCallInputs, ddaModelInputs } from "./schemas";
+import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import InputImage, { useInputImage } from "./InputImage";
-import { signIn } from "next-auth/react";
+import fetchToOutput from "./lib/fetchToOutput";
+import { outputImageQueue } from "./lib/sendQueue";
+import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
+import { ddaCallInputs, ddaModelInputs } from "./schemas";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 const DRAW_BORDERS = false;
@@ -88,7 +86,7 @@ function MaskCanvas({
         ops.current.splice(
           opsIndexRef.current,
           ops.current.length - opsIndexRef.current,
-          []
+          [],
         );
       }
       setOpsCount(ops.current.length);
@@ -259,10 +257,10 @@ export default function Inpainting() {
 
   const [log, setLog] = React.useState([] as Array<string>);
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [historyId, setHistoryId] = React.useState("");
 
@@ -271,7 +269,7 @@ export default function Inpainting() {
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const router = useRouter();
 
@@ -310,8 +308,8 @@ export default function Inpainting() {
         initImageCanvasRef.current &&
         initImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
-          "image/jpeg"
-        )
+          "image/jpeg",
+        ),
     )) as Blob | null;
 
     if (!init_image_blob) {
@@ -324,8 +322,8 @@ export default function Inpainting() {
         maskImageCanvasRef.current &&
         maskImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
-          "image/jpeg"
-        )
+          "image/jpeg",
+        ),
     )) as Blob | null;
 
     if (!mask_image_blob) {
@@ -436,7 +434,7 @@ export default function Inpainting() {
         </>
       );
     },
-    [initImageLoaded, file, initImageCanvasRef]
+    [initImageLoaded, file, initImageCanvasRef],
   );
 
   return (

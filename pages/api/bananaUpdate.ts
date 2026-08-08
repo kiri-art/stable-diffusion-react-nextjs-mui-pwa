@@ -3,7 +3,7 @@ import gs from "../../src/api-lib/db-full";
 
 export default async function bananaUpdate(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
   if (typeof req.body !== "object") throw new Error("Body not decoded");

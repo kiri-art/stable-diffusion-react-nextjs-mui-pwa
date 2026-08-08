@@ -1,9 +1,10 @@
-/* eslint-disable */
-import * as React from "react";
-import type { NextPage } from "next";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+// biome-ignore-all lint: This legacy page is intentionally excluded from linting.
+
 import { t } from "@lingui/core/macro";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import type { NextPage } from "next";
+import * as React from "react";
 
 import Copyright from "../src/Copyright";
 import MyAppBar from "../src/MyAppBar";

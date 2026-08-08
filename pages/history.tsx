@@ -1,17 +1,5 @@
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
-import { NextRouter, useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  ImageListItem,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
 import {
   AccessTime,
   Delete,
@@ -20,27 +8,38 @@ import {
   Splitscreen,
   Star,
 } from "@mui/icons-material";
-import sanitizeFilename from "sanitize-filename";
+import {
+  Box,
+  Button,
+  Container,
+  ImageListItem,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+import { db, useGongoLive, useGongoUserId } from "gongo-client-react";
 import type { MasonryProps } from "masonic";
-
-import MyAppBar from "../src/MyAppBar";
-import type { HistoryItem } from "../src/schemas/history";
-import sendQueue, {
-  outputImageQueue,
-  maskImageQueue,
-} from "../src/lib/sendQueue";
-import Link from "../src/Link";
-import useBreakPoint from "../src/lib/useBreakPoint";
-import { destar } from "../src/Starred";
-import asyncConfirm from "../src/asyncConfirm";
-import StarType from "../src/schemas/star";
+import dynamic from "next/dynamic";
+import { NextRouter, useRouter } from "next/router";
+import React from "react";
 import { toast } from "react-toastify";
+import sanitizeFilename from "sanitize-filename";
+import asyncConfirm from "../src/asyncConfirm";
+import Link from "../src/Link";
+import sendQueue, {
+  maskImageQueue,
+  outputImageQueue,
+} from "../src/lib/sendQueue";
+import useBreakPoint from "../src/lib/useBreakPoint";
+import MyAppBar from "../src/MyAppBar";
+import { destar } from "../src/Starred";
+import type { HistoryItem } from "../src/schemas/history";
+import StarType from "../src/schemas/star";
 
 const MAX_HISTORY = 250;
 
 const Masonry = dynamic<MasonryProps<HistoryItem>>(
   () => import("masonic").then((module) => module.Masonry),
-  { ssr: false }
+  { ssr: false },
 );
 
 function ImgFromBase64({
@@ -58,7 +57,7 @@ function ImgFromBase64({
 }) {
   const src = "data:image/png;base64," + base64;
   return (
-    // eslint-disable-next-line @next/next/no-img-element
+    // biome-ignore lint/performance/noImgElement: These image URLs are already served by the optimized file API.
     <img
       alt={alt}
       src={src}
@@ -73,7 +72,7 @@ function ImgFromBase64({
 export async function editItem(
   item: HistoryItem | StarType,
   base64: string,
-  router: NextRouter
+  router: NextRouter,
 ) {
   console.log(item);
 
@@ -286,7 +285,7 @@ export default function History() {
   const cols = useGrid ? gridCols : 1;
 
   const items = useGongoLive((db) =>
-    db.collection("history").find().sort("date", "desc").limit(MAX_HISTORY)
+    db.collection("history").find().sort("date", "desc").limit(MAX_HISTORY),
   );
 
   async function clear() {

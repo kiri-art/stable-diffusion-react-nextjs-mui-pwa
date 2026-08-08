@@ -1,14 +1,13 @@
 import { db } from "gongo-client-react";
 import { v4 as uuidv4 } from "uuid";
-
-import { REQUIRE_REGISTRATION } from "./lib/client-env";
-import stableDiffusionInputsSchema from "../src/schemas/stableDiffusionInputs";
 import type { StableDiffusionInputs } from "../src/schemas/stableDiffusionInputs";
+import stableDiffusionInputsSchema from "../src/schemas/stableDiffusionInputs";
+import bananaUrl from "./lib/bananaUrl";
+import { REQUIRE_REGISTRATION } from "./lib/client-env";
+import { UpsampleCallInputs, UpsampleModelInputs } from "./schemas";
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "./schemas/bananaCallInputs";
-import { UpsampleCallInputs, UpsampleModelInputs } from "./schemas";
-import bananaUrl from "./lib/bananaUrl";
 
 type ModelInputs = StableDiffusionInputs | UpsampleModelInputs;
 type CallInputs = BananaCallInputs | UpsampleCallInputs;
@@ -18,7 +17,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 async function updateFinishedStep(
   callID: string,
   timestampMs: number,
-  value: Record<string, unknown>
+  value: Record<string, unknown>,
 ) {
   await fetch("/api/bananaUpdate", {
     method: "POST",
@@ -52,7 +51,7 @@ async function runner(
     dest: string; // "banana-local" | "banana-remote" | "exec";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
-  }
+  },
 ) {
   // This is quite distracting, need to rethink this ;)
   // setLog(["[WebUI] Sending " + dest + " request..."]);
@@ -171,7 +170,7 @@ async function runner(
       updateFinishedStep(
         callID,
         (result.created && result.created * 1000) || Date.now(),
-        { $error: result }
+        { $error: result },
       );
     setLog(JSON.stringify(result, null, 2).split("\n"));
     return { $error: result };
@@ -206,7 +205,7 @@ export default async function bananaFetch(
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
-  }
+  },
 ) {
   //console.log("runner", dest, runner);
   console.log({ model_inputs, call_inputs });

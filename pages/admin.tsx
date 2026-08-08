@@ -1,14 +1,5 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import {
-  db,
-  useGongoUserId,
-  useGongoOne,
-  useGongoSub,
-  useGongoLive,
-} from "gongo-client-react";
-
 import {
   Box,
   Button,
@@ -23,13 +14,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { TableVirtuoso, TableComponents } from "react-virtuoso";
+import {
+  db,
+  useGongoLive,
+  useGongoOne,
+  useGongoSub,
+  useGongoUserId,
+} from "gongo-client-react";
+import React from "react";
+import { TableComponents, TableVirtuoso } from "react-virtuoso";
 
 import MyAppBar from "../src/MyAppBar";
 import { creditCodeSchema, User } from "../src/schemas";
 
 const VirtuosoTableComponents: TableComponents<User> = {
-  // eslint-disable-next-line react/display-name
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
   )),
@@ -41,7 +39,6 @@ const VirtuosoTableComponents: TableComponents<User> = {
   ),
   TableHead,
   TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
-  // eslint-disable-next-line react/display-name
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableBody {...props} ref={ref} />
   )),
@@ -117,7 +114,7 @@ function Credits() {
       minInterval: 500,
       maxInterval: 2000,
       // persist: false,
-    }
+    },
   );
   const [filter, setFilter] = React.useState("");
   const _users = useGongoLive((db) => db.collection("users").find());
@@ -179,7 +176,7 @@ function Codes() {
   function onClick(
     codeId: string,
     field: "name" | "credits" | "total",
-    oldValue: string | number
+    oldValue: string | number,
   ) {
     return function () {
       const textValue = prompt("New Value?  Was: " + oldValue);
@@ -271,7 +268,7 @@ function Codes() {
 export default function Admin() {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
 
   React.useEffect(() => {

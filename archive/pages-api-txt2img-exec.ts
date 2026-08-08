@@ -1,7 +1,7 @@
 import child_process from "node:child_process";
 import fs from "node:fs/promises";
-import path from "node:path";
 import os from "node:os";
+import path from "node:path";
 import type { NextApiRequest, NextApiResponse } from "next";
 import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
 
@@ -10,7 +10,7 @@ console.log({ STABLE_DIFFUSION_HOME });
 
 export default async function txt2imgExec(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (process.env.NODE_ENV !== "development") {
     res.status(400);
@@ -31,7 +31,7 @@ export default async function txt2imgExec(
       if (key === "height") return ["H", value];
       if (key === "num_inference_steps") return ["ddim_steps", value];
       return [key, value];
-    })
+    }),
   );
 
   console.log({ cmdOpts });
@@ -44,8 +44,8 @@ export default async function txt2imgExec(
     .concat(
       Object.entries(cmdOpts).map(
         ([key, val]) =>
-          "--" + key + " " + (typeof val === "string" ? "'" + val + "'" : val)
-      )
+          "--" + key + " " + (typeof val === "string" ? "'" + val + "'" : val),
+      ),
     )
     .join(" ");
 
@@ -76,7 +76,7 @@ export default async function txt2imgExec(
         JSON.stringify({
           $type: "stdout",
           data: data.toString("utf8").trim(),
-        }) + "\n"
+        }) + "\n",
       );
     });
     child.stderr.on("data", (data) => {
@@ -85,7 +85,7 @@ export default async function txt2imgExec(
         JSON.stringify({
           $type: "stderr",
           data: data.toString("utf8").trim(),
-        }) + "\n"
+        }) + "\n",
       );
     });
 

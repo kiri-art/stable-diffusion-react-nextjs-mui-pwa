@@ -4,9 +4,7 @@ const Img2Img = dynamic(() => import("../src/Img2img"), {
   ssr: false,
 });
 
-import React from "react";
 import { t } from "@lingui/core/macro";
-
 import { Container } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";

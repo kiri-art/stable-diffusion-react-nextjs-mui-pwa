@@ -1,5 +1,5 @@
-import React from "react";
 import Discourse from "discourse2";
+import React from "react";
 
 const CHECK_NEWS_INTERVAL = 60_000 * 1; // 1 minute
 
@@ -10,7 +10,7 @@ export default function useNews() {
 
   const [news, setNews] = React.useState<
     Awaited<
-      ReturnType<typeof discourse["listCategoryTopics"]>
+      ReturnType<(typeof discourse)["listCategoryTopics"]>
     >["topic_list"]["topics"]
   >([]);
   const [lastRead, setLastRead] = React.useState(
@@ -23,7 +23,7 @@ export default function useNews() {
       }
       const str = localStorage.getItem("newsLastDismissed");
       return str ? parseInt(str) : null;
-    })()
+    })(),
   );
 
   React.useEffect(() => {

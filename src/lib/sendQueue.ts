@@ -44,5 +44,5 @@ const sendQueue = new SendQueue();
 const outputImageQueue = new SendQueue();
 const maskImageQueue = new SendQueue();
 
-export { outputImageQueue, maskImageQueue };
+export { maskImageQueue, outputImageQueue };
 export default sendQueue;

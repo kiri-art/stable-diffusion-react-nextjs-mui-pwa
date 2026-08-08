@@ -1,9 +1,7 @@
-import React from "react";
-import { useRouter } from "next/router";
-
-import MyAppBar from "../src/MyAppBar";
-import { Container, Typography, Box } from "@mui/material";
 import { Trans } from "@lingui/react/macro";
+import { Box, Container, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import MyAppBar from "../src/MyAppBar";
 
 export default function FAQ() {
   useRouter();

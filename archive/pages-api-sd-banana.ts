@@ -1,19 +1,19 @@
 // import * as banana from "@banana-dev/banana-dev";
-import type { NextApiRequest, NextApiResponse } from "next";
+
 import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
 import Database /* ObjectID */ from "gongo-server-db-mongo";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
-
-import type { BananaRequest } from "../../src/schemas/bananaRequest";
-import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
-import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
+import models from "../../src/config/models";
+import bananaUrl from "../../src/lib/bananaUrl";
 import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../../src/schemas/bananaCallInputs";
-import bananaUrl from "../../src/lib/bananaUrl";
-import models from "../../src/config/models";
+import type { BananaRequest } from "../../src/schemas/bananaRequest";
+import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
+import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
 
 // const CREDIT_COST = 1;
 
@@ -28,7 +28,7 @@ const gs = new GongoServer({
 async function bananaSdkRun(
   modelInputs: StableDiffusionInputs,
   callInputs: BananaCallInputs,
-  chargedCredits: { credits: number; paid: boolean }
+  chargedCredits: { credits: number; paid: boolean },
 ) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
@@ -174,7 +174,7 @@ async function bananaSdkRun(
 
 async function localSdkRun(
   modelInputs: StableDiffusionInputs,
-  callInputs: BananaCallInputs
+  callInputs: BananaCallInputs,
 ) {
   const created = Math.floor(Date.now() / 1000);
 
@@ -217,14 +217,14 @@ function log(out: Record<string, unknown>) {
           return shorten(value);
         return value;
       },
-      2
-    )
+      2,
+    ),
   );
 }
 
 export default async function SDBanana(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
   if (typeof req.body !== "object") throw new Error("Body not decoded");
@@ -234,7 +234,7 @@ export default async function SDBanana(
   let modelInputs, callInputs;
   try {
     modelInputs = await stableDiffusionInputsSchema.validate(
-      req.body.modelInputs
+      req.body.modelInputs,
     );
     callInputs = await bananaCallInputsSchema.validate(req.body.callInputs);
   } catch (error) {

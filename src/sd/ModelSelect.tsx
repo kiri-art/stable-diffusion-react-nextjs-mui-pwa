@@ -1,8 +1,5 @@
-import React, { FunctionComponent } from "react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import ScrollShadowWrapper from "../lib/ScrollShadowWrapper";
-
 import { AccessTime, ArrowDropDown, SortByAlpha } from "@mui/icons-material";
 import {
   Box,
@@ -14,11 +11,12 @@ import {
   Modal,
   OutlinedInput,
 } from "@mui/material";
-
-import { ModelState } from "./useModelState";
-import models from "../config/models";
+import React, { FunctionComponent } from "react";
 import type { Model } from "../config/models";
+import models from "../config/models";
+import ScrollShadowWrapper from "../lib/ScrollShadowWrapper";
 import useOver18 from "../lib/useOver18";
+import { ModelState } from "./useModelState";
 
 const nsfwTags = [
   "abyssorangemix2_hard",
@@ -131,10 +129,10 @@ const ModelSelectModalContents = React.forwardRef(
       setValue: (value: string) => void;
       input: HackyModelIdModelState;
     },
-    ref: React.ForwardedRef<HTMLInputElement>
+    ref: React.ForwardedRef<HTMLInputElement>,
   ) {
     const [baseModelFilter, setBaseModelFilter] = React.useState(
-      input.forceBaseModel || "all"
+      input.forceBaseModel || "all",
     );
     const [modelOriginFilter, setModelOriginFilter] = React.useState("all");
     const [inpaintFilter, setInpaintFilter] = React.useState(true);
@@ -171,7 +169,7 @@ const ModelSelectModalContents = React.forwardRef(
             (inInpaint &&
               (!inpaintFilter ||
                 (inpaintFilter && model.MODEL_ID.match(/[Ii]npaint/))))) &&
-          (tagFilter === "" || model.tags?.includes(tagFilter))
+          (tagFilter === "" || model.tags?.includes(tagFilter)),
       );
       return filteredModels;
     }, [
@@ -196,7 +194,7 @@ const ModelSelectModalContents = React.forwardRef(
       },
       [
         /* models */
-      ]
+      ],
     );
 
     const allTags = React.useMemo(() => {
@@ -317,7 +315,7 @@ const ModelSelectModalContents = React.forwardRef(
         </Box>
       </Fade>
     );
-  }
+  },
 );
 
 const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
@@ -334,7 +332,7 @@ const ModelSelectSelect = React.forwardRef(function ModelSelectSelect(
     setOpen: (value: boolean) => void;
     input: HackyModelIdModelState;
   },
-  ref: React.ForwardedRef<HTMLInputElement>
+  ref: React.ForwardedRef<HTMLInputElement>,
 ) {
   const model = models[value];
 

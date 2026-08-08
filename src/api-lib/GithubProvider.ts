@@ -61,7 +61,7 @@ export interface GithubEmail extends Record<string, unknown> {
 }
 
 export default function Github<P extends GithubProfile>(
-  options: OAuthUserConfig<P>
+  options: OAuthUserConfig<P>,
 ): OAuthConfig<P> {
   return {
     id: "github",
@@ -75,7 +75,6 @@ export default function Github<P extends GithubProfile>(
     userinfo: {
       url: "https://api.github.com/user",
       async request({ client, tokens }) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const _profile = await client.userinfo(tokens.access_token!);
         const profile = _profile as typeof _profile & {
           emails: GithubEmail[]; // <-- added

@@ -1,11 +1,13 @@
-import React, { useMemo } from "react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { db, useGongoUserId, useGongoOne } from "gongo-client-react";
-import models from "../config/models";
-import Providers from "../config/providers";
-import Addons from "./Addons";
-
+import {
+  Clear,
+  Height,
+  Help,
+  HelpOutlined,
+  Scale,
+  SettingsBackupRestore,
+} from "@mui/icons-material";
 import {
   Box,
   FormControl,
@@ -24,25 +26,21 @@ import {
   ToggleButtonGroup,
   Tooltip,
 } from "@mui/material";
-import {
-  Clear,
-  Height,
-  Help,
-  HelpOutlined,
-  Scale,
-  SettingsBackupRestore,
-} from "@mui/icons-material";
-
-import InputSlider from "../InputSlider";
-import globalDefaults, { MAX_SEED_VALUE } from "../sd/defaults";
-import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
+import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
+import React, { useMemo } from "react";
+import calculateCredits from "../calculateCredits";
+import models from "../config/models";
+import Providers from "../config/providers";
 import GoButton from "../GoButton";
+import InputSlider from "../InputSlider";
+import sharedInputTextFromInputs from "../lib/sharedInputTextFromInputs";
+import useOver18 from "../lib/useOver18";
 import ddaModelInputsSchema from "../schemas/ddaModelInputs";
+import globalDefaults, { MAX_SEED_VALUE } from "../sd/defaults";
+import Addons from "./Addons";
+import ModelSelect2 from "./ModelSelect";
 import type { ModelState } from "./useModelState";
 import { getRandomPrompt } from "./useRandomPrompt";
-import useOver18 from "../lib/useOver18";
-import calculateCredits from "../calculateCredits";
-import ModelSelect2 from "./ModelSelect";
 
 function EmojiIcon({ children, ...props }: { children: React.ReactNode }) {
   return (
@@ -81,7 +79,7 @@ function Prompt({
 
         // @ts-expect-error: TODO
         event.target.form.dispatchEvent(
-          new Event("submit", { cancelable: true, bubbles: true })
+          new Event("submit", { cancelable: true, bubbles: true }),
         );
       }
     }
@@ -105,39 +103,39 @@ function Prompt({
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                <IconButton onClick={() => setValue("")} edge="end">
-                  <Clear />
-                </IconButton>
-                <IconButton onClick={() => setValue(getRandomPrompt())}>
-                  <SettingsBackupRestore />
-                </IconButton>
-                <Tooltip
-                  title={
-                    <Box>
-                      <Trans>
-                        Description / caption of your desired image. May include
-                        art styles like &apos;impressionist&apos;, &apos;digital
-                        art&apos;, photographic styles and lenses, and other
-                        hints.
-                      </Trans>{" "}
-                      <Trans>
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc"
-                        >
-                          Learn more
-                        </a>
-                      </Trans>
-                    </Box>
-                  }
-                  enterDelay={0}
-                  enterTouchDelay={0}
-                  leaveDelay={0}
-                  leaveTouchDelay={4000}
-                >
-                  <Help />
-                </Tooltip>
+                  <IconButton onClick={() => setValue("")} edge="end">
+                    <Clear />
+                  </IconButton>
+                  <IconButton onClick={() => setValue(getRandomPrompt())}>
+                    <SettingsBackupRestore />
+                  </IconButton>
+                  <Tooltip
+                    title={
+                      <Box>
+                        <Trans>
+                          Description / caption of your desired image. May
+                          include art styles like &apos;impressionist&apos;,
+                          &apos;digital art&apos;, photographic styles and
+                          lenses, and other hints.
+                        </Trans>{" "}
+                        <Trans>
+                          <a
+                            target="_blank"
+                            rel="noreferrer"
+                            href="https://docs.google.com/document/d/17VPu3U2qXthOpt2zWczFvf-AH6z37hxUbvEe1rJTsEc"
+                          >
+                            Learn more
+                          </a>
+                        </Trans>
+                      </Box>
+                    }
+                    enterDelay={0}
+                    enterTouchDelay={0}
+                    leaveDelay={0}
+                    leaveTouchDelay={4000}
+                  >
+                    <Help />
+                  </Tooltip>
                 </InputAdornment>
               ),
             },
@@ -182,7 +180,7 @@ function NegativePrompt({
 
         // @ts-expect-error: TODO
         event.target.form.dispatchEvent(
-          new Event("submit", { cancelable: true, bubbles: true })
+          new Event("submit", { cancelable: true, bubbles: true }),
         );
       }
     }
@@ -206,41 +204,41 @@ function NegativePrompt({
           input: {
             endAdornment: (
               <InputAdornment position="end">
-              <IconButton onClick={() => setValue("")} edge="end">
-                <Clear />
-              </IconButton>
-              <IconButton onClick={() => setValue(defaultValue)}>
-                <SettingsBackupRestore />
-              </IconButton>
-              <Tooltip
-                title={
-                  <Box>
-                    <Trans>
-                      Description of all the things you <i>don&apos;t want</i>{" "}
-                      in the output image, e.g. prompt: &quot;bouquet of
-                      roses&quot;, negative prompt: &quot;red roses&quot;. You
-                      can also ask to exclude common diffusion artifacts like
-                      &quot;deformed hands&quot;. Click the &quot;reset&quot;
-                      icon for some common defaults.
-                    </Trans>{" "}
-                    <Trans>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt"
-                      >
-                        Learn more
-                      </a>
-                    </Trans>
-                  </Box>
-                }
-                enterDelay={0}
-                enterTouchDelay={0}
-                leaveDelay={0}
-                leaveTouchDelay={4000}
-              >
-                <Help />
-              </Tooltip>
+                <IconButton onClick={() => setValue("")} edge="end">
+                  <Clear />
+                </IconButton>
+                <IconButton onClick={() => setValue(defaultValue)}>
+                  <SettingsBackupRestore />
+                </IconButton>
+                <Tooltip
+                  title={
+                    <Box>
+                      <Trans>
+                        Description of all the things you <i>don&apos;t want</i>{" "}
+                        in the output image, e.g. prompt: &quot;bouquet of
+                        roses&quot;, negative prompt: &quot;red roses&quot;. You
+                        can also ask to exclude common diffusion artifacts like
+                        &quot;deformed hands&quot;. Click the &quot;reset&quot;
+                        icon for some common defaults.
+                      </Trans>{" "}
+                      <Trans>
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt"
+                        >
+                          Learn more
+                        </a>
+                      </Trans>
+                    </Box>
+                  }
+                  enterDelay={0}
+                  enterTouchDelay={0}
+                  leaveDelay={0}
+                  leaveTouchDelay={4000}
+                >
+                  <Help />
+                </Tooltip>
               </InputAdornment>
             ),
           },
@@ -290,7 +288,7 @@ function Strength_Grid_Slider({
         />
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -336,7 +334,7 @@ function CFS_Grid_Slider({
         />
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -374,7 +372,7 @@ function Image_Guidance_Grid_Slider({
         />
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -428,7 +426,7 @@ function Steps_Grid_Slider({
         )}
       </Grid>
     ),
-    [value, setValue, defaultValue, sampler]
+    [value, setValue, defaultValue, sampler],
   );
 }
 
@@ -468,7 +466,7 @@ function Width_Grid_Slider({
         />
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -507,7 +505,7 @@ function Height_Grid_Slider({
         />
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -547,29 +545,29 @@ function Seed({
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                <Tooltip
-                  title={
-                    <Box>
-                      <Trans>
-                        Using an identical seed with identical options (prompt,
-                        guidance scale, etc) will always produce the same image.
-                        This can be useful to tweak prior creations, to
-                        understand how the other options affect the process (by
-                        removing the &quot;random&quot; element), or when
-                        sharing your work. A number between {0} and{" "}
-                        {MAX_SEED_VALUE}.
-                      </Trans>
-                    </Box>
-                  }
-                  enterDelay={0}
-                  enterTouchDelay={0}
-                  leaveDelay={0}
-                  leaveTouchDelay={5000}
-                >
-                  <HelpOutlined
-                    sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
-                  />
-                </Tooltip>
+                  <Tooltip
+                    title={
+                      <Box>
+                        <Trans>
+                          Using an identical seed with identical options
+                          (prompt, guidance scale, etc) will always produce the
+                          same image. This can be useful to tweak prior
+                          creations, to understand how the other options affect
+                          the process (by removing the &quot;random&quot;
+                          element), or when sharing your work. A number between{" "}
+                          {0} and {MAX_SEED_VALUE}.
+                        </Trans>
+                      </Box>
+                    }
+                    enterDelay={0}
+                    enterTouchDelay={0}
+                    leaveDelay={0}
+                    leaveTouchDelay={5000}
+                  >
+                    <HelpOutlined
+                      sx={{ verticalAlign: "bottom", opacity: 0.5, ml: 1 }}
+                    />
+                  </Tooltip>
                 </InputAdornment>
               ),
             },
@@ -712,7 +710,7 @@ function SafetyChecker({
 }) {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const over18 = useOver18();
 
@@ -741,7 +739,7 @@ function SafetyChecker({
         }
       }
     },
-    [userId]
+    [userId],
   );
 
   return React.useMemo(() => {
@@ -934,7 +932,7 @@ function Sampler({
         </FormControl>
       </Grid>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -1004,7 +1002,7 @@ export function ProviderSelect({
           </Tooltip>
         </Grid>
       ) : null,
-    [value, setValue /* , defaultValue */]
+    [value, setValue /* , defaultValue */],
   );
 }
 
@@ -1024,13 +1022,13 @@ export default function SDControls({
   const sharedInputs = sharedInputTextFromInputs(inputs, true);
   const getRandomPromptForModel = getRandomPrompt.bind(
     null,
-    inputs.MODEL_ID.value
+    inputs.MODEL_ID.value,
   );
 
   function setWidthHeight(
     width: number | string,
     height: number | string,
-    which: string
+    which: string,
   ) {
     // logic allows for one max of 1024x768 or 768x1024 but now we support 1024x1024
     if (width > height) {
@@ -1077,16 +1075,16 @@ export default function SDControls({
     ...model.defaults,
   } as typeof globalDefaults;
 
-  React.useEffect(
-    () => {
-      inputs.width && inputs.width.setValue(defaults.width);
-      inputs.height && inputs.height.setValue(defaults.height);
-      // mdefs.safety_checker === false && inputs.safety_checker.setValue(true);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: These dependencies are intentionally explicit.
+  React.useEffect(() => {
+    inputs.width && inputs.width.setValue(defaults.width);
+    inputs.height && inputs.height.setValue(defaults.height);
+    // mdefs.safety_checker === false && inputs.safety_checker.setValue(true);
 
-      // inputs.negative_prompt &&
-      //  inputs.negative_prompt.setValue(defaults.negative_prompt);
+    // inputs.negative_prompt &&
+    //  inputs.negative_prompt.setValue(defaults.negative_prompt);
 
-      /*
+    /*
       if (
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2" ||
         inputs.MODEL_ID.value === "stabilityai/stable-diffusion-2-1"
@@ -1111,27 +1109,24 @@ export default function SDControls({
         );
       }
       */
-    },
-    /* eslint-disable */
-    [
-      inputs.MODEL_ID.value,
-      inputs.sampler.value,
-      defaults.width,
-      defaults.height,
-      // The following lines really are exactly and intentionally what we
-      // want.  Maybe eslint doesn't check 3 levels deep?
-      inputs.sampler.setValue,
-      inputs.width?.setValue,
-      inputs.height?.setValue,
-      inputs.safety_checker.setValue,
-    ]
-  );
+  }, [
+    inputs.MODEL_ID.value,
+    inputs.sampler.value,
+    defaults.width,
+    defaults.height,
+    // The following lines really are exactly and intentionally what we
+    // want. Maybe the linter doesn't check three levels deep?
+    inputs.sampler.setValue,
+    inputs.width?.setValue,
+    inputs.height?.setValue,
+    inputs.safety_checker.setValue,
+  ]);
 
   React.useEffect(() => {
     inputs.num_inference_steps.setValue(
       inputs.sampler.value == "DPMSolverMultistepScheduler"
         ? 20
-        : defaults.num_inference_steps
+        : defaults.num_inference_steps,
     );
   }, [defaults.num_inference_steps, inputs.sampler.value]);
 
@@ -1141,7 +1136,7 @@ export default function SDControls({
 
   const values = Object.fromEntries(
     // @ts-expect-error: TODO
-    Object.keys(inputs).map((key) => [key, inputs[key].value])
+    Object.keys(inputs).map((key) => [key, inputs[key].value]),
   );
   const creditCost = calculateCredits(values, values);
 

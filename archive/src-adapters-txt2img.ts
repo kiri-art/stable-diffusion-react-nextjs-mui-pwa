@@ -1,11 +1,11 @@
-import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
+import { db } from "gongo-client-react";
 import type { StableDiffusionInputs } from "../../src/schemas/stableDiffusionInputs";
+import stableDiffusionInputsSchema from "../../src/schemas/stableDiffusionInputs";
+import bananaFetch from "../bananaFetch";
+import blackImgBase64 from "../blackImgBase64";
 import bananaCallInputsSchema, {
   BananaCallInputs,
 } from "../schemas/bananaCallInputs";
-import blackImgBase64 from "../blackImgBase64";
-import bananaFetch from "../bananaFetch";
-import { db } from "gongo-client-react";
 
 const History = typeof window === "object" && db.collection("history");
 
@@ -22,7 +22,7 @@ async function exec(
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     _auth?: Record<string, unknown>;
     _MODEL_NAME?: string;
-  }
+  },
 ) {
   let log: string[] = [];
   let up = 0;
@@ -93,7 +93,7 @@ async function banana(
     dest: string; // "banana-local" | "banana-remote" | "exec";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
-  }
+  },
 ) {
   return bananaFetch("/api/sd-banana", modelInputs, callInputs, {
     setLog,
@@ -125,7 +125,7 @@ export default async function txt2img(
     dest: string; // "exec" | "banana-local" | "banana-remote";
     auth?: Record<string, unknown>;
     MODEL_NAME?: string;
-  }
+  },
 ) {
   const proto = dest.split("-")[0] as "exec" | "banana";
   const runner = runners[proto];

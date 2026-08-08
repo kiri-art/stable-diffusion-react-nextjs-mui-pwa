@@ -48,7 +48,7 @@ async function createFromBuffer(
   mimeType,
   size,
   existingId,
-  extra
+  extra,
 ) {
   // TODO, check if it's an image.
 
@@ -110,7 +110,7 @@ async function createFromSourceUrl(sourceUrl, existingId) {
     contentType,
     contentLength,
     existingId,
-    { sourceUrl }
+    { sourceUrl },
   );
 }
 
@@ -160,7 +160,7 @@ async function PostRequest(req, res) {
       file.mimeType,
       stat.size,
       undefined,
-      { userId }
+      { userId },
     );
 
     results[i] = entry;

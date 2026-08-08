@@ -1,16 +1,16 @@
-import gs, { CreditCode, User } from "../../src/api-lib/db";
+// import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
+import { ObjectId } from "bson";
+import { addDays } from "date-fns";
+import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 import {
   CollectionEventProps,
   GongoDocument,
   userIdMatches,
   userIsAdmin,
 } from "gongo-server-db-mongo/lib/collection";
-import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
-import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/config/constants";
-import { addDays } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
-// import { ipFromReq, ipPass } from "../../src/api-lib/ipCheck";
-import { ObjectId } from "bson";
+import gs, { CreditCode, User } from "../../src/api-lib/db";
+import { NUM_REPORTS_UNTIL_REMOVAL } from "../../src/config/constants";
 
 export const config = {
   runtime: "edge",
@@ -18,9 +18,8 @@ export const config = {
 };
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
-gs.publish(
-  "accounts",
-  (db) => db.collection("accounts").find({ userId: { $exists: false } }),
+gs.publish("accounts", (db) =>
+  db.collection("accounts").find({ userId: { $exists: false } }),
 );
 
 gs.publish("orders", async (db, {}, { auth }) => {
@@ -249,7 +248,8 @@ gs.method("redeemCreditCode", async (db, { creditCode }, { auth }) => {
     .findOne({ _id: userId })) as unknown as User;
 
   if (
-    user.redeemedCreditCodes && user.redeemedCreditCodes.includes(creditCode)
+    user.redeemedCreditCodes &&
+    user.redeemedCreditCodes.includes(creditCode)
   ) {
     return { $error: "ALREADY_REDEEMED" };
   }
@@ -422,9 +422,8 @@ if (gs.dba) {
 }
 
 // module.exports = gs.expressPost();
-const gsExpressPost = config.runtime === "edge"
-  ? gs.vercelEdgePost()
-  : gs.expressPost();
+const gsExpressPost =
+  config.runtime === "edge" ? gs.vercelEdgePost() : gs.expressPost();
 async function gongoPoll(req: NextApiRequest, res: NextApiResponse) {
   /*
   if (

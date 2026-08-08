@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
-
-import gs, { User, Order } from "../../src/api-lib/db";
 import { AuthFromReq } from "../../src/api-lib/auth";
+import gs, { Order, User } from "../../src/api-lib/db";
 
 if (!process.env.STRIPE_SECRET_KEY)
   throw new Error("STRIPE_SECRET_KEY not defined");
@@ -14,7 +13,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 export default async function craeateStripePaymentIntent(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
   console.log(req.body);
@@ -50,7 +49,7 @@ export default async function craeateStripePaymentIntent(
       .collection("users")
       .updateOne(
         { _id: user._id },
-        { $set: { stripeCustomerId: customer.id } }
+        { $set: { stripeCustomerId: customer.id } },
       );
   }
 

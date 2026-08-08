@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import hooks from "../hooks";
 import "../../../src/hooks/providerFetch";
+import { updateFinishedStepFromResult } from ".";
 import ProviderFetchRequestBase, {
   ProviderFetchRequestObject,
 } from "./ProviderFetchRequestBase";
 import ProviderFetchRequestFromObject from "./ProviderFetchRequestFromObject";
-import { updateFinishedStepFromResult } from ".";
 
 export const runtime = "edge";
 
@@ -87,7 +87,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
     if (userRequest.method !== "POST")
       return new NextResponse(
         "Bad Request: Expected POST, not " + userRequest.method,
-        { status: 400 }
+        { status: 400 },
       );
 
     const bodyText = await userRequest.text();
@@ -96,7 +96,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
     if (type !== "start" && type != "check")
       return new NextResponse(
         `Bad Request: \`type\` should be "start" or "check", not "${type}"`,
-        { status: 400 }
+        { status: 400 },
       );
 
     const providerRequest = ProviderFetchRequestFromObject(query.requestObject);
@@ -118,7 +118,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
           extraInfo,
           deps,
           req: userRequest,
-        }
+        },
       );
 
       const $response = preStartResult.$response as
@@ -190,7 +190,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
             preStartResult,
             startResult: result,
           });
-        }
+        },
       );
 
       // Note, previously this was sent by the client, so we could measure network
@@ -198,7 +198,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
       watcher.on("finalResult", async (result: Record<string, unknown>) => {
         console.log("finalResult, result");
         await updateFinishedStepFromResult(
-          result as unknown as ProviderFetchRequestBase
+          result as unknown as ProviderFetchRequestBase,
         );
       });
 

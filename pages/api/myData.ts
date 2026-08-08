@@ -1,7 +1,7 @@
-import Stream, { TransformCallback } from "stream";
-import { NextApiRequest, NextApiResponse } from "next";
-import { WithId, Document } from "mongodb";
 import JSZip from "jszip";
+import { Document, WithId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
+import Stream, { TransformCallback } from "stream";
 
 import gs from "../../src/api-lib/db-full";
 
@@ -16,7 +16,7 @@ class ToJSON extends Stream.Transform {
   _transform(
     data: WithId<Document>,
     encoding: BufferEncoding,
-    callback: TransformCallback
+    callback: TransformCallback,
   ) {
     if (!this.sentFirst) {
       callback(null, "[\n");
@@ -37,7 +37,7 @@ class ToJSON extends Stream.Transform {
 
 export default async function myData(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { sessionId } = req.query;
   const { cookie } = req.headers;
@@ -85,7 +85,7 @@ export default async function myData(
 
     zip.file(
       `${name}.json`,
-      collection.find(query).stream().pipe(new ToJSON())
+      collection.find(query).stream().pipe(new ToJSON()),
     );
   }
 

@@ -1,4 +1,4 @@
-/* eslint-disable */
+// biome-ignore-all lint: This generated standalone converter is not hand-maintained.
 // @ts-nocheck
 // added default export
 // 1.6.4; b06f1d9
@@ -52,7 +52,7 @@ export default class InvokeAIPromptResolver {
   convertAuto1111ToInvokeAI = (
     inputPositive: any,
     inputNegative: any,
-    resolverOptions: any = null
+    resolverOptions: any = null,
   ) => {
     var input = {
       positive: inputPositive,
@@ -78,13 +78,13 @@ export default class InvokeAIPromptResolver {
         input = resolverContext.regexValueRecursiveReplace(
           input,
           regexPatternItem,
-          ignoreNegativeParameters
+          ignoreNegativeParameters,
         );
       } else {
         input = resolverContext.regexValueReplace(
           input,
           regexPatternItem,
-          ignoreNegativeParameters
+          ignoreNegativeParameters,
         );
       }
     });
@@ -94,7 +94,7 @@ export default class InvokeAIPromptResolver {
       input,
       inputPositive,
       inputNegative,
-      false
+      false,
     );
     return finalOutput;
   };
@@ -103,7 +103,7 @@ export default class InvokeAIPromptResolver {
   convertInvokeAIToAuto1111 = (
     inputPositive: any,
     inputNegative: any,
-    resolverOptions: any = null
+    resolverOptions: any = null,
   ) => {
     //It's expected to have negative values within input
     //so it's better to fetch them (if any)
@@ -137,13 +137,13 @@ export default class InvokeAIPromptResolver {
         input = resolverContext.regexValueRecursiveReplace(
           input,
           regexPatternItem,
-          ignoreNegativeParameters
+          ignoreNegativeParameters,
         );
       } else {
         input = resolverContext.regexValueReplace(
           input,
           regexPatternItem,
-          ignoreNegativeParameters
+          ignoreNegativeParameters,
         );
       }
     });
@@ -153,7 +153,7 @@ export default class InvokeAIPromptResolver {
       input,
       inputPositive,
       inputNegative,
-      true
+      true,
     );
     return finalOutput;
   };
@@ -377,7 +377,7 @@ export default class InvokeAIPromptResolver {
                 var innerMatchRegex = fullMatch;
                 innerMatchRegex = innerMatchRegex.replace(
                   /\)/g,
-                  String.raw`\)`
+                  String.raw`\)`,
                 );
                 innerMatchRegex = String.raw`${innerMatchRegex}(?![\.\d])`;
                 var regexExp = new RegExp(innerMatchRegex, "gm");
@@ -390,7 +390,7 @@ export default class InvokeAIPromptResolver {
         outputNegativeRegex: function (
           context: any,
           inputText: any,
-          regexGroups: any
+          regexGroups: any,
         ) {
           var limitedValue = context.limitWeightNegative;
           if (limitedValue.indexOf("$1") === -1) {
@@ -425,7 +425,7 @@ export default class InvokeAIPromptResolver {
                 var innerMatchRegex = fullMatch;
                 innerMatchRegex = innerMatchRegex.replace(
                   /\)/g,
-                  String.raw`\)`
+                  String.raw`\)`,
                 );
                 innerMatchRegex = String.raw`${innerMatchRegex}(?![\.\d])`;
                 var regexExp = new RegExp(innerMatchRegex, "gm");
@@ -1027,7 +1027,7 @@ export default class InvokeAIPromptResolver {
   regexValueRecursiveReplace = (
     input: any,
     regexPatternItem: any,
-    ignoreNegativeParameters = false
+    ignoreNegativeParameters = false,
   ) => {
     var inputPositive = input.positive;
     var inputNegative = input.negative;
@@ -1143,7 +1143,7 @@ export default class InvokeAIPromptResolver {
             if (patternNegativeOutput.indexOf(mapTarget) !== -1) {
               patternNegativeOutput = patternNegativeOutput.replace(
                 mapTarget,
-                mapReplacement
+                mapReplacement,
               );
             }
           }
@@ -1171,14 +1171,14 @@ export default class InvokeAIPromptResolver {
           } else {
             inputPositive = inputPositive.replace(
               regexExp,
-              patternOutput(resolverContext)
+              patternOutput(resolverContext),
             );
           }
           if (!ignoreNegativeParameters) {
             if (typeof patternNegativeOutput !== "function") {
               inputNegative = inputNegative.replace(
                 regexNegativeExp,
-                patternNegativeOutput
+                patternNegativeOutput,
               );
             } else {
               if (
@@ -1186,7 +1186,7 @@ export default class InvokeAIPromptResolver {
               ) {
                 inputNegative = inputNegative.replace(
                   regexNegativeExp,
-                  patternNegativeOutput(resolverContext)
+                  patternNegativeOutput(resolverContext),
                 );
               } else {
                 const regexNegativeGroups =
@@ -1194,7 +1194,7 @@ export default class InvokeAIPromptResolver {
                 inputNegative = patternNegativeOutput(
                   resolverContext,
                   inputNegative,
-                  regexNegativeGroups
+                  regexNegativeGroups,
                 );
               }
             }
@@ -1205,7 +1205,7 @@ export default class InvokeAIPromptResolver {
           inputPositive = patternOutput(
             resolverContext,
             inputPositive,
-            regexGroups
+            regexGroups,
           );
 
           const regexNegativeGroups = inputNegative.matchAll(matchNegative);
@@ -1216,20 +1216,20 @@ export default class InvokeAIPromptResolver {
               ) {
                 inputNegative = inputNegative.replace(
                   regexNegativeExp,
-                  patternNegativeOutput(resolverContext)
+                  patternNegativeOutput(resolverContext),
                 );
               } else {
                 inputNegative = patternNegativeOutput(
                   resolverContext,
                   inputNegative,
-                  regexNegativeGroups
+                  regexNegativeGroups,
                 );
               }
             } else {
               inputNegative = patternOutput(
                 resolverContext,
                 inputNegative,
-                regexNegativeGroups
+                regexNegativeGroups,
               );
             }
           }
@@ -1238,7 +1238,7 @@ export default class InvokeAIPromptResolver {
         if (ignoreNegativeParameters) {
           inputNegative = inputNegative.replace(
             regexExp,
-            patternNegativeRawOutput
+            patternNegativeRawOutput,
           );
         }
       });
@@ -1253,7 +1253,7 @@ export default class InvokeAIPromptResolver {
   regexValueReplace = (
     input: any,
     regexPatternItem: any,
-    ignoreNegativeParameters = false
+    ignoreNegativeParameters = false,
   ) => {
     var inputPositive = input.positive;
     var inputNegative = input.negative;
@@ -1328,14 +1328,14 @@ export default class InvokeAIPromptResolver {
         } else {
           inputPositive = inputPositive.replace(
             regexExp,
-            patternOutput(resolverContext)
+            patternOutput(resolverContext),
           );
         }
         if (!ignoreNegativeParameters) {
           if (typeof patternNegativeOutput !== "function") {
             inputNegative = inputNegative.replace(
               regexNegativeExp,
-              patternNegativeOutput
+              patternNegativeOutput,
             );
           } else {
             if (
@@ -1343,7 +1343,7 @@ export default class InvokeAIPromptResolver {
             ) {
               inputNegative = inputNegative.replace(
                 regexNegativeExp,
-                patternNegativeOutput(resolverContext)
+                patternNegativeOutput(resolverContext),
               );
             } else {
               const regexNegativeGroups =
@@ -1351,7 +1351,7 @@ export default class InvokeAIPromptResolver {
               inputNegative = patternNegativeOutput(
                 resolverContext,
                 inputNegative,
-                regexNegativeGroups
+                regexNegativeGroups,
               );
             }
           }
@@ -1362,7 +1362,7 @@ export default class InvokeAIPromptResolver {
         inputPositive = patternOutput(
           resolverContext,
           inputPositive,
-          regexGroups
+          regexGroups,
         );
         if (!ignoreNegativeParameters) {
           const regexNegativeGroups = inputNegative.matchAll(matchNegative);
@@ -1372,20 +1372,20 @@ export default class InvokeAIPromptResolver {
             ) {
               inputNegative = inputNegative.replace(
                 regexNegativeExp,
-                patternNegativeOutput(resolverContext)
+                patternNegativeOutput(resolverContext),
               );
             } else {
               inputNegative = patternNegativeOutput(
                 resolverContext,
                 inputNegative,
-                regexNegativeGroups
+                regexNegativeGroups,
               );
             }
           } else {
             inputNegative = patternOutput(
               resolverContext,
               inputNegative,
-              regexNegativeGroups
+              regexNegativeGroups,
             );
           }
         }
@@ -1394,7 +1394,7 @@ export default class InvokeAIPromptResolver {
       if (ignoreNegativeParameters) {
         inputNegative = inputNegative.replace(
           regexNegativeExp,
-          patternNegativeRawOutput
+          patternNegativeRawOutput,
         );
       }
     });
@@ -1425,7 +1425,7 @@ export default class InvokeAIPromptResolver {
     simpleInput: any,
     originalPositive: any,
     originalNegative: any,
-    invokeAIOriginal = false
+    invokeAIOriginal = false,
   ) => {
     var inputPositive = simpleInput.positive;
     var inputNegative = simpleInput.negative;
@@ -1459,7 +1459,7 @@ export default class InvokeAIPromptResolver {
     positive: any,
     negative: any,
     random = false,
-    forcePow = false
+    forcePow = false,
   ) => {
     console.log(positive);
     if (
@@ -1506,13 +1506,13 @@ export default class InvokeAIPromptResolver {
         output = resolverContext.regexValueRecursiveReplace(
           output,
           regexPatternItem,
-          true
+          true,
         );
       } else {
         output = resolverContext.regexValueReplace(
           output,
           regexPatternItem,
-          true
+          true,
         );
       }
       inputValue = output.negative;

@@ -13,7 +13,7 @@ export default function sharedInputTextFromInputs(
   inputs: ModelState | RequiredInputs,
   always = false,
   separator = ", ",
-  includePromptLabel = false
+  includePromptLabel = false,
 ) {
   const prompt = inputs.prompt.value;
   if (!(always || inputs.shareInputs.value)) return prompt;

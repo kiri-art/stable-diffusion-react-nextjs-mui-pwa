@@ -172,7 +172,7 @@ async function fetchModel(id: number | string): Promise<Model> {
 async function fetchModelVersion(id: number | string): Promise<ModelVersion> {
   const modelId = typeof id === "number" ? id.toString() : id;
   const response = await fetch(
-    `https://civitai.com/api/v1/model-versions/${modelId}`
+    `https://civitai.com/api/v1/model-versions/${modelId}`,
   );
   const data = await response.json();
   return data as ModelVersion;
@@ -181,9 +181,9 @@ async function fetchModelVersion(id: number | string): Promise<ModelVersion> {
 export type {
   Model,
   ModelVersion,
-  ModelVersionWithModel,
   ModelVersionFile,
   ModelVersionFileImage,
+  ModelVersionWithModel,
 };
 export {
   extractModelId,

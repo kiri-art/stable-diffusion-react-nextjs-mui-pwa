@@ -1,15 +1,6 @@
-import React, { useMemo } from "react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
-import { useRouter } from "next/router";
-// import bananaFetch from "../src/bananaFetch";
-import {
-  upsampleCallInputsSchema,
-  upsampleModelInputsSchema,
-} from "../src/schemas";
-import { signIn } from "next-auth/react";
-
+import { HelpOutlined } from "@mui/icons-material";
 import {
   Box,
   Container,
@@ -24,19 +15,26 @@ import {
   Switch,
   Tooltip,
 } from "@mui/material";
-import { HelpOutlined } from "@mui/icons-material";
-
-import { /* isDev, */ REQUIRE_REGISTRATION } from "../src/lib/client-env";
-import MyAppBar from "../src/MyAppBar";
-import defaults from "../src/sd/defaults";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import React, { useMemo } from "react";
 import { toast } from "react-toastify";
-import OutputImage from "../src/OutputImage";
+import calculateCredits from "../src/calculateCredits";
 import GoButton from "../src/GoButton";
 import blobToBase64 from "../src/lib/blobToBase64";
-import sendQueue from "../src/lib/sendQueue";
+import { /* isDev, */ REQUIRE_REGISTRATION } from "../src/lib/client-env";
 import fetchToOutput from "../src/lib/fetchToOutput";
+import sendQueue from "../src/lib/sendQueue";
+import MyAppBar from "../src/MyAppBar";
+import OutputImage from "../src/OutputImage";
+// import bananaFetch from "../src/bananaFetch";
+import {
+  upsampleCallInputsSchema,
+  upsampleModelInputsSchema,
+} from "../src/schemas";
 import { ProviderSelect } from "../src/sd/Controls";
-import calculateCredits from "../src/calculateCredits";
+import defaults from "../src/sd/defaults";
 
 const maxSizeText = "3.2MB";
 
@@ -106,7 +104,7 @@ function ModelSelect({
         </Select>
       </FormControl>
     ),
-    [value, setValue, defaultValue]
+    [value, setValue, defaultValue],
   );
 }
 
@@ -184,20 +182,20 @@ export default function Upsample() {
   );
   */
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
-    null
+    null,
   );
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const router = useRouter();
 
   const CREDIT_COST = calculateCredits(
     { MODEL_ID: modelId, use_extra: "upsample" },
-    {}
+    {},
   );
 
   React.useEffect(() => {
@@ -240,7 +238,7 @@ export default function Upsample() {
       if (typeof result !== "string")
         throw new Error(
           `readerEvent.target.result is not a string, expected "${sample}" but got: ` +
-            JSON.stringify(result)
+            JSON.stringify(result),
         );
 
       image.src = result;
@@ -288,7 +286,7 @@ export default function Upsample() {
 
     if (!inputImage.current) throw new Error("no inputImage.current");
     const input_image_blob = await fetch(inputImage.current.src).then((res) =>
-      res.blob()
+      res.blob(),
     );
 
     if (!input_image_blob) {
@@ -330,7 +328,7 @@ export default function Upsample() {
         setHistoryId: () => {
           /* */
         },
-      }
+      },
     );
 
     setRequestEndTime(Date.now());
@@ -361,7 +359,7 @@ export default function Upsample() {
             position: "relative",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* biome-ignore lint/performance/noImgElement: This preview displays a local object URL. */}
           <img
             alt="input image"
             ref={inputImage}

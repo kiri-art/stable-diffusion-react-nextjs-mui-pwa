@@ -1,14 +1,12 @@
-import * as React from "react";
-import type { NextPage } from "next";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-
-import Link from "../src/Link";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import type { NextPage } from "next";
 import Copyright from "../src/Copyright";
+import Link from "../src/Link";
 import MyAppBar from "../src/MyAppBar";
 
 const About: NextPage = () => {

@@ -1,23 +1,21 @@
-import React from "react";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
-import { useRouter } from "next/router";
-
+import { Circle, Clear, FormatPaint, Redo, Undo } from "@mui/icons-material";
 import { IconButton, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { Clear, Redo, Undo, Circle, FormatPaint } from "@mui/icons-material";
-
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import FloodFill from "q-floodfill";
+import React from "react";
 import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
-import useModelState, { modelStateValues } from "../src/sd/useModelState";
 import OutputImage from "../src/OutputImage";
 import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import Footer from "../src/sd/Footer";
-import FloodFill from "q-floodfill";
+import useModelState, { modelStateValues } from "../src/sd/useModelState";
+import InputImage, { useInputImage } from "./InputImage";
+import blobToBase64 from "./lib/blobToBase64";
+import fetchToOutput from "./lib/fetchToOutput";
+import { outputImageQueue } from "./lib/sendQueue";
 // import { Trans } from "@lingui/macro";
 import sharedInputTextFromInputs from "./lib/sharedInputTextFromInputs";
-import blobToBase64 from "./lib/blobToBase64";
-import { outputImageQueue } from "./lib/sendQueue";
-import fetchToOutput from "./lib/fetchToOutput";
-import InputImage, { useInputImage } from "./InputImage";
-import { signIn } from "next-auth/react";
 
 // Border around inImg{Canvas,Mask}, useful in dev
 // const DRAW_BORDERS = false;
@@ -130,7 +128,7 @@ function Canvas({
         ops.current.splice(
           opsIndexRef.current,
           ops.current.length - opsIndexRef.current,
-          { drawState: ds, steps: [] }
+          { drawState: ds, steps: [] },
         );
       }
 
@@ -141,11 +139,11 @@ function Canvas({
         const mouse = {
           x: Math.round(
             (tEvent.pageX - parent.offsetLeft) *
-              (canvas.width / canvas.clientWidth)
+              (canvas.width / canvas.clientWidth),
           ),
           y: Math.round(
             (tEvent.pageY - parent.offsetTop) *
-              (canvas.height / canvas.clientHeight)
+              (canvas.height / canvas.clientHeight),
           ),
         };
 
@@ -305,7 +303,7 @@ function Paint({
           hexColor[op.drawState.color],
           op.steps[0][0],
           op.steps[0][1],
-          0
+          0,
         );
         ctx.putImageData(floodFill.imageData, 0, 0);
         continue;
@@ -454,10 +452,10 @@ export default function Img2img() {
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [historyId, setHistoryId] = React.useState("");
 
@@ -466,7 +464,7 @@ export default function Img2img() {
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const router = useRouter();
 
@@ -491,8 +489,8 @@ export default function Img2img() {
         initImageCanvasRef.current &&
         initImageCanvasRef.current.toBlob(
           (blob: Blob | null) => resolve(blob),
-          "image/jpeg"
-        )
+          "image/jpeg",
+        ),
     )) as Blob | null;
 
     if (!init_image_blob) {

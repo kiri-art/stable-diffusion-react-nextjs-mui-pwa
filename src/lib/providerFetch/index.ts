@@ -15,7 +15,7 @@ import ProviderFetchRequestFromObject from "./ProviderFetchRequestFromObject";
 async function updateFinishedStep(
   callID: string,
   timestampMs: number,
-  value: Record<string, unknown>
+  value: Record<string, unknown>,
 ) {
   const url = (function () {
     let url = "";
@@ -47,7 +47,7 @@ async function updateFinishedStep(
 }
 
 export async function updateFinishedStepFromResult(
-  result: ProviderFetchRequestBase
+  result: ProviderFetchRequestBase,
 ) {
   const callID = result.callID;
   const now = Date.now(); // result.created * 1000
@@ -67,7 +67,7 @@ export default async function providerFetch(
   providerId: string,
   modelId: string,
   inputs: Record<string, unknown>,
-  callback?: (result: Record<string, unknown>) => void
+  callback?: (result: Record<string, unknown>) => void,
 ) {
   const obj = { providerId, modelId, inputs };
   const request = ProviderFetchRequestFromObject(obj, true);

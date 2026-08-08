@@ -6,10 +6,10 @@
  *
  */
 
-import providerFetch from "./providerFetch";
 import { db } from "gongo-client-react";
 // import isBlackImgBase64 from "./isBlackImgBase64";
 import { getModel } from "./models";
+import providerFetch from "./providerFetch";
 import supports from "./supports";
 
 // import decodeJXL from "@jsquash/jxl/decode";
@@ -43,13 +43,13 @@ export default async function fetchToOutput(
     setImgSrc: React.Dispatch<React.SetStateAction<string>>;
     setNsfw: React.Dispatch<React.SetStateAction<boolean>>;
     setHistoryId: React.Dispatch<React.SetStateAction<string>>;
-  }
+  },
 ) {
   try {
     if (0)
       console.log(
         "pre-cast",
-        JSON.parse(JSON.stringify({ model_inputs, call_inputs }))
+        JSON.parse(JSON.stringify({ model_inputs, call_inputs })),
       );
 
     const model = getModel(MODEL_ID);
@@ -68,7 +68,7 @@ export default async function fetchToOutput(
     if (0)
       console.log(
         "post-cast",
-        JSON.parse(JSON.stringify({ modelInputs, callInputs }))
+        JSON.parse(JSON.stringify({ modelInputs, callInputs })),
       );
 
     // @ts-expect-error: TODO
@@ -77,7 +77,7 @@ export default async function fetchToOutput(
     if (0)
       console.log(
         "post-prepare",
-        JSON.parse(JSON.stringify({ callInputs, modelInputs }))
+        JSON.parse(JSON.stringify({ callInputs, modelInputs })),
       );
 
     /*
@@ -154,7 +154,7 @@ export default async function fetchToOutput(
               "'credits'.",
             ]);
         }
-      }
+      },
     );
 
     console.log("fetchToOutput result", result);
@@ -189,7 +189,7 @@ export default async function fetchToOutput(
       const match =
         message &&
         message.match(
-          /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/
+          /<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/,
         );
 
       if (match) {
@@ -275,8 +275,13 @@ export default async function fetchToOutput(
     const blobBuffer =
       buffer instanceof ArrayBuffer
         ? buffer
-        : buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-    const blob = new Blob([new Uint8Array(blobBuffer as ArrayBuffer)], { type });
+        : buffer.buffer.slice(
+            buffer.byteOffset,
+            buffer.byteOffset + buffer.byteLength,
+          );
+    const blob = new Blob([new Uint8Array(blobBuffer as ArrayBuffer)], {
+      type,
+    });
     const objectURL = URL.createObjectURL(blob);
     setImgSrc(objectURL);
     setLog([]);
@@ -339,8 +344,8 @@ export default async function fetchToOutput(
             stack: error.stack,
           },
           null,
-          2
-        ).split("\n")
+          2,
+        ).split("\n"),
       );
     } else {
       setLog([JSON.stringify(error)]);

@@ -1,6 +1,6 @@
-import { describe, expect, test as it, vi } from "vitest";
 import createFetchCache from "fetch-mock-cache";
 import Store from "fetch-mock-cache/stores/fs";
+import { describe, expect, test as it, vi } from "vitest";
 
 import {
   extractModelId,

@@ -1,12 +1,12 @@
-import path from "node:path";
-import os from "node:os";
 import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function imgFetchAndDelete(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (
     !(typeof req.query.dir === "string" && req.query.dir.startsWith("sd-mui"))

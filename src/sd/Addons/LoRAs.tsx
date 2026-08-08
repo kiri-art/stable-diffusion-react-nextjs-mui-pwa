@@ -12,16 +12,16 @@ export function onChange(
   added: AddedModel[],
   inputs: ModelState,
   setPromptLoras: (
-    loras: Record<string, { scale: number; str: string }>
-  ) => void
+    loras: Record<string, { scale: number; str: string }>,
+  ) => void,
 ) {
   const promptLoras = (function () {
     const loras: Record<string, { scale: number; str: string }> = {};
     const matches1 = inputs.prompt.value.matchAll(
-      /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g
+      /<lora:(?<lora>[^:]+):(?<scale>[0-9.]+)>/g,
     );
     const matches2 = inputs.prompt.value.matchAll(
-      /(with|use)Lora\((?<lora>[^,]+),(?<scale>[0-9.]+)\)/g
+      /(with|use)Lora\((?<lora>[^,]+),(?<scale>[0-9.]+)\)/g,
     );
     for (const matches of [matches1, matches2])
       for (const match of matches) {

@@ -1,6 +1,6 @@
 export default function calculateCredits(
   callInputs: Record<string, unknown>,
-  modelInputs: Record<string, unknown>
+  modelInputs: Record<string, unknown>,
 ) {
   let cost = 0.5;
   if (callInputs.use_extra) {

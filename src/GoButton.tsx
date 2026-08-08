@@ -1,11 +1,9 @@
-import { Trans, Plural } from "@lingui/react/macro";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
-import { useRouter } from "next/router";
-
+import { Plural, Trans } from "@lingui/react/macro";
 import { Box, Button, Container } from "@mui/material";
-
-import { /* isDev, */ REQUIRE_REGISTRATION } from "./lib/client-env";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { /* isDev, */ REQUIRE_REGISTRATION } from "./lib/client-env";
 
 export default function GoButton({
   disabled,
@@ -21,7 +19,7 @@ export default function GoButton({
   const router = useRouter();
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
 
   const userCredits = (user?.credits?.free || 0) + (user?.credits?.paid || 0);

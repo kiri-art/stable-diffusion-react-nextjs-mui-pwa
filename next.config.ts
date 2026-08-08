@@ -38,9 +38,9 @@ export default async function (phase: string): Promise<NextConfig> {
           "@lingui/swc-plugin",
           {
             // the same options as in .swcrc
-            "runtimeModules": {
-              "i18n": ["@lingui/core", "i18n"],
-              "trans": ["@lingui/react", "Trans"],
+            runtimeModules: {
+              i18n: ["@lingui/core", "i18n"],
+              trans: ["@lingui/react", "Trans"],
             },
           },
         ],

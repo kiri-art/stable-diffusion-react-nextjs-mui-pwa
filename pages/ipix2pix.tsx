@@ -4,9 +4,7 @@ const IPix2Pix = dynamic(() => import("../src/IPix2Pix"), {
   ssr: false,
 });
 
-import React from "react";
 import { t } from "@lingui/core/macro";
-
 import { Container } from "@mui/material";
 
 import MyAppBar from "../src/MyAppBar";

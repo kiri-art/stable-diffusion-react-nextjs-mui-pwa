@@ -16,7 +16,11 @@
 - `pnpm install` installs dependencies (Node ^22, pnpm ^10.26.1).
 - `pnpm dev` runs the Next.js dev server.
 - `pnpm build` creates the production build; `pnpm start` serves it.
-- `pnpm lint` runs ESLint (Next.js + TypeScript rules).
+- `pnpm lint` runs Biome's linter; `pnpm lint:fix` applies safe lint fixes.
+- `pnpm format` formats the repository with Biome; `pnpm format:check` checks
+  formatting without writing changes.
+- `pnpm check` runs Biome formatting, lint, and import-organization checks;
+  `pnpm check:fix` applies safe fixes.
 - `pnpm test` runs Vitest in non-watch mode.
 - `pnpm i18n:extract` refreshes Lingui catalogs in `locales/*/messages.po`.
 - `pnpm i18n:extract:clean` refreshes catalogs and removes obsolete `#~`
@@ -31,10 +35,9 @@
 ## Coding Style & Naming Conventions
 
 - TypeScript + React; 2-space indentation is the dominant style.
-- Use ESLint for quality gates; unused imports are errors (`eslint.config.cjs`).
+- Use Biome for linting and formatting; unused imports are errors (`biome.json`).
 - Test files follow `*.spec.ts` naming (see `src/lib/civitai.spec.ts`).
-- Prettier is available as a dev dependency; run manually when needed
-  (`pnpm exec prettier`).
+- Run `pnpm format` after editing code that Biome supports.
 
 ## Testing Guidelines
 

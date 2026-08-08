@@ -1,21 +1,20 @@
-import React from "react";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
+import { Edit, Link as LinkIcon, Share } from "@mui/icons-material";
 import { Box, Container, IconButton, Typography } from "@mui/material";
 import {
   db,
+  useGongoIsPopulated,
   useGongoLive,
   useGongoOne,
   useGongoSub,
   useGongoUserId,
 } from "gongo-client-react";
 import { useRouter } from "next/router";
-import { t } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
-
+import React from "react";
+import { toast } from "react-toastify";
 import MyAppBar from "../src/MyAppBar";
 import Starred from "../src/Starred";
-import { Edit, Share, Link as LinkIcon } from "@mui/icons-material";
-import { useGongoIsPopulated } from "gongo-client-react";
-import { toast } from "react-toastify";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -180,7 +179,7 @@ export default function Profile() {
       db
         .collection("stars")
         .find({ userId: user._id, deleted: { $ne: true } })
-        .sort("date", "desc")
+        .sort("date", "desc"),
   );
   const populated = useGongoIsPopulated();
 
@@ -190,7 +189,7 @@ export default function Profile() {
 
   useGongoSub(
     "stars",
-    query.username ? { username: query.username } : { userId: _id }
+    query.username ? { username: query.username } : { userId: _id },
   );
 
   return (

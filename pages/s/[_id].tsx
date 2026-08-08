@@ -1,30 +1,30 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { useGongoOne, useGongoSub } from "gongo-client-react";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
+import { useGongoOne, useGongoSub } from "gongo-client-react";
+import { useRouter } from "next/router";
+import React from "react";
+
 // import { GetServerSideProps } from "next";
 
-import { Box, Chip, Container, IconButton } from "@mui/material";
 import {
-  FavoriteBorder,
-  Share,
   Edit,
   Favorite,
+  FavoriteBorder,
   Link as LinkIcon,
+  Share,
 } from "@mui/icons-material";
-
-import MyAppBar from "../../src/MyAppBar";
+import { Box, Chip, Container, IconButton } from "@mui/material";
+import { toast } from "react-toastify";
 import Link from "../../src/Link";
+import { fetchModel, fetchModelVersion } from "../../src/lib/civitai";
+import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import strObjectId from "../../src/lib/strObjectId";
+import MyAppBar from "../../src/MyAppBar";
 // import { db as serverDb, ObjectId } from "../../src/api-lib/db";
 import { useLike } from "../../src/Starred";
-import { editItem } from "../history";
-import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
-import { toast } from "react-toastify";
-import Star from "../../src/schemas/star";
 import { ddaCallInputs, ddaModelInputs } from "../../src/schemas";
-import { fetchModel, fetchModelVersion } from "../../src/lib/civitai";
+import Star from "../../src/schemas/star";
+import { editItem } from "../history";
 
 const canShare =
   typeof navigator === "undefined" || // draw on SSR
@@ -74,15 +74,15 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
   const _id = router.query.showStarId || router.query._id;
 
   const clientItem = useGongoOne(
-    (db) => _id && db.collection("stars").find({ _id })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (db) => _id && db.collection("stars").find({ _id }),
+    // biome-ignore lint/suspicious/noExplicitAny: The gongo client package does not expose this result type.
   ) as any;
   // TODO, just testing.
 
   const item = (serverItem || clientItem) as typeof clientItem;
 
   const userProfile = useGongoOne((db) =>
-    db.collection("userProfiles").find({ _id: item && item.userId })
+    db.collection("userProfiles").find({ _id: item && item.userId }),
   );
 
   useGongoSub(_id && "star", { starId: _id });
@@ -138,7 +138,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
       simulatedModelState,
       true,
       "\n\n",
-      true
+      true,
     );
 
     const blob = await fetch(imgRef.current.src).then((r) => r.blob());
@@ -168,7 +168,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
 
   function formatCivitAiLinks(url: string) {
     const match = url.match(
-      /https:\/\/civitai\.com\/api\/download\/models\/(?<id>[\d]+)/
+      /https:\/\/civitai\.com\/api\/download\/models\/(?<id>[\d]+)/,
     );
     if (match && match.groups && match.groups.id) {
       const id = match.groups.id;
@@ -234,7 +234,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
               toast(t`Failed to copy to clipboard`);
             }
           }}
-        />
+        />,
       );
       return children;
     }
@@ -246,7 +246,7 @@ export default function StarredItem({ serverItem }: { serverItem?: Star }) {
     <Box>
       <MyAppBar title="Starred Item" />
       <Container sx={{ my: 2 }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* biome-ignore lint/performance/noImgElement: This element needs a mutable image ref for sharing. */}
         <img
           alt={modelInputs.prompt}
           src={

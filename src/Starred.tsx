@@ -1,24 +1,24 @@
-import React from "react";
-import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
-import { Box, Button } from "@mui/material";
+import { t } from "@lingui/core/macro";
 import { Delete, Favorite, FavoriteBorder, Report } from "@mui/icons-material";
+import { Box, Button } from "@mui/material";
+import { db, useGongoOne, useGongoUserId } from "gongo-client-react";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
+import React from "react";
 import { toast } from "react-toastify";
-import { t } from "@lingui/core/macro";
+
 // import Masonry from "@mui/lab/Masonry";
 
-// import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
-import Masonry from "./MyMasonry"; // <-- flickers in production?  why?
-
-import Link from "./Link";
-import Star from "./schemas/star";
-import strObjectId from "./lib/strObjectId";
-import useBreakPoint from "./lib/useBreakPoint";
+import { useInfiniteLoader } from "masonic";
+import StarredItem from "../pages/s/[_id]";
 import asyncConfirm from "./asyncConfirm";
 import { NUM_REPORTS_UNTIL_REMOVAL } from "./config/constants";
-import StarredItem from "../pages/s/[_id]";
-import { useInfiniteLoader } from "masonic";
+import Link from "./Link";
+import strObjectId from "./lib/strObjectId";
+import useBreakPoint from "./lib/useBreakPoint";
+// import { Masonry } from "masonic"; // <-- doesn't rerender on items.length change.
+import Masonry from "./MyMasonry"; // <-- flickers in production?  why?
+import Star from "./schemas/star";
 
 export async function destar(starId: string) {
   const res = await asyncConfirm({
@@ -71,18 +71,18 @@ export async function report(starId: string) {
 
   if ((result.NUM_REPORTS as number) >= NUM_REPORTS_UNTIL_REMOVAL)
     return toast(
-      t`Item was reported ${result.NUM_REPORTS as number} times has been removed.  Thank you!`
+      t`Item was reported ${result.NUM_REPORTS as number} times has been removed.  Thank you!`,
     );
 
   return toast(
-    t`Item was reported ${result.NUM_REPORTS as number} times.  Thanks for reporting!`
+    t`Item was reported ${result.NUM_REPORTS as number} times.  Thanks for reporting!`,
   );
 }
 
 export function useLike(item: Star) {
   const userId = useGongoUserId();
   const userLike = useGongoOne((db) =>
-    db.collection("likes").find({ starId: item?._id || "NONE", userId })
+    db.collection("likes").find({ starId: item?._id || "NONE", userId }),
   );
   const likedByUser = !!userLike && !!userLike.liked;
 
@@ -168,7 +168,6 @@ const Item = React.memo(function Item({
       href={"/s/" + item._id}
       onClick={itemOpen}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <Image
         priority={index < 4}
         alt={alt}
@@ -298,10 +297,10 @@ export default function Starred({
       await router.replace({ hash: "scrollY=" + window.scrollY });
       await router.push(
         { query: { ...router.query, showStarId: item._id } },
-        "/s/" + item._id
+        "/s/" + item._id,
       );
     },
-    [router]
+    [router],
   );
 
   const MasonryItem = React.useMemo(() => {
@@ -319,7 +318,6 @@ export default function Starred({
     });
   }, [itemOpen, router.query.showReported]);
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const maybeLoadMore = useInfiniteLoader(loadMore || (() => {}), {
     isItemLoaded: (index, items) => !!items[index],
     minimumBatchSize: (cols || _cols) * 6,

@@ -5,6 +5,7 @@
 // Default type of `self` is `WorkerGlobalScope & typeof globalThis`
 // https://github.com/microsoft/TypeScript/issues/14877
 export type {};
+
 declare const self: ServiceWorkerGlobalScope;
 
 self.addEventListener("fetch", (event) => {
@@ -24,7 +25,7 @@ self.addEventListener("fetch", (event) => {
       const data = await event.request.formData();
       console.log("data", data);
       const client = await self.clients.get(
-        event.resultingClientId || event.clientId
+        event.resultingClientId || event.clientId,
       );
       console.log("client", client);
       const image = data.get("image");
@@ -34,7 +35,7 @@ self.addEventListener("fetch", (event) => {
       // during dev only, to make inspection easier
       // uncomment for prod
       // return Response.redirect("/share_target?redirected=1", 303);
-    })()
+    })(),
   );
 });
 
@@ -53,7 +54,6 @@ function nextMessage(dataVal: string): Promise<void> {
     if (!nextMessageResolveMap.has(dataVal)) {
       nextMessageResolveMap.set(dataVal, []);
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     nextMessageResolveMap.get(dataVal)!.push(resolve);
   });
 }

@@ -1,4 +1,4 @@
-import { object, string, number, InferType } from "yup";
+import { InferType, number, object, string } from "yup";
 
 const creditCodeSchema = object({
   _id: string(),

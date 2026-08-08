@@ -206,7 +206,8 @@ function queryValues(value: string | string[] | undefined) {
 function apiKeyFromRequest(req: NextApiRequest) {
   const header = req.headers["x-api-key"];
   return (
-    (Array.isArray(header) ? header[0] : header) || queryValue(req.query.API_KEY)
+    (Array.isArray(header) ? header[0] : header) ||
+    queryValue(req.query.API_KEY)
   );
 }
 
@@ -216,7 +217,7 @@ function sameKey(left: unknown, right: unknown) {
 
 export default async function ensureIndexes(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "GET" && req.method !== "POST") {
     res.setHeader("Allow", "GET, POST");
@@ -236,7 +237,7 @@ export default async function ensureIndexes(
   }
 
   const dryRun = ["1", "true", "yes"].includes(
-    queryValue(req.query.dryRun)?.toLowerCase() || ""
+    queryValue(req.query.dryRun)?.toLowerCase() || "",
   );
   const collectionFilters = queryValues(req.query.collection);
   const nameFilters = queryValues(req.query.name);
@@ -257,7 +258,7 @@ export default async function ensureIndexes(
     return res.status(400).json({
       error: "No managed indexes matched the supplied filters",
       collections: Array.from(
-        new Set(managedIndexes.map((index) => index.collection))
+        new Set(managedIndexes.map((index) => index.collection)),
       ).sort(),
       indexNames: managedIndexes.map((index) => index.name).sort(),
     });
@@ -286,7 +287,7 @@ export default async function ensureIndexes(
       }
 
       const sameKeyExisting = indexes.find((index) =>
-        sameKey(index.key, spec.key)
+        sameKey(index.key, spec.key),
       );
       if (sameKeyExisting) {
         results.push({
@@ -325,7 +326,7 @@ export default async function ensureIndexes(
       exists: 0,
       exists_with_different_name: 0,
       would_create: 0,
-    }
+    },
   );
   const hasFailure = summary.conflict > 0 || summary.error > 0;
 

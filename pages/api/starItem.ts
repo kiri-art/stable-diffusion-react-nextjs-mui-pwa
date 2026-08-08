@@ -1,18 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import sanitizeFilename from "sanitize-filename";
-
-import type NodeCol from "../../src/schemas/lib/NodeCol";
-import type Star from "../../src/schemas/star";
+import { AuthFromReq } from "../../src/api-lib/auth";
+import gs from "../../src/api-lib/db";
+import { extensions, getMimeTypeFromBuffer } from "../../src/lib/mimeTypes";
 import sharedInputTextFromInputs from "../../src/lib/sharedInputTextFromInputs";
 import {
   ddaCallInputsSchema,
   ddaModelInputsSchema,
   // bananaRequestSchema,
 } from "../../src/schemas";
+import type NodeCol from "../../src/schemas/lib/NodeCol";
+import type Star from "../../src/schemas/star";
 import { createFileFromBuffer } from "./file2";
-import gs from "../../src/api-lib/db";
-import { AuthFromReq } from "../../src/api-lib/auth";
-import { getMimeTypeFromBuffer, extensions } from "../../src/lib/mimeTypes";
 
 if (!gs.dba) throw new Error("gs.dba not defined");
 
@@ -32,7 +31,7 @@ export const config = {
 
 export default async function starItem(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const item = req.body?.item;
   if (!gs.dba) return res.status(500).end();

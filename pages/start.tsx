@@ -1,21 +1,12 @@
-import * as React from "react";
-import type { NextPage } from "next";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
-
-import Link from "../src/Link";
-import MyAppBar from "../src/MyAppBar";
-import Copyright from "../src/Copyright";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import type { NextPage } from "next";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
+import Copyright from "../src/Copyright";
+import Link from "../src/Link";
+import MyAppBar from "../src/MyAppBar";
 
 export const itemData = [
   {
@@ -63,10 +54,7 @@ export function ItemGrid({
         const title =
           typeof item.title === "function" ? item.title() : item.title;
         return (
-          <Grid
-            key={item.href}
-            size={{ xs: 6, sm: 4, md: 3, lg: 3, xl: 3 }}
-          >
+          <Grid key={item.href} size={{ xs: 6, sm: 4, md: 3, lg: 3, xl: 3 }}>
             <Box
               sx={{
                 p: 0,

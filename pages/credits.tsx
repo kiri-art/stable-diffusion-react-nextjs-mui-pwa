@@ -1,16 +1,16 @@
-import React from "react";
-import { useRouter } from "next/router";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import {
-  db,
-  useGongoUserId,
-  useGongoOne,
-  useGongoIsPopulated,
-} from "gongo-client-react";
-import type { WithId } from "gongo-client/lib/browser/Collection";
 // import addMonths from "date-fns/addMonths";
 import { addDays } from "date-fns/addDays";
+import type { WithId } from "gongo-client/lib/browser/Collection";
+import {
+  db,
+  useGongoIsPopulated,
+  useGongoOne,
+  useGongoUserId,
+} from "gongo-client-react";
+import { useRouter } from "next/router";
+import React from "react";
 //import RevolutCheckout from "@revolut/checkout";
 
 import {
@@ -25,12 +25,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
-import MyAppBar from "../src/MyAppBar";
-import Link from "../src/Link";
-import type { User } from "../src/schemas";
-import { DAILY_FREE_CREDITS, MIN_PAID_CREDITS } from "../src/config/constants";
 import { signIn } from "next-auth/react";
+import { DAILY_FREE_CREDITS, MIN_PAID_CREDITS } from "../src/config/constants";
+import Link from "../src/Link";
+import MyAppBar from "../src/MyAppBar";
+import type { User } from "../src/schemas";
 
 function intOrFixedOneStr(num: number) {
   if (num && !Number.isInteger(num)) return num.toFixed(1);
@@ -63,7 +62,7 @@ function RedeemCreditCode({ user }: { user: WithId<User> }) {
         return setMessage(t`No such code exists.`);
       if (result.$error === "MAXIMUM_REACHED")
         return setMessage(
-          t`Code already redeeemed maximum number of times, sorry.`
+          t`Code already redeeemed maximum number of times, sorry.`,
         );
       if (result.$error === "ALREADY_REDEEMED")
         return setMessage(t`You have already redeemed this code before.`);
@@ -89,7 +88,7 @@ function RedeemCreditCode({ user }: { user: WithId<User> }) {
       */
 
       return setMessage(
-        t`Successfully redeemed ${result.credits as number} credits.`
+        t`Successfully redeemed ${result.credits as number} credits.`,
       );
     }
 
@@ -123,7 +122,7 @@ export default function Credits() {
   const isPopulated = useGongoIsPopulated();
   const userId = useGongoUserId() as string | null;
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const [loading, setLoading] = React.useState(false);
   const [numCredits, setNumCredits] = React.useState("100");

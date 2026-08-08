@@ -1,25 +1,22 @@
 import { t } from "@lingui/core/macro";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
+import { Container } from "@mui/material";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-
+import React from "react";
 import { REQUIRE_REGISTRATION } from "../src/lib/client-env";
+import fetchToOutput from "../src/lib/fetchToOutput";
+import { outputImageQueue } from "../src/lib/sendQueue";
+import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
+import MyAppBar from "../src/MyAppBar";
+import OutputImage from "../src/OutputImage";
+import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
+import Footer from "../src/sd/Footer";
 import useModelState, {
   modelStateCallInputs,
   modelStateModelInputs,
 } from "../src/sd/useModelState";
-
-import { Container } from "@mui/material";
-
-import MyAppBar from "../src/MyAppBar";
-import React from "react";
-import OutputImage from "../src/OutputImage";
-import Controls, { randomizeSeedIfChecked } from "../src/sd/Controls";
 import useRandomPrompt from "../src/sd/useRandomPrompt";
-import Footer from "../src/sd/Footer";
-import sharedInputTextFromInputs from "../src/lib/sharedInputTextFromInputs";
-import { outputImageQueue } from "../src/lib/sendQueue";
-import fetchToOutput from "../src/lib/fetchToOutput";
 
 const txt2imgState = [
   "prompt",
@@ -44,16 +41,16 @@ export default function Txt2Img() {
   const [nsfw, setNsfw] = React.useState(false);
   const [log, setLog] = React.useState([] as Array<string>);
   const [requestStartTime, setRequestStartTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [requestEndTime, setRequestEndTime] = React.useState<number | null>(
-    null
+    null,
   );
   const [historyId, setHistoryId] = React.useState("");
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const router = useRouter();
 
@@ -102,7 +99,7 @@ export default function Txt2Img() {
         setImgSrc,
         setNsfw,
         setHistoryId,
-      }
+      },
     );
 
     setRequestEndTime(Date.now());

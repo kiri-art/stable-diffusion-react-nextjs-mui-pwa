@@ -1,15 +1,14 @@
+import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
 import MongoDBA from "gongo-server-db-mongo";
-import Auth from "gongo-server/lib/auth-class";
 import Database from "gongo-server-db-mongo";
 import MongoClient from "mongodb-rest-relay/lib/client";
-import { ObjectId } from "./objectId";
-
 import type {
+  CreditCode as _CreditCode,
   User as _User,
   Order,
-  CreditCode as _CreditCode,
 } from "../../src/schemas";
+import { ObjectId } from "./objectId";
 
 // Can't omit on type with index signature, have to remap.
 // export type User = Omit<_User, "_id"> & { _id: ObjectId };
@@ -39,6 +38,6 @@ const gs = new GongoServer({
 const db = gs.dba;
 const dba = gs.dba;
 
-export type { User, Order, CreditCode };
-export { db, dba, Auth, Database };
+export type { CreditCode, Order, User };
+export { Auth, Database, db, dba };
 export default gs;

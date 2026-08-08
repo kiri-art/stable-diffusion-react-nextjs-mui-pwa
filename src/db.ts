@@ -1,15 +1,13 @@
-import db from "gongo-client";
+import db, { Collection } from "gongo-client";
+import GongoAuth from "gongo-client/lib/auth";
 import HTTPTransport from "gongo-client/lib/transports/http";
 
-import { Collection } from "gongo-client";
-import GongoAuth from "gongo-client/lib/auth";
-
 import type {
-  User,
-  Order,
+  BananaRequest,
   CreditCode,
   CSend,
-  BananaRequest,
+  Order,
+  User,
   UserProfile,
 } from "./schemas";
 import { HistoryItem } from "./schemas/history";

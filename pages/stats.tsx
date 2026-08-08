@@ -1,22 +1,21 @@
-import * as React from "react";
-import type { NextPage } from "next";
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {
   db,
-  useGongoSub,
   useGongoLive,
-  useGongoUserId,
   useGongoOne,
+  useGongoSub,
+  useGongoUserId,
 } from "gongo-client-react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import Box from "@mui/material/Box";
-import { t } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
-
-import MyAppBar from "../src/MyAppBar";
-import Link from "../src/Link";
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import * as React from "react";
+import Link from "../src/Link";
+import MyAppBar from "../src/MyAppBar";
 
 const Stats: NextPage = () => {
   useGongoSub("statsDaily");
@@ -26,19 +25,19 @@ const Stats: NextPage = () => {
   const statsDaily = useGongoLive((db) =>
     db
       .collection("statsDaily")
-      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14) } })
+      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14) } }),
   );
   const router = useRouter();
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
   const isAdmin = user?.admin;
 
   const hourlyStats = useGongoLive((db) =>
     db
       .collection("statsHourly")
-      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24) } })
+      .find({ date: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24) } }),
   );
 
   const series = React.useMemo(() => {
@@ -273,7 +272,7 @@ const Stats: NextPage = () => {
             tooltip: {
               formatter: function (
                 this: Highcharts.Point,
-                tooltip: Highcharts.Tooltip
+                tooltip: Highcharts.Tooltip,
               ) {
                 if (this.points) {
                   this.points = this.points.filter((p) => (p.y || 0) > 0);
@@ -509,7 +508,7 @@ const Stats: NextPage = () => {
                           },
                         },
                       };
-                    }
+                    },
                   ),
                   /*
               {

@@ -1,4 +1,3 @@
-import React from "react";
 import { Divider } from "@mui/material";
 
 import Copyright from "../Copyright";

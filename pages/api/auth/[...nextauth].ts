@@ -1,22 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { Session } from "next-auth";
+
 // import { MongoDBAdapter } from "@auth/mongodb-adapter";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 // import clientPromise from "../../src/api-lib/mongodb";
 
-// import GithubProvider from "next-auth/providers/github";
-import GithubProvider from "../../../src/api-lib/GithubProvider";
+import { ObjectId } from "bson";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider, {
   TwitterLegacyProfile,
 } from "next-auth/providers/twitter";
 
 import gs from "../../../src/api-lib/db-full";
+// import GithubProvider from "next-auth/providers/github";
+import GithubProvider from "../../../src/api-lib/GithubProvider";
 import GongoAuthAdapter, {
   AdapterUser,
 } from "../../../src/api-lib/gongoAuthAdapter";
 import { ipFromReq } from "../../../src/api-lib/ipCheck";
-import { ObjectId } from "bson";
 import { DAILY_FREE_CREDITS } from "../../../src/config/constants";
 
 interface Service {
@@ -38,7 +39,7 @@ interface Service {
 
 function newUserFromService<T extends Record<string, unknown>>(
   service: Service,
-  overrides: T = {} as T
+  overrides: T = {} as T,
 ) {
   return {
     id: service.id,
@@ -191,7 +192,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                   ? req.headers.get("user-agent")
                   : req.headers["user-agent"],
             },
-          }
+          },
         );
 
         return session;

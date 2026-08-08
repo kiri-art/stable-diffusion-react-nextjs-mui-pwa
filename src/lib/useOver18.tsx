@@ -1,11 +1,11 @@
-import React from "react";
-import { useGongoUserId, useGongoOne } from "gongo-client-react";
 import { differenceInYears } from "date-fns";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import React from "react";
 
 export default function useOver18() {
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
-    db.collection("users").find({ _id: userId })
+    db.collection("users").find({ _id: userId }),
   );
 
   return React.useMemo(() => {

@@ -1,12 +1,5 @@
-import React from "react";
-import { toast } from "react-toastify";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { db } from "gongo-client-react";
-import sanitizeFilename from "sanitize-filename";
-import { Line } from "rc-progress";
-
-import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import {
   AccessTime,
   AutoFixHigh,
@@ -15,11 +8,16 @@ import {
   Share,
   Star,
 } from "@mui/icons-material";
-
+import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import { db } from "gongo-client-react";
+import { Line } from "rc-progress";
+import React from "react";
+import { toast } from "react-toastify";
+import sanitizeFilename from "sanitize-filename";
+import { extensions, getMimeType } from "./lib/mimeTypes";
 import sendQueue from "./lib/sendQueue";
-import { destar } from "./Starred";
 import NewBadge from "./NewBadge";
-import { getMimeType, extensions } from "./lib/mimeTypes";
+import { destar } from "./Starred";
 
 // Useful for dev
 const FORCE_MOUSEOVER = false;
@@ -49,7 +47,7 @@ function Timer({
     setS((Date.now() - requestStartTime) / 1000);
     const interval = setInterval(
       () => setS((Date.now() - requestStartTime) / 1000),
-      100
+      100,
     );
     return () => {
       clearInterval(interval);
@@ -127,7 +125,7 @@ export default function OutputImage({
       if (!ctx) return toast("Browser could not allocate a context, sorry");
       ctx.drawImage(imgResult.current, 0, 0);
       blob = await new Promise((resolve) =>
-        canvas.toBlob(resolve as BlobCallback, "image/png")
+        canvas.toBlob(resolve as BlobCallback, "image/png"),
       );
       mimeType = "image/png";
       upExt = "PNG";
@@ -284,7 +282,7 @@ export default function OutputImage({
             style={{ position: "absolute" }}
           />
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* biome-ignore lint/performance/noImgElement: This generated image is loaded from an object URL. */}
         <img
           alt="model output"
           ref={imgResult}

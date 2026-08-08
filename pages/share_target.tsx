@@ -1,11 +1,9 @@
-import React from "react";
-import { useRouter } from "next/router";
 import { Trans } from "@lingui/react/macro";
-
 import { Container, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 import MyAppBar from "../src/MyAppBar";
-import { itemData, ItemGrid } from "./start";
+import { ItemGrid, itemData } from "./start";
 
 const items = itemData.filter((item) => item.href !== "/txt2img");
 

@@ -1,24 +1,24 @@
-import * as React from "react";
-import Head from "next/head";
-import { AppProps } from "next/app";
 import { Analytics } from "@vercel/analytics/react";
+import { AppProps } from "next/app";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import * as React from "react";
 // import { useGongoIsPopulated } from "gongo-client-react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 
 import "../src/db";
-import themes from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
-import locales, { defaultLocale } from "../src/lib/locales";
-import { i18n, I18nProvider } from "../src/lib/i18n";
-import serwistStuff from "../src/serwistStuff";
 import { ConfirmDialog } from "../src/asyncConfirm";
+import createEmotionCache from "../src/createEmotionCache";
+import { I18nProvider, i18n } from "../src/lib/i18n";
+import locales, { defaultLocale } from "../src/lib/locales";
+import serwistStuff from "../src/serwistStuff";
+import themes from "../src/theme";
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;

@@ -3,16 +3,20 @@
 // with a few additions (marked with "kiri").
 
 import { useWindowSize } from "@react-hook/window-size";
-import * as React from "react";
+import type {
+  MasonryScrollerProps,
+  UsePositionerOptions,
+  UseScrollToIndexOptions,
+} from "masonic";
 import {
-  usePositioner,
-  useContainerPosition,
-  useResizeObserver,
-  useScrollToIndex,
   //
   MasonryScroller,
+  useContainerPosition,
+  usePositioner,
+  useResizeObserver,
+  useScrollToIndex,
 } from "masonic";
-import type { MasonryScrollerProps, UseScrollToIndexOptions, UsePositionerOptions } from "masonic";
+import * as React from "react";
 
 /**
  * A "batteries included" masonry grid which includes all of the implementation details below. This component is the
@@ -36,8 +40,8 @@ export function Masonry<Item>(props: MasonryProps<Item>) {
       height: windowSize[1],
       containerRef,
     },
-    props
-    // eslint-disable-next-line
+    props,
+    // biome-ignore lint/suspicious/noExplicitAny: Masonic's composed props cannot be expressed by its public types.
   ) as any;
 
   // kiri
@@ -55,7 +59,7 @@ export function Masonry<Item>(props: MasonryProps<Item>) {
     // [props.items] // kiri
     // ok maybe i wanted this: (re-render if items.length changes)
     // [props.items.length]
-    [shrunk && Math.random()]
+    [shrunk && Math.random()],
     // see also https://github.com/jaredLunde/masonic/issues/12
   );
   nextProps.resizeObserver = useResizeObserver(nextProps.positioner);

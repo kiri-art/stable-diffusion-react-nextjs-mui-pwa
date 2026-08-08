@@ -1,14 +1,12 @@
-import React from "react";
-import { useRouter } from "next/router";
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { useGongoUserId } from "gongo-client-react";
+import { Container, Typography } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import CheckoutForm from "../src/CheckoutForm";
+import { useGongoUserId } from "gongo-client-react";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-
-import { Container, Typography } from "@mui/material";
+import CheckoutForm from "../src/CheckoutForm";
 
 import MyAppBar from "../src/MyAppBar";
 
@@ -43,7 +41,7 @@ export default function Checkout() {
       return <div>Loading...</div>;
 
     throw new Error(
-      "either clientSecret or orderId query param is not a string"
+      "either clientSecret or orderId query param is not a string",
     );
   }
 

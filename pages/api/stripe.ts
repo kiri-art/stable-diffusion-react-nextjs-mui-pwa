@@ -45,7 +45,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       event = stripe.webhooks.constructEvent(
         buf.toString(),
         sig,
-        webhookSecret
+        webhookSecret,
       );
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
@@ -72,7 +72,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!order) {
         throw new Error(
           "Could not find order with matching stripePaymentIntentId: " +
-            paymentIntent.id
+            paymentIntent.id,
         );
       }
 
@@ -81,7 +81,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           .collection("orders")
           .updateOne(
             { stripePaymentIntentId: paymentIntent.id },
-            { $set: { stripePaymentIntentStatus: paymentIntent.status } }
+            { $set: { stripePaymentIntentStatus: paymentIntent.status } },
           ));
 
       await (dba &&
@@ -91,12 +91,12 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           {
             $inc: { "credits.paid": order.numCredits },
-          }
+          },
         ));
     } else if (event.type === "payment_intent.payment_failed") {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log(
-        `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
+        `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`,
       );
 
       await (dba &&
@@ -108,7 +108,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
               stripePaymentFailedReason:
                 paymentIntent.last_payment_error?.message,
             },
-          }
+          },
         ));
     } else if (event.type === "charge.succeeded") {
       const charge = event.data.object as Stripe.Charge;
@@ -125,5 +125,5 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: micro-cors and Next use incompatible handler types.
 export default cors(webhookHandler as any);

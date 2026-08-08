@@ -1,15 +1,13 @@
 import AWS from "aws-sdk";
-import crypto from "crypto";
-import sharp from "sharp";
-import { fileTypeFromBuffer } from "file-type";
-
 import { ObjectId } from "bson";
+import crypto from "crypto";
+import { fileTypeFromBuffer } from "file-type";
+import sharp from "sharp";
 import gs /* Auth, User, Order,  ObjectId */ from "../../src/api-lib/db";
+
 // import { format } from 'date-fns';
 
-type SharpMetadata = Awaited<
-  ReturnType<ReturnType<typeof sharp>["metadata"]>
->;
+type SharpMetadata = Awaited<ReturnType<ReturnType<typeof sharp>["metadata"]>>;
 
 const AWS_S3_BUCKET = "kiri-art";
 
@@ -60,7 +58,7 @@ async function createFileFromBuffer(
     size?: number;
     existingId?: string;
     extra?: Record<string, unknown>;
-  } = {}
+  } = {},
 ) {
   // TODO, check if it's an image.
 

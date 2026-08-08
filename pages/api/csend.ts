@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "crypto";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import gs from "../../src/api-lib/db-full";
-import { CSend, BananaRequest } from "../../src/schemas";
+import { BananaRequest, CSend } from "../../src/schemas";
 
 const csends = gs.dba && gs.dba.collection("csends");
 const bananaRequests = gs.dba && gs.dba.collection("bananaRequests");
@@ -44,7 +44,7 @@ async function aggregateRequestCsends(inferDone: CSend) {
   // assume first inference for now... TODO...
   const query = { startRequestId: inferStart.payload.startRequestId };
   const bananaRequest = (await bananaRequests.findOne(
-    query
+    query,
   )) as BananaRequest | null;
 
   if (bananaRequest) {
@@ -66,7 +66,7 @@ async function aggregateRequestCsends(inferDone: CSend) {
 
 export default async function CSendRequest(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   // TODO, remove.
   if (req.method === "GET" && req.query.type === "rebuild" && csends) {

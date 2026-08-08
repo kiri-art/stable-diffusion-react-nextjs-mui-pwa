@@ -1,15 +1,17 @@
-import * as React from "react";
-import type { NextPage } from "next";
-import Container from "@mui/material/Container";
 import { t } from "@lingui/core/macro";
+import Container from "@mui/material/Container";
 import {
   db,
-  useGongoSub,
   useGongoLive,
+  useGongoSub,
   useGongoUserId,
 } from "gongo-client-react";
+import type { NextPage } from "next";
+import * as React from "react";
+
 // import { format } from "date-fns";
 
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -24,11 +26,9 @@ import {
   TableRow,
   Tabs,
 } from "@mui/material";
-
 import MyAppBar from "../src/MyAppBar";
-import type { CSend, PayloadInitStart } from "../src/schemas/csend";
 import { BananaRequest } from "../src/schemas";
-import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import type { CSend, PayloadInitStart } from "../src/schemas/csend";
 
 const MAX_TIME_TOTAL = 60000;
 const MAX_TIME_LOAD = 10000;
@@ -394,9 +394,7 @@ function RequestRow({
                   {method && (
                     <TableRow>
                       <TableCell>Method</TableCell>
-                      <TableCell>
-                        {method}
-                      </TableCell>
+                      <TableCell>{method}</TableCell>
                     </TableRow>
                   )}
                   <TableRow>
@@ -439,7 +437,7 @@ function Requests() {
       minInterval: 500,
       maxInterval: 1000,
       persist: false,
-    }
+    },
   );
 
   const userId = useGongoUserId();
@@ -453,7 +451,7 @@ function Requests() {
       // .find({
       //  createdAt: { $gt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2) },
       // })
-      .sort("createdAt", "desc")
+      .sort("createdAt", "desc"),
   );
 
   React.useEffect(() => {

@@ -16,7 +16,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
       return res
         .status(400)
         .end(
-          `Bad Request: \`type\` should be "start" or "check", not "${type}"`
+          `Bad Request: \`type\` should be "start" or "check", not "${type}"`,
         );
 
     const request = ProviderFetchRequestFromObject(req.body.requestObject);
@@ -35,7 +35,7 @@ export default function createHandler(deps?: Record<string, unknown>) {
           extraInfo,
           deps,
           req,
-        }
+        },
       );
 
       const $response = preStartResult.$response as

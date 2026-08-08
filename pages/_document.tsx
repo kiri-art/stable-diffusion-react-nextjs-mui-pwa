@@ -1,10 +1,8 @@
-import * as React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-
-import themes from "../src/theme";
+import Document, { Head, Html, Main, NextScript } from "next/document";
 import createEmotionCache from "../src/createEmotionCache";
 import locales, { defaultLocale } from "../src/lib/locales";
+import themes from "../src/theme";
 
 export default class MyDocument extends Document {
   render() {
@@ -26,7 +24,7 @@ export default class MyDocument extends Document {
           />
           <meta name="emotion-insertion-point" content="" />
           {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: Emotion augments the document props at runtime.
             (this.props as any).emotionStyleTags
           }
           <meta name="application-name" content="KIRI.ART" />
@@ -143,7 +141,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Next's document enhancer accepts the augmented app component.
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
@@ -158,7 +156,6 @@ MyDocument.getInitialProps = async (ctx) => {
     <style
       data-emotion={`${style.key} ${style.ids.join(" ")}`}
       key={style.key}
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
   ));

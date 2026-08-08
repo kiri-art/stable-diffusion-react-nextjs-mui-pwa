@@ -1,18 +1,18 @@
 // import * as banana from "@banana-dev/banana-dev";
-import type { NextApiRequest, NextApiResponse } from "next";
+
 import Auth from "gongo-server/lib/auth-class";
 import GongoServer from "gongo-server/lib/serverless";
 import Database /* ObjectID */ from "gongo-server-db-mongo";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
-
-import type { BananaRequest } from "../../src/schemas/bananaRequest";
 import { REQUIRE_REGISTRATION } from "../../src/lib/server-env";
 import {
-  upsampleCallInputsSchema,
   UpsampleCallInputs,
-  upsampleModelInputsSchema,
   UpsampleModelInputs,
+  upsampleCallInputsSchema,
+  upsampleModelInputsSchema,
 } from "../../src/schemas";
+import type { BananaRequest } from "../../src/schemas/bananaRequest";
 
 export const config = {
   api: {
@@ -36,7 +36,7 @@ const gs = new GongoServer({
 async function bananaSdkRun(
   modelInputs: UpsampleModelInputs,
   callInputs: UpsampleCallInputs,
-  chargedCredits: { credits: number; paid: boolean }
+  chargedCredits: { credits: number; paid: boolean },
 ) {
   if (typeof apiKey !== "string")
     throw new Error("process.env.BANANA_API_KEY is not a string");
@@ -130,7 +130,7 @@ async function bananaSdkRun(
 
 async function localSdkRun(
   modelInputs: UpsampleModelInputs,
-  callInputs: UpsampleCallInputs
+  callInputs: UpsampleCallInputs,
 ) {
   const created = Math.floor(Date.now() / 1000);
 
@@ -173,14 +173,14 @@ function log(out: Record<string, unknown>) {
           return shorten(value);
         return value;
       },
-      2
-    )
+      2,
+    ),
   );
 }
 
 export default async function txt2imgFetch(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "POST") throw new Error("expected a POST");
   if (typeof req.body !== "object") throw new Error("Body not decoded");

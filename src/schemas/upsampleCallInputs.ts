@@ -1,4 +1,4 @@
-import { object, string, InferType } from "yup";
+import { InferType, object, string } from "yup";
 import Providers from "../config/providers";
 
 const upsampleCallInputsSchema = object({

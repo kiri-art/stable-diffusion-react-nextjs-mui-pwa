@@ -1,11 +1,10 @@
-import React from "react";
-
-import { Box, Chip, Container } from "@mui/material";
 import { FilterAlt } from "@mui/icons-material";
 
-import type { ModelState } from "./useModelState";
-import { AddedModel, Models } from "./Addons/common";
+import { Box, Chip, Container } from "@mui/material";
+import React from "react";
 import models from "../config/models";
+import { AddedModel, Models } from "./Addons/common";
+import type { ModelState } from "./useModelState";
 
 export default function Addons({ inputs }: { inputs: ModelState }) {
   const model = models[inputs.MODEL_ID.value];
@@ -49,11 +48,7 @@ export default function Addons({ inputs }: { inputs: ModelState }) {
         {!model.baseModel.startsWith("SDXL") && (
           <>
             {" "}
-            or <Chip
-              size="small"
-              sx={{ fontSize: "80%" }}
-              label="Embeddings"
-            />{" "}
+            or <Chip size="small" sx={{ fontSize: "80%" }} label="Embeddings" />{" "}
             (aka Textual Inversions)
           </>
         )}

@@ -98,7 +98,7 @@ for (const locale of localeDirs) {
   const stats = getLocaleStats(entries, locale);
 
   console.log(
-    `${locale}: active=${stats.activeCount} missing=${stats.missingCount} obsolete=${stats.obsoleteCount}`
+    `${locale}: active=${stats.activeCount} missing=${stats.missingCount} obsolete=${stats.obsoleteCount}`,
   );
 
   if (stats.missingEntries.length > 0) {

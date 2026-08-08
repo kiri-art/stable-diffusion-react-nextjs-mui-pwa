@@ -1,13 +1,13 @@
-import React from "react";
 import { t } from "@lingui/core/macro";
 import {
+  Button,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Button,
+  DialogTitle,
 } from "@mui/material";
+import React from "react";
 
 const state: {
   resolve: ((value: boolean | PromiseLike<boolean>) => void) | null;
