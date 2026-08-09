@@ -68,7 +68,7 @@
     "micro-cors": "^0.1.1",
     "mongodb": "6.2.0",
     "mongodb-rest-relay": "1.9.3",
-    "next": "16.3.0",
+    "next": "16.2.11",
     "next-auth": "^4.24.15",
     "passport": "0.7.0",
     "passport-github2": "^0.1.12",
