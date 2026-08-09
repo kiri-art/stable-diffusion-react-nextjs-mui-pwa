@@ -114,6 +114,10 @@ msgstr "アカウントの削除は元に戻せません。完全に一致する
 msgid "Account deletion report"
 msgstr "アカウント削除レポート"
 
+#: pages/account/data.tsx:153
+msgid "Account usage records contain daily billing totals only. Separate provider logs retain generation inputs, including full prompts, without an account identifier; they are not included in account downloads or account deletion. Starred records retain full, unredacted prompts, and starred images are stored on our servers."
+msgstr "アカウント利用記録には、日ごとの課金合計のみが含まれます。別途保存されるプロバイダーログには、完全なプロンプトを含む生成入力が保持されますが、アカウント識別子は含まれません。これらのログは、アカウントデータのダウンロードやアカウント削除の対象には含まれません。スターを付けた記録には完全で編集されていないプロンプトが保持され、スターを付けた画像は当社のサーバーに保存されます。"
+
 #: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "謝辞"
@@ -192,7 +196,7 @@ msgstr "アニメに最適"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: pages/account/data.tsx:275
+#: pages/account/data.tsx:277
 msgid "Capitalization and spaces must match."
 msgstr "大文字と小文字、空白を正確に一致させてください。"
 
@@ -254,7 +258,7 @@ msgstr "生年月日を確認"
 msgid "Confirm the immutable user ID"
 msgstr "変更不能なユーザーIDを確認"
 
-#: pages/account/data.tsx:260
+#: pages/account/data.tsx:262
 msgid "Confirmation phrase"
 msgstr "確認フレーズ"
 
@@ -298,7 +302,7 @@ msgstr "日付"
 msgid "Delete a user account"
 msgstr "ユーザーアカウントを削除"
 
-#: pages/account/data.tsx:202
+#: pages/account/data.tsx:204
 msgid "Delete My Account"
 msgstr "アカウントを削除する"
 
@@ -310,7 +314,7 @@ msgstr "このスターを削除しますか？"
 msgid "Deleted"
 msgstr "削除済み"
 
-#: pages/account/data.tsx:292
+#: pages/account/data.tsx:294
 #: src/admin/AccountDeletionDangerZone.tsx:566
 msgid "Deleting account…"
 msgstr "アカウントを削除しています…"
@@ -339,7 +343,7 @@ msgstr "表示名"
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "有害なコンテンツ (人種差別、扇動的など) を作成しないでください。"
 
-#: pages/account/data.tsx:181
+#: pages/account/data.tsx:183
 msgid "Download account data (ZIP)"
 msgstr "アカウントデータをダウンロード（ZIP）"
 
@@ -590,7 +594,7 @@ msgstr "過去 24 時間"
 msgid "Loading..."
 msgstr "読み込み中..."
 
-#: pages/account/data.tsx:302
+#: pages/account/data.tsx:304
 msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
 msgstr "削除後、この端末のローカル履歴は消去されます。別の端末でこのアプリを使用した場合は、その端末でアプリをアンインストールするか、ブラウザのストレージを個別に消去してください。"
 
@@ -770,7 +774,7 @@ msgstr "支払う"
 msgid "Permanently delete"
 msgstr "完全に削除"
 
-#: pages/account/data.tsx:294
+#: pages/account/data.tsx:296
 msgid "Permanently delete my account"
 msgstr "自分のアカウントを完全に削除"
 
@@ -965,7 +969,7 @@ msgstr "Stripe.com とそのパートナーによる安全な決済です。"
 msgid "See all inputs and remix at {url}"
 msgstr "{url} ですべての入力を確認してリミックスできます"
 
-#: pages/account/data.tsx:166
+#: pages/account/data.tsx:168
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "<0>利用規約</0>と <1>プライバシーポリシー</1> もご覧ください"
 
@@ -983,7 +987,7 @@ msgstr "シード"
 msgid "SEND IMAGE TO"
 msgstr "画像の送信先"
 
-#: pages/account/data.tsx:222
+#: pages/account/data.tsx:224
 msgid "Server deletion finished, but local cleanup needs attention:"
 msgstr "サーバー上の削除は完了しましたが、ローカルデータの消去に確認が必要です："
 
@@ -1123,7 +1127,7 @@ msgstr "これは{0}（{1}）に対する最終確認です。この操作は元
 msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
 msgstr "これが最終確認です。アカウントと関連データは消去され、この操作は元に戻せません。"
 
-#: pages/account/data.tsx:205
+#: pages/account/data.tsx:207
 msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
 msgstr "アカウントと関連データを完全に削除します。請求記録は、法的または運用上必要な場合、匿名化して保持されることがあります。"
 
@@ -1143,7 +1147,7 @@ msgstr "無料クレジットを使用しており、有料クレジットが {M
 msgid "those using paid credits."
 msgstr "有料クレジットを使っている人。"
 
-#: pages/account/data.tsx:239
+#: pages/account/data.tsx:241
 msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
 msgstr "続行するには、以下のフレーズを正確に入力してください。削除を開始する前に、もう一度確認を求められます。"
 
@@ -1216,10 +1220,6 @@ msgstr "マウスまたは指を使って、重ねてマスクを描きます"
 msgid "User not found"
 msgstr "ユーザーが見つかりません"
 
-#: pages/account/data.tsx:153
-msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
-msgstr "ユーザーリクエストの記録ではプロンプトと画像が伏せられますが、関連するプロバイダーのログには、プロンプトを含む生成入力が記録される場合があります。スターを付けた画像もサーバーに保存されます。"
-
 #: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "そのユーザー名は利用できません。"
@@ -1263,7 +1263,7 @@ msgstr "出力画像の幅。"
 msgid "Yes"
 msgstr "はい"
 
-#: pages/account/data.tsx:174
+#: pages/account/data.tsx:176
 msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
 msgstr "関連するデータベースのレコードとファイルのメタデータを、JSONコレクションのZIPアーカイブとしてダウンロードできます。アーカイブには、スターを付けた画像ファイル自体は含まれません。"
 
@@ -1283,7 +1283,7 @@ msgstr "無料クレジット <0>{DAILY_FREE_CREDITS}</0><1>*</1> は <2>毎日<
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "<0>履歴</0>はこの端末にのみ保存され、サーバーにはバックアップされません。"
 
-#: pages/account/data.tsx:160
+#: pages/account/data.tsx:162
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "ログインが成功するたびに、<0>IP アドレス</0>とユーザーエージェントが記録されます。"
 

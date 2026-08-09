@@ -2,30 +2,30 @@ import crypto from "node:crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mocks = vi.hoisted(() => ({
-  deleteMany: vi.fn(),
-  findOne: vi.fn(),
-  insertOne: vi.fn(),
-  isDeletedCallbackIdentifier: vi.fn(),
-  recordDeletedCallbackIdentifiers: vi.fn(),
-}));
+const mocks = vi.hoisted(() => {
+  const findOne = vi.fn();
+  const insertOne = vi.fn();
+  return {
+    collection: vi.fn(() => ({ findOne, insertOne })),
+    findOne,
+    insertOne,
+  };
+});
 
 vi.mock("../../src/api-lib/db-full", () => ({
   default: {
     dba: {
-      collection: vi.fn(() => ({
-        findOne: mocks.findOne,
-        insertOne: mocks.insertOne,
-      })),
+      collection: mocks.collection,
       dbPromise: Promise.resolve({
-        collection: vi.fn(() => ({ deleteMany: mocks.deleteMany })),
+        collection: vi.fn((name: string) => {
+          if (name === "userRequests") {
+            throw new Error("provider telemetry touched account data");
+          }
+          return {};
+        }),
       }),
     },
   },
-}));
-vi.mock("../../src/server/account-data/requestTombstone", () => ({
-  isDeletedCallbackIdentifier: mocks.isDeletedCallbackIdentifier,
-  recordDeletedCallbackIdentifiers: mocks.recordDeletedCallbackIdentifiers,
 }));
 
 import csend from "../../pages/api/csend";
@@ -41,13 +41,9 @@ describe("POST /api/csend", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.SIGN_KEY = "test-signing-key";
-    mocks.isDeletedCallbackIdentifier.mockImplementation(
-      async (_db, kind: string) => kind === "request",
-    );
-    mocks.recordDeletedCallbackIdentifiers.mockResolvedValue(1);
   });
 
-  it("drops delayed callbacks for a deleted request and cleans its container", async () => {
+  it("records signed telemetry without consulting account-linked data", async () => {
     const signedData = {
       container_id: "late-container",
       payload: { startRequestId: "deleted-request" },
@@ -68,15 +64,12 @@ describe("POST /api/csend", () => {
 
     await csend(req, res);
 
-    expect(mocks.insertOne).not.toHaveBeenCalled();
-    expect(
-      mocks.recordDeletedCallbackIdentifiers,
-    ).toHaveBeenCalledExactlyOnceWith(expect.any(Object), "container", [
-      "late-container",
-    ]);
-    expect(mocks.deleteMany).toHaveBeenCalledExactlyOnceWith({
-      container_id: "late-container",
-    });
+    expect(mocks.insertOne).toHaveBeenCalledExactlyOnceWith(
+      expect.objectContaining({
+        container_id: "late-container",
+        payload: { startRequestId: "deleted-request" },
+      }),
+    );
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.end).toHaveBeenCalledWith("OK");
   });

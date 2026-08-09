@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
+    "privacy:unlink-provider-logs": "node --experimental-strip-types scripts/unlink-provider-logs.ts",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "check": "biome check .",

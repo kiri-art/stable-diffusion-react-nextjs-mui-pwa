@@ -10,7 +10,6 @@ import {
   recheckS3DeletionKeys,
   retryAccountDeletionJob,
 } from "../../src/server/account-data";
-import { isDeletedCallbackIdentifier } from "../../src/server/account-data/requestTombstone";
 import {
   startMongoReplicaSet,
   type TestMongoReplicaSet,
@@ -60,15 +59,6 @@ const requestIds = {
 
 const expectedCollections: ReportEntry[] = [
   { name: "accounts", action: "deleted", affectedRows: 2 },
-  {
-    name: "accountDeletionCallbackTombstones",
-    action: "retained",
-    affectedRows: 3,
-  },
-  { name: "bananaRequests", action: "deleted", affectedRows: 3 },
-  { name: "bananaRequests", action: "skipped_shared", affectedRows: 1 },
-  { name: "csends", action: "deleted", affectedRows: 4 },
-  { name: "csends", action: "skipped_shared", affectedRows: 1 },
   { name: "files", action: "deleted", affectedRows: 2 },
   { name: "files", action: "skipped_shared", affectedRows: 2 },
   { name: "files", action: "updated", affectedRows: 1 },
@@ -666,6 +656,10 @@ describe.sequential("account data deletion", () => {
     expect(
       await mongo.db.collection("users").findOne({ _id: ids.targetUser }),
     ).not.toBeNull();
+    const providerLogsBefore = await Promise.all([
+      mongo.db.collection("bananaRequests").find().sort({ _id: 1 }).toArray(),
+      mongo.db.collection("csends").find().sort({ _id: 1 }).toArray(),
+    ]);
 
     const external = {
       deleteS3Objects: vi.fn(async (keys: string[]) => ({
@@ -711,12 +705,9 @@ describe.sequential("account data deletion", () => {
     expect(
       await db.collection("users").findOne({ _id: ids.targetUser }),
     ).toBeNull();
-    await expect(
-      isDeletedCallbackIdentifier(db, "request", requestIds.targetA),
-    ).resolves.toBe(true);
-    await expect(
-      isDeletedCallbackIdentifier(db, "request", requestIds.shared),
-    ).resolves.toBe(false);
+    expect(
+      await db.collection("accountDeletionCallbackTombstones").countDocuments(),
+    ).toBe(0);
     expect(await db.collection("users").countDocuments()).toBe(2);
     expect(
       await db
@@ -744,20 +735,20 @@ describe.sequential("account data deletion", () => {
           $in: [requestIds.targetA, requestIds.targetB, requestIds.targetC],
         },
       }),
-    ).toBe(0);
+    ).toBe(3);
     expect(
       await db.collection("csends").countDocuments({
         "payload.startRequestId": {
           $in: [requestIds.targetA, requestIds.targetB, requestIds.targetC],
         },
       }),
-    ).toBe(0);
+    ).toBe(3);
     expect(
       await db.collection("csends").findOne({
         container_id: "target-container-a",
         payload: {},
       }),
-    ).toBeNull();
+    ).toMatchObject({ container_id: "target-container-a" });
     expect(
       await db.collection("bananaRequests").findOne({
         startRequestId: requestIds.shared,
@@ -768,6 +759,12 @@ describe.sequential("account data deletion", () => {
         "payload.startRequestId": requestIds.shared,
       }),
     ).toMatchObject({ container_id: "shared-container" });
+    await expect(
+      Promise.all([
+        db.collection("bananaRequests").find().sort({ _id: 1 }).toArray(),
+        db.collection("csends").find().sort({ _id: 1 }).toArray(),
+      ]),
+    ).resolves.toEqual(providerLogsBefore);
     expect(
       await db.collection("stars").countDocuments({
         _id: { $in: [ids.targetStarA, ids.targetStarB] },

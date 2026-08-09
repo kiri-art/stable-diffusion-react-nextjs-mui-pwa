@@ -114,6 +114,10 @@ msgstr "Account deletion is permanent. Search only by an exact email address or 
 msgid "Account deletion report"
 msgstr "Account deletion report"
 
+#: pages/account/data.tsx:153
+msgid "Account usage records contain daily billing totals only. Separate provider logs retain generation inputs, including full prompts, without an account identifier; they are not included in account downloads or account deletion. Starred records retain full, unredacted prompts, and starred images are stored on our servers."
+msgstr "Account usage records contain daily billing totals only. Separate provider logs retain generation inputs, including full prompts, without an account identifier; they are not included in account downloads or account deletion. Starred records retain full, unredacted prompts, and starred images are stored on our servers."
+
 #: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "Acknowledements and Thanks"
@@ -192,7 +196,7 @@ msgstr "Best for Anime"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: pages/account/data.tsx:275
+#: pages/account/data.tsx:277
 msgid "Capitalization and spaces must match."
 msgstr "Capitalization and spaces must match."
 
@@ -254,7 +258,7 @@ msgstr "Confirm Date of Birth"
 msgid "Confirm the immutable user ID"
 msgstr "Confirm the immutable user ID"
 
-#: pages/account/data.tsx:260
+#: pages/account/data.tsx:262
 msgid "Confirmation phrase"
 msgstr "Confirmation phrase"
 
@@ -298,7 +302,7 @@ msgstr ""
 msgid "Delete a user account"
 msgstr "Delete a user account"
 
-#: pages/account/data.tsx:202
+#: pages/account/data.tsx:204
 msgid "Delete My Account"
 msgstr "Delete My Account"
 
@@ -310,7 +314,7 @@ msgstr "Delete this star?"
 msgid "Deleted"
 msgstr "Deleted"
 
-#: pages/account/data.tsx:292
+#: pages/account/data.tsx:294
 #: src/admin/AccountDeletionDangerZone.tsx:566
 msgid "Deleting account…"
 msgstr "Deleting account…"
@@ -339,7 +343,7 @@ msgstr "Display name"
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr ""
 
-#: pages/account/data.tsx:181
+#: pages/account/data.tsx:183
 msgid "Download account data (ZIP)"
 msgstr "Download account data (ZIP)"
 
@@ -590,7 +594,7 @@ msgstr "Last 24 hours"
 msgid "Loading..."
 msgstr ""
 
-#: pages/account/data.tsx:302
+#: pages/account/data.tsx:304
 msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
 msgstr "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
 
@@ -770,7 +774,7 @@ msgstr ""
 msgid "Permanently delete"
 msgstr "Permanently delete"
 
-#: pages/account/data.tsx:294
+#: pages/account/data.tsx:296
 msgid "Permanently delete my account"
 msgstr "Permanently delete my account"
 
@@ -965,7 +969,7 @@ msgstr "Secure Payment via Stripe.com and partners."
 msgid "See all inputs and remix at {url}"
 msgstr "See all inputs and remix at {url}"
 
-#: pages/account/data.tsx:166
+#: pages/account/data.tsx:168
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 
@@ -983,7 +987,7 @@ msgstr "Seed"
 msgid "SEND IMAGE TO"
 msgstr "SEND IMAGE TO"
 
-#: pages/account/data.tsx:222
+#: pages/account/data.tsx:224
 msgid "Server deletion finished, but local cleanup needs attention:"
 msgstr "Server deletion finished, but local cleanup needs attention:"
 
@@ -1123,7 +1127,7 @@ msgstr "This is the final confirmation for {0} ({1}). This action cannot be undo
 msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
 msgstr "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
 
-#: pages/account/data.tsx:205
+#: pages/account/data.tsx:207
 msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
 msgstr "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
 
@@ -1143,7 +1147,7 @@ msgstr "those using free credits, and have {MIN_PAID_CREDITS} or less paid credi
 msgid "those using paid credits."
 msgstr "those using paid credits."
 
-#: pages/account/data.tsx:239
+#: pages/account/data.tsx:241
 msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
 msgstr "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
 
@@ -1216,10 +1220,6 @@ msgstr "Use mouse / finger to draw mask over it"
 msgid "User not found"
 msgstr "User not found"
 
-#: pages/account/data.tsx:153
-msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
-msgstr "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
-
 #: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "Username not available."
@@ -1263,7 +1263,7 @@ msgstr "Width of output image."
 msgid "Yes"
 msgstr "Yes"
 
-#: pages/account/data.tsx:174
+#: pages/account/data.tsx:176
 msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
 msgstr "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
 
@@ -1283,7 +1283,7 @@ msgstr "Your <0>{DAILY_FREE_CREDITS}</0><1>*</1> free credits are topped up ever
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 
-#: pages/account/data.tsx:160
+#: pages/account/data.tsx:162
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "Your <0>IP address</0> and user agent is recorded on each successful log in."
 

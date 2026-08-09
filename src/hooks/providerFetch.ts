@@ -4,11 +4,11 @@ import calculateCredits from "../calculateCredits";
 // import { ipPass, ipFromReq } from "../api-lib/ipCheck";
 import ProviderFetchRequestBase from "../lib/providerFetch/ProviderFetchRequestBase";
 import { BananaRequest } from "../schemas";
+import { dailyAccountUsageUpsert } from "../server/account-data/accountUsage";
 import {
   AccountDeletionPendingError,
   type AccountWriteLease,
   acquireAccountWriteLease,
-  withAccountWriteLease,
 } from "../server/account-data/writeBarrier";
 
 hooks.register("providerFetch.browser.extraInfoToSend");
@@ -148,35 +148,21 @@ hooks.on("providerFetch.server.preStart", async (data) => {
 
     // --- SAVE REQUESTS --- //
 
-    const userModelInputs = { ...modelInputs };
-
-    for (const key of [
-      "prompt",
-      "negative_prompt",
-      "image",
-      "init_image",
-      "input_image",
-      "mask_image",
-    ])
-      if (userModelInputs[key]) userModelInputs[key] = "[redacted]";
-
-    const userRequest = {
+    const accountUsage = dailyAccountUsageUpsert({
+      ...chargedCredits,
       userId,
-      date: new Date(),
-      ...chargedCredits,
-      callInputs,
-      modelInputs: userModelInputs,
-      ...chargedCredits,
-    };
-
-    await gs.dba.collection("userRequests").insertOne(userRequest);
+    });
+    const userRequests = await gs.dba.collection("userRequests").getReal();
+    await userRequests.updateOne(
+      accountUsage.filter,
+      accountUsage.update,
+      accountUsage.options,
+    );
 
     result.$extra = {
       credits: user.credits,
       chargedCredits: chargedCredits,
     };
-    result.accountWriteTargetUserId = userId.toString();
-
     return result;
   } finally {
     await writeLease.release();
@@ -186,13 +172,12 @@ hooks.on("providerFetch.server.preStart", async (data) => {
 hooks.on("providerFetch.server.postStart", async (data) => {
   // console.log("providerFetch.server.postStart", data, hookResult);
   // @ts-expect-error: TODO
-  const { request, /* extraInfo, */ deps, preStartResult, startResult } = data;
+  const { request, /* extraInfo, */ deps, startResult } = data;
   const { gs } = deps;
 
   const requestModelInputs = { ...request.inputs.modelInputs };
   for (const key of [
-    // UserRequests don't contain "prompt" or "negative_prompt", but BananaRequests do.
-    // BananaRequests don't store userId, UserRequests do.
+    // Raw provider logs intentionally retain prompts, but never an account ID.
     "image",
     "init_image",
     "input_image",
@@ -212,23 +197,10 @@ hooks.on("providerFetch.server.postStart", async (data) => {
     modelInputs: requestModelInputs,
     callInputs: request.inputs.callInputs,
     steps: {},
-    ...preStartResult.chargedCredits,
   };
 
-  const targetUserId = preStartResult.accountWriteTargetUserId;
-  if (gs?.dba && typeof targetUserId === "string") {
-    try {
-      await withAccountWriteLease(
-        {
-          db: await gs.dba.dbPromise,
-          operation: "record-generation-start",
-          targetUserId,
-        },
-        () => gs.dba.collection("bananaRequests").insertOne(bananaRequest),
-      );
-    } catch (error) {
-      if (!(error instanceof AccountDeletionPendingError)) throw error;
-    }
+  if (gs?.dba) {
+    await gs.dba.collection("bananaRequests").insertOne(bananaRequest);
   }
 });
 

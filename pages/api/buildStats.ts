@@ -210,7 +210,11 @@ async function requestsByUserByDay(
       {
         $group: {
           _id: { dayIndex: "$dayIndex", userId: "$userId" },
-          requests: { $sum: 1 },
+          requests: {
+            $sum: {
+              $cond: [{ $isNumber: "$requests" }, "$requests", 1],
+            },
+          },
         },
       },
       {

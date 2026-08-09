@@ -172,6 +172,10 @@ describe.sequential("account data export", () => {
             init: ids.foreignOwnedFile,
             output: ids.targetFile,
           },
+          modelInputs: {
+            negative_prompt: "starred full negative prompt",
+            prompt: "starred full prompt",
+          },
           userId: ids.targetUser,
         },
         {
@@ -273,14 +277,26 @@ describe.sequential("account data export", () => {
         userId: ids.targetUser,
       },
     ]);
-    expect(byName.bananaRequests).toMatchObject([
-      { modelInputs: { prompt: "target private prompt" } },
+    expect(byName).not.toHaveProperty("bananaRequests");
+    expect(byName).not.toHaveProperty("csends");
+    expect(byName.stars).toMatchObject([
+      {
+        modelInputs: {
+          negative_prompt: "starred full negative prompt",
+          prompt: "starred full prompt",
+        },
+      },
     ]);
-    expect(serialized).toContain("token=%5BREDACTED%5D");
-    expect(byName.csends).toMatchObject([
-      { status: "target-start" },
-      { status: "ambiguous-same-container" },
+    expect(byName.userRequests).toEqual([
+      {
+        date: new Date("2026-08-08T00:00:00.000Z"),
+        userId: ids.targetUser,
+      },
     ]);
+    expect(serialized).not.toContain("target private prompt");
+    expect(serialized).not.toContain("target-start");
+    expect(serialized).not.toContain("request-target");
+    expect(serialized).not.toContain("request-shared");
     expect(byName.likes).toMatchObject({
       given: [{ starId: ids.controlStar, userId: ids.targetUser }],
       received: [{ count: 1, starId: ids.targetStar.toHexString() }],

@@ -151,9 +151,11 @@ export default function AccountData() {
               not backed up to our servers.
             </Trans>{" "}
             <Trans>
-              User request records redact prompts and images, but linked
-              provider logs can contain generation inputs, including prompts.
-              Images you have starred are also stored on our servers.
+              Account usage records contain daily billing totals only. Separate
+              provider logs retain generation inputs, including full prompts,
+              without an account identifier; they are not included in account
+              downloads or account deletion. Starred records retain full,
+              unredacted prompts, and starred images are stored on our servers.
             </Trans>
           </li>
           <li>

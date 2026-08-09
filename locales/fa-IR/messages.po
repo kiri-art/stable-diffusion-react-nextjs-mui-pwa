@@ -114,6 +114,10 @@ msgstr "حذف حساب دائمی است. فقط با نشانی ایمیل د�
 msgid "Account deletion report"
 msgstr "گزارش حذف حساب"
 
+#: pages/account/data.tsx:153
+msgid "Account usage records contain daily billing totals only. Separate provider logs retain generation inputs, including full prompts, without an account identifier; they are not included in account downloads or account deletion. Starred records retain full, unredacted prompts, and starred images are stored on our servers."
+msgstr "سوابق استفاده از حساب فقط شامل جمع‌های روزانهٔ صورتحساب است. گزارش‌های جداگانهٔ ارائه‌دهنده، ورودی‌های تولید، از جمله پرامپت‌های کامل را بدون شناسهٔ حساب نگه می‌دارند؛ این گزارش‌ها در دانلود داده‌های حساب یا حذف حساب گنجانده نمی‌شوند. سوابق ستاره‌دار پرامپت‌های کامل و بدون ویرایش را نگه می‌دارند و تصاویر ستاره‌دار در سرورهای ما ذخیره می‌شوند."
+
 #: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "قدردانی و تشکر"
@@ -192,7 +196,7 @@ msgstr "بهترین برای انیمه"
 msgid "Cancel"
 msgstr "لغو"
 
-#: pages/account/data.tsx:275
+#: pages/account/data.tsx:277
 msgid "Capitalization and spaces must match."
 msgstr "حروف بزرگ و کوچک و فاصله‌ها باید دقیقاً یکسان باشند."
 
@@ -254,7 +258,7 @@ msgstr "تاریخ تولد را تأیید کنید"
 msgid "Confirm the immutable user ID"
 msgstr "شناسه تغییرناپذیر کاربر را تأیید کنید"
 
-#: pages/account/data.tsx:260
+#: pages/account/data.tsx:262
 msgid "Confirmation phrase"
 msgstr "عبارت تأیید"
 
@@ -298,7 +302,7 @@ msgstr "تاریخ"
 msgid "Delete a user account"
 msgstr "حذف حساب یک کاربر"
 
-#: pages/account/data.tsx:202
+#: pages/account/data.tsx:204
 msgid "Delete My Account"
 msgstr "حذف حساب من"
 
@@ -310,7 +314,7 @@ msgstr "این ستاره حذف شود؟"
 msgid "Deleted"
 msgstr "حذف شد"
 
-#: pages/account/data.tsx:292
+#: pages/account/data.tsx:294
 #: src/admin/AccountDeletionDangerZone.tsx:566
 msgid "Deleting account…"
 msgstr "در حال حذف حساب…"
@@ -339,7 +343,7 @@ msgstr "نام نمایشی"
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "هیچ محتوای مضر (نژادپرستانه، تحریک‌آمیز و غیره) ایجاد نکنید."
 
-#: pages/account/data.tsx:181
+#: pages/account/data.tsx:183
 msgid "Download account data (ZIP)"
 msgstr "دانلود داده‌های حساب (ZIP)"
 
@@ -590,7 +594,7 @@ msgstr "24 ساعت اخیر"
 msgid "Loading..."
 msgstr "در حال بارگذاری..."
 
-#: pages/account/data.tsx:302
+#: pages/account/data.tsx:304
 msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
 msgstr "تاریخچه محلی این دستگاه پس از حذف پاک می‌شود. در هر دستگاه دیگری که از برنامه استفاده کرده‌اید، برنامه را حذف نصب کنید یا فضای ذخیره‌سازی مرورگر آن را جداگانه پاک کنید."
 
@@ -770,7 +774,7 @@ msgstr "پرداخت"
 msgid "Permanently delete"
 msgstr "حذف دائمی"
 
-#: pages/account/data.tsx:294
+#: pages/account/data.tsx:296
 msgid "Permanently delete my account"
 msgstr "حسابم را برای همیشه حذف کن"
 
@@ -965,7 +969,7 @@ msgstr "پرداخت ایمن از طریق Stripe.com و شرکا."
 msgid "See all inputs and remix at {url}"
 msgstr "مشاهده همه ورودی‌ها و ریمیکس در {url}"
 
-#: pages/account/data.tsx:166
+#: pages/account/data.tsx:168
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "همچنین <0>شرایط استفاده</0> و <1>سیاست حفظ حریم خصوصی</1> ما را ببینید"
 
@@ -983,7 +987,7 @@ msgstr "عدد آغازین"
 msgid "SEND IMAGE TO"
 msgstr "ارسال تصویر به"
 
-#: pages/account/data.tsx:222
+#: pages/account/data.tsx:224
 msgid "Server deletion finished, but local cleanup needs attention:"
 msgstr "حذف از سرور پایان یافت، اما پاک‌سازی محلی نیاز به توجه دارد:"
 
@@ -1123,7 +1127,7 @@ msgstr "این تأیید نهایی برای {0} ({1}) است. این اقدا�
 msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
 msgstr "این تأیید نهایی است. حساب شما و داده‌های مرتبط با آن پاک خواهند شد و این اقدام قابل بازگشت نیست."
 
-#: pages/account/data.tsx:205
+#: pages/account/data.tsx:207
 msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
 msgstr "این کار حساب شما و داده‌های مرتبط با آن را برای همیشه حذف می‌کند. سوابق مالی ممکن است در صورت الزام قانونی یا عملیاتی ناشناس‌سازی و نگه‌داری شوند."
 
@@ -1143,7 +1147,7 @@ msgstr "کسانی که از اعتبار رایگان استفاده می‌ک�
 msgid "those using paid credits."
 msgstr "کسانی که از اعتبارهای پرداختی استفاده می‌کنند."
 
-#: pages/account/data.tsx:239
+#: pages/account/data.tsx:241
 msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
 msgstr "برای ادامه، عبارت زیر را دقیقاً وارد کنید. پیش از آغاز حذف، یک بار دیگر از شما تأیید خواسته می‌شود."
 
@@ -1216,10 +1220,6 @@ msgstr "از ماوس / انگشت برای ترسیم ماسک روی آن اس
 msgid "User not found"
 msgstr "کاربر یافت نشد"
 
-#: pages/account/data.tsx:153
-msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
-msgstr "سوابق درخواست‌های کاربر، دستورها و تصاویر را می‌پوشانند، اما گزارش‌های سرویس‌دهنده پیوندخورده ممکن است ورودی‌های تولید، از جمله دستورها را در بر داشته باشند. تصاویری که ستاره‌دار کرده‌اید نیز روی سرورهای ما ذخیره می‌شوند."
-
 #: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "نام کاربری در دسترس نیست."
@@ -1263,7 +1263,7 @@ msgstr "عرض تصویر خروجی."
 msgid "Yes"
 msgstr "بله"
 
-#: pages/account/data.tsx:174
+#: pages/account/data.tsx:176
 msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
 msgstr "می‌توانید رکوردهای مرتبط پایگاه داده و فراداده فایل‌ها را به شکل یک بایگانی ZIP از مجموعه‌های JSON دانلود کنید. خود فایل‌های تصویری ستاره‌دارشده در این بایگانی قرار نمی‌گیرند."
 
@@ -1283,7 +1283,7 @@ msgstr "اعتبارهای رایگان <0>{DAILY_FREE_CREDITS}</0><1>*</1> شم
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "<0>تاریخچه</0> شما فقط روی دستگاه محلی‌تان ذخیره می‌شود و روی سرورهای ما پشتیبان‌گیری نمی‌شود."
 
-#: pages/account/data.tsx:160
+#: pages/account/data.tsx:162
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "<0>نشانی IP</0> و عامل کاربر شما در هر ورود موفق ثبت می‌شود."
 

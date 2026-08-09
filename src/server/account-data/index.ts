@@ -6,7 +6,7 @@ import {
   ObjectId,
   type WithId,
 } from "mongodb";
-import { recordDeletedCallbackIdentifiers } from "./requestTombstone";
+import { accountUsageDay } from "./accountUsage";
 
 export type AccountDataAction =
   | "anonymized"
@@ -67,8 +67,6 @@ export const ACCOUNT_DATA_EXPORT_COLLECTIONS = [
   "sessions",
   "orders",
   "userRequests",
-  "bananaRequests",
-  "csends",
   "stars",
   "likes",
   "reportedStars",
@@ -106,19 +104,16 @@ interface CounterRepair {
 }
 
 interface AccountFootprint {
-  csendContainerIds: string[];
   collectionEntries: AccountDataReportEntry[];
   counterRepairs: CounterRepair[];
   deletableEmailIdentifiers: string[];
   fileDocuments: WithId<Document>[];
   fileIdValues: unknown[];
   ownedStarIdValues: unknown[];
-  requestIds: string[];
   resourceEntries: AccountDataReportEntry[];
   s3DeleteKeys: string[];
   s3SharedKeys: string[];
   sharedEmailIdentifiers: string[];
-  sharedCsendContainerIds: string[];
   sharedFileIdValues: unknown[];
   stars: WithId<Document>[];
   stripeCustomerId?: string;
@@ -363,17 +358,6 @@ export function collectFileReferences(files: unknown): unknown[] {
   );
 }
 
-function requestIdsFrom(document: Document): string[] {
-  const values: unknown[] = [document.startRequestId];
-
-  const callInputs = document.callInputs;
-  if (callInputs && typeof callInputs === "object") {
-    values.push((callInputs as Record<string, unknown>).startRequestId);
-  }
-
-  return stringValues(values);
-}
-
 function sameId(left: unknown, right: unknown): boolean {
   const leftString = idString(left);
   const rightString = idString(right);
@@ -503,6 +487,37 @@ export function selectExportSessions(
       }
     }
     return selected;
+  });
+}
+
+/**
+ * Whitelist the account-side daily ledger. This also keeps pre-migration ZIPs
+ * from exposing legacy request IDs or exact timestamps.
+ */
+export function selectExportAccountUsage(
+  documents: readonly Document[],
+): unknown[] {
+  return documents.map((document) => {
+    const selected: Record<string, unknown> = {};
+    for (const key of [
+      "credits",
+      "freeCredits",
+      "paid",
+      "paidCredits",
+      "requests",
+      "schemaVersion",
+      "userId",
+    ] as const) {
+      if (document[key] !== undefined) selected[key] = document[key];
+    }
+    if (document.date !== undefined) {
+      const date =
+        document.date instanceof Date
+          ? document.date
+          : new Date(document.date as string | number);
+      if (!Number.isNaN(date.getTime())) selected.date = accountUsageDay(date);
+    }
+    return sanitizeAccountDataValue(selected);
   });
 }
 
@@ -657,61 +672,6 @@ async function discoverAccountFootprint(
     .collection("userRequests")
     .find({ userId: { $in: userIdValues } }, { session })
     .toArray();
-  const candidateRequestIds = stringValues(
-    userRequests.flatMap(requestIdsFrom),
-  );
-  const survivingUserRequests = candidateRequestIds.length
-    ? await db
-        .collection("userRequests")
-        .find(
-          {
-            userId: { $nin: userIdValues },
-            $or: [
-              { startRequestId: { $in: candidateRequestIds } },
-              { "callInputs.startRequestId": { $in: candidateRequestIds } },
-            ],
-          },
-          {
-            session,
-            projection: { callInputs: 1, startRequestId: 1 },
-          },
-        )
-        .toArray()
-    : [];
-  const sharedRequestIdSet = new Set(
-    survivingUserRequests.flatMap(requestIdsFrom),
-  );
-  const sharedRequestIds = candidateRequestIds.filter((requestId) =>
-    sharedRequestIdSet.has(requestId),
-  );
-  const requestIds = candidateRequestIds.filter(
-    (requestId) => !sharedRequestIdSet.has(requestId),
-  );
-  const targetCsendAnchors = requestIds.length
-    ? await db
-        .collection("csends")
-        .find(
-          { "payload.startRequestId": { $in: requestIds } },
-          { projection: { container_id: 1 }, session },
-        )
-        .toArray()
-    : [];
-  const sharedCsendAnchors = sharedRequestIds.length
-    ? await db
-        .collection("csends")
-        .find(
-          { "payload.startRequestId": { $in: sharedRequestIds } },
-          { projection: { container_id: 1 }, session },
-        )
-        .toArray()
-    : [];
-  const sharedCsendContainerIds = stringValues(
-    sharedCsendAnchors.map((entry) => entry.container_id),
-  );
-  const sharedCsendContainerSet = new Set(sharedCsendContainerIds);
-  const csendContainerIds = stringValues(
-    targetCsendAnchors.map((entry) => entry.container_id),
-  ).filter((containerId) => !sharedCsendContainerSet.has(containerId));
 
   const starFileIds = stars.flatMap((star) =>
     collectFileReferences(star.files),
@@ -826,57 +786,6 @@ async function discoverAccountFootprint(
   const accountCount = await db
     .collection("accounts")
     .countDocuments({ userId: { $in: userIdValues } }, { session });
-  const bananaRequestCount = requestIds.length
-    ? await db
-        .collection("bananaRequests")
-        .countDocuments({ startRequestId: { $in: requestIds } }, { session })
-    : 0;
-  const sharedBananaRequestCount = sharedRequestIds.length
-    ? await db
-        .collection("bananaRequests")
-        .countDocuments(
-          { startRequestId: { $in: sharedRequestIds } },
-          { session },
-        )
-    : 0;
-  const csendDeleteParts: Document[] = [];
-  if (requestIds.length) {
-    csendDeleteParts.push({ "payload.startRequestId": { $in: requestIds } });
-  }
-  if (csendContainerIds.length) {
-    csendDeleteParts.push({ container_id: { $in: csendContainerIds } });
-  }
-  const csendDeleteFilter = csendDeleteParts.length
-    ? {
-        $and: [
-          { $or: csendDeleteParts },
-          ...(sharedCsendContainerIds.length
-            ? [{ container_id: { $nin: sharedCsendContainerIds } }]
-            : []),
-        ],
-      }
-    : null;
-  const csendCount = csendDeleteFilter
-    ? await db
-        .collection("csends")
-        .countDocuments(csendDeleteFilter, { session })
-    : 0;
-  const sharedCsendParts: Document[] = [];
-  if (sharedRequestIds.length) {
-    sharedCsendParts.push({
-      "payload.startRequestId": { $in: sharedRequestIds },
-    });
-  }
-  if (sharedCsendContainerIds.length) {
-    sharedCsendParts.push({
-      container_id: { $in: sharedCsendContainerIds },
-    });
-  }
-  const sharedCsendCount = sharedCsendParts.length
-    ? await db
-        .collection("csends")
-        .countDocuments({ $or: sharedCsendParts }, { session })
-    : 0;
   const likeCount = await db
     .collection("likes")
     .countDocuments({ $or: directOrOwnedStarQuery }, { session });
@@ -966,32 +875,6 @@ async function discoverAccountFootprint(
 
   const collectionEntries = [
     reportEntry("accounts", "deleted", accountCount),
-    reportEntry(
-      "accountDeletionCallbackTombstones",
-      "retained",
-      requestIds.length,
-      requestIds.length
-        ? "Short-lived hashed markers prevent delayed provider callbacks from recreating deleted request data"
-        : undefined,
-    ),
-    reportEntry("bananaRequests", "deleted", bananaRequestCount),
-    reportEntry(
-      "bananaRequests",
-      "skipped_shared",
-      sharedBananaRequestCount,
-      sharedBananaRequestCount
-        ? "Retained because a surviving user request references the same provider request ID"
-        : undefined,
-    ),
-    reportEntry("csends", "deleted", csendCount),
-    reportEntry(
-      "csends",
-      "skipped_shared",
-      sharedCsendCount,
-      sharedCsendCount
-        ? "Retained because a surviving user request references the same provider request ID"
-        : undefined,
-    ),
     reportEntry("files", "deleted", deletableFileDocuments.length),
     reportEntry(
       "files",
@@ -1063,19 +946,16 @@ async function discoverAccountFootprint(
   ];
 
   return {
-    csendContainerIds,
     collectionEntries,
     counterRepairs,
     deletableEmailIdentifiers,
     fileDocuments,
     fileIdValues,
     ownedStarIdValues,
-    requestIds,
     resourceEntries,
     s3DeleteKeys,
     s3SharedKeys,
     sharedEmailIdentifiers,
-    sharedCsendContainerIds,
     sharedFileIdValues,
     stars,
     stripeCustomerId,
@@ -1121,10 +1001,8 @@ export async function exportAccountData({
   if (!footprint) return null;
 
   const {
-    csendContainerIds,
     fileDocuments,
     ownedStarIdValues,
-    requestIds,
     stars,
     targetUser,
     userIdValues,
@@ -1148,25 +1026,6 @@ export async function exportAccountData({
     .collection("orders")
     .find({ userId: { $in: userIdValues } })
     .toArray();
-  const bananaRequests = requestIds.length
-    ? await db
-        .collection("bananaRequests")
-        .find({ startRequestId: { $in: requestIds } })
-        .toArray()
-    : [];
-  const csends = requestIds.length
-    ? await db
-        .collection("csends")
-        .find({
-          $or: [
-            { "payload.startRequestId": { $in: requestIds } },
-            ...(csendContainerIds.length
-              ? [{ container_id: { $in: csendContainerIds } }]
-              : []),
-          ],
-        })
-        .toArray()
-    : [];
   const likes = await db
     .collection("likes")
     .find({ $or: directOrOwnedStarQuery })
@@ -1187,9 +1046,7 @@ export async function exportAccountData({
     accounts: sanitizedDocuments(accounts),
     sessions: selectExportSessions(sessions),
     orders: sanitizedDocuments(orders),
-    userRequests: sanitizedDocuments(userRequests),
-    bananaRequests: sanitizedDocuments(bananaRequests),
-    csends: sanitizedDocuments(csends),
+    userRequests: selectExportAccountUsage(userRequests),
     stars: sanitizedDocuments(stars),
     likes: selectExportInteractions({
       documents: likes,
@@ -1419,13 +1276,10 @@ async function deleteDatabaseData(
 
   const entries = footprint.collectionEntries.map((entry) => ({ ...entry }));
   const {
-    csendContainerIds,
     deletableEmailIdentifiers,
     fileIdValues,
     ownedStarIdValues,
-    requestIds,
     sharedEmailIdentifiers,
-    sharedCsendContainerIds,
     sharedFileIdValues,
     userIdValues,
   } = footprint;
@@ -1485,19 +1339,6 @@ async function deleteDatabaseData(
     : { deletedCount: 0 };
   replaceEntryCount(entries, "stars", "deleted", stars.deletedCount);
 
-  const callbackTombstones = await recordDeletedCallbackIdentifiers(
-    db,
-    "request",
-    requestIds,
-    session,
-  );
-  replaceEntryCount(
-    entries,
-    "accountDeletionCallbackTombstones",
-    "retained",
-    callbackTombstones,
-  );
-
   const userRequests = await db
     .collection("userRequests")
     .deleteMany({ userId: { $in: userIdValues } }, { session });
@@ -1507,40 +1348,6 @@ async function deleteDatabaseData(
     "deleted",
     userRequests.deletedCount,
   );
-
-  const bananaRequests = requestIds.length
-    ? await db
-        .collection("bananaRequests")
-        .deleteMany({ startRequestId: { $in: requestIds } }, { session })
-    : { deletedCount: 0 };
-  replaceEntryCount(
-    entries,
-    "bananaRequests",
-    "deleted",
-    bananaRequests.deletedCount,
-  );
-
-  const csendDeleteParts: Document[] = [];
-  if (requestIds.length) {
-    csendDeleteParts.push({ "payload.startRequestId": { $in: requestIds } });
-  }
-  if (csendContainerIds.length) {
-    csendDeleteParts.push({ container_id: { $in: csendContainerIds } });
-  }
-  const csends = csendDeleteParts.length
-    ? await db.collection("csends").deleteMany(
-        {
-          $and: [
-            { $or: csendDeleteParts },
-            ...(sharedCsendContainerIds.length
-              ? [{ container_id: { $nin: sharedCsendContainerIds } }]
-              : []),
-          ],
-        },
-        { session },
-      )
-    : { deletedCount: 0 };
-  replaceEntryCount(entries, "csends", "deleted", csends.deletedCount);
 
   const statsDaily = await db.collection("statsDaily").updateMany(
     { "requestsByUser.userId": { $in: userIdValues } },

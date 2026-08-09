@@ -114,6 +114,10 @@ msgstr "מחיקת החשבון היא לצמיתות. יש לחפש רק לפי
 msgid "Account deletion report"
 msgstr "דוח מחיקת חשבון"
 
+#: pages/account/data.tsx:153
+msgid "Account usage records contain daily billing totals only. Separate provider logs retain generation inputs, including full prompts, without an account identifier; they are not included in account downloads or account deletion. Starred records retain full, unredacted prompts, and starred images are stored on our servers."
+msgstr "רשומות השימוש בחשבון מכילות רק סיכומי חיוב יומיים. יומני ספק נפרדים שומרים את קלטי היצירה, כולל הנחיות מלאות, ללא מזהה חשבון; הם אינם נכללים בהורדות נתוני החשבון או במחיקת החשבון. רשומות שסומנו בכוכב שומרות הנחיות מלאות וללא השחרה, ותמונות שסומנו בכוכב נשמרות בשרתים שלנו."
+
 #: pages/about.tsx:99
 msgid "Acknowledements and Thanks"
 msgstr "תודות והוקרות"
@@ -192,7 +196,7 @@ msgstr "הכי מתאים לאנימה"
 msgid "Cancel"
 msgstr "ביטול"
 
-#: pages/account/data.tsx:275
+#: pages/account/data.tsx:277
 msgid "Capitalization and spaces must match."
 msgstr "יש להתאים במדויק את השימוש באותיות רישיות ואת הרווחים."
 
@@ -254,7 +258,7 @@ msgstr "אישור תאריך לידה"
 msgid "Confirm the immutable user ID"
 msgstr "אימות מזהה המשתמש הבלתי ניתן לשינוי"
 
-#: pages/account/data.tsx:260
+#: pages/account/data.tsx:262
 msgid "Confirmation phrase"
 msgstr "משפט האישור"
 
@@ -298,7 +302,7 @@ msgstr "תאריך"
 msgid "Delete a user account"
 msgstr "מחיקת חשבון משתמש"
 
-#: pages/account/data.tsx:202
+#: pages/account/data.tsx:204
 msgid "Delete My Account"
 msgstr "מחיקת החשבון שלי"
 
@@ -310,7 +314,7 @@ msgstr "למחוק את הכוכב הזה?"
 msgid "Deleted"
 msgstr "נמחק"
 
-#: pages/account/data.tsx:292
+#: pages/account/data.tsx:294
 #: src/admin/AccountDeletionDangerZone.tsx:566
 msgid "Deleting account…"
 msgstr "החשבון נמחק…"
@@ -339,7 +343,7 @@ msgstr "שם תצוגה"
 msgid "Do not create any harmful content (racist, inciteful, etc)."
 msgstr "אין לייצר תוכן פוגעני (גזעני, מסית וכד')."
 
-#: pages/account/data.tsx:181
+#: pages/account/data.tsx:183
 msgid "Download account data (ZIP)"
 msgstr "הורדת נתוני החשבון (ZIP)"
 
@@ -590,7 +594,7 @@ msgstr "24 השעות האחרונות"
 msgid "Loading..."
 msgstr "טוען..."
 
-#: pages/account/data.tsx:302
+#: pages/account/data.tsx:304
 msgid "Local history is cleared on this device after deletion. On any other device where you used the app, uninstall it or clear its browser storage separately."
 msgstr "ההיסטוריה המקומית במכשיר זה תימחק לאחר מחיקת החשבון. בכל מכשיר אחר שבו השתמשת באפליקציה, יש להסיר אותה או לנקות בנפרד את אחסון הדפדפן שלה."
 
@@ -770,7 +774,7 @@ msgstr "תשלום"
 msgid "Permanently delete"
 msgstr "מחיקה לצמיתות"
 
-#: pages/account/data.tsx:294
+#: pages/account/data.tsx:296
 msgid "Permanently delete my account"
 msgstr "מחיקת החשבון שלי לצמיתות"
 
@@ -965,7 +969,7 @@ msgstr "תשלום מאובטח דרך Stripe.com ושותפיה."
 msgid "See all inputs and remix at {url}"
 msgstr "ראו את כל הקלטים ועשו remix ב-{url}"
 
-#: pages/account/data.tsx:166
+#: pages/account/data.tsx:168
 msgid "See also our <0>Terms of Service</0> and <1>Privacy Policy</1>"
 msgstr "ראו גם את <0>תנאי השירות</0> ואת <1>מדיניות הפרטיות</1> שלנו"
 
@@ -983,7 +987,7 @@ msgstr "Seed"
 msgid "SEND IMAGE TO"
 msgstr "שליחת התמונה אל"
 
-#: pages/account/data.tsx:222
+#: pages/account/data.tsx:224
 msgid "Server deletion finished, but local cleanup needs attention:"
 msgstr "מחיקת הנתונים בשרת הסתיימה, אך הניקוי המקומי דורש תשומת לב:"
 
@@ -1123,7 +1127,7 @@ msgstr "זהו האישור הסופי עבור {0} ({1}). לא ניתן לבט�
 msgid "This is the final confirmation. Your account and associated data will be erased, and this action cannot be undone."
 msgstr "זהו האישור הסופי. החשבון שלך והנתונים המשויכים אליו יימחקו, ולא ניתן לבטל פעולה זו."
 
-#: pages/account/data.tsx:205
+#: pages/account/data.tsx:207
 msgid "This permanently deletes your account and associated data. Billing orders may be anonymized and retained when legally or operationally required."
 msgstr "פעולה זו מוחקת לצמיתות את החשבון שלך ואת הנתונים המשויכים אליו. ייתכן שהזמנות חיוב יעברו אנונימיזציה ויישמרו כאשר הדבר נדרש מבחינה משפטית או תפעולית."
 
@@ -1143,7 +1147,7 @@ msgstr "מי שמשתמשים בקרדיטים חינמיים ויש להם {MIN
 msgid "those using paid credits."
 msgstr "מי שמשתמשים בקרדיטים בתשלום."
 
-#: pages/account/data.tsx:239
+#: pages/account/data.tsx:241
 msgid "To continue, type the phrase below exactly. You will be asked to confirm once more before deletion starts."
 msgstr "להמשך, יש להקליד בדיוק את המשפט שלהלן. יידרש אישור נוסף לפני תחילת המחיקה."
 
@@ -1216,10 +1220,6 @@ msgstr "השתמשו בעכבר / באצבע כדי לצייר עליו מסכה
 msgid "User not found"
 msgstr "המשתמש לא נמצא"
 
-#: pages/account/data.tsx:153
-msgid "User request records redact prompts and images, but linked provider logs can contain generation inputs, including prompts. Images you have starred are also stored on our servers."
-msgstr "רשומות של בקשות משתמש מסתירות הנחיות ותמונות, אך יומני ספק מקושרים עשויים להכיל קלטים ליצירה, כולל הנחיות. גם תמונות שסימנת בכוכב נשמרות בשרתים שלנו."
-
 #: pages/[_id].tsx:136
 msgid "Username not available."
 msgstr "שם המשתמש אינו זמין."
@@ -1263,7 +1263,7 @@ msgstr "רוחב תמונת הפלט"
 msgid "Yes"
 msgstr "כן"
 
-#: pages/account/data.tsx:174
+#: pages/account/data.tsx:176
 msgid "You can download associated database records and file metadata as a ZIP archive of JSON collections. The archive does not include starred image files themselves."
 msgstr "ניתן להוריד רשומות משויכות ממסד הנתונים ומטא-נתונים של קבצים כארכיון ZIP של אוספי JSON. הארכיון אינו כולל את קובצי התמונות שסומנו בכוכב."
 
@@ -1283,7 +1283,7 @@ msgstr "ה<0>{DAILY_FREE_CREDITS}</0><1>*</1> קרדיטים החינמיים ש
 msgid "Your <0>history</0> is stored on your local device only, and is not backed up to our servers."
 msgstr "ה<0>היסטוריה</0> שלכם נשמרת רק במכשיר המקומי ולא מגובה בשרתים שלנו."
 
-#: pages/account/data.tsx:160
+#: pages/account/data.tsx:162
 msgid "Your <0>IP address</0> and user agent is recorded on each successful log in."
 msgstr "ה<0>כתובת IP</0> ו-agent המשתמש שלכם נשמרים בכל התחברות מוצלחת."
 

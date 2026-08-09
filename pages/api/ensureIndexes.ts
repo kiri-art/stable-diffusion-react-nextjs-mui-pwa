@@ -9,6 +9,7 @@ type ManagedIndex = {
   expireAfterSeconds?: number;
   key: IndexKey;
   name: string;
+  unique?: boolean;
 };
 
 type IndexResult =
@@ -51,21 +52,12 @@ const managedIndexes: ManagedIndex[] = [
     collection: "userRequests",
     key: { date: 1, userId: 1 },
     name: "userRequests_date_userId",
+    unique: true,
   },
   {
     collection: "userRequests",
     key: { userId: 1 },
     name: "userRequests_userId",
-  },
-  {
-    collection: "userRequests",
-    key: { startRequestId: 1 },
-    name: "userRequests_startRequestId",
-  },
-  {
-    collection: "userRequests",
-    key: { "callInputs.startRequestId": 1 },
-    name: "userRequests_callInputs_startRequestId",
   },
   {
     collection: "users",
@@ -238,12 +230,6 @@ const managedIndexes: ManagedIndex[] = [
     name: "accountDeletionJobs_phase_updatedAt",
   },
   {
-    collection: "accountDeletionCallbackTombstones",
-    expireAfterSeconds: 0,
-    key: { expiresAt: 1 },
-    name: "accountDeletionCallbackTombstones_expiresAt_ttl",
-  },
-  {
     collection: "verification_tokens",
     key: { identifier: 1 },
     name: "verification_tokens_identifier",
@@ -309,7 +295,8 @@ function sameKey(left: unknown, right: unknown) {
 function sameIndex(existing: Record<string, unknown>, spec: ManagedIndex) {
   return (
     sameKey(existing.key, spec.key) &&
-    (existing.expireAfterSeconds ?? undefined) === spec.expireAfterSeconds
+    (existing.expireAfterSeconds ?? undefined) === spec.expireAfterSeconds &&
+    (existing.unique ?? false) === (spec.unique ?? false)
   );
 }
 
@@ -401,6 +388,7 @@ export default async function ensureIndexes(
 
       await collection.createIndex(spec.key, {
         name: spec.name,
+        ...(spec.unique === undefined ? {} : { unique: spec.unique }),
         ...(spec.expireAfterSeconds === undefined
           ? {}
           : { expireAfterSeconds: spec.expireAfterSeconds }),
