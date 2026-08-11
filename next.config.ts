@@ -4,9 +4,21 @@ import {
   PHASE_PRODUCTION_BUILD,
 } from "next/constants";
 
+const sharpLibvipsLinuxX64Files = [
+  "./node_modules/.pnpm/@img+sharp-libvips-linux-x64@1.3.*/node_modules/@img/sharp-libvips-linux-x64/lib/**/*",
+];
+
 export default async function (phase: string): Promise<NextConfig> {
   const nextConfig: NextConfig = {
     reactStrictMode: true,
+    // Next 16.2 misses sharp 0.35's dynamically loaded libvips library.
+    // Upstream fix: https://github.com/vercel/next.js/pull/94845
+    // Keep it in these functions until we upgrade to a Next release with that fix.
+    outputFileTracingIncludes: {
+      "/api/file": sharpLibvipsLinuxX64Files,
+      "/api/file2": sharpLibvipsLinuxX64Files,
+      "/api/starItem": sharpLibvipsLinuxX64Files,
+    },
     i18n: {
       locales: ["en-US", "he-IL", "ja-JP", "fa-IR"],
       defaultLocale: "en-US",

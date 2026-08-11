@@ -1,3 +1,14 @@
+supportedArchitectures:
+  os:
+    - current
+    - linux
+  cpu:
+    - current
+    - x64
+  libc:
+    - current
+    - glibc
+
 onlyBuiltDependencies:
   - aws-sdk
   - esbuild

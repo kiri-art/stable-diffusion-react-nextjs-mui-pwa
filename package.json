@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node ./scripts/verify-sharp-traces.mjs",
     "start": "next start",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
@@ -20,6 +20,7 @@
     "i18n:compile": "lingui compile",
     "i18n:status": "node ./scripts/i18n/status.mjs",
     "i18n:refresh": "node ./scripts/i18n/refresh.mjs",
+    "verify:sharp-traces": "node ./scripts/verify-sharp-traces.mjs",
     "docker": "docker run -it -p 8000:8000 --gpus all --rm diffusers-api",
     "test": "vitest --run",
     "stripe-dev": "stripe listen --forward-to localhost:3000/api/stripe",
